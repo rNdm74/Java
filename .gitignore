@@ -4,3 +4,5 @@
 *.jar
 *.war
 *.ear
+/PDice/nbproject/private/
+/PDice/build/
