@@ -1,0 +1,34 @@
+﻿Merge remote-tracking branch 'origin'
+
+Conflicts:
+	.gitignore
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 3 and 2 different commits each, respectively.
+#
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+#
+# Changes to be committed:
+#
+#	modified:   .gitignore
+#	new file:   PDice/build.xml
+#	new file:   PDice/manifest.mf
+#	new file:   PDice/nbproject/build-impl.xml
+#	new file:   PDice/nbproject/genfiles.properties
+#	new file:   PDice/nbproject/project.properties
+#	new file:   PDice/nbproject/project.xml
+#	new file:   PDice/src/pdice/Dice.java
+#	new file:   PDice/src/pdice/DiceApp.java
+#	new file:   PDice/test/pdice/DiceTest.java
+#
+

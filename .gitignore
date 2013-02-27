@@ -4,4 +4,9 @@
 *.jar
 *.war
 *.ear
+<<<<<<< HEAD
 /PtempConverter/nbproject/private/
+=======
+/PDice/nbproject/private/
+/PDice/build/
+>>>>>>> origin
