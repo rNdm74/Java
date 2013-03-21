@@ -35,20 +35,12 @@ public class ArrayUtilities {
     }
     
     public String findIt(int[] numbers, int wanted){
-        StringBuilder sb = new StringBuilder();        
+        int count = 0;
         
-        for (int i = 0; i < numbers.length - 1; i++) {
-            if (numbers[i] == wanted) {
-                sb.append(wanted).append(" was found");
-                break;
-            }
-            else{
-               sb.append(wanted).append(" was not found");
-               break;
-            }
+        while (count < numbers.length && numbers[count] != wanted) {
+            count++;
         }
         
-        return sb.toString();
-    }
-    
+        return (count == numbers.length) ? wanted + " was not found" :  wanted + " was found";
+    }    
 }
