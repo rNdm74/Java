@@ -51,12 +51,14 @@ public class UI extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         jFrame1A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame1A.setBackground(java.awt.Color.red);
+        jFrame1A.setAlwaysOnTop(true);
+        jFrame1A.setBackground(java.awt.Color.white);
         jFrame1A.setBounds(new java.awt.Rectangle(1, 1, 160, 480));
         jFrame1A.setIconImages(null);
         jFrame1A.setLocationByPlatform(true);
+        jFrame1A.setUndecorated(true);
         jFrame1A.setResizable(false);
-        jFrame1A.setType(java.awt.Window.Type.POPUP);
+        jFrame1A.setType(java.awt.Window.Type.UTILITY);
         jFrame1A.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jFrame1AMouseClicked(evt);
@@ -69,27 +71,28 @@ public class UI extends javax.swing.JFrame {
             public void ancestorResized(java.awt.event.HierarchyEvent evt) {
             }
         });
-        jFrame1A.getContentPane().setLayout(null);
 
-        jPanel1A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1A.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
 
         javax.swing.GroupLayout jPanel1ALayout = new javax.swing.GroupLayout(jPanel1A);
         jPanel1A.setLayout(jPanel1ALayout);
         jPanel1ALayout.setHorizontalGroup(
             jPanel1ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+            .addGap(0, 152, Short.MAX_VALUE)
         );
         jPanel1ALayout.setVerticalGroup(
             jPanel1ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
 
-        jFrame1A.getContentPane().add(jPanel1A);
-        jPanel1A.setBounds(0, 0, 0, 0);
+        jFrame1A.getContentPane().add(jPanel1A, java.awt.BorderLayout.CENTER);
 
         jFrame1A.getAccessibleContext().setAccessibleParent(jPanel1);
 
-        jFrame2A.setBackground(java.awt.Color.yellow);
+        jFrame2A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame2A.setAlwaysOnTop(true);
+        jFrame2A.setBackground(java.awt.Color.white);
         jFrame2A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame2A.setIconImages(null);
         jFrame2A.setLocationByPlatform(true);
@@ -101,9 +104,9 @@ public class UI extends javax.swing.JFrame {
                 jFrame2AMouseClicked(evt);
             }
         });
-        jFrame2A.getContentPane().setLayout(null);
 
-        jPanel2A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2A.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel2A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
 
         javax.swing.GroupLayout jPanel2ALayout = new javax.swing.GroupLayout(jPanel2A);
         jPanel2A.setLayout(jPanel2ALayout);
@@ -116,10 +119,11 @@ public class UI extends javax.swing.JFrame {
             .addGap(0, 116, Short.MAX_VALUE)
         );
 
-        jFrame2A.getContentPane().add(jPanel2A);
-        jPanel2A.setBounds(0, 0, 0, 0);
+        jFrame2A.getContentPane().add(jPanel2A, java.awt.BorderLayout.CENTER);
 
-        jFrame3A.setBackground(java.awt.Color.green);
+        jFrame3A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame3A.setAlwaysOnTop(true);
+        jFrame3A.setBackground(java.awt.Color.white);
         jFrame3A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame3A.setIconImages(null);
         jFrame3A.setLocationByPlatform(true);
@@ -131,9 +135,9 @@ public class UI extends javax.swing.JFrame {
                 jFrame3AMouseClicked(evt);
             }
         });
-        jFrame3A.getContentPane().setLayout(null);
 
-        jPanel3A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3A.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel3A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
 
         javax.swing.GroupLayout jPanel3ALayout = new javax.swing.GroupLayout(jPanel3A);
         jPanel3A.setLayout(jPanel3ALayout);
@@ -146,10 +150,11 @@ public class UI extends javax.swing.JFrame {
             .addGap(0, 116, Short.MAX_VALUE)
         );
 
-        jFrame3A.getContentPane().add(jPanel3A);
-        jPanel3A.setBounds(0, 0, 0, 0);
+        jFrame3A.getContentPane().add(jPanel3A, java.awt.BorderLayout.CENTER);
 
-        jFrame4A.setBackground(java.awt.Color.blue);
+        jFrame4A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame4A.setAlwaysOnTop(true);
+        jFrame4A.setBackground(java.awt.Color.white);
         jFrame4A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame4A.setIconImages(null);
         jFrame4A.setLocationByPlatform(true);
@@ -161,9 +166,9 @@ public class UI extends javax.swing.JFrame {
                 jFrame4AMouseClicked(evt);
             }
         });
-        jFrame4A.getContentPane().setLayout(null);
 
-        jPanel4A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4A.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel4A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
 
         javax.swing.GroupLayout jPanel4ALayout = new javax.swing.GroupLayout(jPanel4A);
         jPanel4A.setLayout(jPanel4ALayout);
@@ -176,10 +181,10 @@ public class UI extends javax.swing.JFrame {
             .addGap(0, 116, Short.MAX_VALUE)
         );
 
-        jFrame4A.getContentPane().add(jPanel4A);
-        jPanel4A.setBounds(0, 0, 0, 0);
+        jFrame4A.getContentPane().add(jPanel4A, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(200, 480));
         setResizable(false);
@@ -191,7 +196,7 @@ public class UI extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridLayout(4, 0));
 
         jPanel1.setBackground(java.awt.Color.red);
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel1.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -239,13 +244,22 @@ public class UI extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         jPanel2.setBackground(java.awt.Color.yellow);
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
         jPanel2.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
+            }
+        });
+        jPanel2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel2AncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -273,13 +287,22 @@ public class UI extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
 
         jPanel3.setBackground(java.awt.Color.green);
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
         jPanel3.setAlignmentX(0.0F);
         jPanel3.setAlignmentY(0.0F);
         jPanel3.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
+            }
+        });
+        jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel3AncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -307,13 +330,22 @@ public class UI extends javax.swing.JFrame {
         getContentPane().add(jPanel3);
 
         jPanel4.setBackground(java.awt.Color.blue);
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
         jPanel4.setAlignmentX(0.0F);
         jPanel4.setAlignmentY(0.0F);
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
+            }
+        });
+        jPanel4.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel4AncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -345,47 +377,47 @@ public class UI extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="MouseEvents"> 
     private void jFrame1AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1AMouseClicked
-        jFrame1A.setAlwaysOnTop(true);
-        jFrame2A.setAlwaysOnTop(false);
-        jFrame3A.setAlwaysOnTop(false);
-        jFrame4A.setAlwaysOnTop(false);
+//        jFrame1A.setAlwaysOnTop(true);
+//        jFrame2A.setAlwaysOnTop(false);
+//        jFrame3A.setAlwaysOnTop(false);
+//        jFrame4A.setAlwaysOnTop(false);
     }//GEN-LAST:event_jFrame1AMouseClicked
 
     private void jFrame2AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame2AMouseClicked
-        jFrame1A.setAlwaysOnTop(false);
-        jFrame2A.setAlwaysOnTop(true);
-        jFrame3A.setAlwaysOnTop(false);
-        jFrame4A.setAlwaysOnTop(false);
+//        jFrame1A.setAlwaysOnTop(false);
+//        jFrame2A.setAlwaysOnTop(true);
+//        jFrame3A.setAlwaysOnTop(false);
+//        jFrame4A.setAlwaysOnTop(false);
     }//GEN-LAST:event_jFrame2AMouseClicked
 
     private void jFrame3AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame3AMouseClicked
-        jFrame1A.setAlwaysOnTop(false);
-        jFrame2A.setAlwaysOnTop(false);
-        jFrame3A.setAlwaysOnTop(true);
-        jFrame4A.setAlwaysOnTop(false);
+//        jFrame1A.setAlwaysOnTop(false);
+//        jFrame2A.setAlwaysOnTop(false);
+//        jFrame3A.setAlwaysOnTop(true);
+//        jFrame4A.setAlwaysOnTop(false);
     }//GEN-LAST:event_jFrame3AMouseClicked
 
     private void jFrame4AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame4AMouseClicked
-        jFrame1A.setAlwaysOnTop(false);
-        jFrame2A.setAlwaysOnTop(false);
-        jFrame3A.setAlwaysOnTop(false);
-        jFrame4A.setAlwaysOnTop(true);
+//        jFrame1A.setAlwaysOnTop(false);
+//        jFrame2A.setAlwaysOnTop(false);
+//        jFrame3A.setAlwaysOnTop(false);
+//        jFrame4A.setAlwaysOnTop(true);
     }//GEN-LAST:event_jFrame4AMouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        jFrame2A.setBounds(this.getX() + this.getWidth(), this.getY() + jPanel1.getHeight(), 380, 120);        
+        jFrame2A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
         jFrame2A.setVisible(clicked2);
         clicked2 = !clicked2;
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        jFrame3A.setBounds(this.getX() + this.getWidth(), this.getY() + jPanel1.getHeight() * 2, 380, 120);        
+        jFrame3A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
         jFrame3A.setVisible(clicked3);
         clicked3 = !clicked3;
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        jFrame4A.setBounds(this.getX() + this.getWidth(), this.getY() + jPanel1.getHeight() * 3, 380, 120);        
+        jFrame4A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
         jFrame4A.setVisible(clicked4);
         clicked4 = !clicked4;
     }//GEN-LAST:event_jPanel4MouseClicked
@@ -399,13 +431,13 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseExited
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        jFrame1A.setBounds(this.getX() + this.getWidth(), this.getY(), 380, 480);        
+        jFrame1A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
         jFrame1A.setVisible(clicked1);
         clicked1 = !clicked1;
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        jPanel1.setBackground(Color.LIGHT_GRAY);
+        //jPanel1.setBackground(Color.LIGHT_GRAY);
     }//GEN-LAST:event_formWindowActivated
 
     private void jFrame1AAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jFrame1AAncestorMoved
@@ -413,8 +445,20 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jFrame1AAncestorMoved
 
     private void jPanel1AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel1AncestorMoved
-        jFrame1A.setBounds(this.getX() + this.getWidth(), this.getY(), 380, 480);
+        jFrame1A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
     }//GEN-LAST:event_jPanel1AncestorMoved
+
+    private void jPanel2AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel2AncestorMoved
+        jFrame2A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+    }//GEN-LAST:event_jPanel2AncestorMoved
+
+    private void jPanel3AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorMoved
+        jFrame3A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+    }//GEN-LAST:event_jPanel3AncestorMoved
+
+    private void jPanel4AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel4AncestorMoved
+        jFrame4A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+    }//GEN-LAST:event_jPanel4AncestorMoved
 // </editor-fold>
     
     /**
