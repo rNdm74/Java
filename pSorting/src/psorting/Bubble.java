@@ -10,12 +10,16 @@ package psorting;
  */
 public class Bubble {
     private int[] numbers;
+    //private String[] words;
     
     public Bubble(int[] numbers){
         this.numbers = numbers;        
     }
     
-        
+    public Bubble(){
+        //this.words = words;        
+    }
+            
     public void bubbleSortVersion1(){
         int temp = 0;       
         
@@ -46,7 +50,7 @@ public class Bubble {
     }
     
     public void bubbleSortVersion3(){
-        int temp = 0;   
+        int temp = 0;  //string 
         
         int i = 0;
         
@@ -57,11 +61,35 @@ public class Bubble {
             sorted = true;
             
             for (int j = 0; j < (numbers.length - 1) - i; j++) {
-                if (numbers[j] > numbers[j + 1]){
+                if (numbers[j] > numbers[j + 1]){ //.compareto
                     sorted = false;
                     temp = numbers[j];
                     numbers[j] = numbers[j+1];
                     numbers[j + 1] = temp;
+                }    
+            }
+            
+            i++;            
+        }
+    }
+    
+    public void bubbleSortString(String[] words){
+        String temp;  //string 
+        
+        int i = 0;
+        
+        boolean sorted = false;
+        
+        while (i < words.length && !sorted){
+            
+            sorted = true;
+            
+            for (int j = 0; j < (words.length - 1) - i; j++) {
+                if (words[j].compareTo(words[j+1]) > 0){ //.compareto
+                    sorted = false;
+                    temp = words[j];
+                    words[j] = words[j+1];
+                    words[j + 1] = temp;
                 }    
             }
             

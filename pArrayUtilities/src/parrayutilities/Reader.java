@@ -33,6 +33,7 @@ public class Reader {
         try
         {            
             in = new BufferedReader(new FileReader("rand.txt"));
+            
             while (((line = in.readLine()) != null) && (index<1000)) {
                 myArray[index] = Integer.parseInt(line);
                 index++;

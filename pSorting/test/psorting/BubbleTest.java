@@ -84,4 +84,18 @@ public class BubbleTest {
         
         assertArrayEquals(expected, arr);
     }
+
+    /**
+     * Test of bubbleSortString method, of class Bubble.
+     */
+    @Test
+    public void testBubbleSortString() {
+        System.out.println("bubbleSortString");
+        String[] arr = {"b", "f", "a", "e", "c", "d"};
+        String[] expected = {"a", "b", "c", "d", "e", "f"};
+        Bubble instance = new Bubble();
+        instance.bubbleSortString(arr);
+        
+        assertArrayEquals(expected, arr);
+    }
 }
