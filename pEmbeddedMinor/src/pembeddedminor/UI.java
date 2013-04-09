@@ -5,23 +5,19 @@
 package pembeddedminor;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 /**
  *
  * @author rndm
  */
 public class UI extends javax.swing.JFrame {
-    private boolean clicked1 = true;
-    private boolean clicked2 = true;
-    private boolean clicked3 = true;
-    private boolean clicked4 = true;
-
     /**
      * Creates new form UI
      */
     public UI() {
-        initComponents();
+        initComponents();  
+        //jFrame1A.add(new EmbeddedSensor(jFrame1A));
+        
     }
 
     /**
@@ -42,17 +38,10 @@ public class UI extends javax.swing.JFrame {
         jFrame4A = new javax.swing.JFrame();
         jPanel4A = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
 
-        jFrame1A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame1A.setAlwaysOnTop(true);
-        jFrame1A.setBackground(java.awt.Color.white);
         jFrame1A.setBounds(new java.awt.Rectangle(1, 1, 160, 480));
         jFrame1A.setIconImages(null);
         jFrame1A.setLocationByPlatform(true);
@@ -64,35 +53,31 @@ public class UI extends javax.swing.JFrame {
                 jFrame1AMouseClicked(evt);
             }
         });
-        jFrame1A.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
-            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
-                jFrame1AAncestorMoved(evt);
-            }
-            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+        jFrame1A.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFrame1AFocusLost(evt);
             }
         });
 
         jPanel1A.setBackground(new java.awt.Color(255, 0, 0));
-        jPanel1A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel1A.setBorder(new javax.swing.border.LineBorder(javax.swing.UIManager.getDefaults().getColor("Button.shadow"), 1, true));
+        jPanel1A.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel1ALayout = new javax.swing.GroupLayout(jPanel1A);
+        org.jdesktop.layout.GroupLayout jPanel1ALayout = new org.jdesktop.layout.GroupLayout(jPanel1A);
         jPanel1A.setLayout(jPanel1ALayout);
         jPanel1ALayout.setHorizontalGroup(
-            jPanel1ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 152, Short.MAX_VALUE)
+            jPanel1ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 363, Short.MAX_VALUE)
         );
         jPanel1ALayout.setVerticalGroup(
-            jPanel1ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            jPanel1ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 396, Short.MAX_VALUE)
         );
 
         jFrame1A.getContentPane().add(jPanel1A, java.awt.BorderLayout.CENTER);
 
         jFrame1A.getAccessibleContext().setAccessibleParent(jPanel1);
 
-        jFrame2A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame2A.setAlwaysOnTop(true);
-        jFrame2A.setBackground(java.awt.Color.white);
         jFrame2A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame2A.setIconImages(null);
         jFrame2A.setLocationByPlatform(true);
@@ -104,26 +89,29 @@ public class UI extends javax.swing.JFrame {
                 jFrame2AMouseClicked(evt);
             }
         });
+        jFrame2A.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFrame1AFocusLost(evt);
+            }
+        });
 
         jPanel2A.setBackground(new java.awt.Color(255, 255, 0));
         jPanel2A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel2A.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel2ALayout = new javax.swing.GroupLayout(jPanel2A);
+        org.jdesktop.layout.GroupLayout jPanel2ALayout = new org.jdesktop.layout.GroupLayout(jPanel2A);
         jPanel2A.setLayout(jPanel2ALayout);
         jPanel2ALayout.setHorizontalGroup(
-            jPanel2ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+            jPanel2ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 156, Short.MAX_VALUE)
         );
         jPanel2ALayout.setVerticalGroup(
-            jPanel2ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
+            jPanel2ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 116, Short.MAX_VALUE)
         );
 
         jFrame2A.getContentPane().add(jPanel2A, java.awt.BorderLayout.CENTER);
 
-        jFrame3A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame3A.setAlwaysOnTop(true);
-        jFrame3A.setBackground(java.awt.Color.white);
         jFrame3A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame3A.setIconImages(null);
         jFrame3A.setLocationByPlatform(true);
@@ -135,26 +123,29 @@ public class UI extends javax.swing.JFrame {
                 jFrame3AMouseClicked(evt);
             }
         });
+        jFrame3A.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFrame1AFocusLost(evt);
+            }
+        });
 
         jPanel3A.setBackground(new java.awt.Color(0, 255, 0));
         jPanel3A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel3A.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel3ALayout = new javax.swing.GroupLayout(jPanel3A);
+        org.jdesktop.layout.GroupLayout jPanel3ALayout = new org.jdesktop.layout.GroupLayout(jPanel3A);
         jPanel3A.setLayout(jPanel3ALayout);
         jPanel3ALayout.setHorizontalGroup(
-            jPanel3ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+            jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 156, Short.MAX_VALUE)
         );
         jPanel3ALayout.setVerticalGroup(
-            jPanel3ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
+            jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 116, Short.MAX_VALUE)
         );
 
         jFrame3A.getContentPane().add(jPanel3A, java.awt.BorderLayout.CENTER);
 
-        jFrame4A.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame4A.setAlwaysOnTop(true);
-        jFrame4A.setBackground(java.awt.Color.white);
         jFrame4A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame4A.setIconImages(null);
         jFrame4A.setLocationByPlatform(true);
@@ -166,208 +157,187 @@ public class UI extends javax.swing.JFrame {
                 jFrame4AMouseClicked(evt);
             }
         });
+        jFrame4A.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFrame1AFocusLost(evt);
+            }
+        });
 
         jPanel4A.setBackground(new java.awt.Color(0, 0, 255));
         jPanel4A.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel4A.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel4ALayout = new javax.swing.GroupLayout(jPanel4A);
+        org.jdesktop.layout.GroupLayout jPanel4ALayout = new org.jdesktop.layout.GroupLayout(jPanel4A);
         jPanel4A.setLayout(jPanel4ALayout);
         jPanel4ALayout.setHorizontalGroup(
-            jPanel4ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+            jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 156, Short.MAX_VALUE)
         );
         jPanel4ALayout.setVerticalGroup(
-            jPanel4ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
+            jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 116, Short.MAX_VALUE)
         );
 
         jFrame4A.getContentPane().add(jPanel4A, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Embedded Systems");
         setAlwaysOnTop(true);
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(200, 480));
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
         getContentPane().setLayout(new java.awt.GridLayout(4, 0));
 
-        jPanel1.setBackground(java.awt.Color.red);
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.setPreferredSize(new java.awt.Dimension(160, 120));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UI.this.mouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
+        });
         jPanel1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel1AncestorMoved(evt);
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel1AncestorMoved(evt);
             }
         });
 
-        jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getSize()+36f));
-        jLabel1.setText("255");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1MouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 154, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 98, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1);
 
-        jPanel2.setBackground(java.awt.Color.yellow);
-        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UI.this.mouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel2.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel2AncestorMoved(evt);
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel2AncestorMoved(evt);
             }
         });
 
-        jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getSize()+36f));
-        jLabel5.setText("255");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addContainerGap())
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 154, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 98, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel2);
 
-        jPanel3.setBackground(java.awt.Color.green);
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
         jPanel3.setAlignmentX(0.0F);
         jPanel3.setAlignmentY(0.0F);
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel3.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UI.this.mouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel3AncestorMoved(evt);
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel3AncestorMoved(evt);
             }
         });
 
-        jLabel6.setFont(jLabel6.getFont().deriveFont(jLabel6.getFont().getSize()+36f));
-        jLabel6.setText("255");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addContainerGap())
+            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 154, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 98, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel3);
 
-        jPanel4.setBackground(java.awt.Color.blue);
-        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 160, 160), 1, true));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
         jPanel4.setAlignmentX(0.0F);
         jPanel4.setAlignmentY(0.0F);
+        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UI.this.mouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel4.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel4AncestorMoved(evt);
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel4AncestorMoved(evt);
             }
         });
 
-        jLabel7.setFont(jLabel7.getFont().deriveFont(jLabel7.getFont().getSize()+36f));
-        jLabel7.setText("255");
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addContainerGap())
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 154, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 98, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel4);
@@ -375,6 +345,8 @@ public class UI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     // <editor-fold defaultstate="collapsed" desc="MouseEvents"> 
     private void jFrame1AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1AMouseClicked
 //        jFrame1A.setAlwaysOnTop(true);
@@ -403,67 +375,66 @@ public class UI extends javax.swing.JFrame {
 //        jFrame3A.setAlwaysOnTop(false);
 //        jFrame4A.setAlwaysOnTop(true);
     }//GEN-LAST:event_jFrame4AMouseClicked
-
+        
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        jFrame2A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
-        jFrame2A.setVisible(clicked2);
-        clicked2 = !clicked2;
+        jFrame2A.setBounds(this.getX() + this.getWidth() + 10, jPanel1.getLocationOnScreen().y, 380, 480);        
+        jFrame2A.setVisible(true);
+        //clicked2 = !clicked2;
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        jFrame3A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
-        jFrame3A.setVisible(clicked3);
-        clicked3 = !clicked3;
+        jFrame3A.setBounds(this.getX() + this.getWidth() + 10, jPanel1.getLocationOnScreen().y, 380, 480);        
+        jFrame3A.setVisible(true);
+        //clicked3 = !clicked3;
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        jFrame4A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
-        jFrame4A.setVisible(clicked4);
-        clicked4 = !clicked4;
+        jFrame4A.setBounds(this.getX() + this.getWidth() + 10, jPanel1.getLocationOnScreen().y, 380, 480);        
+        jFrame4A.setVisible(true);
+        //clicked4 = !clicked4;
     }//GEN-LAST:event_jPanel4MouseClicked
 
-    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
-        jLabel1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_jLabel1MouseEntered
-
-    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
-        jLabel1.setForeground(Color.DARK_GRAY);
-    }//GEN-LAST:event_jLabel1MouseExited
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        jFrame1A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);        
-        jFrame1A.setVisible(clicked1);
-        clicked1 = !clicked1;
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        //jPanel1.setBackground(Color.LIGHT_GRAY);
-    }//GEN-LAST:event_formWindowActivated
-
-    private void jFrame1AAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jFrame1AAncestorMoved
-        
-    }//GEN-LAST:event_jFrame1AAncestorMoved
-
     private void jPanel1AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel1AncestorMoved
-        jFrame1A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+        //jFrame1A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
     }//GEN-LAST:event_jPanel1AncestorMoved
 
     private void jPanel2AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel2AncestorMoved
-        jFrame2A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+        //jFrame2A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
     }//GEN-LAST:event_jPanel2AncestorMoved
 
     private void jPanel3AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorMoved
-        jFrame3A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+        //jFrame3A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
     }//GEN-LAST:event_jPanel3AncestorMoved
 
     private void jPanel4AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel4AncestorMoved
-        jFrame4A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
+        //jFrame4A.setBounds(this.getX() + this.getWidth() + 10, this.getY(), 380, 480);
     }//GEN-LAST:event_jPanel4AncestorMoved
-// </editor-fold>
+
+    private void jFrame1AFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFrame1AFocusLost
+        evt.getComponent().setVisible(false);
+    }//GEN-LAST:event_jFrame1AFocusLost
+
+    private void mouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseExited
+        evt.getComponent().setBackground(new Color(245,245,245));
+    }//GEN-LAST:event_mouseExited
+
+    private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
+        evt.getComponent().setBackground(Color.WHITE);
+    }//GEN-LAST:event_jPanel1MouseEntered
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        jFrame1A.setBounds(this.getX() + this.getWidth() + 10, jPanel1.getLocationOnScreen().y, 380, 480);
+        jFrame1A.setVisible(true);
+        //clicked1 = !clicked1;
+    }//GEN-LAST:event_jPanel1MouseClicked
+    
+    // </editor-fold>
     
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -491,24 +462,18 @@ public class UI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {
+            public void run() {                
                 new UI().setVisible(true);
             }
-                        
-            public void paint(Graphics g){
-                
-            }
         });
-    }
+        
+        
+    }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame jFrame1A;
     private javax.swing.JFrame jFrame2A;
     private javax.swing.JFrame jFrame3A;
     private javax.swing.JFrame jFrame4A;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel1A;
     private javax.swing.JPanel jPanel2;
