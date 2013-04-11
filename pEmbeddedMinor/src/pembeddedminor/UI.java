@@ -18,6 +18,7 @@ public class UI extends javax.swing.JFrame {
      * Creates new form UI
      */
     int xPos = 0;
+    int posX=0,posY=0;
     
     public UI() {        
         initComponents();        
@@ -63,12 +64,12 @@ public class UI extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D)g;
-                g2d.setBackground(new Color(0,255,0));
-                GradientPaint g2g = new GradientPaint(0, 0, new Color(245,245,245),200, 200, jPanel1.getBackground());
-                g2d.setPaint(g2g);
-                g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-                g2d.setColor(Color.DARK_GRAY);
+                //        Graphics2D g2d = (Graphics2D)g;
+                //        g2d.setBackground(new Color(0,255,0));
+                //        GradientPaint g2g = new GradientPaint(0, 0, new Color(245,245,245),200, 200, jPanel1.getBackground());
+                //        g2d.setPaint(g2g);
+                //        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+                //        g2d.setColor(Color.DARK_GRAY);
 
                 //g2d.draw3DRect(0, 0, this.getWidth(), this.getHeight(), true);
             }
@@ -89,6 +90,7 @@ public class UI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
+        jFrame1A.setAlwaysOnTop(true);
         jFrame1A.setAutoRequestFocus(false);
         jFrame1A.setBounds(new java.awt.Rectangle(1, 1, 160, 480));
         jFrame1A.setForeground(new java.awt.Color(0, 153, 0));
@@ -138,6 +140,7 @@ public class UI extends javax.swing.JFrame {
 
         jFrame1A.getAccessibleContext().setAccessibleParent(jPanel1);
 
+        jFrame2A.setAlwaysOnTop(true);
         jFrame2A.setAutoRequestFocus(false);
         jFrame2A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame2A.setIconImages(null);
@@ -156,6 +159,7 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        jFrame3A.setAlwaysOnTop(true);
         jFrame3A.setAutoRequestFocus(false);
         jFrame3A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame3A.setIconImages(null);
@@ -174,6 +178,7 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        jFrame4A.setAlwaysOnTop(true);
         jFrame4A.setAutoRequestFocus(false);
         jFrame4A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
         jFrame4A.setIconImages(null);
@@ -200,30 +205,49 @@ public class UI extends javax.swing.JFrame {
         setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(200, 480));
         setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(4, 0));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.setDoubleBuffered(false);
         jPanel1.setName("1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 UI.this.mouseExited(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
+        });
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
         });
         jPanel1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel1AncestorMoved(evt);
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel1AncestorMoved(evt);
             }
         });
 
@@ -244,14 +268,14 @@ public class UI extends javax.swing.JFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel5)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel5)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addContainerGap())
         );
@@ -262,26 +286,27 @@ public class UI extends javax.swing.JFrame {
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.setDoubleBuffered(false);
         jPanel2.setName("2"); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 UI.this.mouseExited(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel2.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel2AncestorMoved(evt);
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel2AncestorMoved(evt);
             }
         });
 
@@ -302,14 +327,14 @@ public class UI extends javax.swing.JFrame {
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel6)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel6)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(jLabel2)
                 .addContainerGap())
         );
@@ -320,26 +345,27 @@ public class UI extends javax.swing.JFrame {
         jPanel3.setAlignmentX(0.0F);
         jPanel3.setAlignmentY(0.0F);
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.setDoubleBuffered(false);
         jPanel3.setName("3"); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 UI.this.mouseExited(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel3AncestorMoved(evt);
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel3AncestorMoved(evt);
             }
         });
 
@@ -360,14 +386,14 @@ public class UI extends javax.swing.JFrame {
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel7)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel7)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(jLabel3)
                 .addContainerGap())
         );
@@ -378,26 +404,27 @@ public class UI extends javax.swing.JFrame {
         jPanel4.setAlignmentX(0.0F);
         jPanel4.setAlignmentY(0.0F);
         jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel4.setDoubleBuffered(false);
         jPanel4.setName("4"); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 120));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 UI.this.mouseExited(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel1MouseEntered(evt);
+            }
         });
         jPanel4.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jPanel4AncestorMoved(evt);
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jPanel4AncestorMoved(evt);
             }
         });
 
@@ -418,14 +445,14 @@ public class UI extends javax.swing.JFrame {
             .add(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel8)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel8)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
                 .add(jLabel4)
                 .addContainerGap())
         );
@@ -485,19 +512,27 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel1AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel1AncestorMoved
-        jFrame1A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);
+//        if(jFrame1A.isVisible()){
+//            jFrame1A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
+//        }
     }//GEN-LAST:event_jPanel1AncestorMoved
 
     private void jPanel2AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel2AncestorMoved
-        jFrame2A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);
+        if(jFrame2A.isVisible()){
+            jFrame2A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
+        }
     }//GEN-LAST:event_jPanel2AncestorMoved
 
     private void jPanel3AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorMoved
-        jFrame3A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);
+        if(jFrame3A.isVisible()){
+            jFrame3A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
+        }        
     }//GEN-LAST:event_jPanel3AncestorMoved
 
     private void jPanel4AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel4AncestorMoved
-        jFrame4A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);
+        if (jFrame4A.isVisible()) {
+           jFrame4A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4); 
+        }
     }//GEN-LAST:event_jPanel4AncestorMoved
 
     private void jFrame1AFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFrame1AFocusLost
@@ -514,16 +549,31 @@ public class UI extends javax.swing.JFrame {
         switch(evt.getComponent().getName()){
             case "1":
                 evt.getComponent().setBackground(Color.GREEN.darker());
-                jFrame1A.setBackground(Color.GREEN.darker());
+                jFrame1A.setVisible(true);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(false);                
                 break;
             case "2":
                 evt.getComponent().setBackground(Color.YELLOW.darker());
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(true);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(false);
                 break;
             case "3":
                 evt.getComponent().setBackground(Color.PINK.darker());
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(true);
+                jFrame4A.setVisible(false);
                 break;
             case "4":
                 evt.getComponent().setBackground(Color.CYAN.darker());
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(true);
                 break;
         }
         
@@ -536,17 +586,35 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jFrame1AMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jFrame1AMouseWheelMoved
-        System.out.println(evt.getWheelRotation());
-        sensor1.setLocation(sensor1.getLocation().x + evt.getWheelRotation(), sensor1.getLocation().y);
+        //System.out.println(evt.getWheelRotation());
+        //sensor1.setLocation(sensor1.getLocation().x + evt.getWheelRotation(), sensor1.getLocation().y);
     }//GEN-LAST:event_jFrame1AMouseWheelMoved
 
     private void jFrame1AMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1AMouseDragged
-        System.out.println(evt.getX());
-        sensor1.setLocation(sensor1.getLocation().x + ((evt.getX() < xPos)? -2 : 2), sensor1.getLocation().y);
-        xPos = evt.getX();
+        //ystem.out.println(evt.getX());
+        //sensor1.setLocation(sensor1.getLocation().x + ((evt.getX() < xPos)? -2 : 2), sensor1.getLocation().y);
+        //xPos = evt.getX();
         
         
     }//GEN-LAST:event_jFrame1AMouseDragged
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        
+    }//GEN-LAST:event_formMousePressed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        
+    }//GEN-LAST:event_formMouseDragged
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        posX=evt.getX();
+        posY=evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        this.setLocation (evt.getXOnScreen()-posX,evt.getYOnScreen()-posY);
+        jFrame1A.setLocation(evt.getXOnScreen()-posX + this.getWidth(),evt.getYOnScreen()-posY);
+    }//GEN-LAST:event_jPanel1MouseDragged
     
     // </editor-fold>
     

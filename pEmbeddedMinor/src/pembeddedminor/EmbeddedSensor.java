@@ -62,7 +62,7 @@ class EmbeddedSensor extends JPanel {
                             0,
                             0};
         
-        //this.setBorder(BorderFactory.createEtchedBorder(1));
+        this.setBorder(BorderFactory.createEtchedBorder(1));
         
         
     }
@@ -113,14 +113,15 @@ class EmbeddedSensor extends JPanel {
 
         
         
-        GradientPaint gr2gr = new GradientPaint(0,0,new Color(223,255,219,0x0),0, 200, new Color(0,255,0, 0xA0).darker());
+        GradientPaint gr2gr = new GradientPaint(0,0,new Color(223,255,219,0x0),0, 400, panel.getBackground());
         g2d.setPaint(gr2gr);
         
         
         Polygon p = new Polygon(xPoly, yPoly, xPoly.length);
         g2d.fillPolygon(p);
-        //g2d.setColor(new Color(R,G,B).darker());   
-        g2d.setColor(new Color(0,255,0).darker());
+        
+        
+        g2d.setColor(panel.getBackground().darker());
         g2d.drawString(value, xPoints[xPoints.length - 1] - 30, yPoints[yPoints.length - 1]);
         
         g2d.drawPolyline(xPoints, yPoints, xPoints.length);        
