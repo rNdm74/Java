@@ -41,9 +41,9 @@ class EmbeddedSensor extends JPanel {
     public EmbeddedSensor(JPanel panel, JLabel label){
         this.panel = panel;
         this.label = label;
-        this.setOpaque(false);
+        this.setOpaque(true);
         
-        this.setBounds(0, 0, 300, 256);
+        this.setBounds(0,0, 388, 440);
         
         xPoints = new int[5];
         xPoly = new int[7];
@@ -62,13 +62,14 @@ class EmbeddedSensor extends JPanel {
                             0,
                             0};
         
-        this.setBorder(BorderFactory.createEtchedBorder(1));
+        this.setBorder(BorderFactory.createEtchedBorder());
         
         
     }
     
     @Override
     public void paintComponent(Graphics g){
+        this.setBackground(panel.getBackground());
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
         
@@ -90,11 +91,6 @@ class EmbeddedSensor extends JPanel {
         
         yPoly[5] = this.getHeight();
         yPoly[6] = this.getHeight();
-        
-//        yPoints[0] = new Random().nextInt(255);
-//        yPoints[1] = new Random().nextInt(255);
-//        yPoints[2] = new Random().nextInt(255);
-//        yPoints[3] = new Random().nextInt(255);
         yPoints[4] = Integer.parseInt(label.getText());
         yPoly[4] = yPoints[4];
         
@@ -102,11 +98,6 @@ class EmbeddedSensor extends JPanel {
         
         value = new StringBuilder().append(i).toString();
         
-        //GradientPaint g2g = new GradientPaint(0, 0, panel.getBackground(), 300, 0, Color.LIGHT_GRAY);
-
-        //g2d.setPaint(g2g);
-        //g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-
         GradientPaint w2w = new GradientPaint(0,0,new Color(230,230,230, 0xA0),366, 0,new Color(255,255,255));
         g2d.setPaint(w2w);
         g2d.fill (new Rectangle(0, 0, this.getWidth(), this.getHeight()));
@@ -125,10 +116,6 @@ class EmbeddedSensor extends JPanel {
         g2d.drawString(value, xPoints[xPoints.length - 1] - 30, yPoints[yPoints.length - 1]);
         
         g2d.drawPolyline(xPoints, yPoints, xPoints.length);        
-               
-        //g2d.setPaint(Color.GRAY);
-        //g2d.drawRect(0, 0, 300, 400);
-        
         super.repaint();
     }     
 }
