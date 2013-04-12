@@ -8,11 +8,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 /**
  *
@@ -26,10 +22,7 @@ public class UI extends javax.swing.JFrame {
     int posX=0,posY=0;
     
     public UI() {        
-        initComponents();         
-        
-        
-        
+        initComponents(); 
         
         sensor1 = new EmbeddedSensor(jPanel1, jLabel1);
         sensor1.setLocation(200 - 2, 240 - 220);
@@ -44,9 +37,9 @@ public class UI extends javax.swing.JFrame {
         
         jPanel2A.setBackground(Color.YELLOW.darker());
         
-        //jPanel3A.setBackground(Color.YELLOW.darker());
+        jPanel3A.setBackground(Color.PINK.darker());
         
-        //jPanel4A.setBackground(Color.YELLOW.darker());
+        jPanel4A.setBackground(Color.CYAN.darker());
         
         //jPanel2A.add(sensor2);
         //jFrame3A.add(sensor3);
@@ -93,8 +86,28 @@ public class UI extends javax.swing.JFrame {
         };
         jLabel2 = new javax.swing.JLabel();
         jFrame3A = new javax.swing.JFrame();
+        jPanel3A = new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D)g;
+                GradientPaint w2w = new GradientPaint(0,0,jPanel3.getBackground(),this.getWidth(), 0, new Color(230,230,230, 0xA0));
+                g2d.setPaint(w2w);
+                g2d.fill (new Rectangle(0, 0, this.getWidth(), this.getHeight()));
+            }
+        };
         jLabel3 = new javax.swing.JLabel();
         jFrame4A = new javax.swing.JFrame();
+        jPanel4A = new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D)g;
+                GradientPaint w2w = new GradientPaint(0,0,jPanel4.getBackground(),this.getWidth(), 0, new Color(230,230,230, 0xA0));
+                g2d.setPaint(w2w);
+                g2d.fill (new Rectangle(0, 0, this.getWidth(), this.getHeight()));
+            }
+        };
         jLabel4 = new javax.swing.JLabel();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel(){
@@ -244,10 +257,36 @@ public class UI extends javax.swing.JFrame {
         jFrame3A.setResizable(false);
         jFrame3A.setType(java.awt.Window.Type.UTILITY);
 
+        jPanel3A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3A.setAlignmentX(1.0F);
+        jPanel3A.setAlignmentY(1.0F);
+
         jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getSize()+10f));
         jLabel3.setLabelFor(jPanel1);
         jLabel3.setText("255");
-        jFrame3A.getContentPane().add(jLabel3, java.awt.BorderLayout.CENTER);
+
+        org.jdesktop.layout.GroupLayout jPanel3ALayout = new org.jdesktop.layout.GroupLayout(jPanel3A);
+        jPanel3A.setLayout(jPanel3ALayout);
+        jPanel3ALayout.setHorizontalGroup(
+            jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+            .add(jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel3ALayout.createSequentialGroup()
+                    .add(0, 0, Short.MAX_VALUE)
+                    .add(jLabel3)
+                    .add(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel3ALayout.setVerticalGroup(
+            jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+            .add(jPanel3ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel3ALayout.createSequentialGroup()
+                    .add(0, 0, Short.MAX_VALUE)
+                    .add(jLabel3)
+                    .add(0, 0, Short.MAX_VALUE)))
+        );
+
+        jFrame3A.getContentPane().add(jPanel3A, java.awt.BorderLayout.CENTER);
 
         jFrame4A.setAlwaysOnTop(true);
         jFrame4A.setAutoRequestFocus(false);
@@ -258,10 +297,36 @@ public class UI extends javax.swing.JFrame {
         jFrame4A.setResizable(false);
         jFrame4A.setType(java.awt.Window.Type.UTILITY);
 
+        jPanel4A.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4A.setAlignmentX(1.0F);
+        jPanel4A.setAlignmentY(1.0F);
+
         jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getSize()+10f));
         jLabel4.setLabelFor(jPanel1);
         jLabel4.setText("255");
-        jFrame4A.getContentPane().add(jLabel4, java.awt.BorderLayout.CENTER);
+
+        org.jdesktop.layout.GroupLayout jPanel4ALayout = new org.jdesktop.layout.GroupLayout(jPanel4A);
+        jPanel4A.setLayout(jPanel4ALayout);
+        jPanel4ALayout.setHorizontalGroup(
+            jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+            .add(jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel4ALayout.createSequentialGroup()
+                    .add(0, 0, Short.MAX_VALUE)
+                    .add(jLabel4)
+                    .add(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel4ALayout.setVerticalGroup(
+            jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+            .add(jPanel4ALayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel4ALayout.createSequentialGroup()
+                    .add(0, 0, Short.MAX_VALUE)
+                    .add(jLabel4)
+                    .add(0, 0, Short.MAX_VALUE)))
+        );
+
+        jFrame4A.getContentPane().add(jPanel4A, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Embedded Systems");
@@ -311,14 +376,14 @@ public class UI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -351,14 +416,14 @@ public class UI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .add(jLabel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .add(jLabel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -391,14 +456,14 @@ public class UI extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -431,14 +496,14 @@ public class UI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .add(jLabel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .add(jLabel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -471,41 +536,41 @@ public class UI extends javax.swing.JFrame {
             case "1":
                 jFrame1A.setLocation(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y);
                 //evt.getComponent().setBackground(Color.GREEN.darker());
-                //jFrame1A.setVisible(true);
-                //jFrame2A.setVisible(false);
-                //jFrame3A.setVisible(false);
-                //jFrame4A.setVisible(false);                
+                jFrame1A.setVisible(true);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(false);                
                 break;
             case "2":
                 jFrame2A.setLocation(this.getX() + this.getWidth(), jPanel2.getLocationOnScreen().y);
                 //evt.getComponent().setBackground(Color.YELLOW.darker());
-                //jFrame1A.setVisible(false);
-                //jFrame2A.setVisible(true);
-                //jFrame3A.setVisible(false);
-                //jFrame4A.setVisible(false);
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(true);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(false);
                 break;
             case "3":
                 jFrame3A.setLocation(this.getX() + this.getWidth(), jPanel3.getLocationOnScreen().y);
                 //evt.getComponent().setBackground(Color.PINK.darker());
-                //jFrame1A.setVisible(false);
-                //jFrame2A.setVisible(false);
-                //jFrame3A.setVisible(true);
-                //jFrame4A.setVisible(false);
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(true);
+                jFrame4A.setVisible(false);
                 break;
             case "4":
                 jFrame4A.setLocation(this.getX() + this.getWidth(), jPanel4.getLocationOnScreen().y);
                 //evt.getComponent().setBackground(Color.CYAN.darker());
-                //jFrame1A.setVisible(false);
-                //jFrame2A.setVisible(false);
-                //jFrame3A.setVisible(false);
-                //jFrame4A.setVisible(true);
+                jFrame1A.setVisible(false);
+                jFrame2A.setVisible(false);
+                jFrame3A.setVisible(false);
+                jFrame4A.setVisible(true);
                 break;
         }        
     }//GEN-LAST:event_jPanel1MouseEntered
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        //jFrame1A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
-        //jFrame1A.setVisible(true);
+        jFrame1A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
+        jFrame1A.setVisible(true);
         //jPopupMenu1.setVisible(true);
     }//GEN-LAST:event_jPanel1MouseClicked
 
@@ -625,7 +690,9 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel2A;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel3A;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel4A;
     private javax.swing.JPopupMenu jPopupMenu1;
     // End of variables declaration//GEN-END:variables
 }
