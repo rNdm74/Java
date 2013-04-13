@@ -24,10 +24,10 @@ public class EmbeddedMinorApp {
     public static void main(String[] args) {
         Timer timer = new Timer();
         
-        Task t = new Task(UI.jLabel1);
-        Task t1 = new Task(UI.jLabel2);
-        Task t2 = new Task(UI.jLabel3);
-        Task t3 = new Task(UI.jLabel4);
+        Task t = new Task(UI.jLabel1, UI.y1);
+        Task t1 = new Task(UI.jLabel2, UI.y2);
+        Task t2 = new Task(UI.jLabel3, UI.y3);
+        Task t3 = new Task(UI.jLabel4, UI.y4);
         
         timer.schedule(t, 0, 1000);
         timer.schedule(t1, 0, 1000);

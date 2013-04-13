@@ -5,10 +5,13 @@
 package pembeddedminor;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,42 +21,33 @@ public class UI extends javax.swing.JFrame {
     /**
      * Creates new form UI
      */
-    boolean sensor1Show = true;
-    boolean sensor2Show = true;
+    public static ArrayList<Integer> y1 = new ArrayList<>();
+    public static ArrayList<Integer> y2 = new ArrayList<>();
+    public static ArrayList<Integer> y3 = new ArrayList<>();
+    public static ArrayList<Integer> y4 = new ArrayList<>();
     
-    int xPos = 0;
+    int xPos=0;
     int posX=0,posY=0;
+    
+    private boolean sensor1Show = true;
+    private boolean sensor2Show = true;
+    private boolean sensor4Show = true;
+    private boolean sensor3Show = true;
     
     public UI() {        
         initComponents(); 
         
-        sensor1 = new EmbeddedSensor(jPanel1, jLabel1);
-        //sensor1.setLocation(-150, 0);
-        
-        sensor2 = new EmbeddedSensor(jPanel2, jLabel2);
-        sensor3 = new EmbeddedSensor(jPanel3, jLabel3);
-        sensor4 = new EmbeddedSensor(jPanel4, jLabel4);
-        
-        
-        jPanel1A.setBackground(Color.GREEN.darker());        
+        sensor1 = new EmbeddedSensor(jLabel1, y1);        
         jPanel1A.add(sensor1);
-        
-        jPanel2A.setBackground(Color.YELLOW.darker());
+                
+        sensor2 = new EmbeddedSensor(jLabel2, y2);
         jPanel2A.add(sensor2);
         
-        jPanel3A.setBackground(Color.PINK.darker());
+        sensor3 = new EmbeddedSensor(jLabel3, y3);
+        jPanel3A.add(sensor3);
         
-        jPanel4A.setBackground(Color.CYAN.darker());
-        
-        //jPanel2A.add(sensor2);
-        //jFrame3A.add(sensor3);
-        //jFrame4A.add(sensor4); 
-        //jFrame1A.setLocation(this.getX() + this.getWidth(), this.getY());
-        //jFrame2A.setLocation(this.getX() + this.getWidth(), jPanel2.getLocationOnScreen().y);
-        //jFrame3A.setLocation(this.getX() + this.getWidth(), jPanel3.getLocationOnScreen().y);
-        //jFrame4A.setLocation(this.getX() + this.getWidth(), jPanel4.getLocationOnScreen().y);
-        
-        
+        sensor4 = new EmbeddedSensor(jLabel4, y4);        
+        jPanel4A.add(sensor4);
     }
 
     /**
@@ -74,6 +68,9 @@ public class UI extends javax.swing.JFrame {
                 GradientPaint w2w = new GradientPaint(0,0,jPanel1.getBackground(),this.getWidth(), 0, new Color(230,230,230, 0xA0));
                 g2d.setPaint(w2w);
                 g2d.fill (new Rectangle(0, 0, this.getWidth(), this.getHeight()));
+                g2d.setColor(Color.DARK_GRAY);
+                g2d.drawString("MAX", this.getWidth() - 27, 12);
+                g2d.drawString("MIN", this.getWidth() - 27, 117);
             }
         };
         jLabel1 = new javax.swing.JLabel();
@@ -113,9 +110,6 @@ public class UI extends javax.swing.JFrame {
             }
         };
         jLabel4 = new javax.swing.JLabel();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jColorChooser1 = new javax.swing.JColorChooser();
-        jColorChooser2 = new javax.swing.JColorChooser();
         jPanel1 = new javax.swing.JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -162,11 +156,8 @@ public class UI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
 
         jFrame1A.setAlwaysOnTop(true);
-        jFrame1A.setAutoRequestFocus(false);
-        jFrame1A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
-        jFrame1A.setForeground(new java.awt.Color(0, 153, 0));
+        jFrame1A.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         jFrame1A.setIconImages(null);
-        jFrame1A.setLocationByPlatform(true);
         jFrame1A.setUndecorated(true);
         jFrame1A.setResizable(false);
         jFrame1A.setType(java.awt.Window.Type.UTILITY);
@@ -188,6 +179,7 @@ public class UI extends javax.swing.JFrame {
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getSize()+10f));
         jLabel1.setLabelFor(jPanel1);
         jLabel1.setText("255");
+        jLabel1.setName("sensor1"); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel1ALayout = new org.jdesktop.layout.GroupLayout(jPanel1A);
         jPanel1A.setLayout(jPanel1ALayout);
@@ -215,10 +207,8 @@ public class UI extends javax.swing.JFrame {
         jFrame1A.getAccessibleContext().setAccessibleParent(jPanel1);
 
         jFrame2A.setAlwaysOnTop(true);
-        jFrame2A.setAutoRequestFocus(false);
-        jFrame2A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
+        jFrame2A.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         jFrame2A.setIconImages(null);
-        jFrame2A.setLocationByPlatform(true);
         jFrame2A.setUndecorated(true);
         jFrame2A.setResizable(false);
         jFrame2A.setType(java.awt.Window.Type.UTILITY);
@@ -230,6 +220,7 @@ public class UI extends javax.swing.JFrame {
         jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getSize()+10f));
         jLabel2.setLabelFor(jPanel1);
         jLabel2.setText("255");
+        jLabel2.setName("sensor2"); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel2ALayout = new org.jdesktop.layout.GroupLayout(jPanel2A);
         jPanel2A.setLayout(jPanel2ALayout);
@@ -255,10 +246,8 @@ public class UI extends javax.swing.JFrame {
         jFrame2A.getContentPane().add(jPanel2A, java.awt.BorderLayout.CENTER);
 
         jFrame3A.setAlwaysOnTop(true);
-        jFrame3A.setAutoRequestFocus(false);
-        jFrame3A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
+        jFrame3A.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         jFrame3A.setIconImages(null);
-        jFrame3A.setLocationByPlatform(true);
         jFrame3A.setUndecorated(true);
         jFrame3A.setResizable(false);
         jFrame3A.setType(java.awt.Window.Type.UTILITY);
@@ -270,6 +259,7 @@ public class UI extends javax.swing.JFrame {
         jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getSize()+10f));
         jLabel3.setLabelFor(jPanel1);
         jLabel3.setText("255");
+        jLabel3.setName("sensor3"); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel3ALayout = new org.jdesktop.layout.GroupLayout(jPanel3A);
         jPanel3A.setLayout(jPanel3ALayout);
@@ -295,10 +285,8 @@ public class UI extends javax.swing.JFrame {
         jFrame3A.getContentPane().add(jPanel3A, java.awt.BorderLayout.CENTER);
 
         jFrame4A.setAlwaysOnTop(true);
-        jFrame4A.setAutoRequestFocus(false);
-        jFrame4A.setBounds(new java.awt.Rectangle(1, 1, 160, 120));
+        jFrame4A.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         jFrame4A.setIconImages(null);
-        jFrame4A.setLocationByPlatform(true);
         jFrame4A.setUndecorated(true);
         jFrame4A.setResizable(false);
         jFrame4A.setType(java.awt.Window.Type.UTILITY);
@@ -310,6 +298,7 @@ public class UI extends javax.swing.JFrame {
         jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getSize()+10f));
         jLabel4.setLabelFor(jPanel1);
         jLabel4.setText("255");
+        jLabel4.setName("sensor4"); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel4ALayout = new org.jdesktop.layout.GroupLayout(jPanel4A);
         jPanel4A.setLayout(jPanel4ALayout);
@@ -340,29 +329,24 @@ public class UI extends javax.swing.JFrame {
         setAutoRequestFocus(false);
         setName(""); // NOI18N
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(200, 480));
+        setPreferredSize(new java.awt.Dimension(100, 480));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
         getContentPane().setLayout(new java.awt.GridLayout(4, 0));
 
+        jPanel1.setBackground(new java.awt.Color(0, 255, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setDoubleBuffered(false);
         jPanel1.setName("1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(160, 120));
+        jPanel1.setPreferredSize(new java.awt.Dimension(100, 120));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UI.this.mouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel1MousePressed(evt);
@@ -374,6 +358,8 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(jLabel5.getFont());
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Sensor 1");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
@@ -395,10 +381,11 @@ public class UI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.setDoubleBuffered(false);
         jPanel2.setName("2"); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(160, 120));
@@ -406,14 +393,9 @@ public class UI extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UI.this.mouseExited(evt);
-            }
         });
 
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Sensor 2");
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
@@ -435,10 +417,11 @@ public class UI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2);
 
+        jPanel3.setBackground(new java.awt.Color(255, 175, 175));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setAlignmentX(0.0F);
         jPanel3.setAlignmentY(0.0F);
-        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel3.setDoubleBuffered(false);
         jPanel3.setName("3"); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(160, 120));
@@ -446,14 +429,9 @@ public class UI extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UI.this.mouseExited(evt);
-            }
         });
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Sensor 3");
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
@@ -475,10 +453,11 @@ public class UI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(0, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setAlignmentX(0.0F);
         jPanel4.setAlignmentY(0.0F);
-        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel4.setDoubleBuffered(false);
         jPanel4.setName("4"); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 120));
@@ -486,14 +465,9 @@ public class UI extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UI.this.mouseExited(evt);
-            }
         });
 
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Sensor 4");
 
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
@@ -519,86 +493,27 @@ public class UI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
             
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        //jFrame2A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);        
-        //jFrame2A.setVisible(true);
-        sensor2.setVisible(true);
-        
+        sensor2.setVisible(true);        
         sensor2.setActive(sensor2Show);
         sensor2Show = !sensor2Show;
-        
-        System.out.println(sensor2.isActive());
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        //jFrame3A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);        
-        //jFrame3A.setVisible(true);
+        sensor3.setVisible(true);        
+        sensor3.setActive(sensor3Show);
+        sensor3Show = !sensor3Show;
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        //jFrame4A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 380, jPanel1.getHeight() * 4);        
-        //jFrame4A.setVisible(true);
+        sensor4.setVisible(true);        
+        sensor4.setActive(sensor4Show);
+        sensor4Show = !sensor4Show;
     }//GEN-LAST:event_jPanel4MouseClicked
 
-    private void mouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseExited
- 
-    }//GEN-LAST:event_mouseExited
-
-    private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
-//        switch(evt.getComponent().getName()){
-//            case "1":
-//                jFrame1A.setLocation(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y);
-//                //evt.getComponent().setBackground(Color.GREEN.darker());
-////                jFrame1A.setVisible(true);
-////                jFrame2A.setVisible(false);
-////                jFrame3A.setVisible(false);
-////                jFrame4A.setVisible(false);                
-//                break;
-//            case "2":
-//                jFrame2A.setLocation(this.getX() + this.getWidth(), jPanel2.getLocationOnScreen().y);
-//                //evt.getComponent().setBackground(Color.YELLOW.darker());
-////                jFrame1A.setVisible(false);
-////                jFrame2A.setVisible(true);
-////                jFrame3A.setVisible(false);
-////                jFrame4A.setVisible(false);
-//                break;
-//            case "3":
-//                jFrame3A.setLocation(this.getX() + this.getWidth(), jPanel3.getLocationOnScreen().y);
-//                //evt.getComponent().setBackground(Color.PINK.darker());
-////                jFrame1A.setVisible(false);
-////                jFrame2A.setVisible(false);
-////                jFrame3A.setVisible(true);
-////                jFrame4A.setVisible(false);
-//                break;
-//            case "4":
-//                jFrame4A.setLocation(this.getX() + this.getWidth(), jPanel4.getLocationOnScreen().y);
-//                //evt.getComponent().setBackground(Color.CYAN.darker());
-////                jFrame1A.setVisible(false);
-////                jFrame2A.setVisible(false);
-////                jFrame3A.setVisible(false);
-////                jFrame4A.setVisible(true);
-//                break;
-//        }        
-    }//GEN-LAST:event_jPanel1MouseEntered
-
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        //jFrame1A.setBounds(this.getX() + this.getWidth(), jPanel1.getLocationOnScreen().y, 400, jPanel1.getHeight() * 4);
-        //jFrame1A.setVisible(true);
-        //jPopupMenu1.setVisible(true);
-        
-        //System.out.println(sensor1.getLocation().x);
-//        int y = (sensor1.getLocation().y);
-//        float speed;
-//        
-//        while(x < 0){
-//        speed = 0.1f;        
-//        x+=speed;   
-        //sensor1.setLocation(-150,0);
-        sensor1.setVisible(true);
-        
+        sensor1.setVisible(true);        
         sensor1.setActive(sensor1Show);
         sensor1Show = !sensor1Show;
-        
-        System.out.println(sensor1.isActive());
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
@@ -608,6 +523,7 @@ public class UI extends javax.swing.JFrame {
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         this.setLocation (evt.getXOnScreen()-posX,evt.getYOnScreen()-posY);
+        
         jFrame1A.setLocation(evt.getXOnScreen()-posX + this.getWidth(),evt.getYOnScreen()-posY);
         jFrame2A.setLocation(evt.getXOnScreen()-posX + this.getWidth(),evt.getYOnScreen()-posY + jPanel1.getHeight());
         jFrame3A.setLocation(evt.getXOnScreen()-posX + this.getWidth(),evt.getYOnScreen()-posY + jPanel1.getHeight() * 2);
@@ -615,54 +531,86 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jFrame1AMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1AMouseDragged
-        int x = (sensor1.getLocation().x);
-        int y = (sensor1.getLocation().y);
-        int speed;
-        
-        speed = ((x < 0 && evt.getX() > xPos) ? 1 : -1);
-        
-        //speed = ((x > -150 && evt.getX() < xPos)? -2 : 2);
-        
-        x+=speed;
-                
-        sensor1.setLocation(x, y);
-        
-        xPos = evt.getX();
+//        int x = (sensor1.getLocation().x);
+//        int y = (sensor1.getLocation().y);
+//        int speed;
+//        
+//        speed = ((x < 0 && evt.getX() > xPos) ? 1 : -1);
+//        
+//        x+=speed;
+//                
+//        sensor1.setLocation(x, y);
+//        
+//        xPos = evt.getX();
     }//GEN-LAST:event_jFrame1AMouseDragged
 
     private void jFrame1AMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jFrame1AMouseWheelMoved
-        sensor1.setLocation(sensor1.getLocation().x + evt.getWheelRotation(), sensor1.getLocation().y);
+        //sensor1.setLocation(sensor1.getLocation().x + evt.getWheelRotation(), sensor1.getLocation().y);
     }//GEN-LAST:event_jFrame1AMouseWheelMoved
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        jPanel1.setBackground(Color.GREEN.darker());
-        jPanel2.setBackground(Color.YELLOW.darker());
-        jPanel3.setBackground(Color.PINK.darker());
-        jPanel4.setBackground(Color.CYAN.darker());
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jPanel1.setBackground(jPanel1.getBackground().darker());
+        jPanel2.setBackground(jPanel2.getBackground().darker());
+        jPanel3.setBackground(jPanel3.getBackground().darker());
+        jPanel4.setBackground(jPanel4.getBackground().darker());
         
-        jFrame1A.setLocation(this.getLocationOnScreen());
+        jFrame1A.setBackground(jPanel1.getBackground());
+        jFrame2A.setBackground(jPanel2.getBackground());
+        jFrame3A.setBackground(jPanel3.getBackground());
+        jFrame4A.setBackground(jPanel4.getBackground());
         
-        jFrame1A.setBounds(jPanel1.getLocationOnScreen().x + jPanel1.getWidth(),
-                           jPanel1.getLocationOnScreen().y, 150, jPanel1.getHeight());
+        jPanel1A.setBackground(jFrame1A.getBackground());        
+        jPanel2A.setBackground(jFrame2A.getBackground());  
+        jPanel3A.setBackground(jFrame3A.getBackground());  
+        jPanel4A.setBackground(jFrame4A.getBackground());  
         
-        jFrame2A.setBounds(jPanel2.getLocationOnScreen().x + jPanel2.getWidth(),
-                           jPanel2.getLocationOnScreen().y, 150, jPanel2.getHeight());
-        jFrame3A.setBounds(jPanel3.getLocationOnScreen().x + jPanel3.getWidth(),
-                           jPanel3.getLocationOnScreen().y, 150, jPanel3.getHeight());
-        jFrame4A.setBounds(jPanel4.getLocationOnScreen().x + jPanel4.getWidth(),
-                           jPanel4.getLocationOnScreen().y, 150, jPanel4.getHeight());
+        sensor1.setBackground(jPanel1A.getBackground());
+        sensor2.setBackground(jPanel2A.getBackground());
+        sensor3.setBackground(jPanel3A.getBackground());
+        sensor4.setBackground(jPanel4A.getBackground());
         
-        jFrame1A.setBackground(Color.GREEN.darker());
-        jFrame2A.setBackground(Color.YELLOW.darker());
-        jFrame3A.setBackground(Color.PINK.darker());
-        jFrame4A.setBackground(Color.CYAN.darker());
+        int w = jPanel1.getWidth();
+        int h = jPanel1.getHeight();
         
+        Dimension d = new Dimension(w + (w) + 30, h);
+                
+        jFrame1A.setSize(d);
+        jFrame2A.setSize(d);
+        jFrame3A.setSize(d);
+        jFrame4A.setSize(d);
+        
+        d = new Dimension(w + (w), h);
+        jPanel1A.setSize(d);
+        jPanel2A.setSize(d);
+        jPanel3A.setSize(d);
+        jPanel4A.setSize(d);
+        
+        sensor1.setSize(d);
+        sensor2.setSize(d);
+        sensor3.setSize(d);
+        sensor4.setSize(d);
+        
+        Point p1 = jPanel1.getLocationOnScreen();
+        Point p2 = jPanel2.getLocationOnScreen();
+        Point p3 = jPanel3.getLocationOnScreen();
+        Point p4 = jPanel4.getLocationOnScreen();
+        
+        jFrame1A.setLocation(p1.x + jPanel1.getWidth(), p1.y);
+        jFrame2A.setLocation(p2.x + jPanel2.getWidth(), p2.y);
+        jFrame3A.setLocation(p3.x + jPanel3.getWidth(), p3.y);
+        jFrame4A.setLocation(p4.x + jPanel4.getWidth(), p4.y);
+        
+        int n = -d.width;
+        sensor1.point = new Point(++n, 0);
+        sensor2.point = new Point(++n, 0);
+        sensor3.point = new Point(++n, 0);
+        sensor4.point = new Point(++n, 0);
+                        
         jFrame1A.setVisible(true);
         jFrame2A.setVisible(true);
         jFrame3A.setVisible(true);
         jFrame4A.setVisible(true);
-    }//GEN-LAST:event_formWindowActivated
-    
+    }//GEN-LAST:event_formWindowOpened
     // </editor-fold>
     
     /**
@@ -703,16 +651,16 @@ public class UI extends javax.swing.JFrame {
         });
     } 
     
+    /* Declared Variables */
+    //<editor-fold defaultstate="collapsed" desc=" Variables ">
     // Variables declaration - do not modify
-    private EmbeddedSensor sensor1;
-    private EmbeddedSensor sensor2;
-    private EmbeddedSensor sensor3;
-    private EmbeddedSensor sensor4;
+    public static EmbeddedSensor sensor1;
+    public static EmbeddedSensor sensor2;
+    public static EmbeddedSensor sensor3;
+    public static EmbeddedSensor sensor4;
     // End of variables declaration
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JColorChooser jColorChooser2;
     private javax.swing.JFrame jFrame1A;
     private javax.swing.JFrame jFrame2A;
     private javax.swing.JFrame jFrame3A;
@@ -733,6 +681,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3A;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel4A;
-    private javax.swing.JPopupMenu jPopupMenu1;
     // End of variables declaration//GEN-END:variables
+//</editor-fold>
 }
