@@ -22,9 +22,19 @@ import javax.swing.JPanel;
  * @author rndm
  */
 class EmbeddedSensor extends JPanel {
+    Point p;
     int i = 0;
+    
+    int direction = 1;
+    
+    int speed = 1;
+    
+    int time = 0;
+    
     JPanel panel;
     JLabel label;
+    
+    private boolean active;
     
     public int mouse;
     public int mouseDragged = 0;
@@ -41,44 +51,82 @@ class EmbeddedSensor extends JPanel {
     public EmbeddedSensor(JPanel panel, JLabel label){
         this.panel = panel;
         this.label = label;
-        this.setOpaque(true);
         
-        this.setBounds(0,0, 388, 440);
+        this.setOpaque(true);
+        this.setVisible(false);
+        this.p = new Point(-149,0);
+        this.setSize(150, 120);
         
         xPoints = new int[5];
         xPoly = new int[7];
                 
-        yPoints = new int[]{255, 
-                            200, 
-                            200,
-                            200,
-                            200};
+        yPoints = new int[]{120, 
+                            100, 
+                            100,
+                            100,
+                            100};
         
-        yPoly = new int[]{255, 
-                          200, 
-                          200,
-                          200,
-                          200,
+        yPoly = new int[]{120, 
+                          100, 
+                          100,
+                          100,
+                          100,
                             0,
                             0};
         
         this.setBorder(BorderFactory.createEtchedBorder());
-        
-        
     }
     
     @Override
     public void paintComponent(Graphics g){
+        //System.out.println(active);
+        if(time < 50){
+            
+            
+            if(active){
+                if (active && p.x >= 0) {
+                    direction = 0;
+                }
+                else{
+                    direction = 1;
+                }
+            }
+            
+            if(!active){
+                if (!active && p.x <= -149) {
+                    direction = 0;
+                    setVisible(false);
+                }
+                else{
+                    direction = -1;
+                }
+            }
+            
+            
+            
+                       
+            time = 0;
+            
+            
+        }
+        
+        p.x += direction;
+        
+        time++;
+        
+        this.setLocation(p);
+        
         this.setBackground(panel.getBackground());
         super.paintComponent( g );
+                
         Graphics2D g2d = (Graphics2D)g;
         
         String value;
         
         xPoints[0] = 0;
-        xPoints[1] = 75;
+        xPoints[1] = 25;
         xPoints[2] = this.getWidth() / 2;
-        xPoints[3] = 225;
+        xPoints[3] = 100;
         xPoints[4] = this.getWidth();
         
         xPoly[0] = xPoints[0];
@@ -104,7 +152,7 @@ class EmbeddedSensor extends JPanel {
 
         
         
-        GradientPaint gr2gr = new GradientPaint(0,0,new Color(223,255,219,0x0),0, 400, panel.getBackground());
+        GradientPaint gr2gr = new GradientPaint(0,0,new Color(223,255,219,0x0),0, 120, panel.getBackground());
         g2d.setPaint(gr2gr);
         
         
@@ -115,7 +163,22 @@ class EmbeddedSensor extends JPanel {
         g2d.setColor(panel.getBackground().darker());
         g2d.drawString(value, xPoints[xPoints.length - 1] - 30, yPoints[yPoints.length - 1]);
         
-        g2d.drawPolyline(xPoints, yPoints, xPoints.length);        
+        g2d.drawPolyline(xPoints, yPoints, xPoints.length);
+        
         super.repaint();
     }     
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

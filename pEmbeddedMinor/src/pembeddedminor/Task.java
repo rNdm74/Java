@@ -25,7 +25,7 @@ public class Task extends TimerTask {
     public void run() {
         String value;
         //time++;
-        value = new StringBuilder().append(new Random().nextInt(255)).toString();
+        value = new StringBuilder().append(new Random().nextInt(120)).toString();
         label.setText(value);
         //System.out.println(value);
 //        times++;
