@@ -5,12 +5,14 @@
 package pembeddedminor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -50,7 +52,7 @@ class EmbeddedSensor extends JPanel {
 	
     private ArrayList<Integer> array = new ArrayList<>();
     
-    private ArrayList<Integer> a = new ArrayList<>();
+    //private ArrayList<Integer> a = new ArrayList<>();
 	
     
     public EmbeddedSensor(JLabel label, ArrayList<Integer> array){
@@ -163,6 +165,18 @@ class EmbeddedSensor extends JPanel {
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
         
+        // for antialiasing geometric shapes
+        g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+                              RenderingHints.VALUE_ANTIALIAS_ON );
+        
+        // for antialiasing text
+        g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                              RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+
+        // to go for quality over speed
+        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
+                              RenderingHints.VALUE_RENDER_QUALITY );
+        
         GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),w * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
         g2d.fill (new Rectangle(0, 0, w, getHeight()));       
@@ -175,9 +189,14 @@ class EmbeddedSensor extends JPanel {
         g2d.setColor(getBackground().darker());
         g2d.drawPolyline(xPoints, yPoints, xPoints.length);
         g2d.setColor(Color.DARK_GRAY);
-        //g2d.drawString("MAX", xPoints[xPoints.length - 1] - 27, 12);
-        //g2d.drawString("MIN", xPoints[xPoints.length - 1] - 27, 117);
-        g2d.drawString(v, xPoints[xPoints.length - 1] - 30, 110);
+                
+        Font font = new Font(getFont().getFamily(), Font.BOLD, 8);
+        g2d.setFont(font);
+        g2d.drawString("REAL-TIME", getWidth() - 50, 115);
+        g2d.drawString("MAX", 5, 10);
+        g2d.drawString("MIN", 5, 115);
+        //g2d.drawString(v, xPoints[xPoints.length - 1] - 30, 110);
+        
         super.repaint();
     }     
 

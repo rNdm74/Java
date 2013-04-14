@@ -17,9 +17,19 @@ public class Task extends TimerTask {
     int time = 0;
     
     private JLabel label;
+    private JLabel label1;
     private ArrayList<Integer> list;
     
-    public Task(JLabel label, ArrayList<Integer> list){
+    public Task(ArrayList<Integer> list,
+                JLabel label,
+                JLabel label1){        
+        this.label = label;
+        this.label1 = label1;
+        this.list = list;
+    }
+    
+    public Task(ArrayList<Integer> list,
+                JLabel label){        
         this.label = label;
         this.list = list;
     }
@@ -27,9 +37,14 @@ public class Task extends TimerTask {
     @Override
     public void run() {
         String s;
-        int r = new Random().nextInt(120);
+        int r = new Random().nextInt(110)+ 5;
         s = new StringBuilder().append(r).toString();
         label.setText(s);
+        
+        if (label1 != null) {
+            label1.setText(s);
+        }
+        
         list.add(r);
         //System.out.println(value);
 //        times++;
