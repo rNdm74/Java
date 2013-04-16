@@ -190,9 +190,9 @@ class EmbeddedSensor extends JPanel {
         g2d.drawPolyline(xPoints, yPoints, xPoints.length);
         g2d.setColor(Color.DARK_GRAY);
                 
-        Font font = new Font(getFont().getFamily(), Font.BOLD, 8);
+        Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
-        g2d.drawString("REAL-TIME", getWidth() - 50, 115);
+        g2d.drawString("REAL-TIME", getWidth() - 60, 115);
         g2d.drawString("MAX", 5, 10);
         g2d.drawString("MIN", 5, 115);
         //g2d.drawString(v, xPoints[xPoints.length - 1] - 30, 110);
