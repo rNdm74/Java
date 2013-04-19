@@ -15,7 +15,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -49,6 +48,18 @@ class EmbeddedSensor extends JPanel {
     
     private static int[] xPoly;
     private static int[] yPoly;
+    
+    int w;
+    
+    int get1 = 0;
+    int get2 = 0;
+    int get3 = 0;
+    int get4 = 0;
+    int get5 = 0;
+    
+    int arraySize;
+    
+    public static String v;
 	
     private ArrayList<Integer> array = new ArrayList<>();	
     
@@ -79,37 +90,41 @@ class EmbeddedSensor extends JPanel {
     
     @Override
     public void paintComponent(Graphics g){
+        setLocation(point);
         
-        if(time < 50){
+        w = getWidth();
+        
+        
+        if(true){
             if(active){                
                 if (active && point.x >= 0) {
                     direction = 0;
                 }
                 else{
-                    direction = 1;
+                    direction = 2;
                 }
             }
             
             if(!active){
-                if (!active && point.x <= -getWidth() + 1) {
+                if (!active && point.x <= -w + 1) {
                     direction = 0;
                     setVisible(false);
                 }
                 else{
-                    direction = -1;
+                    direction = -2;
                 }
             }
             
-            time = 0;
+            //time = 0;
         }
         
         point.x += direction;
         
-        setLocation(point); 
+         
         
-        time++;          
+        //time++;          
         
-        int w = getWidth();
+        
         
         xPoints[0] = 0;
         xPoints[1] = (w / 2) / 2;
@@ -128,18 +143,15 @@ class EmbeddedSensor extends JPanel {
         yPoly[5] = getHeight();
         yPoly[6] = getHeight();
                 
-        int get1 = 0;
-        int get2 = 0;
-        int get3 = 0;
-        int get4 = 0;
-        int get5 = 0;
         
-        if (array.size() > 2) {
-            get1 = array.get(array.size() - 1);
-            get2 = array.get(array.size() - 2);
-            get3 = array.get(array.size() - 3);
-            get4 = array.get(array.size() - 4);
-            get5 = array.get(array.size() - 5);
+        arraySize = array.size();
+        
+        if (arraySize > 2) {
+            get1 = array.get(arraySize - 1);
+            get2 = array.get(arraySize - 2);
+            get3 = array.get(arraySize - 3);
+            get4 = array.get(arraySize - 4);
+            get5 = array.get(arraySize - 5);
             
             yPoints[0] = get5;
             yPoly[0] = get5;
@@ -153,7 +165,7 @@ class EmbeddedSensor extends JPanel {
             yPoly[4] = get1;
         }
         
-        String v;        
+                
         v = new StringBuilder().append(get1).toString();
         
         super.paintComponent( g );
@@ -167,9 +179,9 @@ class EmbeddedSensor extends JPanel {
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-        // to go for quality over speed
-        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
-                              RenderingHints.VALUE_RENDER_QUALITY );
+//        // to go for quality over speed
+//        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
+//                              RenderingHints.VALUE_RENDER_QUALITY );
         
         GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),w * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
@@ -189,7 +201,7 @@ class EmbeddedSensor extends JPanel {
         //g2d.drawString("REAL-TIME", 17, 103);
         g2d.drawString("MAX", 10, 15);
         g2d.drawString("MIN", 10, 108);
-        //g2d.drawString(v, xPoints[xPoints.length - 1] - 30, 110);
+        g2d.drawString(v, xPoints[xPoints.length - 1] - 30, get1);
         
         super.repaint();
     }     

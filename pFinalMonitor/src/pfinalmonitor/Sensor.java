@@ -2,7 +2,6 @@
 package pfinalmonitor;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
@@ -24,9 +23,14 @@ public class Sensor extends javax.swing.JWindow {
     int xPos=0;
     int posX=0,posY=0;
     
-    public boolean button1 = true;
-    public boolean button2 = true;
-    public boolean button3 = true;
+    private boolean button = true;
+    private boolean button1 = true;
+    private boolean button2 = true;
+    private boolean button3 = true;
+    
+    public static String userName = "charlal1";
+    public static String ipAddress = "172.12.73.0";
+    public static String port = "45733";
     
     private Color color;
     
@@ -56,25 +60,61 @@ public class Sensor extends javax.swing.JWindow {
 
                 GradientPaint w2w = new GradientPaint(0,0,leftPanel.getBackground(),getWidth(), 0, new Color(230,230,230, 0xA0));
                 g2d.setPaint(w2w);
+                
                 g2d.fill (new Rectangle(0, 0, getWidth(), getHeight()));
 
+                w2w = new GradientPaint(0,0,leftPanel.getBackground().brighter(),getWidth(), 0, new Color(230,230,230, 0xA0));
+                g2d.setPaint(w2w);
+                
+                g2d.drawLine(50, 30, 50, 90);
+                g2d.drawLine(0, 30, getWidth(), 30);
+                g2d.drawLine(0, 50, getWidth(), 50);
+                g2d.drawLine(0, 70, getWidth(), 70);
+                g2d.drawLine(0, 90, getWidth(), 90);
+                
+                g2d.setColor(getBackground());
+                
+                g2d.draw3DRect(1, 0, getWidth() - 2, 29, true);
+                g2d.draw3DRect(1, 91, getWidth() - 2, 29, false);
+                
                 g2d.setColor(Color.DARK_GRAY);
-                Font font = new Font(getFont().getFamily(), Font.BOLD, 40);
+                Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
                 g2d.setFont(font);
-                //g2d.drawString(jLabel1.getText(), getWidth() / 2 - 20, getHeight() / 2);
-
+                
+                
+                g2d.drawString("CONNECTION DETAILS", 25, 20);
+                
+                g2d.drawString("LOGIN", 10, 44);
+                
+                g2d.drawString("IP", 10, 64);
+                
+                g2d.drawString("PORT", 10, 84);
+                
                 font = new Font(getFont().getFamily(), Font.PLAIN, 10);
                 g2d.setFont(font);
                 //g2d.drawString("REAL-TIME", 17, 103);
                 super.repaint();
             }
         };
-
         rightPanel = new javax.swing.JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                
                 Graphics2D g2d = (Graphics2D)g;
+                
+                // for antialiasing geometric shapes
+                g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+                                      RenderingHints.VALUE_ANTIALIAS_ON );
+        
+                // for antialiasing text
+                g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                                      RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+
+                // to go for quality over speed
+                g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
+                                      RenderingHints.VALUE_RENDER_QUALITY );
+        
                 GradientPaint gp;
                 gp = new GradientPaint(0,0,
                     new Color(230,230,230, 0xA0), getWidth(), 0, getBackground());
@@ -117,13 +157,23 @@ public class Sensor extends javax.swing.JWindow {
                 g2d.setFont(font);
                 //g2d.drawString("CHANGE VIEW", getWidth() / 2 - 35, 103);
 
+                g2d.drawString("REAL-TIME", 34, 103);
+                
                 if(!button3){
-                    g2d.drawString("BASIC VIEW", 25, 103);
+                    g2d.setColor(color.brighter());
+                    g2d.fillOval(15, 94, 10, 10);
+                    g2d.setColor(color.darker().darker());
+                    g2d.drawOval(15, 94, 10, 10);
                 }
                 else{
-                    g2d.drawString("ADVANCED VIEW", 13, 103);
+                    g2d.setColor(color.darker());
+                    g2d.fillOval(15, 94, 10, 10);
+                    g2d.setColor(color.darker().darker());                    
+                    g2d.drawOval(15, 94, 10, 10);
                 }
 
+                
+                
                 super.repaint();
             }
         };               
@@ -156,12 +206,21 @@ public class Sensor extends javax.swing.JWindow {
                 g2d.setColor(Color.DARK_GRAY);
                 Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
                 g2d.setFont(font);
-                g2d.drawString(getName().toUpperCase(), 25, 40);
+                g2d.drawString(getName().toUpperCase(), 25, 20);
                 //        font = new Font(getFont().getFamily(), Font.PLAIN, 10);
                 //        g2d.setFont(font);
                 //
 //                if(button3){
-//                    g2d.drawString("BASIC", 35, 98);
+                font = new Font(getFont().getFamily(), Font.BOLD, 30);
+                g2d.setFont(font);
+                g2d.drawString(y1.get(y1.size() - 1).toString(), getWidth() / 2 - 30, getHeight() / 2 + 10);
+                
+                g2d.setColor(color.darker().darker());
+                g2d.drawLine(1, 29, getWidth(), 29);
+                //g2d.drawLine(1, 91, getWidth(), 91);
+                g2d.setColor(color.brighter());
+                g2d.drawLine(1, 30, getWidth(), 30);
+                //g2d.drawLine(1, 90, getWidth(), 90);
 //                }
 //                else{
 //                    g2d.drawString("ADVANCED", 25, 98);
@@ -171,6 +230,7 @@ public class Sensor extends javax.swing.JWindow {
             }
         };
        
+        sensorFrame.isAlwaysOnTop();
         sensorFrame.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         sensorFrame.setIconImages(null);
         sensorFrame.setUndecorated(true);
@@ -252,7 +312,7 @@ public class Sensor extends javax.swing.JWindow {
         leftPanel.setBackground(color);
         leftPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         leftPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        leftPanel.setDoubleBuffered(false);
+        leftPanel.setDoubleBuffered(true);
         //leftPanel.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         leftPanel.setName("Sensor 1");
         leftPanel.setPreferredSize(new java.awt.Dimension(110, 120));
@@ -276,8 +336,8 @@ public class Sensor extends javax.swing.JWindow {
            
     
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {                                     
-        //jLabel1.setVisible(!sensor1Show);
-        
+        sensorFrame.setVisible(button);
+        button = !button;
     }                                    
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {                                     
@@ -346,7 +406,7 @@ public class Sensor extends javax.swing.JWindow {
         int n = -d.width;
         advancedSensorPanel.point = new Point(++n, 0);
                 
-        sensorFrame.setVisible(true);
+        sensorFrame.setVisible(false);
     }                                 
 
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {                                     
@@ -378,7 +438,7 @@ public class Sensor extends javax.swing.JWindow {
             button3 = !button3;
         } 
         else{
-            rightPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            //rightPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         }
     }                                      
 
@@ -398,8 +458,7 @@ public class Sensor extends javax.swing.JWindow {
         }
         else{
             rightPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        }
-        
+        }        
     }                                    
     // </editor-fold>
      
