@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.List;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -18,10 +19,12 @@ import java.util.ArrayList;
  */
 public class Sensor extends javax.swing.JWindow {
     
-    public ArrayList<Integer> y1 = new ArrayList<>();
+    public ArrayList<String> y1 = new ArrayList<>();
     
     int xPos=0;
     int posX=0,posY=0;
+    
+    
     
     private boolean button = true;
     private boolean button1 = true;
@@ -35,7 +38,7 @@ public class Sensor extends javax.swing.JWindow {
     private Color color;
     
     public Sensor(Color color) { 
-        this.color = color;
+        this.color = color;        
         initComponents();
     }
 
@@ -211,9 +214,9 @@ public class Sensor extends javax.swing.JWindow {
                 //        g2d.setFont(font);
                 //
 //                if(button3){
-                font = new Font(getFont().getFamily(), Font.BOLD, 30);
+                font = new Font(getFont().getFamily(), Font.PLAIN, 30);
                 g2d.setFont(font);
-                g2d.drawString(y1.get(y1.size() - 1).toString(), getWidth() / 2 - 30, getHeight() / 2 + 10);
+                g2d.drawString(y1.get(y1.size() - 1), getWidth() / 2 - 30, getHeight() / 2 + 10);
                 
                 g2d.setColor(color.darker().darker());
                 g2d.drawLine(1, 29, getWidth(), 29);
@@ -341,7 +344,7 @@ public class Sensor extends javax.swing.JWindow {
     }                                    
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {                                     
-        sensorFrame.requestFocus();
+        //sensorFrame.requestFocus();
         
         posX=evt.getX();
         posY=evt.getY();

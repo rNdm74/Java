@@ -61,9 +61,9 @@ class EmbeddedSensor extends JPanel {
     
     public static String v;
 	
-    private ArrayList<Integer> array = new ArrayList<>();	
+    private ArrayList<String> array = new ArrayList<>();	
     
-    public EmbeddedSensor(ArrayList<Integer> array){
+    public EmbeddedSensor(ArrayList<String> array){
         setLocation(30,0);
         
         this.array = array;
@@ -77,14 +77,14 @@ class EmbeddedSensor extends JPanel {
         yPoints = new int[xPoints.length];
         yPoly = new int[]{100, 80, 60, 70, 50, 0, 0}; 
         
-        array.add(100);
-        array.add(80);
-        array.add(60);
-        array.add(70);
-        array.add(50);
+        array.add("0000");
+        array.add("0000");
+        array.add("0000");
+        array.add("0000");
+        array.add("0000");
         
         for (int i = 0; i < yPoints.length; i++) {
-            yPoints[i] = array.get(i);
+            yPoints[i] = Integer.parseInt(array.get(i));
         }
     }
     
@@ -145,13 +145,14 @@ class EmbeddedSensor extends JPanel {
                 
         
         arraySize = array.size();
+        int height = getHeight();
         
         if (arraySize > 2) {
-            get1 = array.get(arraySize - 1);
-            get2 = array.get(arraySize - 2);
-            get3 = array.get(arraySize - 3);
-            get4 = array.get(arraySize - 4);
-            get5 = array.get(arraySize - 5);
+            get1 = height - Integer.parseInt(array.get(arraySize - 1).substring(3));
+            get2 = height - Integer.parseInt(array.get(arraySize - 2).substring(3));
+            get3 = height - Integer.parseInt(array.get(arraySize - 3).substring(3));
+            get4 = height - Integer.parseInt(array.get(arraySize - 4).substring(3));
+            get5 = height - Integer.parseInt(array.get(arraySize - 5).substring(3));
             
             yPoints[0] = get5;
             yPoly[0] = get5;
@@ -166,7 +167,7 @@ class EmbeddedSensor extends JPanel {
         }
         
                 
-        v = new StringBuilder().append(get1).toString();
+        v = new StringBuilder().append(array.get(arraySize - 1)).toString();
         
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
