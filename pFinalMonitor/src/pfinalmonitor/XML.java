@@ -18,13 +18,13 @@ public class XML {
     
     public XML(){
         try{
-	        fXmlFile = new File("sensor.xml");	        
+	        fXmlFile = new File("C:/Users/rNdm/Work/Java/pFinalMonitor/src/pfinalmonitor/sensor.xml");	        
 	        dbFactory = DocumentBuilderFactory.newInstance();
 	        dBuilder = dbFactory.newDocumentBuilder();
 	        doc = dBuilder.parse(fXmlFile); 
                 doc.getDocumentElement().normalize();
                 nList = doc.getElementsByTagName("SENSOR");
-                System.out.println(nList.getLength());
+                //System.out.println(nList.getLength());
         }
         catch (Exception e) {
             e.printStackTrace();

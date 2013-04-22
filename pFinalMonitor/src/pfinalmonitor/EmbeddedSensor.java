@@ -15,6 +15,8 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -22,20 +24,8 @@ import javax.swing.JPanel;
  *
  * @author rndm
  */
-class EmbeddedSensor extends JPanel {
-    
-    
-    private static int i = 0;
-    
+class EmbeddedSensor extends JPanel {    
     private static Polygon p;
-    
-    private static int direction = 1;
-    
-    private static int time = 0;
-    
-    private int value = 0;
-        
-    //private JLabel label;
     
     private boolean active;
     
@@ -46,148 +36,77 @@ class EmbeddedSensor extends JPanel {
     	
     private static float[] xPoints;
     private static float[] yPoints;
-    
+    private float[] get;
     private static int[] xPoly;
     private static int[] yPoly;
     
-    int w;
+    private int width;
+    private int height;
     
-    float get1 = 0;
-    float get2 = 0;
-    float get3 = 0;
-    float get4 = 0;
-    float get5 = 0;
+    private int min_temp = -15;
+    private int max_temp = 40;
     
-    int min_temp = -15;
-    int max_temp = 40;
-    
-    int arraySize;
+    private int arraySize;
     
     public static String v;
 	
-    private ArrayList<String> array = new ArrayList<>();	
+    private ArrayList<String[]> array;	
     
-    public EmbeddedSensor(ArrayList<String> array){
+    public EmbeddedSensor(ArrayList<String[]> array){
+        this.array = new ArrayList<>();
         setLocation(30,0);
         
         this.array = array;
         
         this.setBorder(BorderFactory.createEtchedBorder());
         
-        xPoints = new float[5];
-        
-        xPoly = new int[7];
+        xPoints = new float[60];        
+        xPoly = new int[62];
                 
         yPoints = new float[xPoints.length];
-        yPoly = new int[]{100, 80, 60, 70, 50, 0, 0}; 
+        yPoly = new int[xPoly.length]; 
         
-        array.add("0000");
-        array.add("0000");
-        array.add("0000");
-        array.add("0000");
-        array.add("0000");
+        get = new float[xPoints.length];
         
         for (int i = 0; i < yPoints.length; i++) {
-            yPoints[i] = Float.parseFloat(array.get(i));
-        }
+            String[] s = {"0000", "0000"};
+            array.add(s);
+            yPoints[i] = Float.parseFloat(array.get(i)[0]);
+        }          
     }
     
     @Override
     public void paintComponent(Graphics g){
         setLocation(point);
         
-        w = getWidth();
+        width = getWidth();
+        height = getHeight();
+                
+//        point.x += (!active) ? 
+//                   ((point.x >= 0) ? 0 : 2) : 
+//                   ((point.x <= -width + 1) ? 0 : -2);
         
-        
-        if(true){
-            if(active){                
-                if (active && point.x >= 0) {
-                    direction = 0;
-                }
-                else{
-                    direction = 2;
-                }
-            }
-            
-            if(!active){
-                if (!active && point.x <= -w + 1) {
-                    direction = 0;
-                    setVisible(false);
-                }
-                else{
-                    direction = -2;
-                }
-            }
-            
-            //time = 0;
+        for (int j = 0; j < xPoints.length; j++) {
+            xPoints[j] = 4f * j;
+            xPoly[j] = (int)xPoints[j];
         }
         
-        point.x += direction;
+        xPoly[60] = (int)xPoints[xPoints.length - 1];
+        xPoly[61] = (int)xPoints[0];
         
-         
+        yPoly[60] = height;
+        yPoly[61] = height;                
         
-        //time++;          
-        
-        
-        
-        xPoints[0] = 0;
-        xPoints[1] = (w / 2) / 2;
-        xPoints[2] = w / 2;
-        xPoints[3] = (w / 2) + (w / 2) / 2;
-        xPoints[4] = w;
-        
-        xPoly[0] = (int)xPoints[0];
-        xPoly[1] = (int)xPoints[1];
-        xPoly[2] = (int)xPoints[2];
-        xPoly[3] = (int)xPoints[3];
-        xPoly[4] = (int)xPoints[4];
-        xPoly[5] = w;
-        xPoly[6] = 0;
-        
-        yPoly[5] = getHeight();
-        yPoly[6] = getHeight();
-                
-        
-        arraySize = array.size();
-        int height = getHeight();
-        
-        if (arraySize > 2) {
-//            get1 = Integer.parseInt(array.get(arraySize - 1).substring(0, 2));
-//            get2 = Integer.parseInt(array.get(arraySize - 2).substring(0, 2));
-//            get3 = Integer.parseInt(array.get(arraySize - 3).substring(0, 2));
-//            get4 = Integer.parseInt(array.get(arraySize - 4).substring(0, 2));
-//            get5 = Integer.parseInt(array.get(arraySize - 5).substring(0, 2));
-//            
-//            yPoints[0] = (int) map(get5, 0, 30, 120, 0);
-//            yPoly[0] = (int) map(get5, 0, 30, 120, 0);
-//            yPoints[1] = (int) map(get4, 0, 30, 120, 0);
-//            yPoly[1] = (int) map(get4, 0, 30, 120, 0);
-//            yPoints[2] = (int) map(get3, 0, 30, 120, 0);
-//            yPoly[2] = (int) map(get3, 0, 30, 120, 0);
-//            yPoints[3] = (int) map(get2, 0, 30, 120, 0);
-//            yPoly[3] = (int) map(get2, 0, 30, 120, 0);
-//            yPoints[4] = (int) map(get1, 0, 30, 120, 0);
-//            yPoly[4] = (int) map(get1, 0, 30, 120, 0);
-            get1 = Float.parseFloat(array.get(arraySize - 1));
-            get2 = Float.parseFloat(array.get(arraySize - 2));
-            get3 = Float.parseFloat(array.get(arraySize - 3));
-            get4 = Float.parseFloat(array.get(arraySize - 4));
-            get5 = Float.parseFloat(array.get(arraySize - 5));
-                                   
-            yPoints[0] = (float) map(get5, min_temp, max_temp, 120, 0);
-            yPoly[0] = (int) map(get5, min_temp, max_temp, 120, 0);
-            yPoints[1] = (float) map(get4, min_temp, max_temp, 120, 0);
-            yPoly[1] = (int) map(get4, min_temp, max_temp, 120, 0);
-            yPoints[2] = (float) map(get3, min_temp, max_temp, 120, 0);
-            yPoly[2] = (int) map(get3, min_temp, max_temp, 120, 0);
-            yPoints[3] = (float) map(get2, min_temp, max_temp, 120, 0);
-            yPoly[3] = (int) map(get2, min_temp, max_temp, 120, 0);
-            yPoints[4] = (float) map(get1, min_temp, max_temp, 120, 0);
-            yPoly[4] = (int) map(get1, min_temp, max_temp, 120, 0);
+        arraySize = array.size();        
+        if (arraySize > 2) {            
+            for (int j = 0; j < get.length; j++) {
+               get[j] = Float.parseFloat(array.get(arraySize - (j + 1))[0]);               
+               yPoints[j] = (float) map(get[get.length - (j + 1)], min_temp, max_temp, 120, 0);
+               yPoly[j] = (int) map(get[get.length - (j + 1)], min_temp, max_temp, 120, 0);
+            }
         }
-        
-                
-        v = new StringBuilder().append(array.get(arraySize - 1)).toString();
+            
+        v = new StringBuilder().append(array.get(arraySize - 1)[0]).toString();
         
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
@@ -200,16 +119,16 @@ class EmbeddedSensor extends JPanel {
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-//        // to go for quality over speed
-//        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
-//                              RenderingHints.VALUE_RENDER_QUALITY );
+        // to go for quality over speed
+        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
+                              RenderingHints.VALUE_RENDER_QUALITY );
         
-        GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),w * 2, 0, new Color(255,255,255));
+        GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),width * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
-        g2d.fill (new Rectangle(0, 0, w, getHeight()));   
+        g2d.fill (new Rectangle(0, 0, width, height));   
         
         
-        gp = new GradientPaint(0,0,getBackground(),w * 2, getHeight(), new Color(223,255,219,0x0));
+        gp = new GradientPaint(0,0,getBackground(),width * 2, height, new Color(223,255,219,0x0));
         g2d.setPaint(gp);
         p = new Polygon(xPoly, yPoly, xPoly.length);
         g2d.fillPolygon(p);
@@ -224,10 +143,12 @@ class EmbeddedSensor extends JPanel {
         int y =  (int) map(0, min_temp, max_temp, 120, 0);
         int y_max =  (int) map(30, min_temp, max_temp, 120, 0);
         int y_min =  (int) map(-10, min_temp, max_temp, 120, 0);
-        gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),w * 2, 0, new Color(255,255,255));
+        gp = new GradientPaint(0,0,new Color(230,230,230, 0x90),width * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
         g2d.fillRect(1, 1, 33, 120);
-        g2d.setColor(Color.DARK_GRAY);        
+        //g2d.fillRect(width - 33, 1, 33, 120);
+        g2d.setColor(Color.DARK_GRAY);
+        //g2d.drawLine(width - 33, 0, width - 33, 120);
         g2d.drawLine(33, 0, 33, 120);
         g2d.drawLine(27, y, 33, y);
         g2d.drawLine(27, y_max, 33, y_max);
@@ -235,11 +156,13 @@ class EmbeddedSensor extends JPanel {
         
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
+        
+        //g2d.drawString(Sensor.time, 50, 10);
         //g2d.drawString("REAL-TIME", 17, 103);
         g2d.drawString("0°C", 12, y - 2);
         g2d.drawString(Integer.toString(max_temp - 10) + "°C", 6, y_max - 2);
         g2d.drawString(Integer.toString(min_temp + 5) + "°C", 3, y_min - 2);
-        g2d.drawString(v + "°C", xPoints[xPoints.length - 1] - 45, yPoints[4] - 6);
+        g2d.drawString(v + "°C", width - 33, yPoints[yPoints.length - 1] + 1 );
         
         super.repaint();
     }     
