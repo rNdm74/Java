@@ -13,8 +13,11 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -29,8 +32,8 @@ class EmbeddedSensor extends JPanel {
     
     private boolean active;
     
-    public int mouse;
-    public int mouseDragged = 0;
+    private Point mouse = new Point(0,0);
+    public int mouseDragged = 1;
     
     public Point point = new Point(0,0);
     	
@@ -48,6 +51,8 @@ class EmbeddedSensor extends JPanel {
     
     private int arraySize;
     
+    private int x;
+    
     public static String v;
 	
     private ArrayList<String[]> array;	
@@ -60,8 +65,8 @@ class EmbeddedSensor extends JPanel {
         
         this.setBorder(BorderFactory.createEtchedBorder());
         
-        xPoints = new float[60];        
-        xPoly = new int[62];
+        xPoints = new float[200];        
+        xPoly = new int[202];
                 
         yPoints = new float[xPoints.length];
         yPoly = new int[xPoly.length]; 
@@ -69,10 +74,34 @@ class EmbeddedSensor extends JPanel {
         get = new float[xPoints.length];
         
         for (int i = 0; i < yPoints.length; i++) {
-            String[] s = {"0000", "0000"};
+            String[] s = {"0000", new GregorianCalendar().getTime().toString().substring(0,20)};
             array.add(s);
             yPoints[i] = Float.parseFloat(array.get(i)[0]);
-        }          
+        }
+        
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                advancedSensorPanelMouseMoved(evt);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                advancedSensorPanelMouseDragged(e);
+            }
+        });
+    }
+       
+    private void advancedSensorPanelMouseDragged(java.awt.event.MouseEvent evt) {
+        
+        mouseDragged = ((evt.getX() > x) ? 1 : -1);
+        x = evt.getX();
+        
+    }
+    
+    private void advancedSensorPanelMouseMoved(java.awt.event.MouseEvent evt) {                                     
+        mouse = evt.getPoint();
+        //System.out.println(mouse);
     }
     
     @Override
@@ -87,26 +116,30 @@ class EmbeddedSensor extends JPanel {
 //                   ((point.x <= -width + 1) ? 0 : -2);
         
         for (int j = 0; j < xPoints.length; j++) {
-            xPoints[j] = 4f * j;
+            xPoints[j] = j;
             xPoly[j] = (int)xPoints[j];
         }
         
-        xPoly[60] = (int)xPoints[xPoints.length - 1];
-        xPoly[61] = (int)xPoints[0];
+        xPoly[200] = (int)xPoints[xPoints.length - 1];
+        xPoly[201] = (int)xPoints[0];
         
-        yPoly[60] = height;
-        yPoly[61] = height;                
+        yPoly[200] = height;
+        yPoly[201] = height;                
         
-        arraySize = array.size();        
+        arraySize = array.size();  
+                
         if (arraySize > 2) {            
             for (int j = 0; j < get.length; j++) {
-               get[j] = Float.parseFloat(array.get(arraySize - (j + 1))[0]);               
+               // Converting int to float array
+               get[j] = Float.parseFloat(array.get(arraySize - (j + 1))[0]);
+               
+               
                yPoints[j] = (float) map(get[get.length - (j + 1)], min_temp, max_temp, 120, 0);
                yPoly[j] = (int) map(get[get.length - (j + 1)], min_temp, max_temp, 120, 0);
             }
         }
             
-        v = new StringBuilder().append(array.get(arraySize - 1)[0]).toString();
+        
         
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
@@ -142,28 +175,39 @@ class EmbeddedSensor extends JPanel {
         
         int y =  (int) map(0, min_temp, max_temp, 120, 0);
         int y_max =  (int) map(30, min_temp, max_temp, 120, 0);
-        int y_min =  (int) map(-10, min_temp, max_temp, 120, 0);
-        gp = new GradientPaint(0,0,new Color(230,230,230, 0x90),width * 2, 0, new Color(255,255,255));
+        int y_min =  (int) map(-5, min_temp, max_temp, 120, 0);
+        gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
-        g2d.fillRect(1, 1, 33, 120);
-        //g2d.fillRect(width - 33, 1, 33, 120);
+        //g2d.fillRect(1, 1, 33, 120);
+        g2d.fillRect(width - 40, 1, 40, 120);
         g2d.setColor(Color.DARK_GRAY);
-        //g2d.drawLine(width - 33, 0, width - 33, 120);
-        g2d.drawLine(33, 0, 33, 120);
-        g2d.drawLine(27, y, 33, y);
-        g2d.drawLine(27, y_max, 33, y_max);
-        g2d.drawLine(27, y_min, 33, y_min);
+        g2d.drawLine(width - 40, 0, width - 40, 120);
+        //g2d.drawLine(33, 0, 33, 120);
+        g2d.drawLine(width - 35, (int)yPoints[yPoints.length - 1], width - 40, (int)yPoints[yPoints.length - 1]);
+        g2d.drawLine(width - 35, y_max, width - 40, y_max);
+        g2d.drawLine(width - 35, y_min, width - 40, y_min);
         
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
         
         //g2d.drawString(Sensor.time, 50, 10);
         //g2d.drawString("REAL-TIME", 17, 103);
-        g2d.drawString("0°C", 12, y - 2);
-        g2d.drawString(Integer.toString(max_temp - 10) + "°C", 6, y_max - 2);
-        g2d.drawString(Integer.toString(min_temp + 5) + "°C", 3, y_min - 2);
-        g2d.drawString(v + "°C", width - 33, yPoints[yPoints.length - 1] + 1 );
+        String s = array.get((arraySize - 1))[0] + "°C";
         
+        g2d.drawString(s, width - 35, (int)yPoints[yPoints.length - 1] + 3);
+        g2d.drawString(Integer.toString(max_temp - 10) + "°C", width - 32, y_max - 4);
+        g2d.drawString(Integer.toString(min_temp + 10) + "°C", width - 34, y_min + 14);
+        
+        //System.out.println(arraySize - 240);
+                
+        Rectangle rect = new Rectangle(0, 0, 200, 120);
+        
+        if (rect.contains(mouse)) {
+            g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[0] + "°C", mouse.x - 39, y_max - 2);       
+            g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[1].substring(11), mouse.x - 45, y_min + 10);
+            g2d.drawLine(mouse.x, 0, mouse.x, 120);
+        }
+                
         super.repaint();
     }     
 

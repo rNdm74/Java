@@ -42,10 +42,22 @@ public class Sensor extends javax.swing.JWindow {
     private Color color;
     public String name = "";
     
-    public Sensor(Color color, String name) { 
+    public Sensor(Color color, String name) {
+        setAlwaysOnTop(true);
         this.color = color;
         this.name = name;
         initComponents();
+        
+//        addMouseListener(new java.awt.event.MouseAdapter() {
+//            @Override
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                jPanel1MouseClicked(evt);
+//            }
+//            @Override
+//            public void mousePressed(java.awt.event.MouseEvent evt) {
+//                jPanel1MousePressed(evt);
+//            }
+//        });
     }
 
     // <editor-fold defaultstate="collapsed" desc="initComponents()">                          
@@ -54,6 +66,8 @@ public class Sensor extends javax.swing.JWindow {
        
         
         sensorFrame = new javax.swing.JWindow();
+        menuFrame = new javax.swing.JWindow();
+        
         basicSensorPanel = new javax.swing.JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -107,7 +121,7 @@ public class Sensor extends javax.swing.JWindow {
                 g2d.setColor(Color.DARK_GRAY);
                 Font font = new Font(getFont().getFamily(), Font.PLAIN, 12);
                 g2d.setFont(font);
-                g2d.drawString("Options", 20, 20);
+                g2d.drawString("Settings", 20, 20);
                 
                 font = new Font(getFont().getFamily(), Font.PLAIN, 12);
                 g2d.setFont(font);
@@ -201,8 +215,8 @@ public class Sensor extends javax.swing.JWindow {
                 
                 
                 
-                g2d.drawString("Minimize", 34, button1Bounds.y + 23);
-                g2d.drawString("Options", 34, button2Bounds.y + 23);
+                g2d.drawString("Hide menu", 34, button1Bounds.y + 23);
+                g2d.drawString("Settings", 34, button2Bounds.y + 23);
                 g2d.drawString("Pause", 34, button3Bounds.y + 23);
                 
 //                if(!button2){
@@ -317,10 +331,37 @@ public class Sensor extends javax.swing.JWindow {
             }
         };
        
-        sensorFrame.isAlwaysOnTop();
+        menuFrame.setAlwaysOnTop(true);
+        menuFrame.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
+        menuFrame.setIconImages(null);
+        //menuFrame.setType(java.awt.Window.Type.UTILITY);
+        menuFrame.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jFrame1AMouseWheelMoved(evt);
+            }
+        });
+        menuFrame.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jFrame1AMouseDragged(evt);
+            }
+        });
+        menuFrame.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            @Override
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+                //jFrame1AAncestorMoved(evt);
+            }
+            @Override
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+            }
+        });
+        menuFrame.getContentPane().setLayout(null);
+        
+        sensorFrame.setAlwaysOnTop(true);
         sensorFrame.setBounds(new java.awt.Rectangle(1, 1, 150, 120));
         sensorFrame.setIconImages(null);
-        sensorFrame.setType(java.awt.Window.Type.UTILITY);
+        //sensorFrame.setType(java.awt.Window.Type.UTILITY);
         sensorFrame.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -369,12 +410,15 @@ public class Sensor extends javax.swing.JWindow {
             }
         });
         rightPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 rightPanelMouseMoved(evt);
             }
         });
+        
+        //advancedSensorPanel.
 
-        sensorFrame.getContentPane().add(rightPanel);
+        menuFrame.getContentPane().add(rightPanel);
         rightPanel.setBounds(0, 0, 0, 0);
         
         advancedSensorPanel = new EmbeddedSensor(data);        
@@ -393,7 +437,7 @@ public class Sensor extends javax.swing.JWindow {
         });                
         //getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        
+        leftPanel.grabFocus();
         leftPanel.setBackground(color);
         leftPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         leftPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -424,6 +468,7 @@ public class Sensor extends javax.swing.JWindow {
     
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {                                     
         sensorFrame.setVisible(button);
+        menuFrame.setVisible(button);
         button = !button;
     }                                    
 
@@ -436,7 +481,7 @@ public class Sensor extends javax.swing.JWindow {
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {                                     
         setLocation (evt.getXOnScreen()-posX,evt.getYOnScreen()-posY);
-        
+        menuFrame.setLocation(evt.getXOnScreen()-posX + this.getWidth() * 3,evt.getYOnScreen()-posY);
         sensorFrame.setLocation(evt.getXOnScreen()-posX + this.getWidth(),evt.getYOnScreen()-posY);
     }                                    
 
@@ -461,6 +506,7 @@ public class Sensor extends javax.swing.JWindow {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
         leftPanel.setBackground(leftPanel.getBackground().darker());
         
+        menuFrame.setBackground(leftPanel.getBackground());
         sensorFrame.setBackground(leftPanel.getBackground());
         
         basicSensorPanel.setBackground(sensorFrame.getBackground());   
@@ -472,11 +518,16 @@ public class Sensor extends javax.swing.JWindow {
         int w = leftPanel.getWidth();
         int h = leftPanel.getHeight();
         
-        Dimension d = new Dimension(w + (w) + w, h);
-                
+        Dimension d = new Dimension(w + w, h);
+             
+        
         sensorFrame.setSize(d);
         
-        d = new Dimension(w + (w), h);
+        d = new Dimension(w, h);
+        
+        menuFrame.setSize(d);
+        
+        d = new Dimension(w + w, h);
         
         rightPanel.setSize(w, h);
         
@@ -486,13 +537,16 @@ public class Sensor extends javax.swing.JWindow {
         
         Point p1 = leftPanel.getLocationOnScreen();
         
+        //menuFrame.setLocation(p1.x - leftPanel.getWidth(), p1.y);
+        menuFrame.setLocation(p1.x + leftPanel.getWidth() * 3, p1.y);
         sensorFrame.setLocation(p1.x + leftPanel.getWidth(), p1.y);
         
-        rightPanel.setLocation(sensorFrame.getWidth() - rightPanel.getWidth(), 0);
+        rightPanel.setLocation(0, 0);
         
         //int n = -d.width;
         advancedSensorPanel.point = new Point(0, 0);
-                
+           
+        menuFrame.setVisible(false);
         sensorFrame.setVisible(false);
         
         System.out.println(basicSensorPanel.getBounds());
@@ -510,11 +564,12 @@ public class Sensor extends javax.swing.JWindow {
         Point p = evt.getPoint();
         
         if (button1Bounds.contains(p)) {
-            sensorFrame.dispose();
-            dispose();
+            menuFrame.setVisible(false);
+            //sensorFrame.dispose();
+            //dispose();
             //System.exit(0); 
             
-            //button1 = !button1;
+            button = !button;
         }
         
         if (button2Bounds.contains(p)) {
@@ -550,7 +605,9 @@ public class Sensor extends javax.swing.JWindow {
         else{
             rightPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         }        
-    }                                    
+    }   
+    
+     
     // </editor-fold>
      
     //<editor-fold defaultstate="collapsed" desc=" Variables ">
@@ -559,6 +616,7 @@ public class Sensor extends javax.swing.JWindow {
     private Rectangle button2Bounds;
     private Rectangle button3Bounds;
     private javax.swing.JWindow sensorFrame;
+    private javax.swing.JWindow menuFrame;
     public javax.swing.JPanel leftPanel;
     private javax.swing.JPanel basicSensorPanel;
     private EmbeddedSensor advancedSensorPanel;
