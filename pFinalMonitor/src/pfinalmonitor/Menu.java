@@ -1,0 +1,139 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pfinalmonitor;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+
+/**
+ *
+ * @author rNdm
+ */
+public class Menu extends JMenuBar{
+    JMenu menu, submenu;
+    JMenuItem menuItem;
+    JRadioButtonMenuItem rbMenuItem;
+    JCheckBoxMenuItem cbMenuItem;
+        
+    public Menu(){    
+        UIManager.put("PopupMenu.border", BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        menu = new JMenu("File");        
+        menu.setMnemonic(KeyEvent.VK_F);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "The only menu in this program that has menu items");
+        add(menu);
+
+        //a group of JMenuItems
+        menuItem = new JMenuItem("New",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        menu.add(menuItem);
+        menu.addSeparator();
+        menuItem = new JMenuItem("Open",
+                                 new ImageIcon("images/middle.gif"));
+        //menuItem.setMnemonic(KeyEvent.VK_O);
+        menu.add(menuItem);
+        
+        
+        menuItem = new JMenuItem("Save");
+        menu.add(menuItem);
+        menu.addSeparator();
+        menuItem = new JMenuItem("Exit");
+        menu.add(menuItem);
+        //menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
+        //menuItem.setMnemonic(KeyEvent.VK_D);
+        //menu.add(menuItem);
+
+        //a group of radio button menu items
+        
+//        ButtonGroup group = new ButtonGroup();
+//        rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
+//        rbMenuItem.setSelected(true);
+//        rbMenuItem.setMnemonic(KeyEvent.VK_R);
+//        group.add(rbMenuItem);
+//        menu.add(rbMenuItem);
+//
+//        rbMenuItem = new JRadioButtonMenuItem("Another one");
+//        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+//        group.add(rbMenuItem);
+//        menu.add(rbMenuItem);
+
+        menu = new JMenu("Edit");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+        menu.add(new JMenuItem("Preferences"));
+        add(menu);
+//        
+//        //a group of check box menu items
+//        menu.addSeparator();
+//        cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
+//        cbMenuItem.setMnemonic(KeyEvent.VK_C);
+//        menu.add(cbMenuItem);
+//
+//        cbMenuItem = new JCheckBoxMenuItem("Another one");
+//        cbMenuItem.setMnemonic(KeyEvent.VK_H);
+//        menu.add(cbMenuItem);
+
+        //a submenu
+        //menu.addSeparator();
+        
+        
+        submenu = new JMenu("Temp 2");
+        submenu.setMnemonic(KeyEvent.VK_S);
+
+        menuItem = new JMenuItem("An item in the submenu");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        submenu.add(menuItem);
+
+        menuItem = new JMenuItem("Another item");
+        submenu.add(menuItem);
+        menu.add(submenu);
+
+        //Build second menu in the menu bar.
+        menu = new JMenu("My Sensors");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+        menu.add(submenu);
+         
+        
+        submenu = new JMenu("Temp 1");
+        submenu.setMnemonic(KeyEvent.VK_S);
+
+        menuItem = new JMenuItem("An item in the submenu");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        submenu.add(menuItem);
+
+        menuItem = new JMenuItem("Another item");
+        submenu.add(menuItem);
+        menu.add(submenu);
+        add(menu);
+        menu = new JMenu("Help");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+        
+        add(menu); 
+        
+    }
+}

@@ -59,11 +59,11 @@ class EmbeddedSensor extends JPanel {
     
     public EmbeddedSensor(ArrayList<String[]> array){
         this.array = new ArrayList<>();
-        setLocation(30,0);
+        //setLocation(30,0);
         
         this.array = array;
         
-        this.setBorder(BorderFactory.createEtchedBorder());
+        //this.setBorder(BorderFactory.createEtchedBorder());
         
         xPoints = new float[200];        
         xPoly = new int[202];
@@ -99,8 +99,21 @@ class EmbeddedSensor extends JPanel {
         
     }
     
-    private void advancedSensorPanelMouseMoved(java.awt.event.MouseEvent evt) {                                     
-        mouse = evt.getPoint();
+    private void advancedSensorPanelMouseMoved(java.awt.event.MouseEvent evt) {
+        Rectangle rect = new Rectangle(0, 0, 200, 120);
+        
+        mouse.y = evt.getPoint().y;
+                        
+        if (evt.getPoint().x < rect.width) {
+            mouse.x = evt.getPoint().x;
+        }
+        else if(evt.getPoint().x <= 0){
+            mouse.x = 0 ;
+        }        
+        else{
+            mouse.x = rect.width - 1;
+        }
+        
         //System.out.println(mouse);
     }
     
@@ -158,10 +171,10 @@ class EmbeddedSensor extends JPanel {
         
         GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),width * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
-        g2d.fill (new Rectangle(0, 0, width, height));   
+        //g2d.fill (new Rectangle(0, 0, width, height));   
         
         
-        gp = new GradientPaint(0,0,getBackground(),width * 2, height, new Color(223,255,219,0x0));
+        gp = new GradientPaint(0,0,getBackground(),width * 2, height, Color.RED);
         g2d.setPaint(gp);
         p = new Polygon(xPoly, yPoly, xPoly.length);
         g2d.fillPolygon(p);
@@ -179,14 +192,15 @@ class EmbeddedSensor extends JPanel {
         gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, 0, new Color(255,255,255));
         g2d.setPaint(gp);
         //g2d.fillRect(1, 1, 33, 120);
-        g2d.fillRect(width - 40, 1, 40, 120);
-        g2d.setColor(Color.DARK_GRAY);
+        //g2d.fillRect(width - 40, 1, 40, 120);
+        g2d.setColor(Color.GRAY);
         g2d.drawLine(width - 40, 0, width - 40, 120);
         //g2d.drawLine(33, 0, 33, 120);
         g2d.drawLine(width - 35, (int)yPoints[yPoints.length - 1], width - 40, (int)yPoints[yPoints.length - 1]);
         g2d.drawLine(width - 35, y_max, width - 40, y_max);
         g2d.drawLine(width - 35, y_min, width - 40, y_min);
         
+        g2d.setColor(Color.DARK_GRAY);
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
         
@@ -199,14 +213,18 @@ class EmbeddedSensor extends JPanel {
         g2d.drawString(Integer.toString(min_temp + 10) + "°C", width - 34, y_min + 14);
         
         //System.out.println(arraySize - 240);
-                
-        Rectangle rect = new Rectangle(0, 0, 200, 120);
+               
+        Rectangle rect = new Rectangle(3, 0, 200, 120);
         
         if (rect.contains(mouse)) {
             g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[0] + "°C", mouse.x - 39, y_max - 2);       
             g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[1].substring(11), mouse.x - 45, y_min + 10);
-            g2d.drawLine(mouse.x, 0, mouse.x, 120);
+            g2d.setColor(Color.GRAY); 
+            g2d.drawLine(mouse.x + 1, 0, mouse.x + 1, 120);
         }
+        
+        
+        
                 
         super.repaint();
     }     
