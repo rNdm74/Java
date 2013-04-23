@@ -58,7 +58,7 @@ public class LeftPanel extends JPanel {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 
-                jPanel1MouseDragged(evt);
+                //jPanel1MouseDragged(evt);
             }
         });
     }  

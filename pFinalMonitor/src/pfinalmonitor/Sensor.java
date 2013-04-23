@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -42,6 +43,9 @@ public class Sensor extends javax.swing.JPanel {
     public String name = "";
     
     public Sensor(Color color, String name) {
+        //setPreferredSize(new Dimension(100, 110));
+        //setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //add(vertical);
         //setAlwaysOnTop(true);
         this.color = color;
         this.name = name;

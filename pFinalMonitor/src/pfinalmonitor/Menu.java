@@ -31,32 +31,83 @@ public class Menu extends JMenuBar{
     public Menu(){    
         UIManager.put("PopupMenu.border", BorderFactory.createLineBorder(Color.GRAY, 1));
         
-        menu = new JMenu("File");        
-        menu.setMnemonic(KeyEvent.VK_F);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "The only menu in this program that has menu items");
+        menu = new JMenu("Sensors"); 
+        
         add(menu);
-
-        //a group of JMenuItems
-        menuItem = new JMenuItem("New",
+        
+        submenu = new JMenu("      Temp 1             ");
+        
+        submenu.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        
+        menuItem = new JMenuItem("      Pause             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        submenu.add(menuItem);
+        
+        menu.add(submenu);
+        
+        submenu = new JMenu("      Temp 2             ");
+        submenu.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        menuItem = new JMenuItem("      Pause             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        submenu.add(menuItem);
+        
+        menu.add(submenu);
+        
+        submenu = new JMenu("      Temp 3             ");
+        
+        submenu.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        menuItem = new JMenuItem("      Pause             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        submenu.add(menuItem);
+        menu.add(submenu);
+        
+        menu.addSeparator();
+        
+        menuItem = new JMenuItem("      Light 1             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription(
                 "This doesn't really do anything");
         menu.add(menuItem);
-        menu.addSeparator();
-        menuItem = new JMenuItem("Open",
-                                 new ImageIcon("images/middle.gif"));
-        //menuItem.setMnemonic(KeyEvent.VK_O);
+        
+        menuItem = new JMenuItem("      Light 2             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
         menu.add(menuItem);
         
-        
-        menuItem = new JMenuItem("Save");
+        menuItem = new JMenuItem("      Light 3             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
         menu.add(menuItem);
-        menu.addSeparator();
-        menuItem = new JMenuItem("Exit");
-        menu.add(menuItem);
+//        
+//        
+//        menuItem = new JMenuItem("Save");
+//        menu.add(menuItem);
+//        menu.addSeparator();
+//        menuItem = new JMenuItem("Exit");
+//        menu.add(menuItem);
         //menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
         //menuItem.setMnemonic(KeyEvent.VK_D);
         //menu.add(menuItem);
@@ -94,46 +145,44 @@ public class Menu extends JMenuBar{
 
         //a submenu
         //menu.addSeparator();
-        
-        
-        submenu = new JMenu("Temp 2");
-        submenu.setMnemonic(KeyEvent.VK_S);
-
-        menuItem = new JMenuItem("An item in the submenu");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        submenu.add(menuItem);
-
-        menuItem = new JMenuItem("Another item");
-        submenu.add(menuItem);
-        menu.add(submenu);
-
-        //Build second menu in the menu bar.
-        menu = new JMenu("My Sensors");
-        menu.setMnemonic(KeyEvent.VK_S);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
-        menu.add(submenu);
-         
-        
-        submenu = new JMenu("Temp 1");
-        submenu.setMnemonic(KeyEvent.VK_S);
-
-        menuItem = new JMenuItem("An item in the submenu");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        submenu.add(menuItem);
-
-        menuItem = new JMenuItem("Another item");
-        submenu.add(menuItem);
-        menu.add(submenu);
-        add(menu);
+//        
+//        
+//        submenu = new JMenu("Temp 2");
+//        submenu.setMnemonic(KeyEvent.VK_S);
+//
+//        menuItem = new JMenuItem("An item in the submenu");
+//        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+//                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+//        submenu.add(menuItem);
+//
+//        menuItem = new JMenuItem("Another item");
+//        submenu.add(menuItem);
+//        menu.add(submenu);
+//
+//        //Build second menu in the menu bar.
+//        menu = new JMenu("My Sensors");
+//        menu.setMnemonic(KeyEvent.VK_S);
+//        menu.getAccessibleContext().setAccessibleDescription(
+//                "This menu does nothing");
+//        menu.add(submenu);
+//         
+//        
+//        submenu = new JMenu("Temp 1");
+//        submenu.setMnemonic(KeyEvent.VK_S);
+//
+//        menuItem = new JMenuItem("An item in the submenu");
+//        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+//                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+//        submenu.add(menuItem);
+//
+//        menuItem = new JMenuItem("Another item");
+//        submenu.add(menuItem);
+//        menu.add(submenu);
+//        add(menu);
         menu = new JMenu("Help");
         menu.setMnemonic(KeyEvent.VK_S);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
+        menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         
-        add(menu); 
-        
+        add(menu);
     }
 }
