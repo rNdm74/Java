@@ -35,11 +35,24 @@ public class Menu extends JMenuBar{
         
         add(menu);
         
-        submenu = new JMenu("      Temp 1             ");
+        submenu = new JMenu("Temp 1             ");
         
         submenu.getAccessibleContext().setAccessibleDescription(
                 "This doesn't really do anything");
         
+        menuItem = new JMenuItem("Pause             ",
+                                 KeyEvent.VK_T);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        submenu.add(menuItem);
+        
+        menu.add(submenu);
+        
+        submenu = new JMenu("Temp 2             ");
+        submenu.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
         menuItem = new JMenuItem("      Pause             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -50,24 +63,11 @@ public class Menu extends JMenuBar{
         
         menu.add(submenu);
         
-        submenu = new JMenu("      Temp 2             ");
-        submenu.getAccessibleContext().setAccessibleDescription(
-                "This doesn't really do anything");
-        menuItem = new JMenuItem("      Pause             ",
-                                 KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription(
-                "This doesn't really do anything");
-        submenu.add(menuItem);
-        
-        menu.add(submenu);
-        
-        submenu = new JMenu("      Temp 3             ");
+        submenu = new JMenu("Temp 3             ");
         
         submenu.getAccessibleContext().setAccessibleDescription(
                 "This doesn't really do anything");
-        menuItem = new JMenuItem("      Pause             ",
+        menuItem = new JMenuItem("Pause             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
@@ -78,7 +78,7 @@ public class Menu extends JMenuBar{
         
         menu.addSeparator();
         
-        menuItem = new JMenuItem("      Light 1             ",
+        menuItem = new JMenuItem("Light 1             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
@@ -86,7 +86,7 @@ public class Menu extends JMenuBar{
                 "This doesn't really do anything");
         menu.add(menuItem);
         
-        menuItem = new JMenuItem("      Light 2             ",
+        menuItem = new JMenuItem("Light 2             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
@@ -94,7 +94,7 @@ public class Menu extends JMenuBar{
                 "This doesn't really do anything");
         menu.add(menuItem);
         
-        menuItem = new JMenuItem("      Light 3             ",
+        menuItem = new JMenuItem("Light 3             ",
                                  KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));

@@ -1,16 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pfinalmonitor;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Frame;
+import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.Timer;
-import javax.swing.JFrame;
 
 /**
  *
@@ -18,19 +11,13 @@ import javax.swing.JFrame;
  */
 public class FinalMonitorApp {
 
-    private static GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-    private static int width = gd.getDisplayMode().getWidth();
-    private static int height = gd.getDisplayMode().getHeight();
+    private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    private static final int desktopWidth = gd.getDisplayMode().getWidth();
+    private static final int desktopheight = gd.getDisplayMode().getHeight();
     
-    public static void main(String[] args) {
-        
-        Main m = new Main(width, height){};
-        //m.setJMenuBar(new Menu());
-        
-//        for(Sensor s: sensors){
-//                        
-//        }
-        
-                
+    public static final Dimension size = new Dimension(desktopWidth/3, desktopheight);
+    
+    public static void main(String[] args) {        
+        new Main(size);
     }
 }

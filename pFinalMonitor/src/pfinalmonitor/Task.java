@@ -21,8 +21,12 @@ public class Task extends TimerTask {
     @Override
     public void run() { 
         if(sensor.button3){
-           //sensor.time = new GregorianCalendar().getTime().toString().substring(0,20);
-           String[] s = {new XML().scanData(sensor.name), new GregorianCalendar().getTime().toString().substring(0,20)}; 
+           String data = new XML().scanData(sensor.name);
+           String timeStamp = new GregorianCalendar().getTime().toString();
+                   
+           String[] s = {data.substring(0, data.indexOf('.') + 2), 
+                         timeStamp.substring(0,20)}; 
+           
            sensor.data.add(s); 
         }        
     }

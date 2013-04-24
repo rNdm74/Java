@@ -7,6 +7,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.util.ArrayList;
 
 public class XML {
     
@@ -14,7 +15,7 @@ public class XML {
     private DocumentBuilderFactory dbFactory;
     private DocumentBuilder dBuilder;
     private Document doc;
-    private NodeList nList;
+    private NodeList nList; 
     
     public XML(){
         try{
@@ -30,6 +31,29 @@ public class XML {
             e.printStackTrace();
         }
     }
+    public ArrayList<String> getSensors(){
+        ArrayList<String> list = new ArrayList<>();
+        
+        try {  
+            for (int temp = 0; temp < nList.getLength(); temp++) {  
+
+                Node nNode = nList.item(temp);	
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) { 
+
+                    Element eElement = (Element) nNode;  
+
+                    list.add(eElement.getElementsByTagName("NAME").item(0).getTextContent());
+                }
+            }
+        } 
+        
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    } 
     
     public String scanData(String search){
     	
