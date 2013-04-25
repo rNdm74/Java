@@ -5,11 +5,10 @@
 package pfinalmonitor;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -30,6 +29,8 @@ public class Menu extends JMenuBar{
         
     public Menu(){    
         UIManager.put("PopupMenu.border", BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        this.setPreferredSize(new Dimension(getWidth(), 24));
         
         menu = new JMenu("Sensors"); 
         

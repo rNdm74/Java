@@ -146,13 +146,17 @@ public class LeftPanel extends JPanel {
             
             Rectangle rect = new Rectangle(0, 0, width - 19, getHeight() - 1);
             
+            //int trans = ;
+            
+                    
+                    
             if (hover) {
-                gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F), width * 4, width * 4, Color.CYAN.brighter());
+                gp = new GradientPaint(0,0,new Color(135, 206, 250, 0x2A), 0, getHeight(), new Color(135, 206, 250,0x2F));
                 g2d.setPaint(gp);
-                g2d.fillRoundRect(0, 0, width - 19, getHeight() - 1, 10, 10);
-                gp = new GradientPaint(0,0,Color.CYAN.darker(),width, width, Color.CYAN.darker());
+                g2d.fillRoundRect(0, 0, width - 19, getHeight() - 1, 5, 5);
+                gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
                 g2d.setPaint(gp);
-                g2d.drawRoundRect(0, 0, width - 19, getHeight() - 1, 10, 10);
+                g2d.drawRoundRect(0, 0, width - 19, getHeight() - 1, 5, 5);
             }
         }
         super.repaint();

@@ -2,22 +2,47 @@
 package pfinalmonitor;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.List;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Timer;
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.ListCellRenderer;
+import javax.swing.Renderer;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class Main extends javax.swing.JFrame {
     public static Dimension mainSize;
@@ -68,8 +93,55 @@ public class Main extends javax.swing.JFrame {
             }             
         };   
         
+        JToolBar jtoolbar = new JToolBar(); 
+        FlowLayout layout = new FlowLayout(FlowLayout.LEFT, 2, -1);
+        jtoolbar.setLayout(layout);
+        jtoolbar.setRollover(true);
+        //jtoolbar.setLayout(null);
+        jtoolbar.setFloatable(false);
+        jtoolbar.setPreferredSize(new Dimension(getWidth(), 32));
+        
+        //jtoolbar.addSeparator(new Dimension(5,20));
+        
+        JButton button = new JButton("Pause");        
+        //button.setBounds(10, 0, 90, 31);
+        button.setPreferredSize(new Dimension(90, 31));
+        Image img = Toolkit.getDefaultToolkit().getImage("pause.png");
+        button.setIcon(new ImageIcon(img));    
+        button.setFocusPainted(false);
+        button.setFocusable(false);
+        jtoolbar.add(button);
+        
+        jtoolbar.addSeparator(new Dimension(20,20));
+        
+        button = new JButton("Realtime");
+        button.setPreferredSize(new Dimension(100, 31));   
+        img = Toolkit.getDefaultToolkit().getImage("time.png");
+        button.setIcon(new ImageIcon(img)); 
+        button.setFocusPainted(false);
+        button.setFocusable(false);
+        jtoolbar.add(button);
+        
+        jtoolbar.addSeparator(new Dimension(20,20));
+        
+        button = new JButton("Graph");
+        button.setPreferredSize(new Dimension(80, 31));  
+        img = Toolkit.getDefaultToolkit().getImage("graph.png");
+        button.setIcon(new ImageIcon(img)); 
+        button.setFocusPainted(false);
+        button.setFocusable(false);
+        jtoolbar.add(button);
+        
+        
+        ComboBox sensorsList = new ComboBox(xml);
+        sensorsList.setPreferredSize(new Dimension(80, 29));
+        //sensorsList.addPopupMenuListener(PopupMenuListener);
+        sensorsList.setFocusable(false);
+        jtoolbar.add(sensorsList);
+        
+        getContentPane().add(jtoolbar, BorderLayout.PAGE_START);
         getContentPane().add(jscrollpane, BorderLayout.CENTER);
-                
+        
         setJMenuBar(new Menu());
         
         setMinimumSize(new Dimension(640, 120));

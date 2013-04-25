@@ -15,7 +15,7 @@ public class FinalMonitorApp {
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
     private static final int desktopheight = gd.getDisplayMode().getHeight();
     
-    public static final Dimension size = new Dimension(desktopWidth/3, desktopheight);
+    public static final Dimension size = new Dimension(desktopWidth, desktopheight);
     
     public static void main(String[] args) {        
         new Main(size);
