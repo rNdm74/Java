@@ -76,6 +76,10 @@ class IconListRenderer extends DefaultListCellRenderer{
         
         label.setIconTextGap(15);
         
+        //System.out.println(label.getText());
+            
+        label.setText(label.getText().toUpperCase());
+        
         return label;  
     }
 }

@@ -19,7 +19,7 @@ public class XML {
     
     public XML(){
         try{
-	        fXmlFile = new File("C:/Users/rNdm/Work/Java/pFinalMonitor/src/pfinalmonitor/sensor.xml");	        
+	        fXmlFile = new File("/home/rndm/Work/ProjectThunderhead/sensor.xml");	        
 	        dbFactory = DocumentBuilderFactory.newInstance();
 	        dBuilder = dbFactory.newDocumentBuilder();
 	        doc = dBuilder.parse(fXmlFile); 
@@ -43,7 +43,13 @@ public class XML {
 
                     Element eElement = (Element) nNode;  
 
-                    list.add(eElement.getElementsByTagName("NAME").item(0).getTextContent());
+                    System.out.println(eElement.getElementsByTagName("NAME").item(0).getTextContent());
+                    
+                    String name = eElement.getElementsByTagName("NAME").item(0).getTextContent();
+                    
+                    if (!"datetime".equals(name)) {
+                        list.add(eElement.getElementsByTagName("NAME").item(0).getTextContent());
+                    }                    
                 }
             }
         } 
@@ -87,6 +93,7 @@ public class XML {
      * @return the nList
      */
     public int getnList() {
-        return nList.getLength();
+        ArrayList<String> list = getSensors();
+        return list.size();
     }
 }

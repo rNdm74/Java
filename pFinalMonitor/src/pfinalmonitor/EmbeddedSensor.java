@@ -310,7 +310,7 @@ class EmbeddedSensor extends JPanel {
         }
 
         if (true) {
-            g2d.drawImage(img, width - 17, getHeight() / 2 - 8, null);
+            //g2d.drawImage(img, width - 17, getHeight() / 2 - 8, null);
         }
         
                 

@@ -79,9 +79,12 @@ public class Main extends javax.swing.JFrame {
             
             service.scheduleAtFixedRate(tasks[i],0, 1, TimeUnit.MILLISECONDS);
                       
-            sensors[i].setPreferredSize(new Dimension(600, 120)); 
+            sensors[i].setPreferredSize(new Dimension(700, 120)); 
             
-            jpanel.add(sensors[i]);
+            if (sensors[i].name != "datetime") {
+                jpanel.add(sensors[i]);
+            }
+            
         }
         
         jpanel.setLayout(new GridLayout(numberOfSensors, 1));
@@ -116,7 +119,7 @@ public class Main extends javax.swing.JFrame {
         
         JButton button = new JButton("Pause");        
         //button.setBounds(10, 0, 90, 31);
-        button.setPreferredSize(new Dimension(80, 31));
+        button.setPreferredSize(new Dimension(90, 40));
         Image img = Toolkit.getDefaultToolkit().getImage("pause.png");
         button.setIcon(new ImageIcon(img));    
         button.setFocusPainted(false);
@@ -126,7 +129,7 @@ public class Main extends javax.swing.JFrame {
         toptoolbar.addSeparator(new Dimension(20,20));
         
         button = new JButton("Realtime");
-        button.setPreferredSize(new Dimension(80, 31));   
+        button.setPreferredSize(new Dimension(90, 40));   
         img = Toolkit.getDefaultToolkit().getImage("time.png");
         button.setIcon(new ImageIcon(img)); 
         button.setFocusPainted(false);
@@ -136,7 +139,7 @@ public class Main extends javax.swing.JFrame {
         toptoolbar.addSeparator(new Dimension(20,20));
         
         button = new JButton("Graph");
-        button.setPreferredSize(new Dimension(80, 31));  
+        button.setPreferredSize(new Dimension(90, 40));  
         img = Toolkit.getDefaultToolkit().getImage("graph.png");
         button.setIcon(new ImageIcon(img)); 
         button.setFocusPainted(false);
@@ -161,12 +164,15 @@ public class Main extends javax.swing.JFrame {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 1000, 1000);        
         slider.setFocusable(false);
         slider.setSnapToTicks(true);
-        slider.setPreferredSize(new Dimension(80,30));
+        slider.setPreferredSize(new Dimension(80,40));
+        
         slider.setInverted(true);   
-        //slider.setExtent(50);
+        slider.setPaintLabels(true);
+        slider.setIgnoreRepaint(true);
         //slider.setMinorTickSpacing(50);
         //slider.setMajorTickSpacing(500);
         //slider.setPaintTicks(true);
+        
         sizeAction=new ChangeListener() {
             @Override
             public void stateChanged (ChangeEvent event)
@@ -180,8 +186,8 @@ public class Main extends javax.swing.JFrame {
         
         slider.addChangeListener(sizeAction);  
         
-        time.setPreferredSize(new Dimension(40,30));
-        toptoolbar.add(slider, gbc);  
+        time.setPreferredSize(new Dimension(50,40));
+        toptoolbar.add(slider);  
         toptoolbar.add(time);
                 
         
@@ -192,7 +198,7 @@ public class Main extends javax.swing.JFrame {
         menu = new Menu();
         setJMenuBar(menu);
         
-        setMinimumSize(new Dimension(640, 120));
+        setMinimumSize(new Dimension(700, 120));
         
         setLocation(size.width / 2 - getWidth() / 2, 0);
         

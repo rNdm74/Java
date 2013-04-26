@@ -41,6 +41,8 @@ public class LeftPanel extends JPanel {
     public LeftPanel(RightPanel sensor, ArrayList<String[]> data){
         this.sensor = sensor;
         this.data = data;
+        
+        setOpaque(true);
         //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));//System.out.println(this.getParent().);
         setBackground(Color.white);
         //setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -79,9 +81,10 @@ public class LeftPanel extends JPanel {
     }
     
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) { 
-        setSize((button) ? new Dimension(105, Main.sensors[0].getHeight()) : 
-                new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
-        sensor.setLocation(getWidth(), 0);
+        setVisible(!button);
+//        setSize((button) ? new Dimension(0, Main.sensors[0].getHeight()) : 
+//                new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
+        //sensor.setLocation(getWidth(), 0);
         sensor.setVisible(button);        
         button = !button;
     }                                    
@@ -177,9 +180,9 @@ public class LeftPanel extends JPanel {
             }
             
             if (button) {
-                g2d.setColor(new Color(230,230,230, 0xFF));
-                g2d.drawLine(width - 100, 20, width - 100, getHeight() - 20);
-                g2d.drawImage(img, width - 57, getHeight() / 2 - 8, null);
+                //g2d.setColor(new Color(230,230,230, 0xFF));
+                //g2d.drawLine(width - 100, 20, width - 100, getHeight() - 20);
+                //g2d.drawImage(img, width - 57, getHeight() / 2 - 8, null);
             }
             
         }
