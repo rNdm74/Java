@@ -4,9 +4,11 @@
  */
 package pfinalmonitor;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBoxMenuItem;
@@ -27,10 +29,13 @@ public class Menu extends JMenuBar{
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
         
-    public Menu(){    
+    public Menu(){  
+        
         UIManager.put("PopupMenu.border", BorderFactory.createLineBorder(Color.GRAY, 1));
         
-        this.setPreferredSize(new Dimension(getWidth(), 24));
+        setPreferredSize(new Dimension(getWidth(), 24));
+        
+        setVisible(false);
         
         menu = new JMenu("Sensors"); 
         
@@ -185,5 +190,19 @@ public class Menu extends JMenuBar{
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         
         add(menu);
+        
+        
+        addFocusListener(new java.awt.event.FocusListener() {
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                setVisible(false);
+            }
+        });
     }
 }

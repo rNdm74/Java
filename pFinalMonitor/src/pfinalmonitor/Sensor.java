@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +32,7 @@ public class Sensor extends javax.swing.JPanel {
     private Color color;
     public String name = "";
     
-    public Sensor(Color color, String name) {
+    public Sensor(Color color, String name) throws IOException {
         this.color = color;
         this.name = name;
         setDoubleBuffered(true);
@@ -40,14 +41,19 @@ public class Sensor extends javax.swing.JPanel {
     }
 
     // <editor-fold defaultstate="collapsed" desc="initComponents()">                          
-    private void initComponents() {
+    private void initComponents() throws IOException {
         Dimension size = new Dimension(FinalMonitorApp.size.width, 120);
         
         advancedSensorPanel = new EmbeddedSensor(color, size, data); 
+        advancedSensorPanel.setName(name);
         
-        rightPanel = new RightPanel(leftPanel, size);        
-        rightPanel.add(advancedSensorPanel);         
+        rightPanel = new RightPanel(size);        
+        rightPanel.add(advancedSensorPanel);
+        
         leftPanel = new LeftPanel(rightPanel, data);
+        leftPanel.setName(name);
+        
+        //leftPanel.setSize(new Dimension(400, 120));
         
         rightPanel.setBackground(color);
         leftPanel.setBackground(color);

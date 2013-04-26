@@ -4,6 +4,7 @@ package pfinalmonitor;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
 
 /**
  *
@@ -17,7 +18,7 @@ public class FinalMonitorApp {
     
     public static final Dimension size = new Dimension(desktopWidth, desktopheight);
     
-    public static void main(String[] args) {        
+    public static void main(String[] args) throws IOException {        
         new Main(size);
     }
 }

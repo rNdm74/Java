@@ -74,6 +74,8 @@ class IconListRenderer extends DefaultListCellRenderer{
         // Set icon to display for value 
         label.setIcon(icon); 
         
+        label.setIconTextGap(15);
+        
         return label;  
     }
 }
