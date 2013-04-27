@@ -2,7 +2,6 @@
 package pfinalmonitor;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -81,11 +80,20 @@ public class LeftPanel extends JPanel {
     }
     
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) { 
-        setVisible(!button);
+        //setVisible(!button);
 //        setSize((button) ? new Dimension(0, Main.sensors[0].getHeight()) : 
 //                new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
         //sensor.setLocation(getWidth(), 0);
-        sensor.setVisible(button);        
+        //sensor.setVisible(button);    
+        
+        
+        String name = evt.getComponent().getName();
+        
+        
+        name = "Monitor - " + (name.substring(0, 1).toUpperCase() + name.substring(1));
+        
+        FinalMonitorApp.monitor.setTitle(name);
+        //Main.button3.setText(name);
         button = !button;
     }                                    
     
@@ -115,7 +123,7 @@ public class LeftPanel extends JPanel {
 
         g2d.setColor(new Color(230,230,230, 0xFF));
         g2d.drawLine(width - 1, 0, width - 1, getHeight() - 1);
-        g2d.drawLine(0, getHeight() - 1, width, getHeight() - 1);
+        //g2d.drawLine(70, getHeight() - 1, width - 62, getHeight() - 1);
 
         gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, width, new Color(255,255,255));
         g2d.setPaint(gp);
@@ -131,65 +139,95 @@ public class LeftPanel extends JPanel {
 
         //int sHeight = (int) font.getStringBounds(Sensor.time, frc).getHeight();
 
-        Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
+        Font font = new Font(getFont().getFamily(), Font.PLAIN, 12);
         g2d.setFont(font);
 
         if (data.size() > 2) {
-            int sWidth = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getWidth(); 
-            int sHeight = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getHeight();
+            
 
-            g2d.drawString(data.get(data.size() - 1)[1], width / 2 - sWidth / 2, getHeight() / 2 - sHeight / 2 + 40);
+            //g2d.drawString(data.get(data.size() - 1)[1], width - (sWidth + 20), getHeight() / 2 - sHeight / 2 + 30);
             font = new Font(getFont().getFamily(), Font.PLAIN, 30);
             g2d.setFont(font);
 
-            String s = data.get(data.size() - 1)[0];
+            String value = data.get(data.size() - 1)[0];
 
-            sWidth = (int) font.getStringBounds(s, frc).getWidth();
-
-
-            g2d.drawString(s, width / 2 - sWidth / 2, getHeight() / 2 - sHeight / 2 + 10);
+            int sWidth = (int) font.getStringBounds(value, frc).getWidth();
+            int sHeight = (int) font.getStringBounds(value, frc).getHeight();
+            
+            //System.out.println(sHeight / 2);
+            
+            int valuePosition = (width > 300) ? width / 2 - sWidth / 2 : 100;
+            
+            g2d.drawString(value, valuePosition, getHeight()  / 2 + 8);
+            
             
             Rectangle rect = new Rectangle(0, 0, width - 19, getHeight() - 1);
             
-            font = new Font(getFont().getFamily(), Font.PLAIN, 10);        
-            int rWidth = (int) font.getStringBounds(getName().toUpperCase(), frc).getWidth(); 
-            int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
-
-            g2d.setFont(font);
-            g2d.drawString(getName().toUpperCase(), width / 2 - rWidth / 2, getHeight() / 2 - rHeight / 2 - 30);
             
             
-                    
-                    
-            if (hover) {
-                //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
-                gp = new GradientPaint(0,0,new Color(135, 206, 250, 0x2A), 0, getHeight(), new Color(135, 206, 250,0x2F));
-                g2d.setPaint(gp);
-                g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
-                gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
-                g2d.setPaint(gp);
-                g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
-            }
+            
+            g2d.setColor(new Color(230,230,230, 0xFF));
+            //g2d.drawLine(width - 62, 0, width - 62, getHeight());
+            //g2d.drawLine(70, 0, 70, getHeight());
+            //g2d.setColor(Color.LIGHT_GRAY);
+            //g2d.drawLine(71, 0, 71, getHeight());
             
             BufferedImage img = null;
             String name = getName();
             try {
-                img = ImageIO.read(new File((name.contains("temp"))? "temp.png" : "light.png"));
+                img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
             } catch (IOException e) {
                 
             }
             
             if (button) {
                 //g2d.setColor(new Color(230,230,230, 0xFF));
-                //g2d.drawLine(width - 100, 20, width - 100, getHeight() - 20);
-                //g2d.drawImage(img, width - 57, getHeight() / 2 - 8, null);
+                //g2d.drawLine(width - 60, 0, width - 60, getHeight());
+                //g2d.drawLine(70, 0, 70, getHeight());
+                
+            }
+            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+                    
+            if (hover) {
+                gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+                g2d.setPaint(gp);
+                //g2d.drawLine(70, 0, 70, getHeight() - 2);
+                
+                gp = new GradientPaint(0,-10,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
+                g2d.setPaint(gp);
+                //g2d.drawLine(71, 1, 71, getHeight() - 2);
+                
+                //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
+                gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
+                g2d.setPaint(gp);
+                g2d.fillRoundRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1, 5, 5);
+                
+                gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
+                g2d.setPaint(gp);
+                g2d.fillRoundRect(2, 0, width - 5, getHeight() / 2, 5, 5);
+                
+                gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
+                g2d.setPaint(gp);
+                g2d.drawRoundRect(2, 0, width - 5, getHeight() - 1, 5, 5);
+                        
+                font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, 12);        
+                int rWidth = (int) font.getStringBounds(getName().toUpperCase(), frc).getWidth(); 
+                
+                sWidth = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getWidth(); 
+                sHeight = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getHeight();
+                int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
+
+                g2d.setFont(font);
+                g2d.drawString(getName().toUpperCase(), 15, getHeight() / 2 - rHeight / 2 - 25);
+                g2d.drawString(data.get(data.size() - 1)[1], width - (sWidth + 20), getHeight() / 2 - sHeight / 2 + 45);
+                
+                
             }
             
+            
+                
+            
         }
-        
-        
-        
-        
         super.repaint();
     }
 }

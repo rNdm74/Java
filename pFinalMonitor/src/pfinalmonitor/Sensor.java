@@ -35,7 +35,7 @@ public class Sensor extends javax.swing.JPanel {
     public Sensor(Color color, String name) throws IOException {
         this.color = color;
         this.name = name;
-        setDoubleBuffered(true);
+        //setDoubleBuffered(true);
         setLayout(null);
         initComponents();        
     }

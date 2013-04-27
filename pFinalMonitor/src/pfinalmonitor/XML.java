@@ -19,7 +19,13 @@ public class XML {
     
     public XML(){
         try{
-	        fXmlFile = new File("/home/rndm/Work/ProjectThunderhead/sensor.xml");	        
+                if(System.getProperty("os.name").contains("Windows")){
+                    fXmlFile = new File("C:/Users/rNdm/Work/Java/pFinalMonitor/src/pfinalmonitor/sensor.xml");
+                }
+                else{
+                    fXmlFile = new File("/home/rndm/Work/ProjectThunderhead/sensor.xml");
+                }
+                	        	        
 	        dbFactory = DocumentBuilderFactory.newInstance();
 	        dBuilder = dbFactory.newDocumentBuilder();
 	        doc = dBuilder.parse(fXmlFile); 
@@ -43,7 +49,7 @@ public class XML {
 
                     Element eElement = (Element) nNode;  
 
-                    System.out.println(eElement.getElementsByTagName("NAME").item(0).getTextContent());
+                    //System.out.println(eElement.getElementsByTagName("NAME").item(0).getTextContent());
                     
                     String name = eElement.getElementsByTagName("NAME").item(0).getTextContent();
                     

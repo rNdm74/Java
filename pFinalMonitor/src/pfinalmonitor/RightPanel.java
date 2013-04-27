@@ -5,10 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -125,7 +121,7 @@ public class RightPanel extends JPanel{
         g2d.setColor(new Color(230,230,230, 0xFF));
         
         //System.out.println(getSize());
-        g2d.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
+       // g2d.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
         
         
         

@@ -14,6 +14,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -46,10 +47,18 @@ public class Main extends javax.swing.JFrame {
     private JPanel jpanel;
     private JToolBar toptoolbar;
     private JLabel time;
+    private JButton refresh;
+    private JButton pause;
     private JScrollPane jscrollpane;
     
+    public static JButton button3;
+    private boolean click = true;
+    
+    
+    
     private int numberOfSensors;
-    private final ChangeListener sizeAction;
+    //private final ChangeListener sliderAction;
+    //private final ChangeListener clicked;
         
     public Main(Dimension size) throws IOException{ 
         try {            
@@ -81,7 +90,7 @@ public class Main extends javax.swing.JFrame {
                       
             sensors[i].setPreferredSize(new Dimension(700, 120)); 
             
-            if (sensors[i].name != "datetime") {
+            if (!"datetime".equals(sensors[i].name)) {
                 jpanel.add(sensors[i]);
             }
             
@@ -97,15 +106,15 @@ public class Main extends javax.swing.JFrame {
         };   
                 
         JToolBar bottomtoolbar = new JToolBar(); 
-         
-        toptoolbar.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();       
+        FlowLayout layout = new FlowLayout(FlowLayout.LEFT, 2, 0); 
+        toptoolbar.setLayout(layout);
+        //GridBagConstraints gbc = new GridBagConstraints();       
         
         toptoolbar.setRollover(true);
         toptoolbar.setFloatable(false);
         toptoolbar.setAutoscrolls(true);
         
-        FlowLayout layout = new FlowLayout(FlowLayout.RIGHT, 2, 0);
+        layout = new FlowLayout(FlowLayout.RIGHT, 2, 0);
         bottomtoolbar.setLayout(layout);
         bottomtoolbar.setRollover(true);
         bottomtoolbar.setFloatable(false);
@@ -117,78 +126,331 @@ public class Main extends javax.swing.JFrame {
         bottomtoolbar.addSeparator(new Dimension(5,20));
         bottomtoolbar.add(new JLabel(" SENSORS "));
         
-        JButton button = new JButton("Pause");        
-        //button.setBounds(10, 0, 90, 31);
-        button.setPreferredSize(new Dimension(90, 40));
-        Image img = Toolkit.getDefaultToolkit().getImage("pause.png");
-        button.setIcon(new ImageIcon(img));    
-        button.setFocusPainted(false);
-        button.setFocusable(false);
-        toptoolbar.add(button, gbc);
-        
-        toptoolbar.addSeparator(new Dimension(20,20));
-        
-        button = new JButton("Realtime");
-        button.setPreferredSize(new Dimension(90, 40));   
-        img = Toolkit.getDefaultToolkit().getImage("time.png");
+        JButton button = new JButton("Home");
+        button.setPreferredSize(new Dimension(90, 30));   
+        Image img = Toolkit.getDefaultToolkit().getImage("home.png");
         button.setIcon(new ImageIcon(img)); 
         button.setFocusPainted(false);
         button.setFocusable(false);
-        toptoolbar.add(button, gbc);
-                       
-        toptoolbar.addSeparator(new Dimension(20,20));
-        
-        button = new JButton("Graph");
-        button.setPreferredSize(new Dimension(90, 40));  
-        img = Toolkit.getDefaultToolkit().getImage("graph.png");
-        button.setIcon(new ImageIcon(img)); 
-        button.setFocusPainted(false);
-        button.setFocusable(false);
+        button.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    for(Sensor s: sensors){
+                        s.leftPanel.setVisible(true);
+                        s.rightPanel.setVisible(false);
+                    }
+                    //click = !click;
+                }                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         toptoolbar.add(button);
         
-        toptoolbar.addSeparator(new Dimension(10,0));
-        
-        ComboBox sensorsList = new ComboBox(xml);
-        sensorsList.setPreferredSize(new Dimension(115, 27));
-        //sensorsList.addPopupMenuListener(PopupMenuListener);
-        sensorsList.setFocusable(false);
-        toptoolbar.add(sensorsList, gbc);
-        
-        toptoolbar.addSeparator(new Dimension(20,20));
-        
-        JLabel refresh = new JLabel(" Refresh ");
-        img = Toolkit.getDefaultToolkit().getImage("refresh.png");
-        refresh.setIcon(new ImageIcon(img));
-        toptoolbar.add(refresh,gbc);
-        
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 1000, 1000);        
-        slider.setFocusable(false);
-        slider.setSnapToTicks(true);
-        slider.setPreferredSize(new Dimension(80,40));
-        
-        slider.setInverted(true);   
-        slider.setPaintLabels(true);
-        slider.setIgnoreRepaint(true);
-        //slider.setMinorTickSpacing(50);
-        //slider.setMajorTickSpacing(500);
-        //slider.setPaintTicks(true);
-        
-        sizeAction=new ChangeListener() {
+        JButton button2 = new JButton("Activity");
+        button2.setPreferredSize(new Dimension(90, 30));   
+        img = Toolkit.getDefaultToolkit().getImage("activity.png");
+        button2.setIcon(new ImageIcon(img)); 
+        button2.setFocusPainted(false);
+        button2.setFocusable(false);
+        button2.addMouseListener(new java.awt.event.MouseListener() {
+
             @Override
-            public void stateChanged (ChangeEvent event)
-            {
-                JSlider jslider=(JSlider)event.getSource();
-                int delay = jslider.getValue();
-                time.setText((delay == 1000) ? "1 sec" : delay + " ms");
-                Task.delay = delay;                
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    for(Sensor s: sensors){
+                        s.leftPanel.setVisible(false);
+                        s.rightPanel.setVisible(true);
+                        s.advancedSensorPanel.setVisible(true);
+                    }
+                    //click = !click;
+                }                
             }
-        };
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(button2);
+                       
+        //toptoolbar.addSeparator(new Dimension(20,20));
         
-        slider.addChangeListener(sizeAction);  
+        button3 = new JButton("Graph");
+        button3.setPreferredSize(new Dimension(90, 30));  
+        img = Toolkit.getDefaultToolkit().getImage("graph.png");
+        button3.setIcon(new ImageIcon(img)); 
+        button3.setFocusPainted(false);
+        button3.setFocusable(false);        
+        button3.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    for(Sensor s: sensors){
+                        s.leftPanel.setVisible(false);
+                        s.rightPanel.setVisible(true);
+                        s.advancedSensorPanel.setVisible(false);
+                    }
+                    //click = !click;
+                }                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(button3);
         
-        time.setPreferredSize(new Dimension(50,40));
-        toptoolbar.add(slider);  
-        toptoolbar.add(time);
+        //toptoolbar.addSeparator(new Dimension(10,0));
+        
+//        ComboBox sensorsList = new ComboBox(xml);
+//        sensorsList.setPreferredSize(new Dimension(115, 27));
+//        //sensorsList.addPopupMenuListener(PopupMenuListener);
+//        sensorsList.setFocusable(false);
+//        toptoolbar.add(sensorsList);
+        
+        pause = new JButton("Pause"); 
+        pause.setPreferredSize(new Dimension(90, 30));
+        img = Toolkit.getDefaultToolkit().getImage("pause.png");
+        pause.setIcon(new ImageIcon(img));    
+        pause.setFocusPainted(false);
+        pause.setFocusable(false);
+        pause.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String string = (!click) ? "Pause" : "Play";
+                Task.pause = click;
+                
+                Image img = Toolkit.getDefaultToolkit().getImage(string + ".png");
+                pause.setText(string);
+                pause.setIcon(new ImageIcon(img));
+                click = !click;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(pause);
+        
+        //toptoolbar.addSeparator(new Dimension(20,20));
+        JButton plus = new JButton();
+        plus.setPreferredSize(new Dimension(30, 30));
+        img = Toolkit.getDefaultToolkit().getImage("arrow-7-up.png");
+        plus.setIcon(new ImageIcon(img));
+        plus.setFocusPainted(true);
+        plus.setFocusable(false);
+        plus.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Task.delay += 100;
+                refresh.setText(Long.toString(Task.delay) + " ms");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(plus);
+        
+        
+        refresh = new JButton(Long.toString(Task.delay) + " ms");
+        refresh.setPreferredSize(new Dimension(90, 30));
+        refresh.setFocusable(false);
+        img = Toolkit.getDefaultToolkit().getImage("time.png");
+        refresh.setIcon(new ImageIcon(img));
+        toptoolbar.add(refresh);
+        
+        
+        
+        
+        
+        //toptoolbar.addSeparator(new Dimension(20,20));
+        
+        JButton minus = new JButton();
+        minus.setPreferredSize(new Dimension(30, 30));
+        img = Toolkit.getDefaultToolkit().getImage("arrow-7-down.png");
+        minus.setIcon(new ImageIcon(img));
+        minus.setFocusPainted(false);
+        minus.setFocusable(false);
+        minus.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Task.delay -= 100;
+                refresh.setText(Long.toString(Task.delay) + " ms");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+                System.out.println(e.getButton());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(minus);
+        
+        //toptoolbar.addSeparator(new Dimension(20,20));
+        
+        
+        
+        JButton settings = new JButton("Settings"); 
+        settings.setPreferredSize(new Dimension(90, 30));
+        img = Toolkit.getDefaultToolkit().getImage("settings.png");
+        settings.setIcon(new ImageIcon(img));    
+        settings.setFocusPainted(false);
+        settings.setFocusable(false);
+        settings.addMouseListener(new java.awt.event.MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        toptoolbar.add(settings);
+        
+        //toptoolbar.addSeparator(new Dimension(20,20));
+        
+//        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 1000, 1000);        
+//        slider.setFocusable(false);
+//        slider.setSnapToTicks(true);
+//        slider.setPreferredSize(new Dimension(80,40));
+//        
+//        slider.setInverted(true);   
+//        slider.setPaintLabels(true);
+//        slider.setIgnoreRepaint(true);        
+//        sliderAction=new ChangeListener() {
+//            @Override
+//            public void stateChanged (ChangeEvent event)
+//            {
+//                JSlider jslider=(JSlider)event.getSource();
+//                int delay = jslider.getValue();
+//                time.setText((delay == 1000) ? "1 sec" : delay + " ms");
+//                Task.delay = delay;                
+//            }
+//        };        
+//        slider.addChangeListener(sliderAction);          
+//        time.setPreferredSize(new Dimension(50,40));
+//        toptoolbar.add(slider);  
+//        toptoolbar.add(time);
                 
         
         getContentPane().add(toptoolbar, BorderLayout.PAGE_START);
@@ -196,6 +458,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jscrollpane, BorderLayout.CENTER);
         
         menu = new Menu();
+        
         setJMenuBar(menu);
         
         setMinimumSize(new Dimension(700, 120));
@@ -210,25 +473,28 @@ public class Main extends javax.swing.JFrame {
         // Variables declaration - do not modify
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) { 
+            public void componentResized(ComponentEvent e) {
+                //System.out.println(
                 mainSize = getSize();
                 
                 
                 for (int i = 0; i < sensors.length; i++) {
                     
-                    sensors[i].getComponents()[1].setSize((sensors[i].leftPanel.button) ? 
-                            new Dimension(getWidth(), Main.sensors[0].getHeight()) :
-                            new Dimension(105, Main.sensors[0].getHeight()));
+                    sensors[i].getComponents()[1].setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
+//                            (sensors[i].leftPanel.button) ? 
+//                            ) :
+//                            new Dimension(0, Main.sensors[0].getHeight()));
                     
                     if(sensors[i].leftPanel.button){
                       sensors[i].leftPanel.setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));  
                     }
                      
-                    sensors[i].rightPanel.setSize(getWidth(), Main.sensors[0].getHeight());                    
-                    sensors[i].advancedSensorPanel.setSize(FinalMonitorApp.size.width, Main.sensors[0].getHeight());
-                    sensors[i].advancedSensorPanel.setLocation(getWidth() - (FinalMonitorApp.size.width + 163), 0);  
+                    sensors[i].rightPanel.setSize(getWidth(), Main.sensors[0].getHeight()); 
                     
-                    toptoolbar.setVisible(!(mainSize.width < 180));
+                    sensors[i].advancedSensorPanel.setSize(FinalMonitorApp.size.width, Main.sensors[0].getHeight());
+                    sensors[i].advancedSensorPanel.setLocation(getWidth() - (FinalMonitorApp.size.width +20), 0);  
+                    
+                    //toptoolbar.setVisible(!(mainSize.width < 180));
                 }
                 super.componentResized(e);
             }
@@ -263,8 +529,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void focusLost(FocusEvent e) {
             }
-        });
-        
+        });        
         addWindowListener(new java.awt.event.WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {

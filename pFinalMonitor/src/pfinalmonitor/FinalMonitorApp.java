@@ -16,9 +16,11 @@ public class FinalMonitorApp {
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
     private static final int desktopheight = gd.getDisplayMode().getHeight();
     
-    public static final Dimension size = new Dimension(desktopWidth, desktopheight);
+    protected static final Dimension size = new Dimension(desktopWidth, desktopheight);
+    
+    protected static Main monitor;
     
     public static void main(String[] args) throws IOException {        
-        new Main(size);
+        monitor = new Main(size);
     }
 }

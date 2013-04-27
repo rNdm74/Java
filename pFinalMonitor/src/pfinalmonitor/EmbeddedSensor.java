@@ -12,6 +12,8 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,11 +28,15 @@ import javax.swing.JPanel;
  * @author rndm
  */
 class EmbeddedSensor extends JPanel {    
+    private AffineTransform affinetransform = new AffineTransform();     
+    private FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+    
     private static Polygon p;
     
     private static boolean active;
     
     private static Point mouse = new Point(0,0);
+    
     public int mouseDragged = 1;
     
     public Point point = new Point(0,0);
@@ -65,6 +71,7 @@ class EmbeddedSensor extends JPanel {
     private Dimension size;
     
     Rectangle rect;
+    private boolean hover;
 
     public EmbeddedSensor(Color color, Dimension size, ArrayList<String[]> array) throws IOException {
         
@@ -120,11 +127,13 @@ class EmbeddedSensor extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 active = true;
+                hover = true;
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 active = false;
+                hover=false;
             }
         });
         
@@ -174,7 +183,7 @@ class EmbeddedSensor extends JPanel {
         String name = getName();
         
         width = size.width;
-        height = size.height;
+        height = getHeight();
                 
 //        point.x += (!active) ? 
 //                   ((point.x >= 0) ? 0 : 2) : 
@@ -237,8 +246,8 @@ class EmbeddedSensor extends JPanel {
         g2d.setPaint(gp);
         //g2d.fill (new Rectangle(0, 0, width, height));   
         
-        
-        gp = new GradientPaint(width - 600,0,getBackground(),width, height, Color.RED.darker());
+        //System.out.println((int)yPoints[yPoints.length - 1]);
+        gp = new GradientPaint(width,-100,getBackground(),-width, height *3, Color.RED.darker());
         g2d.setPaint(gp);
         p = new Polygon(xPoly, yPoly, xPoly.length);
         g2d.fillPolygon(p);
@@ -298,22 +307,65 @@ class EmbeddedSensor extends JPanel {
         }
         
         g2d.setColor(new Color(230,230,230, 0xFF));
-        g2d.drawLine(0, getHeight() - 1, width, getHeight() - 1);
+        //g2d.drawLine(0, getHeight() - 1, width - 60, getHeight() - 1);
+                       
+        //System.out.println(Main.mainSize.width);
         
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
+        g2d.setColor(new Color(230,230,230, 0xFF));
+        g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
+                
         BufferedImage img = null;
-        //String name = getName();
-        //System.out.println(name);
         try {
-            img = ImageIO.read(new File((name.contains("temp"))? "temp.png" : "light.png"));
+            img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
         } catch (IOException e) {
 
         }
+        
+        g2d.drawImage(img, width - (Main.mainSize.width - 38), getHeight() / 2 - 16, null);
+        
+        if (hover) {                
+            //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
+            gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
+            g2d.setPaint(gp);
+            g2d.fillRoundRect(width - (Main.mainSize.width - 22), getHeight() / 2, Main.mainSize.width - 23, (getHeight() / 2) - 1, 5, 5);
 
-        if (true) {
-            //g2d.drawImage(img, width - 17, getHeight() / 2 - 8, null);
+            gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
+            g2d.setPaint(gp);
+            g2d.fillRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() / 2, 5, 5);
+
+            gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
+            g2d.setPaint(gp);
+            g2d.drawRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
+                     
+            
+            
+//            gp = new GradientPaint(0,-10,new Color(135, 206, 250,0x2F), 0, getHeight(), new Color(255, 255, 255, 0x2A));
+//            g2d.setPaint(gp);
+//            g2d.fillRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
+//            gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
+//            g2d.setPaint(gp);
+//            g2d.drawRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
+
+            font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, 12);        
+            int rWidth = (int) font.getStringBounds(getName().toUpperCase(), frc).getWidth(); 
+            int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
+
+            g2d.setFont(font);
+            g2d.drawString(getName().toUpperCase(), width - (Main.mainSize.width - 35), getHeight() / 2 - rHeight / 2 - 25);
+            
+            gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+            g2d.setPaint(gp);
+            g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
+            g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
+
+            gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
+            g2d.setPaint(gp);
+            g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
+            g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
         }
         
-                
         super.repaint();
     }     
 
@@ -328,7 +380,7 @@ class EmbeddedSensor extends JPanel {
      * @param active the active to set
      */
     public void setActive(boolean active) {
-        this.active = active;
+        EmbeddedSensor.active = active;
     }
     
     public float map(float x, float in_min, float in_max, float out_min, float out_max)
