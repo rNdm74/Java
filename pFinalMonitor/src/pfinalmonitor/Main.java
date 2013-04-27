@@ -54,8 +54,6 @@ public class Main extends javax.swing.JFrame {
     public static JButton button3;
     private boolean click = true;
     
-    
-    
     private int numberOfSensors;
     //private final ChangeListener sliderAction;
     //private final ChangeListener clicked;
@@ -88,15 +86,25 @@ public class Main extends javax.swing.JFrame {
             
             service.scheduleAtFixedRate(tasks[i],0, 1, TimeUnit.MILLISECONDS);
                       
-            sensors[i].setPreferredSize(new Dimension(700, 120)); 
+            sensors[i].setPreferredSize(new Dimension(400, 120)); 
             
             if (!"datetime".equals(sensors[i].name)) {
                 jpanel.add(sensors[i]);
             }
             
+            
         }
         
-        jpanel.setLayout(new GridLayout(numberOfSensors, 1));
+        
+        //jpanel.setLayout(new GridLayout(numberOfSensors, 1));
+        
+        System.out.println(jpanel.getComponentCount());
+        jpanel.remove(sensors[1]);
+        //jpanel.add(sensors[1]);
+        System.out.println(jpanel.getComponentCount());
+        
+        jpanel.setLayout(new GridLayout(jpanel.getComponentCount(), 0));
+        
         
         jscrollpane = new JScrollPane(jpanel){
             @Override
@@ -104,7 +112,10 @@ public class Main extends javax.swing.JFrame {
                 super.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             }             
         };   
-                
+         
+        
+        //<editor-fold defaultstate="collapsed" desc=" Toolbar ">
+        
         JToolBar bottomtoolbar = new JToolBar(); 
         FlowLayout layout = new FlowLayout(FlowLayout.LEFT, 2, 0); 
         toptoolbar.setLayout(layout);
@@ -403,7 +414,15 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+              jpanel.remove(sensors[0]);
+              jpanel.add(sensors[1]); 
+              System.out.println(jpanel.getComponentCount());
+              
+        
+              jpanel.setLayout(new GridLayout(jpanel.getComponentCount(), 0));
+              
+              jpanel.revalidate();
+              pack();
             }
 
             @Override
@@ -451,7 +470,7 @@ public class Main extends javax.swing.JFrame {
 //        time.setPreferredSize(new Dimension(50,40));
 //        toptoolbar.add(slider);  
 //        toptoolbar.add(time);
-                
+        //</editor-fold>        
         
         getContentPane().add(toptoolbar, BorderLayout.PAGE_START);
         getContentPane().add(bottomtoolbar, BorderLayout.PAGE_END);
@@ -461,7 +480,7 @@ public class Main extends javax.swing.JFrame {
         
         setJMenuBar(menu);
         
-        setMinimumSize(new Dimension(700, 120));
+        //setMinimumSize(new Dimension(700, 120));
         
         setLocation(size.width / 2 - getWidth() / 2, 0);
         
@@ -470,7 +489,6 @@ public class Main extends javax.swing.JFrame {
         setVisible(true); 
         
         //<editor-fold defaultstate="collapsed" desc=" Listeners ">
-        // Variables declaration - do not modify
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

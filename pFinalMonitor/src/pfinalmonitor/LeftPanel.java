@@ -171,31 +171,22 @@ public class LeftPanel extends JPanel {
             //g2d.drawLine(70, 0, 70, getHeight());
             //g2d.setColor(Color.LIGHT_GRAY);
             //g2d.drawLine(71, 0, 71, getHeight());
-            
-            BufferedImage img = null;
-            String name = getName();
-            try {
-                img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
-            } catch (IOException e) {
-                
-            }
-            
             if (button) {
                 //g2d.setColor(new Color(230,230,230, 0xFF));
                 //g2d.drawLine(width - 60, 0, width - 60, getHeight());
-                //g2d.drawLine(70, 0, 70, getHeight());
-                
+                //g2d.drawLine(70, 0, 70, getHeight());                
             }
-            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+            
+            
                     
             if (hover) {
                 gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
                 g2d.setPaint(gp);
-                //g2d.drawLine(70, 0, 70, getHeight() - 2);
+                g2d.drawLine(70, 0, 70, getHeight() - 2);
                 
                 gp = new GradientPaint(0,-10,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
                 g2d.setPaint(gp);
-                //g2d.drawLine(71, 1, 71, getHeight() - 2);
+                
                 
                 //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
                 gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
@@ -219,10 +210,35 @@ public class LeftPanel extends JPanel {
 
                 g2d.setFont(font);
                 g2d.drawString(getName().toUpperCase(), 15, getHeight() / 2 - rHeight / 2 - 25);
-                g2d.drawString(data.get(data.size() - 1)[1], width - (sWidth + 20), getHeight() / 2 - sHeight / 2 + 45);
+                //g2d.drawString(data.get(data.size() - 1)[1], 15, getHeight() / 2 - sHeight / 2 + 45);
+                g2d.drawString(data.get(data.size() - 1)[1], width - (sWidth + 80), getHeight() / 2 - sHeight / 2 + 45);
+                
+                gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+                g2d.setPaint(gp);
+                g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
+                //g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
+
+                gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
+                g2d.setPaint(gp);
+                g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
+                //g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
+                g2d.drawLine(71, 1, 71, getHeight() - 2);
                 
                 
-            }
+                BufferedImage img = null;
+            String name = getName();
+            try {
+                //img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
+                img = ImageIO.read(new File("MD-eject.png"));
+            } catch (IOException e) {}            
+            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+            
+            try {
+                img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
+            } catch (IOException e) {}  
+            g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);
+                
+                }
             
             
                 

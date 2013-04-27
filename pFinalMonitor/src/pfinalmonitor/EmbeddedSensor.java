@@ -314,16 +314,15 @@ class EmbeddedSensor extends JPanel {
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
         g2d.setColor(new Color(230,230,230, 0xFF));
-        g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
+        //g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
                 
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
-        } catch (IOException e) {
-
-        }
         
-        g2d.drawImage(img, width - (Main.mainSize.width - 38), getHeight() / 2 - 16, null);
+        
+//        try {
+//            
+//        } catch (IOException e) {}  
+//        
+//        g2d.drawImage(img, width - 38, getHeight() / 2 - 16, null);
         
         if (hover) {                
             //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
@@ -364,6 +363,14 @@ class EmbeddedSensor extends JPanel {
             g2d.setPaint(gp);
             g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
             g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
+            
+            BufferedImage img = null;
+            try {
+                //img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
+                img = ImageIO.read(new File("MD-eject.png"));
+            } catch (IOException e) {}  
+        
+            g2d.drawImage(img, width - (Main.mainSize.width - 38), getHeight() / 2 - 16, null);
         }
         
         super.repaint();
