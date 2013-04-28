@@ -74,24 +74,16 @@ class EmbeddedSensor extends JPanel {
     private boolean hover;
 
     public EmbeddedSensor(Color color, Dimension size, ArrayList<String[]> array) throws IOException {
-        
-        //img = new ImageIcon("temp.png").getImage();
-        
-        
-        //setLayout(null);
         this.color = color;
         this.size = FinalMonitorApp.size;        
-        this.array = array;
-        
-        this.setOpaque(false);
-        setSize(size);
+        this.array = array;        
+        setOpaque(false);
+        //setBackground(Color.white);
+        //setSize(size);
         
         rect = new Rectangle(4, 0, size.width - 100, getHeight());
-        //this.setVisible(false);
-        //setLocation(200, 0);
-        //this.setBorder(BorderFactory.createEtchedBorder());
         
-        setBackground(Color.white);
+        
         
         xPoints = new float[size.width - 100];        
         xPoly = new int[size.width - 100 + 2];
@@ -135,8 +127,7 @@ class EmbeddedSensor extends JPanel {
                 active = false;
                 hover=false;
             }
-        });
-        
+        });        
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -156,8 +147,7 @@ class EmbeddedSensor extends JPanel {
         mouseDragged = ((evt.getX() > x) ? 1 : -1);
         x = evt.getX();
         
-    }
-    
+    }    
     private void advancedSensorPanelMouseMoved(java.awt.event.MouseEvent evt) {
         
         
@@ -182,12 +172,15 @@ class EmbeddedSensor extends JPanel {
         //setSize(size);
         String name = getName();
         
-        width = size.width;
+        width = getWidth();
         height = getHeight();
                 
 //        point.x += (!active) ? 
 //                   ((point.x >= 0) ? 0 : 2) : 
 //                   ((point.x <= -width + 1) ? 0 : -2);
+        
+        
+        
         
         for (int j = 0; j < xPoints.length; j++) {
             xPoints[j] = j;
@@ -219,9 +212,6 @@ class EmbeddedSensor extends JPanel {
                     yPoints[j] = (float) map(get[get.length - (j + 1)], min_light, max_light, getHeight(), 0);               
                     yPoly[j] = (int) map(get[get.length - (j + 1)], min_light, max_light, getHeight(), 0);
                }
-                       
-                   
-               
             }
         }
             
@@ -242,17 +232,20 @@ class EmbeddedSensor extends JPanel {
 //        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
 //                              RenderingHints.VALUE_RENDER_QUALITY );
         
-        GradientPaint gp = new GradientPaint(0,0,new Color(230,230,230, 0xA0),width * 2, 0, new Color(255,255,255));
-        g2d.setPaint(gp);
+//        GradientPaint gp = new GradientPaint(0,0,Color.BLUE,getWidth() / 2, 0, new Color(255,255,255));
+//        g2d.setPaint(gp);
         //g2d.fill (new Rectangle(0, 0, width, height));   
         
         //System.out.println((int)yPoints[yPoints.length - 1]);
-        gp = new GradientPaint(width,-100,getBackground(),-width, height *3, Color.RED.darker());
+        //System.out.println(width / 8);
+        //System.out.println(Main.mainSize.width);
+        //GradientPaint gp = new GradientPaint(0, 0, Color.RED.darker() , width, 0, Color.WHITE);
+        GradientPaint gp = new GradientPaint((width - Main.mainSize.width) + 85, 0, Color.WHITE , width, 0, Color.RED.darker());
         g2d.setPaint(gp);
-        p = new Polygon(xPoly, yPoly, xPoly.length);
-        g2d.fillPolygon(p);
+//        p = new Polygon(xPoly, yPoly, xPoly.length);
+//        g2d.fillPolygon(p);
         
-        g2d.setColor(Color.RED.darker());
+        //g2d.setColor(gp);
         for (int i = 0; i < xPoints.length - 1; i++) {
             g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
         }

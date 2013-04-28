@@ -20,7 +20,7 @@ public class Task implements Runnable{
     @Override
     public void run() {
         if(time > delay && !pause){
-            
+           //System.out.println(sensor.data.s); 
            String data = new XML().scanData(sensor.name);
            data = (sensor.name.contains("temp")) ? 
                    data.substring(0, data.indexOf('.') + 2) + " °C" : data;

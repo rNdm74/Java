@@ -41,7 +41,7 @@ public class LeftPanel extends JPanel {
         this.sensor = sensor;
         this.data = data;
         
-        setOpaque(true);
+        setOpaque(false);
         //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));//System.out.println(this.getParent().);
         setBackground(Color.white);
         //setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -87,14 +87,14 @@ public class LeftPanel extends JPanel {
         //sensor.setVisible(button);    
         
         
-        String name = evt.getComponent().getName();
+        //String name = evt.getComponent().getName();
         
         
-        name = "Monitor - " + (name.substring(0, 1).toUpperCase() + name.substring(1));
+        //name = "Monitor - " + (name.substring(0, 1).toUpperCase() + name.substring(1));
         
-        FinalMonitorApp.monitor.setTitle(name);
+        //FinalMonitorApp.monitor.setTitle(name);
         //Main.button3.setText(name);
-        button = !button;
+        //button = !button;
     }                                    
     
     @Override
@@ -133,18 +133,10 @@ public class LeftPanel extends JPanel {
 
 
         g2d.setColor(Color.DARK_GRAY);
-        
-        
-
-
-        //int sHeight = (int) font.getStringBounds(Sensor.time, frc).getHeight();
 
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 12);
         g2d.setFont(font);
-
         if (data.size() > 2) {
-            
-
             //g2d.drawString(data.get(data.size() - 1)[1], width - (sWidth + 20), getHeight() / 2 - sHeight / 2 + 30);
             font = new Font(getFont().getFamily(), Font.PLAIN, 30);
             g2d.setFont(font);
@@ -152,33 +144,15 @@ public class LeftPanel extends JPanel {
             String value = data.get(data.size() - 1)[0];
 
             int sWidth = (int) font.getStringBounds(value, frc).getWidth();
-            int sHeight = (int) font.getStringBounds(value, frc).getHeight();
-            
-            //System.out.println(sHeight / 2);
-            
+            int sHeight = (int) font.getStringBounds(value, frc).getHeight();            
             int valuePosition = (width > 300) ? width / 2 - sWidth / 2 : 100;
             
             g2d.drawString(value, valuePosition, getHeight()  / 2 + 8);
-            
-            
+                        
             Rectangle rect = new Rectangle(0, 0, width - 19, getHeight() - 1);
             
-            
-            
-            
             g2d.setColor(new Color(230,230,230, 0xFF));
-            //g2d.drawLine(width - 62, 0, width - 62, getHeight());
-            //g2d.drawLine(70, 0, 70, getHeight());
-            //g2d.setColor(Color.LIGHT_GRAY);
-            //g2d.drawLine(71, 0, 71, getHeight());
-            if (button) {
-                //g2d.setColor(new Color(230,230,230, 0xFF));
-                //g2d.drawLine(width - 60, 0, width - 60, getHeight());
-                //g2d.drawLine(70, 0, 70, getHeight());                
-            }
-            
-            
-                    
+                  
             if (hover) {
                 gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
                 g2d.setPaint(gp);
@@ -226,23 +200,17 @@ public class LeftPanel extends JPanel {
                 
                 
                 BufferedImage img = null;
-            String name = getName();
-            try {
-                //img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
-                img = ImageIO.read(new File("MD-eject.png"));
-            } catch (IOException e) {}            
-            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
-            
-            try {
-                img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
-            } catch (IOException e) {}  
-            g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);
-                
+                String name = getName();
+                try {                    
+                    img = ImageIO.read(new File("MD-eject.png"));
+                } catch (IOException e) {}            
+                g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+
+                try {
+                    img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
+                } catch (IOException e) {}  
+                g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);                
                 }
-            
-            
-                
-            
         }
         super.repaint();
     }

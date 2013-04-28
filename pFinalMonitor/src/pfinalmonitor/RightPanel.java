@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 /**
@@ -19,11 +20,10 @@ public class RightPanel extends JPanel{
     private Dimension size;
     private int width;
     
-    public RightPanel(Dimension size){
+    public RightPanel(Dimension size){        
+        //setSize(size);
         
-        setSize(size);
-        
-        //setLocation(100, 0);
+        setOpaque(false);
         
         setLayout(null);
         
@@ -118,7 +118,7 @@ public class RightPanel extends JPanel{
 //        //g2d.drawString("REAL-TIME", 17, 103);
 //
 //
-        g2d.setColor(new Color(230,230,230, 0xFF));
+//        g2d.setColor(new Color(230,230,230, 0xFF));
         
         //System.out.println(getSize());
        // g2d.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
@@ -127,7 +127,5 @@ public class RightPanel extends JPanel{
         
         super.repaint();
     } 
-    
-    
 }
 
