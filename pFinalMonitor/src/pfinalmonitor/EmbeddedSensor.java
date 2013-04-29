@@ -247,7 +247,7 @@ class EmbeddedSensor extends JPanel {
         
         //g2d.setColor(gp);
         for (int i = 0; i < xPoints.length - 1; i++) {
-            g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
+            //g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
         }
         //g2d.drawPolyline(xPoints, yPoints, xPoints.length);
         g2d.setColor(Color.DARK_GRAY);
@@ -293,20 +293,20 @@ class EmbeddedSensor extends JPanel {
         rect = new Rectangle(0, 0, width - 100, height);
         g2d.setColor(Color.DARK_GRAY);
         if (rect.contains(mouse) && active) {
-            g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[0], mouse.x - 39, y_max - 2);       
+            //g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[0], mouse.x - 39, y_max - 2);       
             g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[1].substring(11), mouse.x - 45, y_min + 10);
             g2d.setColor(Color.RED.darker()); 
             g2d.drawLine(mouse.x + 1, 0, mouse.x + 1, getHeight());
         }
         
-        g2d.setColor(new Color(230,230,230, 0xFF));
+        //g2d.setColor(new Color(230,230,230, 0xFF));
         //g2d.drawLine(0, getHeight() - 1, width - 60, getHeight() - 1);
                        
         //System.out.println(Main.mainSize.width);
         
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
-        g2d.setColor(new Color(230,230,230, 0xFF));
+        //g2d.setColor(Color.WHITE);
+        //g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
+        //g2d.setColor(new Color(230,230,230, 0xFF));
         //g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
                 
         
@@ -321,15 +321,16 @@ class EmbeddedSensor extends JPanel {
             //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
             gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRoundRect(width - (Main.mainSize.width - 22), getHeight() / 2, Main.mainSize.width - 23, (getHeight() / 2) - 1, 5, 5);
+            System.out.println(Main.mainSize.width);
+            g2d.fillRect(width - (Main.mainSize.width - 2), getHeight() / 2, Main.mainSize.width -8, (getHeight() / 2) - 1);
 
             gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() / 2, 5, 5);
+            g2d.fillRect(width - (Main.mainSize.width - 2), 0, Main.mainSize.width -8, getHeight() / 2);
 
             gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
             g2d.setPaint(gp);
-            g2d.drawRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
+            g2d.drawRect(width - (Main.mainSize.width-2), 0, Main.mainSize.width - 8, getHeight() - 1);
                      
             
             
@@ -345,17 +346,17 @@ class EmbeddedSensor extends JPanel {
             int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
 
             g2d.setFont(font);
-            g2d.drawString(getName().toUpperCase(), width - (Main.mainSize.width - 35), getHeight() / 2 - rHeight / 2 - 25);
+            g2d.drawString(getName().toUpperCase(), width - (Main.mainSize.width - 15), getHeight() / 2 - rHeight / 2 - 25);
             
             gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
             g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
-            g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
+            g2d.drawLine(width - (Main.mainSize.width - 70), 0, width - (Main.mainSize.width - 70), getHeight() - 2);
 
             gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
             g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
-            g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
+            g2d.drawLine(width - (Main.mainSize.width - 71), 1, width - (Main.mainSize.width - 71), getHeight() - 2);
             
             BufferedImage img = null;
             try {
@@ -363,7 +364,7 @@ class EmbeddedSensor extends JPanel {
                 img = ImageIO.read(new File("MD-eject.png"));
             } catch (IOException e) {}  
         
-            g2d.drawImage(img, width - (Main.mainSize.width - 38), getHeight() / 2 - 16, null);
+            g2d.drawImage(img, width - (Main.mainSize.width - 18), getHeight() / 2 - 16, null);
         }
         
         super.repaint();

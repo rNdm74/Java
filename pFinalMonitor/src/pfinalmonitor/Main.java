@@ -91,6 +91,8 @@ public class Main extends javax.swing.JFrame {
         }
           
         // Sets panel layout
+        
+        System.out.println(jpanel.getComponentCount());
         jpanel.setLayout(new GridLayout(jpanel.getComponentCount(), 1));
         
         
@@ -392,12 +394,12 @@ public class Main extends javax.swing.JFrame {
               //jscrollpane.setSize(new Dimension(getWidth(), 120 * 4));
               //setSize(new Dimension(getWidth(), 120 * 4));
               
-              getContentPane().removeAll();
+              //getContentPane().removeAll();
               
-              getContentPane().add(toptoolbar, BorderLayout.PAGE_START);
-              getContentPane().add(bottomtoolbar, BorderLayout.PAGE_END);
-              getContentPane().add(jscrollpane , BorderLayout.CENTER);
-              //pack();
+              //getContentPane().add(toptoolbar, BorderLayout.PAGE_START);
+              //getContentPane().add(bottomtoolbar, BorderLayout.PAGE_END);
+              //getContentPane().add(jscrollpane , BorderLayout.CENTER);
+              pack();
             }
 
             @Override
@@ -450,11 +452,12 @@ public class Main extends javax.swing.JFrame {
                 int exsize = (System.getProperty("os.name").contains("Windows")) ? 18 : 0;
                 
                 for (int i = 0; i < sensors.length; i++) {                     
-                    sensors[i].leftPanel.setSize(new Dimension(getWidth() - exsize, jpanel.getHeight() / 7)); 
-                    sensors[i].rightPanel.setSize(new Dimension(getWidth() - exsize, jpanel.getHeight() / 7));
+                    sensors[i].leftPanel.setSize(new Dimension(getWidth() - exsize, sensors[0].getHeight())); 
+                    sensors[i].rightPanel.setSize(new Dimension(getWidth() - exsize, sensors[0].getHeight()));
                     
-                    sensors[i].advancedSensorPanel.setSize(new Dimension(FinalMonitorApp.size.width, jpanel.getHeight() / 7));
-                    sensors[i].advancedSensorPanel.setLocation(getWidth() - (FinalMonitorApp.size.width + 20), 0);
+                    System.out.println(FinalMonitorApp.size.width);
+                    sensors[i].advancedSensorPanel.setSize(new Dimension(FinalMonitorApp.size.width + 22, sensors[0].getHeight()));
+                    sensors[i].advancedSensorPanel.setLocation(getWidth() - (FinalMonitorApp.size.width + 22), 0);
                 }
                 super.componentResized(e);
             }

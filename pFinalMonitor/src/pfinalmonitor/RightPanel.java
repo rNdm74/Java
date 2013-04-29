@@ -3,9 +3,11 @@ package pfinalmonitor;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import javax.swing.JPanel;
 
 /**
@@ -21,7 +23,7 @@ public class RightPanel extends JPanel{
     private int width;
     
     public RightPanel(Dimension size){        
-        //setSize(size);
+        setSize(size);
         
         setOpaque(false);
         
@@ -53,8 +55,8 @@ public class RightPanel extends JPanel{
         //g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
         //    RenderingHints.VALUE_RENDER_QUALITY );
 
-        //GradientPaint gp = new GradientPaint(0,0, Color.BLUE, width, 0, new Color(230,230,230, 0xA0));
-        //g2d.setPaint(gp);
+        GradientPaint gp = new GradientPaint(0,0, Color.GRAY.brighter(), width, 0, new Color(230,230,230, 0xA0));
+        g2d.setPaint(gp);
 //
         //g2d.fill (new Rectangle(0, 0, getWidth(), getHeight()));
 //

@@ -165,15 +165,15 @@ public class LeftPanel extends JPanel {
                 //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
                 gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
                 g2d.setPaint(gp);
-                g2d.fillRoundRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1, 5, 5);
+                g2d.fillRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1);
                 
                 gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
                 g2d.setPaint(gp);
-                g2d.fillRoundRect(2, 0, width - 5, getHeight() / 2, 5, 5);
+                g2d.fillRect(2, 0, width - 5, getHeight() / 2);
                 
                 gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
                 g2d.setPaint(gp);
-                g2d.drawRoundRect(2, 0, width - 5, getHeight() - 1, 5, 5);
+                g2d.drawRect(2, 0, width - 5, getHeight() - 1);
                         
                 font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, 12);        
                 int rWidth = (int) font.getStringBounds(getName().toUpperCase(), frc).getWidth(); 
