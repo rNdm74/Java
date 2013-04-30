@@ -39,11 +39,11 @@ class Activity extends JPanel {
     
     public int mouseDragged = 1;
     
-    public Point point = new Point(0,0);
+    
     	
-    public float[] xPoints;
-    public float[] yPoints;
-    public float[] get;
+    public int[] xPoints;
+    public int[] yPoints;
+    //public ArrayList<Float> get;
     //private static int[] xPoly;
     //private static int[] yPoly;
     
@@ -78,35 +78,36 @@ class Activity extends JPanel {
         this.data = data; 
         
         setVisible(false);
-                
-        xPoints = new float[600];    
         
-        yPoints = new float[xPoints.length];
+        //points = new ArrayList<>();
         
-        get = new float[xPoints.length];
+        //xPoints = new ArrayList<>(); 
+        //yPoints = new ArrayList<>();
+        //get = new ArrayList<>();
         
-        for (int i = 0; i < yPoints.length; i++) {
-            String[] s = {"0000", new GregorianCalendar().getTime().toString().substring(0,20)};
-            data.add(s);
-            yPoints[i] = Float.parseFloat(data.get(i)[0]);
-        }
+//        for (int i = 0; i < 5760; i++) {
+//            xPoints.add((float)i);
+//            String[] s = {"0000", new GregorianCalendar().getTime().toString().substring(0,20)};
+//            data.add(s);
+//            yPoints.add(Float.parseFloat(data.get(i)[0]));
+//        }
         
         
         addMouseListener(new java.awt.event.MouseListener() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            	
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
             }
 
             @Override
@@ -160,32 +161,43 @@ class Activity extends JPanel {
     }
     
     @Override
-    public void paint(Graphics g){        
-        super.paintComponent( g );
-        Graphics2D g2d = (Graphics2D)g;  
-        
-        width = sensorpanel.getWidth();
+    public void paint(Graphics g){ 
+    	width = sensorpanel.getWidth();
         height = getHeight();
         
-        // for antialiasing geometric shapes
-        //g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-        //                      RenderingHints.VALUE_ANTIALIAS_ON );
+        super.paintComponent( g );
+        Graphics2D g2d = (Graphics2D)g;
         
         // for antialiasing text
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-//        // to go for quality over speed
-//        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
-//                              RenderingHints.VALUE_RENDER_QUALITY );
+        GradientPaint gp = new GradientPaint((
+             width - Main.mainSize.width) + 85, 
+             0, 
+             Color.WHITE , 
+             width, 
+             0, 
+             Color.RED.darker()
+             );
         
-
-        GradientPaint gp = new GradientPaint((width - Main.mainSize.width) + 85, 0, Color.WHITE , width, 0, Color.RED.darker());
         g2d.setPaint(gp);
         
-        for (int i = 0; i < xPoints.length - 1; i++) {
-            g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
-        }
+        
+        
+        g.drawPolyline(xPoints, yPoints, xPoints.length - 1);
+        
+//        if (xPoints.size() > 4) {
+//            for (int index = 0; index < xPoints.size() - 1; index++) {
+//                g2d.draw(new Line2D.Float(
+//            		xPoints.get(index + 1),
+//            		yPoints.get(index + 1), 
+//            		xPoints.get(index),
+//            		yPoints.get(index))
+//                );
+//            }
+//        }
+        
         
         g2d.setColor(Color.DARK_GRAY);
         
@@ -233,7 +245,9 @@ class Activity extends JPanel {
         //g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
         //g2d.setColor(new Color(230,230,230, 0xFF));
         //g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
+        
         mouseOver(g2d);  
+        
         super.repaint();
     }     
 

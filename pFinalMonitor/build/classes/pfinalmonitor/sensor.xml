@@ -2,37 +2,37 @@
 <DATA>
     <SENSOR type="output">
         <NAME>temp1</NAME>
-        <VALUE updated="yes">3.94</VALUE>
+        <VALUE updated="yes">5.4</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
     <SENSOR type="output">
         <NAME>temp2</NAME>
-        <VALUE updated="yes">21.05</VALUE>
+        <VALUE updated="yes">12.05</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
     <SENSOR type="output"> 
         <NAME>temp3</NAME>
-        <VALUE updated="yes">-4.07</VALUE>
+        <VALUE updated="yes">12.07</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
     <SENSOR type="output">
         <NAME>light1</NAME>
-        <VALUE updated="yes">10</VALUE>
+        <VALUE updated="yes">120</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
 	<SENSOR type="output">
         <NAME>light2</NAME>
-        <VALUE updated="yes">255</VALUE>
+        <VALUE updated="yes">305</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
 	<SENSOR type="output">
         <NAME>light3</NAME>
-        <VALUE updated="yes">493</VALUE>
+        <VALUE updated="yes">200</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
     	<SENSOR type="output">
         <NAME>light4</NAME>
-        <VALUE updated="yes">1000</VALUE>
+        <VALUE updated="yes">500</VALUE>
         <TYPE>OUTPUT</TYPE>
     </SENSOR>
 </DATA>

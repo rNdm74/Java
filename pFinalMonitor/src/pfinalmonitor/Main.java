@@ -7,7 +7,6 @@ import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.io.*;
-import java.security.Policy;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -26,7 +25,7 @@ public class Main extends javax.swing.JFrame {
 
             pack();
 
-            setVisible(true);            
+            setVisible(true);        
             
         } catch (ClassNotFoundException | 
                  InstantiationException | 
@@ -40,11 +39,9 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void componentResized(ComponentEvent e) {
                 mainSize = getSize();
-                //System.out.println(mainSize);  
                 
-                for (Sensor s: sensors) {                     
-                    s.home.setSize(frameSize()); 
-                    //s.graph.setSize(frameSize());
+                for (Sensor s: sensors) { 
+                    s.home.setSize(frameSize());
                     s.activity.setSize(frameSize());
                 }
                 
@@ -169,7 +166,16 @@ public class Main extends javax.swing.JFrame {
             }
         });
         return settings; 
-    }    
+    } 
+    private JButton refresh() {
+        Image img;
+        refresh = new JButton(Long.toString(Task.delay) + " ms");
+        refresh.setPreferredSize(new Dimension(90, 30));
+        refresh.setFocusable(false);
+        img = Toolkit.getDefaultToolkit().getImage("time.png");
+        refresh.setIcon(new ImageIcon(img));
+        return refresh;
+    }
     private JButton minus() {
         Image img;
         JButton minus = new JButton();
@@ -189,7 +195,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 
-                System.out.println(e.getButton());
+                //System.out.println(e.getButton());
             }
 
             @Override
@@ -208,15 +214,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         return minus;
-    }
-    private JButton refresh() {
-        Image img;
-        refresh = new JButton(Long.toString(Task.delay) + " ms");
-        refresh.setPreferredSize(new Dimension(90, 30));
-        refresh.setFocusable(false);
-        img = Toolkit.getDefaultToolkit().getImage("time.png");
-        refresh.setIcon(new ImageIcon(img));
-        return refresh;
     }
     private JButton plus() {
         Image img;
@@ -591,14 +588,6 @@ public class Main extends javax.swing.JFrame {
     }
     private JScrollPane jscrollPane() throws IOException {
         jscrollpane = new JScrollPane(sensorPanel()){ 
-//            @Override
-//            public void setVerticalScrollBarPolicy(int policy) {
-//                int never = ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
-//                int asneeded = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
-//                
-//                System.out.println(click);
-//                super.setVerticalScrollBarPolicy((click) ? never : asneeded);
-//            }
             @Override
             public void setHorizontalScrollBarPolicy(int policy) {
                     super.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
