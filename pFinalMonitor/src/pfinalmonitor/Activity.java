@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  *
  * @author rndm
  */
-class EmbeddedSensor extends JPanel {    
+class Activity extends JPanel {    
     private AffineTransform affinetransform = new AffineTransform();     
     private FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
     
@@ -41,63 +41,56 @@ class EmbeddedSensor extends JPanel {
     
     public Point point = new Point(0,0);
     	
-    private static float[] xPoints;
-    private static float[] yPoints;
-    private float[] get;
-    private static int[] xPoly;
-    private static int[] yPoly;
+    public float[] xPoints;
+    public float[] yPoints;
+    public float[] get;
+    //private static int[] xPoly;
+    //private static int[] yPoly;
     
     private int width;
     private int height;
     
-    private int min_temp = -15;
-    private int max_temp = 40;
+    public int min_temp = -15;
+    public int max_temp = 40;
     
-    private int min_light = 0;
-    private int max_light = 1023;
+    public int min_light = 0;
+    public int max_light = 1023;
     
-    private int arraySize;
+    public int arraySize;
     
     private int x;
     
     public static String v;
 	
-    private ArrayList<String[]> array;	
+    public ArrayList<String[]> data;	
     
-    private Color color;
-    //private Image img;
+    //private Color color;
+    private JPanel sensorpanel;
     
     
-    private Dimension size;
+    //private Dimension size;
     
     Rectangle rect;
     private boolean hover;
 
-    public EmbeddedSensor(Color color, Dimension size, ArrayList<String[]> array) throws IOException {
-        this.color = color;
-        this.size = FinalMonitorApp.size;        
-        this.array = array;        
-        setOpaque(false);
-        //setBackground(Color.white);
-        //setSize(size);
+    public Activity(JPanel sensorpanel, ArrayList<String[]> data) throws IOException {
+        this.sensorpanel = sensorpanel;        
+        this.data = data; 
         
-        rect = new Rectangle(4, 0, size.width - 100, getHeight());
-        
-        
-        
-        xPoints = new float[size.width - 100];        
-        xPoly = new int[size.width - 100 + 2];
+        setVisible(false);
                 
+        xPoints = new float[600];    
+        
         yPoints = new float[xPoints.length];
-        yPoly = new int[xPoly.length]; 
         
         get = new float[xPoints.length];
         
         for (int i = 0; i < yPoints.length; i++) {
             String[] s = {"0000", new GregorianCalendar().getTime().toString().substring(0,20)};
-            array.add(s);
-            yPoints[i] = Float.parseFloat(array.get(i)[0]);
+            data.add(s);
+            yPoints[i] = Float.parseFloat(data.get(i)[0]);
         }
+        
         
         addMouseListener(new java.awt.event.MouseListener() {
 
@@ -167,58 +160,12 @@ class EmbeddedSensor extends JPanel {
     }
     
     @Override
-    public void paint(Graphics g){
-        //setLocation(point);
-        //setSize(size);
-        String name = getName();
-        
-        width = getWidth();
-        height = getHeight();
-                
-//        point.x += (!active) ? 
-//                   ((point.x >= 0) ? 0 : 2) : 
-//                   ((point.x <= -width + 1) ? 0 : -2);
-        
-        
-        
-        
-        for (int j = 0; j < xPoints.length; j++) {
-            xPoints[j] = j;
-            xPoly[j] = (int)xPoints[j];
-        }
-        
-        xPoly[xPoly.length-2] = (int)xPoints[xPoints.length - 1];
-        xPoly[xPoly.length-1] = (int)xPoints[0];
-        
-        yPoly[yPoly.length-2] = height;
-        yPoly[yPoly.length-1] = height;                
-        
-        arraySize = array.size();  
-                
-        if (arraySize > 2) {            
-            for (int j = 0; j < get.length; j++) {
-               // Converting int to float array
-                            
-               
-               //(name.contains("temp"))? min_temp : min_light)
-               //(name.contains("temp"))? max_temp : max_light)
-               if (name.contains("temp")) {
-                    get[j] = Float.parseFloat(array.get(arraySize - (j + 1))[0].substring(0, 2)); 
-                    yPoints[j] = (float) map(get[get.length - (j + 1)], min_temp, max_temp, getHeight(), 0);               
-                    yPoly[j] = (int) map(get[get.length - (j + 1)], min_temp, max_temp, getHeight(), 0);
-               }
-               else{
-                    get[j] = Float.parseFloat(array.get(arraySize - (j + 1))[0]); 
-                    yPoints[j] = (float) map(get[get.length - (j + 1)], min_light, max_light, getHeight(), 0);               
-                    yPoly[j] = (int) map(get[get.length - (j + 1)], min_light, max_light, getHeight(), 0);
-               }
-            }
-        }
-            
-        
-        
+    public void paint(Graphics g){        
         super.paintComponent( g );
-        Graphics2D g2d = (Graphics2D)g;
+        Graphics2D g2d = (Graphics2D)g;  
+        
+        width = sensorpanel.getWidth();
+        height = getHeight();
         
         // for antialiasing geometric shapes
         //g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
@@ -232,69 +179,47 @@ class EmbeddedSensor extends JPanel {
 //        g2d.setRenderingHint( RenderingHints.KEY_RENDERING,
 //                              RenderingHints.VALUE_RENDER_QUALITY );
         
-//        GradientPaint gp = new GradientPaint(0,0,Color.BLUE,getWidth() / 2, 0, new Color(255,255,255));
-//        g2d.setPaint(gp);
-        //g2d.fill (new Rectangle(0, 0, width, height));   
-        
-        //System.out.println((int)yPoints[yPoints.length - 1]);
-        //System.out.println(width / 8);
-        //System.out.println(Main.mainSize.width);
-        //GradientPaint gp = new GradientPaint(0, 0, Color.RED.darker() , width, 0, Color.WHITE);
+
         GradientPaint gp = new GradientPaint((width - Main.mainSize.width) + 85, 0, Color.WHITE , width, 0, Color.RED.darker());
         g2d.setPaint(gp);
-//        p = new Polygon(xPoly, yPoly, xPoly.length);
-//        g2d.fillPolygon(p);
         
-        //g2d.setColor(gp);
         for (int i = 0; i < xPoints.length - 1; i++) {
-            //g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
+            g2d.draw(new Line2D.Float(xPoints[i], yPoints[i], xPoints[i + 1], yPoints[i + 1]));
         }
-        //g2d.drawPolyline(xPoints, yPoints, xPoints.length);
+        
         g2d.setColor(Color.DARK_GRAY);
         
-        int y =  (int) map(0, min_temp, max_temp, getHeight(), 0);
-        int y_max =  (int) map(30, min_temp, max_temp, getHeight(), 0);
-        int y_min =  (int) map(-5, min_temp, max_temp, getHeight(), 0);
-        gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, 0, new Color(255,255,255));
-        g2d.setPaint(gp);
-        //g2d.fillRect(1, 1, 33, 120);
-        //g2d.fillRect(width - 40, 1, 40, 120);
+//        int y =  (int) map(0, min_temp, max_temp, getHeight(), 0);
+//        int y_max =  (int) map(30, min_temp, max_temp, getHeight(), 0);
+//        int y_min =  (int) map(-5, min_temp, max_temp, getHeight(), 0);
+        //gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, 0, new Color(255,255,255));
+        //g2d.setPaint(gp);
+        
         g2d.setColor(new Color(230,230,230, 0xFF));
         g2d.drawLine(width - 60, 0, width - 60, getHeight());
-        //g2d.drawLine(33, 0, 33, 120);
-        g2d.drawLine(width - 65, (int)yPoints[yPoints.length - 1], width - 60, (int)yPoints[yPoints.length - 1]);
-        g2d.drawLine(width - 55, y_max, width - 60, y_max);
-        g2d.drawLine(width - 55, y_min, width - 60, y_min);
-        
+                
         g2d.setColor(Color.DARK_GRAY);
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
-        
-        //g2d.drawString(Sensor.time, 50, 10);
-        //g2d.drawString("REAL-TIME", 17, 103);
-        
+                
         ////
         //// TEMP
-        ////
-        if (name.contains("temp")) {
-            
-        }
-        String s = array.get((arraySize - 1))[0];        
-        g2d.drawString(s, width - 98, (int)yPoints[yPoints.length - 1] + 4);
+        ////        
+        //String s = data.get((arraySize - 1))[0];        
+        //g2d.drawString(s, width - 98, (int)yPoints[yPoints.length - 1] + 4);
         //g2d.setColor(new Color(230,230,230, 0xFF));
-        String max = (name.contains("temp"))? Integer.toString(max_temp - 10) + "°C" : "Dark";
-        String min = (name.contains("temp"))? Integer.toString(min_temp + 10) + "°C" : "Light";
+        String max = (getName().contains("temp"))? Integer.toString(max_temp - 10) + "°C" : "Dark";
+        String min = (getName().contains("temp"))? Integer.toString(min_temp + 10) + "°C" : "Light";
         
-        g2d.drawString(max, width - 48, y_max + 3);
-        g2d.drawString(min, width - 50, y_min + 4);
+        //g2d.drawString(max, width - 48, y_max + 3);
+        //g2d.drawString(min, width - 50, y_min + 4);
+              
+        rect = new Rectangle(0, 0, width, height);
         
-        //System.out.println(arraySize - 240);
-               
-        rect = new Rectangle(0, 0, width - 100, height);
         g2d.setColor(Color.DARK_GRAY);
         if (rect.contains(mouse) && active) {
-            //g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[0], mouse.x - 39, y_max - 2);       
-            g2d.drawString(array.get(mouse.x + (arraySize - yPoints.length))[1].substring(11), mouse.x - 45, y_min + 10);
+            //g2d.drawString(data.get(mouse.x + (arraySize - yPoints.length))[0], mouse.x - 39, 20 - 2);       
+            //g2d.drawString(data.get(mouse.x + (arraySize - yPoints.length))[1].substring(11), mouse.x - 45, 100 + 10);
             g2d.setColor(Color.RED.darker()); 
             g2d.drawLine(mouse.x + 1, 0, mouse.x + 1, getHeight());
         }
@@ -308,84 +233,77 @@ class EmbeddedSensor extends JPanel {
         //g2d.fillRect(0, 0, width - (Main.mainSize.width - 92), height);
         //g2d.setColor(new Color(230,230,230, 0xFF));
         //g2d.drawLine(width - (Main.mainSize.width - 90), 0,width - (Main.mainSize.width - 90),height);
-                
-        
-        
-//        try {
-//            
-//        } catch (IOException e) {}  
-//        
-//        g2d.drawImage(img, width - 38, getHeight() / 2 - 16, null);
-        
-        if (hover) {                
+        mouseOver(g2d);  
+        super.repaint();
+    }     
+
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active) {
+        Activity.active = active;
+    }    
+    private void mouseOver(Graphics2D g2d) {
+        GradientPaint gp;
+        Font font;        
+        if (hover) {
+            gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+            g2d.setPaint(gp);
+            g2d.drawLine(70, 0, 70, getHeight() - 2);
+
+            gp = new GradientPaint(0,-10,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
+            g2d.setPaint(gp);
+
+
             //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
             gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            System.out.println(Main.mainSize.width);
-            g2d.fillRect(width - (Main.mainSize.width - 2), getHeight() / 2, Main.mainSize.width -8, (getHeight() / 2) - 1);
+            g2d.fillRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1);
 
             gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRect(width - (Main.mainSize.width - 2), 0, Main.mainSize.width -8, getHeight() / 2);
+            g2d.fillRect(2, 0, width - 5, getHeight() / 2);
 
             gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
             g2d.setPaint(gp);
-            g2d.drawRect(width - (Main.mainSize.width-2), 0, Main.mainSize.width - 8, getHeight() - 1);
-                     
-            
-            
-//            gp = new GradientPaint(0,-10,new Color(135, 206, 250,0x2F), 0, getHeight(), new Color(255, 255, 255, 0x2A));
-//            g2d.setPaint(gp);
-//            g2d.fillRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
-//            gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
-//            g2d.setPaint(gp);
-//            g2d.drawRoundRect(width - (Main.mainSize.width - 22), 0, Main.mainSize.width - 23, getHeight() - 1, 5, 5);
+            g2d.drawRect(2, 0, width - 5, getHeight() - 1);
 
-            font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, 12);        
-            int rWidth = (int) font.getStringBounds(getName().toUpperCase(), frc).getWidth(); 
+            font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, getHeight() / 10);
+
+            int rWidth = (int) font.getStringBounds(getName().toUpperCase().trim(), frc).getWidth(); 
             int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
-
             g2d.setFont(font);
-            g2d.drawString(getName().toUpperCase(), width - (Main.mainSize.width - 15), getHeight() / 2 - rHeight / 2 - 25);
-            
+            //g2d.drawString(getName().toUpperCase(), 100, rHeight / 2);
+
+            int sWidth = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getWidth(); 
+            int sHeight = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getHeight();
+            //g2d.drawString(data.get(data.size() - 1)[1], 15, getHeight() / 2 - sHeight / 2 + 45);
+            //System.out.println(sHeight);
+            g2d.drawString(data.get(data.size() - 1)[1], (width - sWidth) - 90, (getHeight() - sHeight));
+
             gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
             g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
-            g2d.drawLine(width - (Main.mainSize.width - 70), 0, width - (Main.mainSize.width - 70), getHeight() - 2);
+            //g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
 
             gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
             g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
-            g2d.drawLine(width - (Main.mainSize.width - 71), 1, width - (Main.mainSize.width - 71), getHeight() - 2);
-            
+            //g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
+            g2d.drawLine(71, 1, 71, getHeight() - 2);
+
+
             BufferedImage img = null;
-            try {
-                //img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
+            //String name = getName();
+            try {                    
                 img = ImageIO.read(new File("MD-eject.png"));
+            } catch (IOException e) {}            
+            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+
+            try {
+                img = ImageIO.read(new File((getName().contains("temp"))? "temp32.png" : "light32.png"));
             } catch (IOException e) {}  
-        
-            g2d.drawImage(img, width - (Main.mainSize.width - 18), getHeight() / 2 - 16, null);
+            g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);                
         }
-        
-        super.repaint();
-    }     
-
-    /**
-     * @return the active
-     */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * @param active the active to set
-     */
-    public void setActive(boolean active) {
-        EmbeddedSensor.active = active;
-    }
-    
-    public float map(float x, float in_min, float in_max, float out_min, float out_max)
-    {
-        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 }

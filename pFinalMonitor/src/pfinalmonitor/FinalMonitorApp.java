@@ -21,6 +21,6 @@ public class FinalMonitorApp {
     protected static Main monitor;
     
     public static void main(String[] args) throws IOException {        
-        monitor = new Main(size);
+        monitor = new Main();
     }
 }
