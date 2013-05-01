@@ -52,11 +52,9 @@ public class Task implements Runnable{
             if (xpoints.size() > sensor.getWidth()){
                 //xpoints.remove(sensor.getWidth());
                 //ypoints.remove(sensor.getWidth());
-                System.out.println(ypoints.get(0));
+                //System.out.println(ypoints.get(0));
             }
-            
-           
-                                   
+
            ypoint = (sensor.name.contains("temp")) ? 
                    (int) Math.round(map(Float.parseFloat(data.substring(0, 2)), 
                             sensor.activity.min_temp, 
@@ -77,9 +75,7 @@ public class Task implements Runnable{
                  sensor.activity.xPoints[i] = xpoints.get(i);
                  sensor.activity.yPoints[(ypoints.size() - 1) - i] = (int) ypoints.get(i);                 
            }
-                      
-           
-                       
+
            time  = 0;
            
            count++;

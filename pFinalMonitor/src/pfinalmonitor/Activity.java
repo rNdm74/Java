@@ -172,20 +172,23 @@ class Activity extends JPanel {
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-        GradientPaint gp = new GradientPaint((
-             width - Main.mainSize.width) + 85, 
-             0, 
-             Color.WHITE , 
-             width, 
-             0, 
-             Color.RED.darker()
-             );
+//        GradientPaint gp = new GradientPaint((
+//             width - Main.mainSize.width) + 85,
+//             0,
+//             Color.WHITE ,
+//             width,
+//             0,
+//             Color.RED.darker()
+//             );
         
-        g2d.setPaint(gp);
+        g2d.setPaint(Color.BLACK);
         
+        for (int i = 0; i < yPoints.length - 1; i++){
+            //g2d.drawLine(xPoints[i],yPoints[i],xPoints[i],yPoints[i]);
+        }
+
         
-        
-        g.drawPolyline(xPoints, yPoints, xPoints.length - 1);
+        g2d.drawPolyline(xPoints, yPoints, yPoints.length - 1);
         
 //        if (xPoints.size() > 4) {
 //            for (int index = 0; index < xPoints.size() - 1; index++) {
