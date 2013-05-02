@@ -35,11 +35,14 @@ public class Main extends javax.swing.JFrame {
         }
         
         //<editor-fold defaultstate="collapsed" desc=" Listeners ">         
-        addComponentListener(new ComponentAdapter() {            
+        addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+                //System.out.println(getSize());
+                //System.out.println(sizeChanged);
+
                 mainSize = getSize();
-                
+
                 for (Sensor s: sensors) { 
                     s.home.setSize(frameSize());
                     s.activity.setSize(frameSize());
@@ -238,7 +241,7 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                sizeChanged = false;
             }
 
             @Override
@@ -615,7 +618,8 @@ public class Main extends javax.swing.JFrame {
     private JButton[] buttons;    
     private JButton refresh;
     private JButton pause;
-    private boolean click;     
+    private boolean click;
+    public boolean sizeChanged;
     private XML xml;
     // </editor-fold>
 }

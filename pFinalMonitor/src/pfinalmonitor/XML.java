@@ -32,6 +32,7 @@ public class XML {
                 doc.getDocumentElement().normalize();
                 nList = doc.getElementsByTagName("SENSOR");
                 //System.out.println(nList.getLength());
+
         }
         catch (Exception e) {
             e.printStackTrace();

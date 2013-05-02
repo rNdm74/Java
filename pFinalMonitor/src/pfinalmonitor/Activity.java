@@ -1,27 +1,20 @@
 
 package pfinalmonitor;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import static java.awt.BasicStroke.*;
 
 /**
  *
@@ -97,17 +90,17 @@ class Activity extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-            	
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
 
             @Override
@@ -119,7 +112,7 @@ class Activity extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 active = false;
-                hover=false;
+                hover = false;
             }
         });        
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -152,7 +145,7 @@ class Activity extends JPanel {
         }
         else if(evt.getPoint().x <= 0){
             //mouse.x = 0 ;
-        }        
+        }
         else{
             //mouse.x = rect.width - 1;
         }
@@ -167,7 +160,11 @@ class Activity extends JPanel {
         
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
-        
+
+        // for antialiasing geometric shapes
+        g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON );
+
         // for antialiasing text
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
@@ -182,12 +179,8 @@ class Activity extends JPanel {
 //             );
         
         g2d.setPaint(Color.BLACK);
-        
-        for (int i = 0; i < yPoints.length - 1; i++){
-            //g2d.drawLine(xPoints[i],yPoints[i],xPoints[i],yPoints[i]);
-        }
 
-        
+        g2d.setStroke(new BasicStroke(2.0f));
         g2d.drawPolyline(xPoints, yPoints, yPoints.length - 1);
         
 //        if (xPoints.size() > 4) {
@@ -200,9 +193,9 @@ class Activity extends JPanel {
 //                );
 //            }
 //        }
-        
-        
-        g2d.setColor(Color.DARK_GRAY);
+
+        g2d.setStroke(new BasicStroke(1.0f));
+                g2d.setColor(Color.DARK_GRAY);
         
 //        int y =  (int) map(0, min_temp, max_temp, getHeight(), 0);
 //        int y_max =  (int) map(30, min_temp, max_temp, getHeight(), 0);
@@ -210,8 +203,7 @@ class Activity extends JPanel {
         //gp = new GradientPaint(0,0,new Color(230,230,230, 0x0F),width * 2, 0, new Color(255,255,255));
         //g2d.setPaint(gp);
         
-        g2d.setColor(new Color(230,230,230, 0xFF));
-        g2d.drawLine(width - 60, 0, width - 60, getHeight());
+
                 
         g2d.setColor(Color.DARK_GRAY);
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
@@ -264,6 +256,14 @@ class Activity extends JPanel {
         GradientPaint gp;
         Font font;        
         if (hover) {
+            gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, 25,new Color(135, 206, 250));
+            g2d.setPaint(gp);
+            g2d.fillRoundRect(width - 39, 5, 40, 25, 5, 5);
+            //g2d.fill3DRect(width - 39, 10, 13, 4, true);
+
+            g2d.setColor(new Color(135, 206, 250, 0xFF));
+            g2d.drawRoundRect(width - 39, 5, 40, 25, 5, 5);
+
             gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
             g2d.drawLine(70, 0, 70, getHeight() - 2);
@@ -275,15 +275,15 @@ class Activity extends JPanel {
             //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
             gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1);
+            g2d.fillRect(0, getHeight() / 2, width, (getHeight() / 2) - 1);
 
             gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRect(2, 0, width - 5, getHeight() / 2);
+            g2d.fillRect(0, 0, width, getHeight() / 2);
 
             gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
             g2d.setPaint(gp);
-            g2d.drawRect(2, 0, width - 5, getHeight() - 1);
+            g2d.drawRect(-1, 0, width, getHeight() - 1);
 
             font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, getHeight() / 10);
 
@@ -296,31 +296,57 @@ class Activity extends JPanel {
             int sHeight = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getHeight();
             //g2d.drawString(data.get(data.size() - 1)[1], 15, getHeight() / 2 - sHeight / 2 + 45);
             //System.out.println(sHeight);
-            g2d.drawString(data.get(data.size() - 1)[1], (width - sWidth) - 90, (getHeight() - sHeight));
+            g2d.drawString(data.get(data.size() - 1)[1], ((width / 2) - (sWidth / 2)), (getHeight() - sHeight));
 
-            gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+            gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, 25, new Color(255, 255, 255));
             g2d.setPaint(gp);
-            g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
-            //g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
+//            g2d.drawLine(width - 60, 0, width - 60, 25);
+//            g2d.drawLine(width - 60, 1, width - 60, 25);
+//            g2d.drawLine(width - 60, 25, width - 4, 25);
 
             gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
-            g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
-            //g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
-            g2d.drawLine(71, 1, 71, getHeight() - 2);
+            //g2d.drawLine(width - 61, 1, width - 61, 25);
+
+            g2d.setColor(Color.white);
+            g2d.fillRect(width - 31, 10, 13, 4);
+            g2d.setColor(new Color(135, 206, 250));
+            g2d.drawRect(width - 31, 10, 13, 4);
+
 
 
             BufferedImage img = null;
-            //String name = getName();
-            try {                    
-                img = ImageIO.read(new File("MD-eject.png"));
-            } catch (IOException e) {}            
-            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
+//            try {
+//                img = ImageIO.read(new File("MD-eject.png"));
+//            } catch (IOException e) {}
+//            AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+//            tx.translate(0, -img.getHeight(null));
+//            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+//            img = op.filter(img, null);
+//            g2d.drawImage(img, width - 45, 20, null);
 
             try {
                 img = ImageIO.read(new File((getName().contains("temp"))? "temp32.png" : "light32.png"));
             } catch (IOException e) {}  
-            g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);                
+            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
         }
+
+    }
+
+    public static BufferedImage loadTranslucentImage(BufferedImage img, float transperancy) {
+        // Load the image
+        //BufferedImage loaded = loadImage(url);
+        // Create the image using the
+        BufferedImage aimg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TRANSLUCENT);
+        // Get the images graphics
+        Graphics2D g = aimg.createGraphics();
+        // Set the Graphics composite to Alpha
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transperancy));
+        // Draw the LOADED img into the prepared reciver image
+        g.drawImage(img, null, 0, 0);
+        // let go of all system resources in this Graphics
+        g.dispose();
+        // Return the image
+        return aimg;
     }
 }

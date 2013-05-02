@@ -1,8 +1,7 @@
 
 package pfinalmonitor;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -11,75 +10,74 @@ import java.util.GregorianCalendar;
  * @author rNdm
  */
 public class Task implements Runnable{       
-    private Sensor sensor; 
+    private Sensor sensor;
+
+    private int min_temp = -15;
+    private int max_temp = 40;
+
+    private int min_light = 0;
+    private int max_light = 1023;
+
     private long time = 0;
+
     private int count = 0;
+
     private int startPos;
-    private int xpoint = 0;
-    private int ypoint = 0;
-    //public int[] xPoints;
-    //public int[] yPoints;
+
+    private Float xmlData = 0f;
+
+    private ArrayList<Float> xmlDataList;
     
-    private ArrayList<Integer> xpoints;
-    private ArrayList<Integer> ypoints;
-    
-    public static long delay = 10;
+    public static long delay = 100;
     public static boolean pause;
+
+    private XML xml;
+    private String data;
+    private String timeStamp;
     
     public Task(Sensor sensor){
+        startPos = Main.sensorpanel.getWidth() - 1;
         this.sensor = sensor;
-        xpoints = new ArrayList<>();
-        ypoints = new ArrayList<>();        
-    }        
+        xmlDataList = new ArrayList<>();
+        xml = new XML();
+    }
         
     @Override
     public void run() {        
-        if(time > delay && !pause){ 
-           String data = new XML().scanData(sensor.name);
-           
-           String timeStamp = new GregorianCalendar().getTime().toString();
+        if(time > delay && !pause){
+            data = new XML().scanData(sensor.name);
+            timeStamp = new GregorianCalendar().getTime().toString();
                       
-           sensor.data.add(new String[]{data, timeStamp.substring(0,20)}); 
-           
-           startPos = sensor.getWidth();
-           
-           xpoint = startPos - count;
-           
-            if (xpoint < 0) {
-                //xpoint = 0;
+            sensor.data.add(new String[]{data, timeStamp.substring(0,20)});
+
+            if (sensor.name.contains("temp")) {
+                xmlData = Float.parseFloat(data.substring(0, 2));
             }
-           
-            if (xpoints.size() > sensor.getWidth()){
-                //xpoints.remove(sensor.getWidth());
-                //ypoints.remove(sensor.getWidth());
-                //System.out.println(ypoints.get(0));
+            else {
+                xmlData = Float.parseFloat(data);
             }
 
-           ypoint = (sensor.name.contains("temp")) ? 
-                   (int) Math.round(map(Float.parseFloat(data.substring(0, 2)), 
-                            sensor.activity.min_temp, 
-                            sensor.activity.max_temp, 
-                            sensor.activity.getHeight(), 0)):       
-                   (int) Math.round( map( Float.parseFloat(data), 
-                            sensor.activity.min_light, 
-                            sensor.activity.max_light, 
-                            sensor.activity.getHeight(), 0));   
-           
-           xpoints.add(xpoint);
-           ypoints.add(ypoint);
-           
-           sensor.activity.xPoints = new int[ypoints.size()];
-           sensor.activity.yPoints = new int[ypoints.size()];
-        
-           for (int i = 0; i < ypoints.size(); i++) {                    
-                 sensor.activity.xPoints[i] = xpoints.get(i);
-                 sensor.activity.yPoints[(ypoints.size() - 1) - i] = (int) ypoints.get(i);                 
-           }
+            xmlDataList.add(xmlData);
 
-           time  = 0;
-           
-           count++;
-        }  
+            sensor.activity.yPoints = new int[xmlDataList.size()];
+            sensor.activity.xPoints = new int[xmlDataList.size()];
+
+            for (int i = 0; i < sensor.activity.xPoints.length; i++) {
+                sensor.activity.xPoints[(xmlDataList.size() - 1) - i] =  i;
+                sensor.activity.yPoints[i] = Math.round(map(xmlDataList.get((xmlDataList.size() - 1) - i),
+                        (sensor.name.contains("temp")) ? min_temp : min_light,
+                        (sensor.name.contains("temp")) ? max_temp : max_light,
+                        sensor.activity.getHeight(), 0));
+            }
+
+            time  = 0;
+
+            count++;
+        }
+
+        if (xmlDataList.size() > Main.sensorpanel.getWidth()){
+            xmlDataList.remove(0);
+        }
         
         time++;
     }
