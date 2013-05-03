@@ -26,6 +26,9 @@ public class Task implements Runnable{
     private Float xmlData;
 
     private ArrayList<Float> xmlDataList;
+
+    private int[] xPoints;
+    private int[] yPoints;
     
     public static long delay = 100;
     public static boolean pause;
@@ -54,32 +57,48 @@ public class Task implements Runnable{
 
             xmlDataList.add(xmlData);
 
-            sensor.activity.yPoints = new int[xmlDataList.size()];
-            sensor.activity.xPoints = new int[xmlDataList.size()];
+            yPoints = new int[xmlDataList.size()];
+            xPoints = new int[xmlDataList.size()];
 
-            for (int i = 0; i < sensor.activity.xPoints.length - 1; i++) {
-                sensor.activity.xPoints[(xmlDataList.size() - 1) - i] =  i;
+            for (int i = 0; i < xPoints.length; i++) {
+                xPoints[i] =  i+3;
 
-                int data = Math.round(map(xmlDataList.get((xmlDataList.size() - 1) - i),
+                int data = Math.round(map(xmlDataList.get(i),
                         (sensor.name.contains("temp")) ? min_temp : min_light,
                         (sensor.name.contains("temp")) ? max_temp : max_light,
                         sensor.activity.getHeight(), 0));
 
-                if (data != 0){
-                    sensor.activity.yPoints[i] = data;
-                }
+                yPoints[i] = data;
             }
+
+            int[] newYPoints = new int[]{sensor.activity.getHeight() - 2, sensor.activity.getHeight() - 2};
+            int[] newXPoints = new int[]{yPoints.length +1, 4};
+
+            sensor.activity.xPoints = concat(newXPoints, xPoints);
+            sensor.activity.yPoints = concat(newYPoints, yPoints);
 
             time  = 0;
 
             count++;
         }
 
-        if (xmlDataList.size() > sensor.activity.getWidth()){
+
+
+        if (xmlDataList.size() > sensor.sensorpanel.getWidth() - 5 && xmlDataList.size() > 20){
             xmlDataList.remove(0);
         }
 
         time++;
+    }
+
+    private int[] concat(int[] a, int[] b) {
+        final int alen = a.length;
+        final int blen = b.length;
+        final int[] result = (int[]) java.lang.reflect.Array.
+                newInstance(a.getClass().getComponentType(), alen + blen);
+        System.arraycopy(a, 0, result, 0, alen);
+        System.arraycopy(b, 0, result, alen, blen);
+        return result;
     }
         
     public float map(float x, float in_min, float in_max, float out_min, float out_max) {

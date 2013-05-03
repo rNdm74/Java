@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Activity extends JPanel {
     private static Point mouse = new Point(0,0);
-    public Polygon2D pg = new Polygon2D();
+
     public ArrayList<String[]> data;
     public int arraySize;
     public int mouseDragged = 1;
@@ -28,9 +28,6 @@ public class Activity extends JPanel {
     public Activity(JPanel sensorPanel, ArrayList<String[]> data) throws IOException {
         this.sensorPanel = sensorPanel;
         this.data = data;
-
-        //pg.addPoint(0f, 120f);
-        //pg.addPoint(0f, (float)sensorPanel.getHeight());
 
         Random r = new Random();
 
@@ -109,24 +106,21 @@ public class Activity extends JPanel {
 
         GradientPaint gp;
         //gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
-        g2d.setPaint(color);
-        g2d.drawRoundRect(1, 2, width - 3, getHeight() - 4, 5, 5);
+
 
         g2d.setPaint(Color.BLACK);
+
 
         g2d.setStroke(new BasicStroke(2.0f));
         //g2d.drawPolyline(xPoints, yPoints, yPoints.length - 1);
 
-        int[] newYPoints = new int[]{getHeight() - 2, getHeight() - 2};
-        int[] yPoly = concat(newYPoints, yPoints);
 
-        int[] newXPoints = new int[]{0, yPoints.length};
-        int[] xPoly = concat(newXPoints, xPoints);
 
         gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), color);
         g2d.setPaint(gp);
 
-        g2d.fillPolygon(xPoly, yPoly, yPoly.length - 1);
+        // Draw data to screen
+        g2d.fillPolygon(xPoints, yPoints, yPoints.length -1);
 
 
         g2d.setStroke(new BasicStroke(1.0f));
@@ -142,30 +136,31 @@ public class Activity extends JPanel {
 
         if (rect.contains(mouse)) {
             g2d.setColor(Color.RED.darker());
-            g2d.drawLine(mouse.x + 1, 2, mouse.x + 1, getHeight() - 3);
+            //g2d.drawLine(mouse.x + 1, 2, mouse.x + 1, getHeight() - 3);
         }
 
-        mouseOver(g2d);
+
 
         gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, 25,new Color(135, 206, 250));
         g2d.setPaint(gp);
         //g2d.fillRoundRect(width - 39, 5, 40, 25, 5, 5);
 
-        g2d.setColor(new Color(135, 206, 250, 0xFF));
-        //g2d.drawRoundRect(width - 39, 5, 40, 25, 5, 5);
-        
+        g2d.setPaint(Color.LIGHT_GRAY);
+        g2d.drawRoundRect(3, 2, width - 6, getHeight() - 4, 5, 5);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawRoundRect(4, 3, width - 8, getHeight() - 6, 5, 5);
+
+        //g2d.setStroke(new BasicStroke(2.0f));
+        //g2d.drawRoundRect(1, 1, width - 2, getHeight() - 1, 5, 5);
+        //g2d.drawRoundRect(0, 0, width - 1, getHeight(), 5, 5);
+        //g2d.setStroke(new BasicStroke(1.0f));
+        mouseOver(g2d);
+
         super.repaint();
     }
 
-    static int[] concat(int[] a, int[] b) {
-        final int alen = a.length;
-        final int blen = b.length;
-        final int[] result = (int[]) java.lang.reflect.Array.
-                newInstance(a.getClass().getComponentType(), alen + blen);
-        System.arraycopy(a, 0, result, 0, alen);
-        System.arraycopy(b, 0, result, alen, blen);
-        return result;
-    }
+
 
     private void mouseOver(Graphics2D g2d) {
         GradientPaint gp;
@@ -187,7 +182,7 @@ public class Activity extends JPanel {
 
             gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
             g2d.setPaint(gp);
-            g2d.drawRoundRect(1, 2, width-3, getHeight()-4, 5, 5);
+            g2d.drawRoundRect(3, 2, width-6, getHeight()-4, 5, 5);
 
             font = new Font(getFont().getFamily(), Font.PLAIN, getHeight() / 10);
             g2d.setFont(font);
