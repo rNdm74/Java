@@ -14,9 +14,9 @@ public class FinalMonitorApp {
 
     private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
-    private static final int desktopheight = gd.getDisplayMode().getHeight();
+    private static final int desktopHeight = gd.getDisplayMode().getHeight();
     
-    protected static final Dimension size = new Dimension(desktopWidth, desktopheight);
+    protected static final Dimension size = new Dimension(desktopWidth, desktopHeight);
     
     protected static Main monitor;
     
