@@ -150,6 +150,9 @@ public class Home extends JPanel {
             Rectangle rect = new Rectangle(0, 0, width - 19, getHeight() - 1);
             
             g2d.setColor(new Color(230,230,230, 0xFF));
+
+            g2d.setPaint(Color.LIGHT_GRAY);
+            g2d.drawRoundRect(3, 2, width - 6, getHeight() - 4, 5, 5);
             
             mouseOver(g2d);
         }
@@ -166,64 +169,36 @@ public class Home extends JPanel {
         if (hover) {
             gp = new GradientPaint(0,-10,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
-            g2d.drawLine(70, 0, 70, getHeight() - 2);
-            
+
             gp = new GradientPaint(0,-10,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
-            
-            
-            //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));
+
             gp = new GradientPaint(0, getHeight() / 2,new Color(135, 206, 250,0x30), 0, getHeight(), new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRect(2, getHeight() / 2, width - 5, (getHeight() / 2) - 1);
-            
+            g2d.fillRect(0, getHeight() / 2, width, (getHeight() / 2) - 1);
+
             gp = new GradientPaint(0, getHeight(),new Color(135, 206, 250,0x2F), 0, 0, new Color(255, 255, 255, 0x2A));
             g2d.setPaint(gp);
-            g2d.fillRect(2, 0, width - 5, getHeight() / 2);
-            
+            g2d.fillRect(0, 0, width, getHeight() / 2);
+
             gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
             g2d.setPaint(gp);
-            g2d.drawRect(2, 0, width - 5, getHeight() - 1);
-                    
-            font = new Font(getFont().getFamily(), Font.HANGING_BASELINE, getHeight() / 10);
-            
-            int rWidth = (int) font.getStringBounds(getName().toUpperCase().trim(), frc).getWidth(); 
-            int rHeight = (int) font.getStringBounds(getName().toUpperCase(), frc).getHeight();
+            g2d.drawRoundRect(3, 2, width-6, getHeight()-4, 5, 5);
+
+            font = new Font(getFont().getFamily(), Font.PLAIN, getHeight() / 10);
             g2d.setFont(font);
-            //g2d.drawString(getName().toUpperCase(), 100, rHeight / 2);
-             
-            
-            
-            
-            sWidth = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getWidth(); 
-            sHeight = (int) font.getStringBounds(data.get(data.size() - 1)[1], frc).getHeight();
-            //g2d.drawString(data.get(data.size() - 1)[1], 15, getHeight() / 2 - sHeight / 2 + 45);
-            //System.out.println(sHeight);
-            g2d.drawString(data.get(data.size() - 1)[1], (width - sWidth) - 90, (getHeight() - sHeight));
-            
-            gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, getHeight(), new Color(255, 255, 255));
+
+            g2d.drawString(data.get(data.size() - 1)[1], 15, 20);
+
+            gp = new GradientPaint(0,0,new Color(135, 206, 250), 0, 25, new Color(255, 255, 255));
             g2d.setPaint(gp);
-            g2d.drawLine(width - 60, 0, width - 60, getHeight() - 2);
-            //g2d.drawLine(width - (Main.mainSize.width - 90), 0, width - (Main.mainSize.width - 90), getHeight() - 2);
 
             gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), new Color(255, 255, 255));
             g2d.setPaint(gp);
-            g2d.drawLine(width - 61, 1, width - 61, getHeight() - 2);
-            //g2d.drawLine(width - (Main.mainSize.width - 91), 1, width - (Main.mainSize.width - 91), getHeight() - 2);
-            g2d.drawLine(71, 1, 71, getHeight() - 2);
-            
-            
-            BufferedImage img = null;
-            String name = getName();
-            try {                    
-                img = ImageIO.read(new File("MD-eject.png"));
-            } catch (IOException e) {}            
-            g2d.drawImage(img, 18, getHeight() / 2 - 16, null);
-
-            try {
-                img = ImageIO.read(new File((name.contains("temp"))? "temp32.png" : "light32.png"));
-            } catch (IOException e) {}  
-            g2d.drawImage(img, width - 50, getHeight() / 2 - 16, null);                
+            g2d.setColor(Color.white);
+            g2d.fillRect(width - 31, 10, 13, 4);
+            g2d.setColor(new Color(135, 206, 250));
+            g2d.drawRect(width - 31, 10, 13, 4);
         }
     }
 }

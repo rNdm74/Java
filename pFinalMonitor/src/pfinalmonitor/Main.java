@@ -311,6 +311,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 jscrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+                jscrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
                 click = true;
                 
                 if (e.getButton() == 1) {
@@ -486,7 +487,7 @@ public class Main extends javax.swing.JFrame {
         sensorpanel = new JPanel(){            
             private AffineTransform affinetransform = new AffineTransform();     
             private FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
-            
+
             private String date = new GregorianCalendar().getTime().toString();
                                
             private void label_line(Graphics g, double x, double y, double theta, String label) {
@@ -516,36 +517,116 @@ public class Main extends javax.swing.JFrame {
             public void paint(Graphics g) {
                 super.paint(g);
                 Graphics2D g2d = (Graphics2D)g;
+
+                // for antialiasing geometric shapes
+                g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON );
+
+                // for antialiasing text
+                g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
                 
                 if (click) {                    
                     int width = sensorpanel.getWidth();  
                     int height = FinalMonitorApp.monitor.getContentPane().getHeight();
-                    
-                    //System.out.println(sensorpanel.getWidth());
 
-                    g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
-                              RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
-                    
                     g2d.setColor(Color.DARK_GRAY);
+
                     Font font = new Font(getFont().getFamily(), Font.PLAIN, 12);
                     g2d.setFont(font);
                     
                     int fWidth = (int) font.getStringBounds(date, frc).getWidth() + 20; 
                     int fHeight = (int) font.getStringBounds(date, frc).getHeight();
 
-                    g2d.drawString("0", 25, height - 40 - fWidth);
+                    label_line(
+                            g2d,
+                            25,                                     // X
+                            (height / 2) - 15,                             // Y
+                            Math.toRadians(360 - 90),               // ANGLE
+                            "Sensor Data"                                  // TEXT
+                    );
+
+                    g2d.drawString("Time", 75 + (width - 150) / 2, height - fWidth + 60);
+
+
+
                     
-                    for (int i = 0; i < 10; i++) {                        
-                        label_line(g2d, 50 + (((width - 100) / 10) * i) , height - 20 - fWidth , Math.toRadians(50), date);
+                    for (int i = 0; i < 10; i++) {
+                        g2d.setColor(Color.DARK_GRAY);
+
+                        label_line(
+                                   g2d,
+                                   50 + (((width - 100) / 10) * i),               // X
+                                   height - 60 - fWidth,                          // Y
+                                   Math.toRadians(angle),                            // ANGLE
+                                   date.substring(0,20)                           // TEXT
+                                   );
+
+                        // X AXIS LINES
+                        g2d.drawLine(
+                                     50 + (((width - 100) / 10) * i),             // X
+                                     height - 75 - fWidth,                        // Y
+                                     50 + (((width - 100) / 10) * i),             // X
+                                     height - 85 - fWidth                         // Y
+                                     );
+
+                        g2d.setPaint(Color.LIGHT_GRAY);
+
+                        // Y AXIS LINES
+                        g2d.drawLine(
+                                     50,                                                // X
+                                     fWidth + (((height - 80 - (fWidth*2))/10) * i),    // Y
+                                     50 + width - 100,                                  // X
+                                     fWidth + (((height - 80 - (fWidth*2))/10) * i)     // Y
+                                     );
                     }
-                    
+
+                    int w = width / 15;
+
+                    System.out.println(width);
+
+                    if (width < 599){
+                        angle = (45) + (45 -  w);
+                    }
+
+
+
+                    g2d.setColor(Color.DARK_GRAY);
+                    g2d.setStroke(new BasicStroke(1.0f));
                     GradientPaint gp = new GradientPaint(0,0, Color.GRAY.brighter(), width, 0, new Color(230,230,230, 0xA0));
-                    g2d.setPaint(gp);
-                    g2d.drawLine(50, 50, 50, height - 40 - fWidth);
+                    //g2d.setPaint(gp);
+                    //g2d.drawLine(50, 50, 50, height - 40 - fWidth);
+                    g2d.drawString("1023", 15, fWidth + 4);
+                    g2d.drawLine(
+                            45,      // X
+                            fWidth,  // Y
+                            55,      // X
+                            fWidth   // Y
+                    );
+
+                    g2d.drawString("0", 25, (height - 80 - fWidth) + 4);
+                    g2d.drawLine(
+                            45,      // X
+                            height - 80 - fWidth,  // Y
+                            55,      // X
+                            height - 80 - fWidth   // Y
+                    );
+
+                    // CHART RECTANGLE
+                    g2d.drawRect(
+                                 50,                         // X
+                                 fWidth,                     // Y
+                                 50 + width - 150,           //WIDTH
+                                 height - 80 - (fWidth * 2)  //HEIGHT
+                                 );
 
                     gp = new GradientPaint(0,0, Color.GRAY.brighter(), 0, height, new Color(230,230,230, 0xA0));
-                    g2d.setPaint(gp);
-                    g2d.drawLine(50, height - 40 - fWidth, width - 100, height - 40 - fWidth);
+                    //g2d.setPaint(gp);
+                    //g2d.drawLine(50, height - 40 - fWidth, 50 + width - 100, height - 40 - fWidth);
+
+                    g2d.setStroke(new BasicStroke(1.0f));
+                    g2d.setPaint(Color.LIGHT_GRAY);
+                    g2d.drawRoundRect(3, 2, width - 6, getHeight() - 5, 5, 5);
                     
                     super.repaint();
                 }                
@@ -603,6 +684,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc=" Variables ">
     public static Dimension mainSize;
     public static int delay = 1000;
+
     public static JButton graph;
     public static JLabel selectedSensor;
     public static JPanel sensorpanel;
@@ -618,6 +700,7 @@ public class Main extends javax.swing.JFrame {
     private JButton[] buttons;    
     private JButton refresh;
     private JButton pause;
+    private int angle = 30;
     private boolean click;
     public boolean sizeChanged;
     private XML xml;

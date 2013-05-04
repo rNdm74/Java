@@ -31,7 +31,7 @@ public class Activity extends JPanel {
 
         Random r = new Random();
 
-        color = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+        color = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)).darker();
         
         setVisible(false);
 
@@ -96,9 +96,9 @@ public class Activity extends JPanel {
         super.paintComponent( g );
         Graphics2D g2d = (Graphics2D)g;
 
-//        // for antialiasing geometric shapes
-//        g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-//            RenderingHints.VALUE_ANTIALIAS_ON );
+        // for antialiasing geometric shapes
+        g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON );
 
         // for antialiasing text
         g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -107,26 +107,19 @@ public class Activity extends JPanel {
         GradientPaint gp;
         //gp = new GradientPaint(0,0,new Color(135, 206, 250),0, 0, new Color(135, 206, 250));
 
-
         g2d.setPaint(Color.BLACK);
 
-
         g2d.setStroke(new BasicStroke(2.0f));
-        //g2d.drawPolyline(xPoints, yPoints, yPoints.length - 1);
 
-
-
-        gp = new GradientPaint(0,0,new Color(255, 255, 255), 0, getHeight(), color);
+        gp = new GradientPaint(0,0, color, 0, getHeight(), Color.WHITE);
         g2d.setPaint(gp);
 
         // Draw data to screen
         g2d.fillPolygon(xPoints, yPoints, yPoints.length -1);
 
-
         g2d.setStroke(new BasicStroke(1.0f));
-                g2d.setColor(Color.DARK_GRAY);
-
         g2d.setColor(Color.DARK_GRAY);
+
         Font font = new Font(getFont().getFamily(), Font.PLAIN, 10);
         g2d.setFont(font);
 
