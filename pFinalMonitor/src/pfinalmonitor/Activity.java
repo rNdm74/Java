@@ -17,6 +17,11 @@ public class Activity extends JPanel {
     public int mouseDragged = 1;
     public int[] xPoints;
     public int[] yPoints;
+
+    private int red = 255;
+    private int green = 25;
+    private int blue = 25;
+
     
     private int width;
     private int x;
@@ -111,7 +116,20 @@ public class Activity extends JPanel {
 
         g2d.setStroke(new BasicStroke(2.0f));
 
-        gp = new GradientPaint(0,0, color, 0, getHeight(), Color.WHITE);
+        System.out.println(yPoints[yPoints.length-1]);
+
+        if(red > 25){
+            red--;
+            blue++;
+        }
+        else{
+            red++;
+            blue--;
+        }
+
+        Color c = new Color(red, green ,blue);
+
+        gp = new GradientPaint(0,0, c.darker(), 0, getHeight(), c.brighter());
         g2d.setPaint(gp);
 
         // Draw data to screen

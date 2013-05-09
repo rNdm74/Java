@@ -4,30 +4,31 @@
  */
 package panimal;
 
+import static panimal.Domesticated.REGFEE;
+
 /**
  *
  * @author rndm
  */
-public class Dog extends Animal implements Domesticated{
-    
-    public Dog(String name) {
+public class Horse extends Animal implements Domesticated{    
+    public Horse(String name) {
         super(name);
-        this.type = "dog";
+        this.type = "horse";
     }
-    
+
     @Override
-    public String speak(){
-        return "WOOF!";        
-    }    
+    public String speak() {
+        return "NEIGH!";
+    }
 
     @Override
     public String work() {
-        return "herd sheep";
+        return "plough fields";
     }
 
     @Override
     public String rewarded() {
-        return "bones";
+        return "apples";
     }
     
     @Override
@@ -38,5 +39,5 @@ public class Dog extends Animal implements Domesticated{
                             + rewarded() + ". " + "My registration is $" + Math.round(REGFEE);
                             
         return result;
-    }
+    }    
 }

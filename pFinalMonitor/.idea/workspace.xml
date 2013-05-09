@@ -3,16 +3,26 @@
   <component name="ChangeListManager">
     <list default="true" id="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pfinalmonitor/Activity.java" afterPath="$PROJECT_DIR$/src/pfinalmonitor/Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pfinalmonitor/Home.java" afterPath="$PROJECT_DIR$/src/pfinalmonitor/Home.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pfinalmonitor/Main.java" afterPath="$PROJECT_DIR$/src/pfinalmonitor/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../pAnimal/src/panimal/AnimalApp.java" afterPath="$PROJECT_DIR$/../pAnimal/src/panimal/AnimalApp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../pAnimal/src/panimal/Dog.java" afterPath="$PROJECT_DIR$/../pAnimal/src/panimal/Dog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PBox/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PBox/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PDice/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PDice/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PMYFirst/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PMYFirst/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PNameInStars/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PNameInStars/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PRobot/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PRobot/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PSimpleMaths/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../PSimpleMaths/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../pArrayUtilities/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../pArrayUtilities/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../pEmbeddedMinor/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../pEmbeddedMinor/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../pSorting/nbproject/private/private.properties" afterPath="$PROJECT_DIR$/../pSorting/nbproject/private/private.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/pfinalmonitor/sensor.xml" afterPath="$PROJECT_DIR$/build/classes/pfinalmonitor/sensor.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pfinalmonitor/sensor.xml" afterPath="$PROJECT_DIR$/src/pfinalmonitor/sensor.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pFinalMonitor.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1367619847122" ignored="false" />
-    <file path="/Activity.java" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1367629951611" ignored="false" />
+    <file path="/Dummy.txt" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1368053196931" ignored="false" />
+    <file path="/Activity.java" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1368060557785" ignored="false" />
     <file path="/Task.java" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1367613782706" ignored="false" />
     <file path="/Main.java" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1367629219946" ignored="false" />
     <file path="/fragment.java" changelist="92c45d9e-b1ec-4dfe-91dd-1215329da4eb" time="1367465979954" ignored="false" />
@@ -34,7 +44,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -71,6 +80,7 @@
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -80,7 +90,7 @@
     <favorites_list name="pFinalMonitor" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4101184">
+    <splitter split-orientation="horizontal" split-proportion="0.5030303">
       <split-first>
         <leaf>
           <file leaf-file-name="FinalMonitorApp.java" pinned="false" current="false" current-in-tab="false">
@@ -95,7 +105,7 @@
           <file leaf-file-name="Activity.java" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Activity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="122" column="8" selection-start="3202" selection-end="3202" vertical-scroll-proportion="0.54147106">
+                <state line="126" column="19" selection-start="3177" selection-end="3177" vertical-scroll-proportion="0.65217394">
                   <folding />
                 </state>
               </provider>
@@ -104,7 +114,7 @@
           <file leaf-file-name="Home.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Home.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="154" column="70" selection-start="5601" selection-end="5703" vertical-scroll-proportion="0.0">
+                <state line="129" column="70" selection-start="4559" selection-end="4559" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -135,7 +145,7 @@
           <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="533" column="20" selection-start="19947" selection-end="19947" vertical-scroll-proportion="0.39110428">
+                <state line="616" column="20" selection-start="23650" selection-end="23650" vertical-scroll-proportion="0.2402746">
                   <folding />
                 </state>
               </provider>
@@ -184,9 +194,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1050" />
+    <option name="x" value="-1" />
+    <option name="y" value="4" />
+    <option name="width" value="1368" />
+    <option name="height" value="765" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -432,7 +443,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="0" width="1920" height="1050" extended-state="6" />
+    <frame x="-1" y="4" width="1368" height="765" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -440,16 +451,16 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3984" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14262648" sideWeight="0.75923854" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24076147" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24792013" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -527,6 +538,13 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/XML.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="31" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Task.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -593,14 +611,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/awt/EventQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="726" column="0" selection-start="24702" selection-end="24702" vertical-scroll-proportion="0.33282208" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="70" selection-start="5601" selection-end="5703" vertical-scroll-proportion="0.0">
+        <state line="129" column="70" selection-start="4559" selection-end="4559" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -621,14 +634,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="533" column="20" selection-start="19947" selection-end="19947" vertical-scroll-proportion="0.39110428">
+        <state line="616" column="20" selection-start="23650" selection-end="23650" vertical-scroll-proportion="0.2402746">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pfinalmonitor/Activity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="8" selection-start="3202" selection-end="3202" vertical-scroll-proportion="0.54147106">
+        <state line="126" column="19" selection-start="3177" selection-end="3177" vertical-scroll-proportion="0.65217394">
           <folding />
         </state>
       </provider>
