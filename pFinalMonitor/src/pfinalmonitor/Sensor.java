@@ -9,30 +9,31 @@ import javax.swing.JPanel;
 
 public class Sensor extends javax.swing.JPanel {   
     
-    public Sensor(JPanel sensorpanel, String name) throws IOException {
+    public Sensor(JPanel sensorpanel, String name, int sensorID) throws IOException {
         this.sensorpanel = sensorpanel;
         this.name = name;
+        this.sensorID = sensorID;
         
         setLayout(null);
         
         setBackground(Color.white);
         
-        setPreferredSize(new Dimension(120, 120));
+        setPreferredSize(new Dimension(120, 60));
         
-        setSize(new Dimension(120, 120));               
+        setSize(new Dimension(120, 60));               
         
-        initComponents();
+        initComponents(sensorID);
         
         setOpaque(false);
     }
        
 
     // <editor-fold defaultstate="collapsed" desc="initComponents()">                          
-    private void initComponents() throws IOException {        
+    private void initComponents(int sensorID) throws IOException {        
         size = new Dimension(getWidth(), getHeight());        
         data = new ArrayList<>();
         
-        home = new Home(sensorpanel, data);
+        home = new Home(sensorpanel, data, sensorID);
         home.setName(name);
         
         activity = new Activity(sensorpanel, data); 
@@ -41,7 +42,7 @@ public class Sensor extends javax.swing.JPanel {
         //graph = new Graph(sensorpanel);   
         //graph.setName(name);
         
-        home.setBackground(getBackground());
+        home.setBackground(getBackground());        
         activity.setBackground(getBackground());        
         //graph.setBackground(getBackground());        
         
@@ -59,7 +60,7 @@ public class Sensor extends javax.swing.JPanel {
     public Activity activity;
     
     public Dimension size;
-    
+    public int sensorID;
     public String name;
     public ArrayList<String[]> data;                     
     //</editor-fold>

@@ -23,7 +23,7 @@ public class XML {
                     fXmlFile = new File("C:/Users/rNdm/Work/Java/pFinalMonitor/src/pfinalmonitor/sensor.xml");
                 }
                 else{
-                    fXmlFile = new File("/home/rndm/Work/ProjectThunderhead/sensor.xml");
+                    fXmlFile = new File("/home/rndm/Work/Pi_Bak/thunderhead/sensor.xml");
                 }
                 	        	        
 	        dbFactory = DocumentBuilderFactory.newInstance();

@@ -11,7 +11,6 @@ import java.io.IOException;
  * @author rNdm
  */
 public class FinalMonitorApp {
-
     private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
     private static final int desktopHeight = gd.getDisplayMode().getHeight();
@@ -23,5 +22,15 @@ public class FinalMonitorApp {
     public static void main(String[] args) throws IOException {        
 
         monitor = new Main();
+        
+        CSV csv = new CSV();
+        
+        for(String[] sArray: csv.getCsvData()){
+            System.out.println(sArray[1]);
+            for(String s: sArray){
+                System.out.print(s + " | ");
+            }
+            System.out.println("");
+        }
     }
 }

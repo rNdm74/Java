@@ -116,7 +116,7 @@ public class Activity extends JPanel {
 
         g2d.setStroke(new BasicStroke(2.0f));
 
-        System.out.println(yPoints[yPoints.length-1]);
+        //System.out.println(yPoints[yPoints.length-1]);
 
         if(red > 25){
             red--;

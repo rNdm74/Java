@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class Main extends javax.swing.JFrame {
+public class Main extends JFrame {
     public Main() throws IOException{ 
         try {            
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -181,77 +181,41 @@ public class Main extends javax.swing.JFrame {
     }
     private JButton minus() {
         Image img;
-        JButton minus = new JButton();
+        final JButton minus = new JButton();
         minus.setPreferredSize(new Dimension(30, 30));
         img = Toolkit.getDefaultToolkit().getImage("arrow-7-down.png");
         minus.setIcon(new ImageIcon(img));
         minus.setFocusPainted(false);
         minus.setFocusable(false);
-        minus.addMouseListener(new java.awt.event.MouseListener() {
-
+        minus.setEnabled(false);        
+        minus.addActionListener(new java.awt.event.ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                Task.delay -= 100;
-                refresh.setText(Long.toString(Task.delay) + " ms");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                
-                //System.out.println(e.getButton());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            public void actionPerformed(ActionEvent e) {
+                if (minus.isEnabled()) {
+                  for(Sensor s: sensors){
+                        s.home.count--;
+                    }  
+                }
             }
         });
         return minus;
     }
     private JButton plus() {
         Image img;
-        JButton plus = new JButton();
+        final JButton plus = new JButton();
         plus.setPreferredSize(new Dimension(30, 30));
         img = Toolkit.getDefaultToolkit().getImage("arrow-7-up.png");
         plus.setIcon(new ImageIcon(img));
         plus.setFocusPainted(true);
         plus.setFocusable(false);
-        plus.addMouseListener(new java.awt.event.MouseListener() {
-
+        plus.addActionListener(new java.awt.event.ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                Task.delay += 100;
-                refresh.setText(Long.toString(Task.delay) + " ms");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                sizeChanged = false;
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            public void actionPerformed(ActionEvent e) {
+                if (plus.isEnabled()) {
+                    for(Sensor s: sensors){
+                        s.home.count++;
+                    }  
+                }
             }
         });
         return plus;
@@ -441,10 +405,10 @@ public class Main extends javax.swing.JFrame {
             activity(),
             graph(),
             pause(),            
-            refresh(),
+            //refresh(),
             plus(),
-            minus(),
-            settings()
+            minus()
+            //settings()
         };
         
         toptoolbar = new JToolBar();
@@ -557,7 +521,7 @@ public class Main extends javax.swing.JFrame {
                         label_line(
                                    g2d,
                                    50 + (((width - 100) / 10) * i),               // X
-                                   height - 60 - fWidth,                          // Y
+                                   (height / 6) + height - 65 - fWidth,                          // Y
                                    Math.toRadians(angle),                            // ANGLE
                                    date.substring(0,20)                           // TEXT
                                    );
@@ -565,9 +529,9 @@ public class Main extends javax.swing.JFrame {
                         // X AXIS LINES
                         g2d.drawLine(
                                      50 + (((width - 100) / 10) * i),             // X
-                                     height - 75 - fWidth,                        // Y
+                                (height / 6) + height - 75 - fWidth,                        // Y
                                      50 + (((width - 100) / 10) * i),             // X
-                                     height - 85 - fWidth                         // Y
+                                (height / 6) + height - 85 - fWidth                         // Y
                                      );
 
                         g2d.setPaint(Color.LIGHT_GRAY);
@@ -575,15 +539,15 @@ public class Main extends javax.swing.JFrame {
                         // Y AXIS LINES
                         g2d.drawLine(
                                      50,                                                // X
-                                     fWidth + (((height - 80 - (fWidth*2))/10) * i),    // Y
+                                (height / 6) + (((height - 80 - (fWidth))/10) * i),    // Y
                                      50 + width - 100,                                  // X
-                                     fWidth + (((height - 80 - (fWidth*2))/10) * i)     // Y
+                                (height / 6) + (((height - 80 - (fWidth))/10) * i)     // Y
                                      );
                     }
 
                     int w = width / 15;
 
-                    System.out.println(width);
+                    //System.out.println(width);
 
                     if (width < 599){
                         angle = (45) + (45 -  w);
@@ -615,9 +579,9 @@ public class Main extends javax.swing.JFrame {
                     // CHART RECTANGLE
                     g2d.drawRect(
                                  50,                         // X
-                                 fWidth,                     // Y
+                                 height / 6,                 // Y
                                  50 + width - 150,           //WIDTH
-                                 height - 80 - (fWidth * 2)  //HEIGHT
+                                 height - 80 - (fWidth)  //HEIGHT
                                  );
 
                     gp = new GradientPaint(0,0, Color.GRAY.brighter(), 0, height, new Color(230,230,230, 0xA0));
@@ -647,16 +611,16 @@ public class Main extends javax.swing.JFrame {
                 
         for (int i = 0; i < xml.getnList(); i++) {
             // Creates Sensor
-            sensors.add(new Sensor(sensorpanel, xml.getSensors().get(i)));
-
+            sensors.add(new Sensor(sensorpanel, xml.getSensors().get(i), (i + 1)));
             // Creates a task for each sensor
             tasks.add(new Task(sensors.get(i)));
 
             // Adds tasks to schedule
-            service.scheduleAtFixedRate(tasks.get(i), 
-                                        0, 
-                                        1,
-                                        TimeUnit.MILLISECONDS);
+            service.scheduleAtFixedRate(
+                    tasks.get(i), 
+                    0, 
+                    1,
+                    TimeUnit.MILLISECONDS);
 
             // Adds sensors to jpanel
             if (!"datetime".equals(sensors.get(i).name)) {
@@ -700,7 +664,7 @@ public class Main extends javax.swing.JFrame {
     private JButton[] buttons;    
     private JButton refresh;
     private JButton pause;
-    private int angle = 30;
+    private int angle = 45;
     private boolean click;
     public boolean sizeChanged;
     private XML xml;

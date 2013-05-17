@@ -63,12 +63,12 @@ public class Task implements Runnable{
             for (int i = 0; i < xPoints.length; i++) {
                 xPoints[i] =  i+3;
 
-                int data = Math.round(map(xmlDataList.get(i),
+                int mappedData = Math.round(map(xmlDataList.get(i),
                         (sensor.name.contains("temp")) ? min_temp : min_light,
                         (sensor.name.contains("temp")) ? max_temp : max_light,
                         sensor.activity.getHeight(), 0));
 
-                yPoints[i] = data;
+                yPoints[i] = mappedData;
             }
 
             int[] newYPoints = new int[]{sensor.activity.getHeight() - 2, sensor.activity.getHeight() - 2};
