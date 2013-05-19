@@ -9,6 +9,11 @@ import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Main extends JFrame {
     public Main() throws IOException{ 
@@ -16,9 +21,9 @@ public class Main extends JFrame {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             
             getContentPane().add(topToolBar(), BorderLayout.PAGE_START);
-            getContentPane().add(new JPanel(), BorderLayout.WEST);
+            getContentPane().add(rightToolBar(), BorderLayout.EAST);
             getContentPane().add(jscrollPane(), BorderLayout.CENTER);
-            getContentPane().add(new JPanel(), BorderLayout.EAST);
+            getContentPane().add(leftToolBar(), BorderLayout.WEST);
             getContentPane().add(bottomToolBar(), BorderLayout.PAGE_END);
 
             setLocation(FinalMonitorApp.size.width / 2 - getWidth() / 2, 0);
@@ -323,10 +328,15 @@ public class Main extends JFrame {
                 jscrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                 click = false;
                 
+                righttoolbar.setVisible(false);
+                lefttoolbar.setVisible(false);
+                
                 if (e.getButton() == 1) {
+                    
                     for(Sensor s: sensors){
                         s.home.setVisible(false);
                         s.activity.setVisible(true);
+                        
                     }                    
                 }                
             }
@@ -365,14 +375,19 @@ public class Main extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                lefttoolbar.setVisible(true);
+                righttoolbar.setVisible(true);
+                //scrollTablePane.setVisible(true);
                 jscrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                 click = false;
                 if (e.getButton() == 1) {
                     for(Sensor s: sensors){
+                        //s.setPreferredSize(new Dimension(339,50));
                         s.home.setVisible(true);
                         s.activity.setVisible(false);
                     }                    
-                }                
+                }
+               // pack();
             }
 
             @Override
@@ -398,17 +413,74 @@ public class Main extends JFrame {
         return home;
     }
     
+    private JButton left() {
+        Image img;
+        final JButton left = new JButton();
+        left.setPreferredSize(new Dimension(22, 55));
+        img = Toolkit.getDefaultToolkit().getImage("arrow-7-left.png");
+        left.setIcon(new ImageIcon(img));
+        //left.setSelected(true);
+        
+        left.setFocusPainted(false);
+        left.setFocusable(false);
+        left.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (left.isEnabled()) {
+                    for(Sensor s: sensors){
+                        s.home.count++;
+                    }  
+                }
+            }
+        });
+        return left;
+    }    
+    private JButton right() {
+        Image img;
+        final JButton right = new JButton();
+        right.setPreferredSize(new Dimension(30, 60));
+        img = Toolkit.getDefaultToolkit().getImage("arrow-7-right.png");
+        right.setIcon(new ImageIcon(img));
+        right.setBorderPainted(true);
+        right.setFocusPainted(true);
+        right.setFocusable(false);
+        right.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (right.isEnabled()) {
+                    for(Sensor s: sensors){
+                        s.home.count++;
+                    }  
+                }
+            }
+        });
+        return right;
+    }
+    
+    private JTextField textfield() {
+        final JTextField textfield = new JTextField();
+        textfield.setPreferredSize(new Dimension(150, 22));        
+        return textfield;
+    }    
+    private JTextArea textarea() {
+        final JTextArea textarea = new JTextArea();
+        textarea.setPreferredSize(new Dimension(5, 30));        
+        return textarea;
+    }
+    
+    
+    
     private JToolBar topToolBar() {
         buttons = new JButton[]
         {
             home(),
             activity(),
-            graph(),
-            pause(),            
+            graph()
+            //pause(),            
             //refresh(),
-            plus(),
-            minus()
-            //settings()
+            //plus(),
+            //minus()
+            
         };
         
         toptoolbar = new JToolBar();
@@ -422,12 +494,14 @@ public class Main extends JFrame {
             toptoolbar.add(b);
         }
         
+        //toptoolbar.add(textfield());
+        
         return toptoolbar;
     }
     private JToolBar bottomToolBar() { 
-        selectedSensor = new JLabel();
+        selectedSensor = new JLabel(); 
         
-        bottomtoolbar = new JToolBar();
+        bottomtoolbar = new JToolBar(); 
         
         bottomtoolbar.setLayout(new FlowLayout(FlowLayout.RIGHT, 0,2));
         bottomtoolbar.setRollover(true);
@@ -435,17 +509,103 @@ public class Main extends JFrame {
         bottomtoolbar.setPreferredSize(new Dimension(getWidth(), 22));
         
         bottomtoolbar.add(selectedSensor);
-        
-        bottomtoolbar.addSeparator(new Dimension(5,20));
-        
+        bottomtoolbar.addSeparator(new Dimension(5,0));        
         bottomtoolbar.add(new JLabel("  " + xml.getnList() + "  "));
-        bottomtoolbar.addSeparator(new Dimension(5,20));
+        bottomtoolbar.addSeparator(new Dimension(5,0));
         bottomtoolbar.add(new JLabel(" SENSORS "));
-        bottomtoolbar.addSeparator(new Dimension(5,20));
-        
+        bottomtoolbar.addSeparator(new Dimension(5,0));       
         
         return bottomtoolbar;
     }  
+    private JToolBar leftToolBar(){
+        lefttoolbar = new JToolBar();
+        
+        lefttoolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        lefttoolbar.setRollover(true);
+        lefttoolbar.setFloatable(false);
+        //lefttoolbar.setPreferredSize(new Dimension(22, getHeight()));
+        for (int i = 0; i < 6; i++) {
+            //lefttoolbar.add(new JButton("Add Flight"));
+        }
+        //lefttoolbar.add(text());
+        //lefttoolbar.setVisible(false);
+        return lefttoolbar;
+}
+    private JToolBar rightToolBar() throws FileNotFoundException, IOException{
+        righttoolbar = new JToolBar();
+          
+        righttoolbar.setLayout(new BorderLayout());
+        
+        righttoolbar.setFloatable(false);
+        
+        String[] columnNames = {"Timestamp", "Values"};
+        
+        CSV csv = new CSV();
+        Object[][] data = new Object[csv.getCsvData().size()][3];
+        
+        for (int i = 0; i < csv.getCsvData().size(); i++) {
+//            for (int j = 0; j < 2; j++) {
+//                data[i][j] = csv.getCsvData().get(i)[j];
+//            } 
+            data[i][0] = csv.getCsvData().get(i)[0];
+            data[i][1] = csv.getCsvData().get(i)[2];
+        }
+        
+        table = new JTable(data, columnNames);
+        //table.setPreferredSize(new Dimension(200,200));
+        table.setPreferredScrollableViewportSize(new Dimension(250, 70));
+        //table.setEnabled(false);
+        //table.setFillsViewportHeight(true);
+        table.setAutoCreateRowSorter(true);
+        
+        TableRowSorter<TableModel> sorter 
+        = new TableRowSorter<>(table.getModel());
+        table.setRowSorter(sorter);
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        
+        TableColumn column;
+        
+        for (int i = 0; i < 2; i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+            
+        }
+        
+        table.getColumnModel().getColumn(1).setPreferredWidth(table.getSize().width / 2);
+        //column.setPreferredWidth(table.getPreferredScrollableViewportSize().width / 2);      //custom size
+        
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                
+        table.setDefaultRenderer(String.class, centerRenderer);
+        
+//        ArrayList <RowSorter.SortKey> sortKeys = new ArrayList<>();
+//        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+//        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+//        sorter.setSortKeys(sortKeys);
+                
+        filter = new JPanel();
+        filter.setLayout(new FlowLayout());
+        
+        filter.add(new JLabel(" Filter : "));
+        filter.add(textfield());
+                
+        scrollTablePane = new JScrollPane(table);
+        
+        scrollTablePane.setPreferredSize(new Dimension(250,100));
+        scrollTablePane.setSize(new Dimension(250,100));
+                        
+        righttoolbar.add(new JPanel(), BorderLayout.WEST);
+        righttoolbar.add(scrollTablePane, BorderLayout.CENTER);
+        righttoolbar.add(new JPanel(), BorderLayout.EAST);
+        righttoolbar.add(filter, BorderLayout.PAGE_END);
+        //righttoolbar.setVisible(false);
+        
+        //scrollTablePane.setVisible(false);
+        //filter.setVisible(false);
+        return righttoolbar;
+}
     
     private JPanel sensorPanel() throws IOException {
         sensorpanel = new JPanel(){            
@@ -597,7 +757,7 @@ public class Main extends JFrame {
             }
             @Override
             public void setBackground(Color bg) {
-                super.setBackground(Color.LIGHT_GRAY.brighter()); 
+                super.setBackground(null); 
             }
         };
         
@@ -636,6 +796,17 @@ public class Main extends JFrame {
     }
     private JScrollPane jscrollPane() throws IOException {
         jscrollpane = new JScrollPane(sensorPanel()){ 
+
+            @Override
+            public void setBackground(Color bg) {
+                super.setBackground(null); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void setBorder(Border border) {
+                super.setBorder(null); //To change body of generated methods, choose Tools | Templates.
+            }
+            
             @Override
             public void setHorizontalScrollBarPolicy(int policy) {
                     super.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -652,18 +823,24 @@ public class Main extends JFrame {
     public static JButton graph;
     public static JLabel selectedSensor;
     public static JPanel sensorpanel;
+    public static JTable table;
+    public static JScrollPane scrollTablePane;
+    public static JPanel filter;
     
     protected static ArrayList<Sensor> sensors;
     
     private ArrayList<Task> tasks;
     
     private ScheduledExecutorService service;
-    private JToolBar bottomtoolbar;
-    private JToolBar toptoolbar;
+    public static JToolBar lefttoolbar;
+    public static JToolBar righttoolbar;
+    public static JToolBar bottomtoolbar;
+    public static JToolBar toptoolbar;
     private JScrollPane jscrollpane;
     private JButton[] buttons;    
     private JButton refresh;
     private JButton pause;
+    private JTextArea text;
     private int angle = 45;
     private boolean click;
     public boolean sizeChanged;

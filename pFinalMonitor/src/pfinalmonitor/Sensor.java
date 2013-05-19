@@ -16,11 +16,11 @@ public class Sensor extends javax.swing.JPanel {
         
         setLayout(null);
         
-        setBackground(Color.white);
+        //setBackground(Color.white);
         
-        setPreferredSize(new Dimension(120, 60));
+        setPreferredSize(new Dimension(100, 50));
         
-        setSize(new Dimension(120, 60));               
+        setSize(new Dimension(100, 50));               
         
         initComponents(sensorID);
         
@@ -42,8 +42,8 @@ public class Sensor extends javax.swing.JPanel {
         //graph = new Graph(sensorpanel);   
         //graph.setName(name);
         
-        home.setBackground(getBackground());        
-        activity.setBackground(getBackground());        
+        //home.setBackground(getBackground());        
+        //activity.setBackground(getBackground());        
         //graph.setBackground(getBackground());        
         
         add(home); 

@@ -2,6 +2,7 @@
 package pfinalmonitor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +16,16 @@ public class CSV {
     private ArrayList<String[]> csvData;
         
     public CSV() throws FileNotFoundException, IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("/home/rndm/Work/Pi_Bak/thunderhead/sensor.csv"))) {
+        String filename;
+        
+        if(System.getProperty("os.name").contains("Windows")){
+            filename = "C:/Users/rNdm/Work/thunderhead/sensor.csv";
+        }
+        else{
+            filename = "/home/rndm/Work/Pi_Bak/thunderhead/sensor.csv";
+        }
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             csvData = new ArrayList<>();
             
             String line;

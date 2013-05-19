@@ -20,7 +20,7 @@ public class XML {
     public XML(){
         try{
                 if(System.getProperty("os.name").contains("Windows")){
-                    fXmlFile = new File("C:/Users/rNdm/Work/Java/pFinalMonitor/src/pfinalmonitor/sensor.xml");
+                    fXmlFile = new File("C:/Users/rNdm/Work/thunderhead/sensor.xml");
                 }
                 else{
                     fXmlFile = new File("/home/rndm/Work/Pi_Bak/thunderhead/sensor.xml");
