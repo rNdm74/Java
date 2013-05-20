@@ -1,6 +1,7 @@
 
 package pprogramming3assignmentone;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JFileChooser;
@@ -23,35 +24,40 @@ public class Table extends javax.swing.JPanel {
      */
     public Table(ReadCSV csv) {
         setVisible(true);
+        
         initComponents();
         
-        String[] columnNames = {"Timestamp", "Values"};
-        //JFileChooser fc = new JFileChooser();
+        //JPanel jPanel2 = new JPanel();
                 
-        //int returnVal = fc.showDialog(this, "Attach");
+        jPanel1.setLayout(new BorderLayout());
         
-        //fc.getSelectedFile().getAbsolutePath()
-                
-        //csv = new CSV();
+        String[] columnNames = csv.getCsvData().get(0);
         
         
         
-        Object[][] data = new Object[csv.getCsvData().size()][3];
         
-        for (int i = 0; i < csv.getCsvData().size(); i++) {
-//            for (int j = 0; j < 2; j++) {
-//                data[i][j] = csv.getCsvData().get(i)[j];
-//            } 
-            data[i][0] = csv.getCsvData().get(i)[0];
-            data[i][1] = csv.getCsvData().get(i)[2];
+        Object[][] data = new Object[csv.getCsvData().size()][columnNames.length];
+        
+        //System.out.println(csv.getCsvData().size());
+        //System.out.println(columnNames.length);
+        
+        for (int row = 1; row < csv.getCsvData().size(); row++) {
+            for (int column = 0; column < columnNames.length; column++) {
+                data[row][column] = csv.getCsvData().get(row)[column];
+            }            
         }
+        
+        for (int i = 1; i < csv.getCsvData().size(); i++) {
+            for (int j = 0; j < columnNames.length; j++) {
+                System.out.print(data[i][j] + " | ");
+            }
+            System.out.println("");
+        }
+        //
         
         JTable jTable1 = new JTable(data, columnNames);
         jTable1.setBackground(getBackground());
-        //table.setPreferredSize(new Dimension(200,200));
         jTable1.setPreferredScrollableViewportSize(new Dimension(getWidth() / 2, 70));
-        //table.setEnabled(false);
-        //table.setFillsViewportHeight(true);
         jTable1.setAutoCreateRowSorter(true);
         
         TableRowSorter<TableModel> sorter 
@@ -61,28 +67,22 @@ public class Table extends javax.swing.JPanel {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         
-        //TableColumn column;
-        
         for (int i = 0; i < 2; i++) {
-            jTable1.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
-            
+            //jTable1.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );            
         }
         
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(jTable1.getSize().width / 2);
-        //column.setPreferredWidth(table.getPreferredScrollableViewportSize().width / 2);      //custom size
+        //jTable1.getColumnModel().getColumn(1).setPreferredWidth(jTable1.getSize().width / 2);
         
         jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
                 
         jTable1.setDefaultRenderer(String.class, centerRenderer);
         
-        jScrollPane1.add(jTable1);
+        //jPanel2.add(jTable1, BorderLayout.CENTER); 
         
-//        ArrayList <RowSorter.SortKey> sortKeys = new ArrayList<>();
-//        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
-//        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-//        sorter.setSortKeys(sortKeys);
-                
+        JScrollPane jScrollPane = new JScrollPane(jTable1);
+        jTable1.setFillsViewportHeight(true);
         
+        jPanel1.add(jScrollPane, BorderLayout.CENTER);
     }
 
     /**
@@ -100,7 +100,7 @@ public class Table extends javax.swing.JPanel {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -110,6 +110,17 @@ public class Table extends javax.swing.JPanel {
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, 17));
         jLabel1.setText("CSV File");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 209, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -126,7 +137,7 @@ public class Table extends javax.swing.JPanel {
                         .addGap(0, 290, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,7 +148,7 @@ public class Table extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -148,7 +159,7 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
