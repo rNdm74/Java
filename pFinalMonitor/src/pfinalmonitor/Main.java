@@ -9,9 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -21,8 +19,8 @@ public class Main extends JFrame {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             
             getContentPane().add(topToolBar(), BorderLayout.PAGE_START);
-            getContentPane().add(rightToolBar(), BorderLayout.EAST);
-            getContentPane().add(jscrollPane(), BorderLayout.CENTER);
+            getContentPane().add(rightToolBar(), BorderLayout.EAST);            
+            getContentPane().add(jscrollPane(), BorderLayout.CENTER);            
             getContentPane().add(leftToolBar(), BorderLayout.WEST);
             getContentPane().add(bottomToolBar(), BorderLayout.PAGE_END);
 
@@ -132,6 +130,12 @@ public class Main extends JFrame {
     } 
     
     //<editor-fold defaultstate="collapsed" desc=" Methods ">
+    private JPanel startup() throws IOException {
+        startup = new JPanel();
+        //startup.setPreferredSize(new Dimension(90, 30));
+        //startup.add();
+        return startup; 
+    }
     private JButton settings() {
         Image img;
         JButton settings = new JButton("Settings");
@@ -139,40 +143,7 @@ public class Main extends JFrame {
         img = Toolkit.getDefaultToolkit().getImage("settings.png");
         settings.setIcon(new ImageIcon(img));
         settings.setFocusPainted(false);
-        settings.setFocusable(false);
-        settings.addMouseListener(new java.awt.event.MouseListener() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-              //sensorpanel.removeAll();
-              
-              //sensorpanel.add(sensors.get(3));
-              //jpanel.remove(sensors.get(6));
-              
-              //sensorpanel.setLayout(new GridLayout(sensorpanel.getComponentCount(), 1));
-                pack();            
-              
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
+        settings.setFocusable(false);        
         return settings; 
     } 
     private JButton refresh() {
@@ -184,6 +155,7 @@ public class Main extends JFrame {
         refresh.setIcon(new ImageIcon(img));
         return refresh;
     }
+    
     private JButton minus() {
         Image img;
         final JButton minus = new JButton();
@@ -371,46 +343,50 @@ public class Main extends JFrame {
         home.setIcon(new ImageIcon(img)); 
         home.setFocusPainted(false);
         home.setFocusable(false);
-        home.addMouseListener(new java.awt.event.MouseListener() {
+        home.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
-            public void mouseClicked(MouseEvent e) {
-                lefttoolbar.setVisible(true);
-                righttoolbar.setVisible(true);
+            public void actionPerformed(ActionEvent e) {
+                //lefttoolbar.setVisible(true);
+                //righttoolbar.setVisible(true);
                 //scrollTablePane.setVisible(true);
                 jscrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                 click = false;
-                if (e.getButton() == 1) {
-                    for(Sensor s: sensors){
+                for(Sensor s: sensors){
                         //s.setPreferredSize(new Dimension(339,50));
                         s.home.setVisible(true);
                         s.activity.setVisible(false);
-                    }                    
                 }
-               // pack();
+                //pack();
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }            
-        });
+        });        
         return home;
+    }
+    
+    private JButton file() {
+        Image img;
+        JButton file = new JButton("Add CSV");
+        file.setPreferredSize(new Dimension(90, 30));
+        img = Toolkit.getDefaultToolkit().getImage("pause.png");
+        file.setIcon(new ImageIcon(img));
+        file.setFocusPainted(false);
+        file.setFocusable(false);
+        file.addActionListener(new java.awt.event.ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = new JFileChooser();
+//                int returnVal = fc.showDialog(Main.this, "Attach");
+//                try {
+//                    csv = new CSV(fc.getSelectedFile().getAbsolutePath());
+//                } catch (FileNotFoundException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+            }
+        });
+        return file;
     }
     
     private JButton left() {
@@ -529,7 +505,7 @@ public class Main extends JFrame {
             //lefttoolbar.add(new JButton("Add Flight"));
         }
         //lefttoolbar.add(text());
-        //lefttoolbar.setVisible(false);
+        lefttoolbar.setVisible(false);
         return lefttoolbar;
 }
     private JToolBar rightToolBar() throws FileNotFoundException, IOException{
@@ -540,8 +516,14 @@ public class Main extends JFrame {
         righttoolbar.setFloatable(false);
         
         String[] columnNames = {"Timestamp", "Values"};
+        JFileChooser fc = new JFileChooser();
+                
+        //int returnVal = fc.showDialog(this, "Attach");
         
-        CSV csv = new CSV();
+        //fc.getSelectedFile().getAbsolutePath()
+                
+        csv = new CSV();
+        
         Object[][] data = new Object[csv.getCsvData().size()][3];
         
         for (int i = 0; i < csv.getCsvData().size(); i++) {
@@ -553,8 +535,9 @@ public class Main extends JFrame {
         }
         
         table = new JTable(data, columnNames);
+        table.setBackground(getBackground());
         //table.setPreferredSize(new Dimension(200,200));
-        table.setPreferredScrollableViewportSize(new Dimension(250, 70));
+        table.setPreferredScrollableViewportSize(new Dimension(getWidth() / 2, 70));
         //table.setEnabled(false);
         //table.setFillsViewportHeight(true);
         table.setAutoCreateRowSorter(true);
@@ -566,7 +549,7 @@ public class Main extends JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         
-        TableColumn column;
+        //TableColumn column;
         
         for (int i = 0; i < 2; i++) {
             table.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
@@ -592,15 +575,21 @@ public class Main extends JFrame {
         filter.add(textfield());
                 
         scrollTablePane = new JScrollPane(table);
+        scrollTablePane.setBackground(getBackground());
+        scrollTablePane.setBorder(null);
+        //scrollTablePane.setPreferredSize(new Dimension(250,100));
+        //scrollTablePane.setSize(new Dimension(250,100));
         
-        scrollTablePane.setPreferredSize(new Dimension(250,100));
-        scrollTablePane.setSize(new Dimension(250,100));
+        JPanel panel = new JPanel();
+        panel.add(label);
                         
+        righttoolbar.add(panel, BorderLayout.NORTH);
         righttoolbar.add(new JPanel(), BorderLayout.WEST);
         righttoolbar.add(scrollTablePane, BorderLayout.CENTER);
         righttoolbar.add(new JPanel(), BorderLayout.EAST);
         righttoolbar.add(filter, BorderLayout.PAGE_END);
-        //righttoolbar.setVisible(false);
+        righttoolbar.setBorderPainted(true);
+        righttoolbar.setVisible(false);
         
         //scrollTablePane.setVisible(false);
         //filter.setVisible(false);
@@ -792,6 +781,8 @@ public class Main extends JFrame {
         sensorpanel.setLayout(new GridLayout(sensorpanel.getComponentCount(), 
                                              1));
         
+        sensorpanel.setBorder(null);
+        sensorpanel.setBackground(getBackground());
         return sensorpanel;
     }
     private JScrollPane jscrollPane() throws IOException {
@@ -799,19 +790,15 @@ public class Main extends JFrame {
 
             @Override
             public void setBackground(Color bg) {
-                super.setBackground(null); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void setBorder(Border border) {
-                super.setBorder(null); //To change body of generated methods, choose Tools | Templates.
+                super.setBackground(getBackground()); 
             }
             
             @Override
             public void setHorizontalScrollBarPolicy(int policy) {
                     super.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             }             
-        };
+        };        
+        
         return jscrollpane; 
     }
     //</editor-fold>
@@ -822,7 +809,9 @@ public class Main extends JFrame {
 
     public static JButton graph;
     public static JLabel selectedSensor;
+    public static JPanel startup;
     public static JPanel sensorpanel;
+    public static JLabel label = new JLabel(" LABEL ");
     public static JTable table;
     public static JScrollPane scrollTablePane;
     public static JPanel filter;
@@ -836,6 +825,7 @@ public class Main extends JFrame {
     public static JToolBar righttoolbar;
     public static JToolBar bottomtoolbar;
     public static JToolBar toptoolbar;
+    public static CSV csv;
     private JScrollPane jscrollpane;
     private JButton[] buttons;    
     private JButton refresh;

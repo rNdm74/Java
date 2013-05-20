@@ -14,6 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class Home extends JPanel {
@@ -36,26 +37,18 @@ public class Home extends JPanel {
     
     private int mouse;
     private boolean mouseclicked;
-    private Color backgroundColor = new Color(240, 240 ,240);
+    private Color backgroundColor = getBackground();
     private Color borderColor = Color.white;
     private Color textColor = Color.DARK_GRAY;
     private Color hoverColor = new Color(100,149,237, 0x2F);
     
     private GradientPaint gp;
-    
-    private CSV csv;
-    
+        
     public Home(final JPanel sensorpanel, ArrayList<String[]> data, int sensorID){
         this.sensorpanel = sensorpanel;
         this.data = data;
         this.sensorID = sensorID;
-        try {
-            csv = new CSV();
-        } catch (FileNotFoundException ex) {
-            //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         
         setOpaque(true);
         //setSize(new Dimension(Main.mainSize.width - 18, Main.sensors[0].getHeight()));//System.out.println(this.getParent().);
@@ -69,12 +62,12 @@ public class Home extends JPanel {
                 //System.out.println(e.getWheelRotation());
                 count += e.getWheelRotation();
                 
-                if(count >= csv.getCsvData().size() - 1){
+                if(count >= Main.csv.getCsvData().size() - 1){
                             count = 0;
                 }
 
                 if (count < 0) {
-                    count = csv.getCsvData().size() - 1;
+                    count = Main.csv.getCsvData().size() - 1;
                 }
             }
         });
@@ -99,21 +92,24 @@ public class Home extends JPanel {
                 //Main.selectedSensor.setText(getName().toUpperCase());
             }
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                selected = true;
-                for (Sensor s: Main.sensors) {     
-                    
-                    if (s.name.equals(evt.getComponent().getName())) {                         
-                        try {
-                            CSV csv = new CSV();
+            public void mouseClicked(java.awt.event.MouseEvent evt) {                
+                for (Sensor s: Main.sensors) {
+                    if (s.name.equals(evt.getComponent().getName())) { 
+                        if (Main.label.getText().matches(evt.getComponent().getName().toUpperCase())) {
+                            Main.righttoolbar.setVisible(selected);
                             
+                            selected = !selected;
+                        }
+                        else{
+                            CSV csv = Main.csv;
+
                             for (int i = 0; i < csv.getCsvData().size(); i++) {                                
                                 Main.table.setValueAt(csv.getCsvData().get(i)[0], i, 0);
                                 Main.table.setValueAt(csv.getCsvData().get(i)[s.sensorID], i, 1);
                             }
-                        } catch (FileNotFoundException ex) {                            
-                        } catch (IOException ex) {                            
-                        }
+                            Main.label.setText(evt.getComponent().getName().toUpperCase());
+                        }                        
+                        
                     }
                 }
             }

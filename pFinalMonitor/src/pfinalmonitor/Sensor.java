@@ -16,7 +16,7 @@ public class Sensor extends javax.swing.JPanel {
         
         setLayout(null);
         
-        //setBackground(Color.white);
+        setBackground(getBackground());
         
         setPreferredSize(new Dimension(100, 50));
         

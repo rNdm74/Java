@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -14,9 +15,10 @@ import java.util.ArrayList;
  */
 public class CSV {
     private ArrayList<String[]> csvData;
+    //public static ;
         
     public CSV() throws FileNotFoundException, IOException {
-        String filename;
+        String filename;        
         
         if(System.getProperty("os.name").contains("Windows")){
             filename = "C:/Users/rNdm/Work/thunderhead/sensor.csv";
