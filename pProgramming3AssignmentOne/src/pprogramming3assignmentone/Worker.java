@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pprogramming3assignmentone;
 
 import java.io.BufferedReader;
@@ -14,10 +11,10 @@ import java.util.ArrayList;
  *
  * @author rndm
  */
-public class ReadCSV {
+public class Worker {
     private ArrayList<String[]> csvData;
         
-    public ReadCSV(String filename) throws FileNotFoundException, IOException {        
+    public Worker(String filename) throws FileNotFoundException, IOException {        
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             csvData = new ArrayList<>();
             

@@ -3,6 +3,8 @@ package pprogramming3assignmentone;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -16,11 +18,15 @@ public class Programming3AssignmentOneApp {
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
     private static final int desktopHeight = gd.getDisplayMode().getHeight();
         
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         try {            
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
-            GUI gui = new GUI();
-            gui.setVisible(true);  
+            Welcome gui = new Welcome();
+            gui.setVisible(true); 
+            if (gui.getjFormattedTextField1().getText().contains("csv")) {
+                gui.getjButton2().setEnabled(true);
+            }
+            
             gui.setLocation(desktopWidth / 2 - gui.getWidth() / 2, desktopHeight / 2 - gui.getHeight() / 2);
             
         } catch (ClassNotFoundException | 
