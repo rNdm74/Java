@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,15 +61,17 @@ public final class Welcome extends javax.swing.JFrame {
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
+        content.setPreferredSize(new java.awt.Dimension(391, 291));
+
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
         content.setLayout(contentLayout);
         contentLayout.setHorizontalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 515, Short.MAX_VALUE)
+            .addGap(0, 471, Short.MAX_VALUE)
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 357, Short.MAX_VALUE)
         );
 
         getContentPane().add(content, java.awt.BorderLayout.CENTER);
@@ -106,7 +110,7 @@ public final class Welcome extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                 .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,13 +141,19 @@ public final class Welcome extends javax.swing.JFrame {
             
             display("Overview", loadfile, overview);
             overviewActive = true;
+            //pack();
         }
         else{
             ok.setVisible(false);
+            ok.setText("Close");
             back.setVisible(false);
-            
-            mainpage = new MainPage(this);
+            try {
+                mainpage = new MainPage(this);
+            } catch (IOException ex) {
+                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
+            }
             display("Mainpage", overview, mainpage);            
+            //pack();
         }                
     }//GEN-LAST:event_okActionPerformed
 

@@ -29,6 +29,8 @@ public class LoadFile extends javax.swing.JPanel implements MouseListener{
         open = new javax.swing.JButton();
         filePath = new javax.swing.JFormattedTextField();
 
+        setPreferredSize(new java.awt.Dimension(100, 100));
+
         chooseCsvFile.setText(" Import csv file");
 
         open.setText("Open");
@@ -67,13 +69,13 @@ public class LoadFile extends javax.swing.JPanel implements MouseListener{
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
+                .addContainerGap(141, Short.MAX_VALUE)
                 .addComponent(chooseCsvFile, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(open))
-                .addGap(123, 123, 123))
+                .addGap(48, 48, 48))
         );
     }// </editor-fold>//GEN-END:initComponents
 

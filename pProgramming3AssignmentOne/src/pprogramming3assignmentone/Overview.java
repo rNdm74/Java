@@ -2,7 +2,6 @@
 package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -58,7 +57,7 @@ public class Overview extends javax.swing.JPanel {
         
         //jTable1.getColumnModel().getColumn(1).setPreferredWidth(jTable1.getSize().width / 2);
         
-        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        //jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
                 
         jTable1.setDefaultRenderer(String.class, centerRenderer);
         
@@ -66,6 +65,7 @@ public class Overview extends javax.swing.JPanel {
         JScrollPane jScrollPane = new JScrollPane(jTable1);
         jTable1.setFillsViewportHeight(true);
         jScrollPane.setVisible(true);
+        jScrollPane.setBorder(BorderFactory.createEtchedBorder());
         
         overview.add(jScrollPane, BorderLayout.CENTER);
     }
@@ -87,6 +87,10 @@ public class Overview extends javax.swing.JPanel {
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
+        setPreferredSize(new java.awt.Dimension(100, 100));
+
+        overview.setPreferredSize(new java.awt.Dimension(100, 100));
+
         javax.swing.GroupLayout overviewLayout = new javax.swing.GroupLayout(overview);
         overview.setLayout(overviewLayout);
         overviewLayout.setHorizontalGroup(
@@ -95,7 +99,7 @@ public class Overview extends javax.swing.JPanel {
         );
         overviewLayout.setVerticalGroup(
             overviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
+            .addGap(0, 237, Short.MAX_VALUE)
         );
 
         filepath.setDisabledTextColor(java.awt.Color.darkGray);
@@ -108,14 +112,15 @@ public class Overview extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(overview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(overview, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                     .addComponent(filepath, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(overview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(overview, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(filepath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))

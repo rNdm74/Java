@@ -37,6 +37,8 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
         modeoutput = new javax.swing.JFormattedTextField();
         rangeoutput = new javax.swing.JFormattedTextField();
 
+        setPreferredSize(new java.awt.Dimension(100, 100));
+
         columnlist.setMaximumRowCount(100);
         columnlist.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item", " " }));
         columnlist.setName("columnlist"); // NOI18N
