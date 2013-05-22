@@ -23,9 +23,9 @@ public class Programming3AssignmentOneApp {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
             Welcome gui = new Welcome();
             gui.setVisible(true); 
-            if (gui.getjFormattedTextField1().getText().contains("csv")) {
-                gui.getjButton2().setEnabled(true);
-            }
+//            if (gui.filePath().getText().contains("csv")) {
+//                gui.getOk().setEnabled(true);
+//            }
             
             gui.setLocation(desktopWidth / 2 - gui.getWidth() / 2, desktopHeight / 2 - gui.getHeight() / 2);
             

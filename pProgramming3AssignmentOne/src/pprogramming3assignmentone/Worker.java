@@ -13,8 +13,10 @@ import java.util.ArrayList;
  */
 public class Worker {
     private ArrayList<String[]> csvData;
+    private String filename;
         
-    public Worker(String filename) throws FileNotFoundException, IOException {        
+    public Worker(String filename) throws FileNotFoundException, IOException { 
+        this.filename = filename;
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             csvData = new ArrayList<>();
             
@@ -29,4 +31,8 @@ public class Worker {
     public ArrayList<String[]> getCsvData() {
         return csvData;
     }        
+
+    public String getFilename() {
+        return filename;
+    }
 }

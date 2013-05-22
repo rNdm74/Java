@@ -1,17 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package psorting;
+
+package pprogramming3assignmentone;
 
 /**
  *
  * @author rndm
  */
 public class Selection {
-    private int[] numbers;
+    private double[] numbers;
     
-    public Selection(int[] numbers){
+    public Selection(double[] numbers){
         this.numbers = numbers;        
     }
     
@@ -30,7 +27,7 @@ public class Selection {
             
             // Swap if needed
             if (smallestPos != i) {                
-                int temp = 0;
+                double temp = 0;
                 temp = numbers[i];
                 numbers[i] = numbers[smallestPos];
                 numbers[smallestPos] = temp;
