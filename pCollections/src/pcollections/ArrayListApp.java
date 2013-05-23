@@ -29,6 +29,6 @@ public class ArrayListApp {
         
         System.out.println(myList);
         
-        myList.
+        //myList.
     }    
 }

@@ -29,10 +29,11 @@ public class Activity extends JPanel {
    public Activity(Welcome welcome) {
        scores = new ArrayList<>();
        
-       PREF_W = welcome.csv.getCsvData().size();
+       PREF_W = welcome.csvData.getData().size();
        
-       for (int i = 1; i < welcome.csv.getCsvData().size(); i++) {
-           scores.add(Integer.parseInt(welcome.csv.getCsvData().get(i)[1]));
+       for (int i = 1; i < welcome.csvData.getData().size(); i++) {
+           int value = (int)Math.round((double) welcome.csvData.getData().get(i)[1]);
+           scores.add(value);
        }
    }
 

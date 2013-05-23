@@ -3,6 +3,7 @@ package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ public final class Welcome extends javax.swing.JFrame {
     public boolean overviewActive;
     public boolean mainpageActive;
     
-    public Worker csv;
+    public Worker csvData;
     
     public LoadFile loadfile;
     public Overview overview;
@@ -25,11 +26,12 @@ public final class Welcome extends javax.swing.JFrame {
     
     public Welcome() throws FileNotFoundException, IOException {
         initComponents();
-        next.setVisible(false);
+        //next.setVisible(false);
         back.setVisible(false);
         content.setLayout(new BorderLayout());
         loadfile = new LoadFile(this);
         content.add(loadfile, BorderLayout.CENTER); 
+        ButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     }
 
     @SuppressWarnings("unchecked")
@@ -39,14 +41,17 @@ public final class Welcome extends javax.swing.JFrame {
         titleBar = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0));
         panelTitle = new javax.swing.JLabel();
-        content = new javax.swing.JPanel();
         bottomBar = new javax.swing.JToolBar();
         ButtonPanel = new javax.swing.JPanel();
         back = new javax.swing.JButton();
-        next = new javax.swing.JButton();
         ok = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        address = new javax.swing.JFormattedTextField();
+        content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("CSVReader"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         titleBar.setFloatable(false);
         titleBar.setRollover(true);
@@ -61,36 +66,26 @@ public final class Welcome extends javax.swing.JFrame {
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
-        content.setPreferredSize(new java.awt.Dimension(391, 291));
-
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
-        content.setLayout(contentLayout);
-        contentLayout.setHorizontalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
-        );
-        contentLayout.setVerticalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(content, java.awt.BorderLayout.CENTER);
-
+        bottomBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         bottomBar.setFloatable(false);
+        bottomBar.setBorderPainted(false);
+        bottomBar.setMinimumSize(new java.awt.Dimension(22, 40));
+        bottomBar.setPreferredSize(new java.awt.Dimension(22, 40));
+        bottomBar.setRequestFocusEnabled(false);
+
+        ButtonPanel.setOpaque(false);
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT);
+        flowLayout1.setAlignOnBaseline(true);
+        ButtonPanel.setLayout(flowLayout1);
 
         back.setText("Back");
+        back.setPreferredSize(new java.awt.Dimension(96, 23));
         back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backActionPerformed(evt);
             }
         });
-
-        next.setText("Next");
-        next.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextActionPerformed(evt);
-            }
-        });
+        ButtonPanel.add(back);
 
         ok.setText("Next");
         ok.setEnabled(false);
@@ -102,34 +97,37 @@ public final class Welcome extends javax.swing.JFrame {
                 okActionPerformed(evt);
             }
         });
+        ButtonPanel.add(ok);
 
-        javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
-        ButtonPanel.setLayout(ButtonPanelLayout);
-        ButtonPanelLayout.setHorizontalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        ButtonPanelLayout.setVerticalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(back)
-                    .addComponent(next)
-                    .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
+        ButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0,2));
         bottomBar.add(ButtonPanel);
 
-        getContentPane().add(bottomBar, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(bottomBar, java.awt.BorderLayout.SOUTH);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        address.setEnabled(false);
+        address.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressActionPerformed(evt);
+            }
+        });
+        jPanel1.add(address, java.awt.BorderLayout.NORTH);
+
+        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
+        content.setLayout(contentLayout);
+        contentLayout.setHorizontalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 568, Short.MAX_VALUE)
+        );
+        contentLayout.setVerticalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 302, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(content, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -141,12 +139,13 @@ public final class Welcome extends javax.swing.JFrame {
             
             display("Overview", loadfile, overview);
             overviewActive = true;
+            address.setText(csvData.getFilename());
             //pack();
         }
         else{
-            ok.setVisible(false);
+            //ok.setVisible(false);
             ok.setText("Close");
-            back.setVisible(false);
+            //back.setVisible(false);
             try {
                 mainpage = new MainPage(this);
             } catch (IOException ex) {
@@ -163,11 +162,9 @@ public final class Welcome extends javax.swing.JFrame {
         overviewActive = false;
     }//GEN-LAST:event_backActionPerformed
 
-    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        
-        
-                
-    }//GEN-LAST:event_nextActionPerformed
+    private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressActionPerformed
     
     private void display(String name, Component remove, Component add){
         panelTitle.setText(name);
@@ -178,11 +175,12 @@ public final class Welcome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonPanel;
+    private javax.swing.JFormattedTextField address;
     private javax.swing.JButton back;
     private javax.swing.JToolBar bottomBar;
     private javax.swing.JPanel content;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton next;
+    private javax.swing.JPanel jPanel1;
     public javax.swing.JButton ok;
     public javax.swing.JLabel panelTitle;
     private javax.swing.JToolBar titleBar;

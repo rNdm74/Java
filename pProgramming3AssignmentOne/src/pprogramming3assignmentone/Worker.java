@@ -12,24 +12,46 @@ import java.util.ArrayList;
  * @author rndm
  */
 public class Worker {
-    private ArrayList<String[]> csvData;
+    private ArrayList<Object[]> data;
     private String filename;
         
     public Worker(String filename) throws FileNotFoundException, IOException { 
         this.filename = filename;
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            csvData = new ArrayList<>();
+            data = new ArrayList<>();
             
             String line;
             
             while((line = br.readLine()) != null){            
-                csvData.add(line.split(","));
+                data.add(dataType(line));
             }
         }
     } 
+    
+    private Object[] dataType(String line){
+        String[] s = line.split(",");
+        
+        Object[] o = new Object[s.length];
+        
+        for (int i = 0; i < o.length; i++) {
+            o[i] = (isNumber(s[i])) ? Double.parseDouble(s[i]) : s[i];
+        }   
+        
+        return o;
+    }
+    
+    private boolean isNumber(String s){
+        try{
+           Double.parseDouble(s);
+           return true;
+        }
+        catch(Exception e){
+           return false; 
+        }        
+    }
 
-    public ArrayList<String[]> getCsvData() {
-        return csvData;
+    public ArrayList<Object[]> getData() {
+        return data;
     }        
 
     public String getFilename() {
