@@ -26,7 +26,7 @@ public class Activity extends JPanel {
    
    private List<Integer> scores;
    
-   public Activity(Welcome welcome) {
+   public Activity(Home welcome) {
        scores = new ArrayList<>();
        
        PREF_W = welcome.csvData.getData().size();

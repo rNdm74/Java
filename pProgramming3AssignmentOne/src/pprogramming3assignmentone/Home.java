@@ -8,30 +8,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
 
 /**
  *
  * @author rndm
  */
-public final class Welcome extends javax.swing.JFrame {
+public final class Home extends javax.swing.JFrame {
     public boolean loadfileActive;
     public boolean overviewActive;
     public boolean mainpageActive;
     
     public Worker csvData;
     
-    public LoadFile loadfile;
-    public Overview overview;
-    public MainPage mainpage;
+    public Load load;
+    public Table table;
+    public Main main;
     
-    public Welcome() throws FileNotFoundException, IOException {
+    public Home() throws FileNotFoundException, IOException {
         initComponents();
-        //next.setVisible(false);
-        back.setVisible(false);
-        content.setLayout(new BorderLayout());
-        loadfile = new LoadFile(this);
-        content.add(loadfile, BorderLayout.CENTER); 
-        ButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        
+        //content.setLayout(new BorderLayout());
+        csvData = new Worker(address.getText());
+        
+        load = new Load(this);        
+        content.add(load); 
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -39,17 +43,20 @@ public final class Welcome extends javax.swing.JFrame {
     private void initComponents() {
 
         titleBar = new javax.swing.JToolBar();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0));
-        panelTitle = new javax.swing.JLabel();
-        bottomBar = new javax.swing.JToolBar();
-        ButtonPanel = new javax.swing.JPanel();
         back = new javax.swing.JButton();
-        ok = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        forward = new javax.swing.JButton();
+        home = new javax.swing.JButton();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         address = new javax.swing.JFormattedTextField();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         content = new javax.swing.JPanel();
+        bottomBar = new javax.swing.JToolBar();
+        buttonPanel = new javax.swing.JPanel();
+        next = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Home - CSV Analyser 1.0");
+        setMinimumSize(new java.awt.Dimension(400, 400));
         setName("CSVReader"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -57,14 +64,51 @@ public final class Welcome extends javax.swing.JFrame {
         titleBar.setRollover(true);
         titleBar.setMinimumSize(new java.awt.Dimension(76, 40));
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
-        titleBar.add(filler1);
 
-        panelTitle.setFont(panelTitle.getFont().deriveFont(panelTitle.getFont().getStyle() | java.awt.Font.BOLD, 18));
-        panelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        panelTitle.setText("Welcome");
-        titleBar.add(panelTitle);
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
+        back.setEnabled(false);
+        back.setFocusable(false);
+        back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        titleBar.add(back);
+
+        forward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-right.png"))); // NOI18N
+        forward.setEnabled(false);
+        forward.setFocusable(false);
+        forward.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        forward.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        titleBar.add(forward);
+
+        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
+        home.setFocusable(false);
+        home.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        home.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        titleBar.add(home);
+        titleBar.add(filler4);
+
+        address.setText("E:\\Share\\Documents\\sensor.csv");
+        address.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        address.setFont(address.getFont());
+        address.setMaximumSize(new java.awt.Dimension(2147483647, 26));
+        address.setMinimumSize(new java.awt.Dimension(6, 30));
+        address.setPreferredSize(new java.awt.Dimension(6, 30));
+        address.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressActionPerformed(evt);
+            }
+        });
+        titleBar.add(address);
+        titleBar.add(filler3);
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
+
+        content.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(content, java.awt.BorderLayout.CENTER);
 
         bottomBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         bottomBar.setFloatable(false);
@@ -73,116 +117,94 @@ public final class Welcome extends javax.swing.JFrame {
         bottomBar.setPreferredSize(new java.awt.Dimension(22, 40));
         bottomBar.setRequestFocusEnabled(false);
 
-        ButtonPanel.setOpaque(false);
+        buttonPanel.setOpaque(false);
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT);
         flowLayout1.setAlignOnBaseline(true);
-        ButtonPanel.setLayout(flowLayout1);
+        buttonPanel.setLayout(flowLayout1);
 
-        back.setText("Back");
-        back.setPreferredSize(new java.awt.Dimension(96, 23));
-        back.addActionListener(new java.awt.event.ActionListener() {
+        next.setText("Next");
+        next.setMaximumSize(new java.awt.Dimension(96, 23));
+        next.setMinimumSize(new java.awt.Dimension(96, 23));
+        next.setPreferredSize(new java.awt.Dimension(96, 23));
+        next.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
+                nextActionPerformed(evt);
             }
         });
-        ButtonPanel.add(back);
+        buttonPanel.add(next);
 
-        ok.setText("Next");
-        ok.setEnabled(false);
-        ok.setMaximumSize(new java.awt.Dimension(96, 23));
-        ok.setMinimumSize(new java.awt.Dimension(96, 23));
-        ok.setPreferredSize(new java.awt.Dimension(96, 23));
-        ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okActionPerformed(evt);
-            }
-        });
-        ButtonPanel.add(ok);
-
-        ButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0,2));
-        bottomBar.add(ButtonPanel);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0,2));
+        bottomBar.add(buttonPanel);
 
         getContentPane().add(bottomBar, java.awt.BorderLayout.SOUTH);
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        address.setEnabled(false);
-        address.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressActionPerformed(evt);
-            }
-        });
-        jPanel1.add(address, java.awt.BorderLayout.NORTH);
-
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
-        content.setLayout(contentLayout);
-        contentLayout.setHorizontalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 568, Short.MAX_VALUE)
-        );
-        contentLayout.setVerticalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(content, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getAccessibleContext().setAccessibleName("CSVReader");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
+    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
         if(!overviewActive){
-            back.setVisible(true);
-            overview = new Overview(this); 
+            back.setEnabled(true);
             
-            display("Overview", loadfile, overview);
-            overviewActive = true;
-            address.setText(csvData.getFilename());
-            //pack();
-        }
-        else{
-            //ok.setVisible(false);
-            ok.setText("Close");
-            //back.setVisible(false);
             try {
-                mainpage = new MainPage(this);
-            } catch (IOException ex) {
-                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
+            if (csvData.load()) {
+                table = new Table(this);
+                display("Data Overview", load, table);
+                
             }
-            display("Mainpage", overview, mainpage);            
-            //pack();
+        } catch (IOException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        pack();   
+            
+            
+            table.setVisible(true);
+            
+            address.setText(csvData.getFilename());
+            
+            overviewActive = true;
+        }
+        else{            
+            next.setText("Close");
+            try {
+                table.setBorder(null);
+                main = new Main(this);
+                display("Main", table, main);
+            } catch (IOException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }                
-    }//GEN-LAST:event_okActionPerformed
-
+    }//GEN-LAST:event_nextActionPerformed
     
+    private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
+        
+    }//GEN-LAST:event_addressActionPerformed
+
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        display("Welcome", overview, loadfile);
+        display("Home", table, load);
         overviewActive = false;
     }//GEN-LAST:event_backActionPerformed
-
-    private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addressActionPerformed
     
     private void display(String name, Component remove, Component add){
-        panelTitle.setText(name);
+        setTitle(name);
         content.remove(remove);        
         content.add(add); 
         content.repaint();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel ButtonPanel;
-    private javax.swing.JFormattedTextField address;
+    public javax.swing.JFormattedTextField address;
     private javax.swing.JButton back;
     private javax.swing.JToolBar bottomBar;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel content;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.JPanel jPanel1;
-    public javax.swing.JButton ok;
-    public javax.swing.JLabel panelTitle;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.JButton forward;
+    private javax.swing.JButton home;
+    public javax.swing.JButton next;
     private javax.swing.JToolBar titleBar;
     // End of variables declaration//GEN-END:variables
 }

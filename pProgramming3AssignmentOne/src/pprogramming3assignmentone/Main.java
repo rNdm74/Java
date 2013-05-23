@@ -2,22 +2,22 @@
 package pprogramming3assignmentone;
 
 import java.io.IOException;
-import javax.swing.JComboBox;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
  *
  * @author rndm
  */
-public class MainPage extends javax.swing.JPanel {
+public class Main extends javax.swing.JPanel {
 
-    public MainPage(Welcome welcome) throws IOException {
+    public Main(Home welcome) throws IOException {
         initComponents(); 
                                 
         statistics = new Statistics(welcome);        
         search = new Search(welcome);        
         graph = new Graph(welcome);
                 
-        mainpagetabs.add(welcome.overview);
+        mainpagetabs.add(welcome.table);
         mainpagetabs.add(statistics);
         mainpagetabs.add(search);
         mainpagetabs.add(graph);
@@ -26,8 +26,7 @@ public class MainPage extends javax.swing.JPanel {
         mainpagetabs.setTitleAt(1, "Statistics"); 
         mainpagetabs.setTitleAt(2, "Search");
         mainpagetabs.setTitleAt(3, "Graph");
-        
-        //mainpagetabs.setSize(welcome.overview.getSize());
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -36,9 +35,11 @@ public class MainPage extends javax.swing.JPanel {
 
         mainpagetabs = new javax.swing.JTabbedPane();
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         setPreferredSize(new java.awt.Dimension(391, 291));
         setLayout(new java.awt.BorderLayout());
 
+        mainpagetabs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         mainpagetabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         mainpagetabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         mainpagetabs.setToolTipText("");

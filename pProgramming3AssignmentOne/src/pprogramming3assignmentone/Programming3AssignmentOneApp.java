@@ -21,11 +21,9 @@ public class Programming3AssignmentOneApp {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         try {            
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
-            Welcome gui = new Welcome();
+            Home gui = new Home();
+            
             gui.setVisible(true); 
-//            if (gui.filePath().getText().contains("csv")) {
-//                gui.getOk().setEnabled(true);
-//            }
             
             gui.setLocation(desktopWidth / 2 - gui.getWidth() / 2, desktopHeight / 2 - gui.getHeight() / 2);
             

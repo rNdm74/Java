@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,9 +16,13 @@ import java.util.ArrayList;
 public class Worker {
     private ArrayList<Object[]> data;
     private String filename;
-        
+    public boolean loadComplete;
+    
     public Worker(String filename) throws FileNotFoundException, IOException { 
-        this.filename = filename;
+        this.filename = filename; 
+    } 
+    
+    public boolean load() throws IOException{
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             data = new ArrayList<>();
             
@@ -25,8 +31,12 @@ public class Worker {
             while((line = br.readLine()) != null){            
                 data.add(dataType(line));
             }
-        }
-    } 
+            
+            return true;
+        } catch (FileNotFoundException ex) {
+            return false;
+        }        
+    }
     
     private Object[] dataType(String line){
         String[] s = line.split(",");
