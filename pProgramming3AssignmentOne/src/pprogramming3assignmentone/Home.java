@@ -49,10 +49,11 @@ public final class Home extends javax.swing.JFrame {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         address = new javax.swing.JFormattedTextField();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
-        content = new javax.swing.JPanel();
-        bottomBar = new javax.swing.JToolBar();
-        buttonPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         next = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home - CSV Analyser 1.0");
@@ -107,20 +108,8 @@ public final class Home extends javax.swing.JFrame {
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
-        content.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(content, java.awt.BorderLayout.CENTER);
-
-        bottomBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        bottomBar.setFloatable(false);
-        bottomBar.setBorderPainted(false);
-        bottomBar.setMinimumSize(new java.awt.Dimension(22, 40));
-        bottomBar.setPreferredSize(new java.awt.Dimension(22, 40));
-        bottomBar.setRequestFocusEnabled(false);
-
-        buttonPanel.setOpaque(false);
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT);
-        flowLayout1.setAlignOnBaseline(true);
-        buttonPanel.setLayout(flowLayout1);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(437, 50));
 
         next.setText("Next");
         next.setMaximumSize(new java.awt.Dimension(96, 23));
@@ -131,52 +120,56 @@ public final class Home extends javax.swing.JFrame {
                 nextActionPerformed(evt);
             }
         });
-        buttonPanel.add(next);
 
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0,2));
-        bottomBar.add(buttonPanel);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(320, Short.MAX_VALUE)
+                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
 
-        getContentPane().add(bottomBar, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setMaximumSize(new java.awt.Dimension(20, 32767));
+        jPanel2.setPreferredSize(new java.awt.Dimension(20, 50));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 265, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.WEST);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setMaximumSize(new java.awt.Dimension(20, 32767));
+        jPanel3.setPreferredSize(new java.awt.Dimension(20, 100));
+        getContentPane().add(jPanel3, java.awt.BorderLayout.EAST);
+
+        content.setBackground(new java.awt.Color(255, 255, 255));
+        content.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(content, java.awt.BorderLayout.CENTER);
 
         getAccessibleContext().setAccessibleName("CSVReader");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        if(!overviewActive){
-            back.setEnabled(true);
-            
-            try {
-            if (csvData.load()) {
-                table = new Table(this);
-                display("Data Overview", load, table);
-                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        pack();   
-            
-            
-            table.setVisible(true);
-            
-            address.setText(csvData.getFilename());
-            
-            overviewActive = true;
-        }
-        else{            
-            next.setText("Close");
-            try {
-                table.setBorder(null);
-                main = new Main(this);
-                display("Main", table, main);
-            } catch (IOException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }                
-    }//GEN-LAST:event_nextActionPerformed
     
     private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
         
@@ -186,8 +179,42 @@ public final class Home extends javax.swing.JFrame {
         display("Home", table, load);
         overviewActive = false;
     }//GEN-LAST:event_backActionPerformed
+
+    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
+        if(!overviewActive){
+            back.setEnabled(true);
+
+            try {
+                if (csvData.load()) {
+                    table = new Table(this);
+                    display("Data Overview", load, table);
+
+                }
+            } catch (IOException ex) {
+
+            }
+            pack();
+
+            table.setVisible(true);
+
+            address.setText(csvData.getFilename());
+
+            overviewActive = true;
+        }
+        else{
+            next.setText("Close");
+            try {
+                table.setBorder(null);
+                main = new Main(this);
+                display("Main", table, main);
+            } catch (IOException ex) {
+
+            }
+
+        }
+    }//GEN-LAST:event_nextActionPerformed
     
-    private void display(String name, Component remove, Component add){
+    public void display(String name, Component remove, Component add){
         setTitle(name);
         content.remove(remove);        
         content.add(add); 
@@ -196,14 +223,15 @@ public final class Home extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JFormattedTextField address;
-    private javax.swing.JButton back;
-    private javax.swing.JToolBar bottomBar;
-    private javax.swing.JPanel buttonPanel;
+    public javax.swing.JButton back;
     private javax.swing.JPanel content;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.JButton forward;
-    private javax.swing.JButton home;
+    public javax.swing.JButton forward;
+    public javax.swing.JButton home;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     public javax.swing.JButton next;
     private javax.swing.JToolBar titleBar;
     // End of variables declaration//GEN-END:variables

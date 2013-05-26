@@ -28,7 +28,6 @@ public class Search extends javax.swing.JPanel {
         searchField = new javax.swing.JFormattedTextField();
         searchLabel = new javax.swing.JLabel();
         scroll = new javax.swing.JScrollPane();
-        result = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(391, 291));
@@ -98,12 +97,6 @@ public class Search extends javax.swing.JPanel {
 
         scroll.setBorder(null);
 
-        result.setColumns(20);
-        result.setFont(result.getFont());
-        result.setRows(5);
-        result.setBorder(null);
-        scroll.setViewportView(result);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,7 +106,7 @@ public class Search extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(searchPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(columnlist, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -124,7 +117,7 @@ public class Search extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -168,13 +161,13 @@ public class Search extends javax.swing.JPanel {
     
     private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
         String item = (String)columnlist.getSelectedItem();
-        result.removeAll();
+       // result.removeAll();
         
         if (evt.getKeyCode() == 10) {
             
             for (int i = 1; i < home.csvData.getData().size(); i++) {
                String s = String.valueOf(home.csvData.getData().get(i)[column(item, home.csvData)]);
-               result.append(s + "\n"); 
+               //result.append(s + "\n"); 
                
 //                if (s.(searchField.getText())) {
 //                    
@@ -186,7 +179,6 @@ public class Search extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox columnlist;
-    private javax.swing.JTextArea result;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JFormattedTextField searchField;
     private javax.swing.JLabel searchLabel;

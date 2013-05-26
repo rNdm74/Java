@@ -35,7 +35,6 @@ public class Main extends javax.swing.JPanel {
 
         mainpagetabs = new javax.swing.JTabbedPane();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         setPreferredSize(new java.awt.Dimension(391, 291));
         setLayout(new java.awt.BorderLayout());
 
@@ -43,6 +42,7 @@ public class Main extends javax.swing.JPanel {
         mainpagetabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         mainpagetabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         mainpagetabs.setToolTipText("");
+        mainpagetabs.setOpaque(true);
         add(mainpagetabs, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 

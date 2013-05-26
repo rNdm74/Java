@@ -77,7 +77,7 @@ public class Load extends javax.swing.JPanel implements MouseListener{
         home.address.setText(file);
         home.address.setToolTipText(file);            
 
-        home.next.setEnabled(true);
+        //home.next.setEnabled(true);
     }//GEN-LAST:event_attachActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

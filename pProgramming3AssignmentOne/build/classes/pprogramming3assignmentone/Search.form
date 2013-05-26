@@ -29,7 +29,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="searchPanel" alignment="0" max="32767" attributes="0"/>
                   <Component id="columnlist" alignment="1" max="32767" attributes="0"/>
-                  <Component id="scroll" alignment="0" pref="473" max="32767" attributes="0"/>
+                  <Component id="scroll" alignment="0" pref="371" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -43,7 +43,7 @@
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="searchPanel" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="scroll" pref="296" max="32767" attributes="0"/>
+              <Component id="scroll" pref="175" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -147,22 +147,6 @@
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextArea" name="result">
-          <Properties>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
-              <FontInfo relative="true">
-                <Font component="result" property="font" relativeSize="true" size="0"/>
-              </FontInfo>
-            </Property>
-            <Property name="rows" type="int" value="5"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
     </Container>
   </SubComponents>
 </Form>
