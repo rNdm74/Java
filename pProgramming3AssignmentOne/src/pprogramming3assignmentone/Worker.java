@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,22 +16,25 @@ public class Worker {
     private String filename;
     public boolean loadComplete;
     
-    public Worker(String filename) throws FileNotFoundException, IOException { 
+    public Worker(String filename) { 
         this.filename = filename; 
     } 
     
-    public boolean load() throws IOException{
+    public boolean load(){
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             data = new ArrayList<>();
             
             String line;
             
             while((line = br.readLine()) != null){            
-                data.add(dataType(line));
+                data.add(line.split(","));
             }
             
             return true;
+            
         } catch (FileNotFoundException ex) {
+            return false;
+        } catch (IOException ex) {
             return false;
         }        
     }
@@ -62,7 +63,11 @@ public class Worker {
 
     public ArrayList<Object[]> getData() {
         return data;
-    }        
+    } 
+    
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public String getFilename() {
         return filename;

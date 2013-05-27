@@ -1,22 +1,17 @@
 
 package pprogramming3assignmentone;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author rndm
  */
 public final class Home extends javax.swing.JFrame {
-    public boolean loadfileActive;
+    public boolean loadfile;
     public boolean overviewActive;
     public boolean mainpageActive;
     
@@ -29,13 +24,10 @@ public final class Home extends javax.swing.JFrame {
     public Home() throws FileNotFoundException, IOException {
         initComponents();
         
-        //content.setLayout(new BorderLayout());
         csvData = new Worker(address.getText());
         
-        load = new Load(this);        
-        content.add(load); 
-        
-        
+        //load = new Load(this);        
+        //content.add(load); 
     }
 
     @SuppressWarnings("unchecked")
@@ -48,12 +40,12 @@ public final class Home extends javax.swing.JFrame {
         home = new javax.swing.JButton();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         address = new javax.swing.JFormattedTextField();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         jPanel1 = new javax.swing.JPanel();
         next = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         content = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home - CSV Analyser 1.0");
@@ -92,26 +84,24 @@ public final class Home extends javax.swing.JFrame {
         titleBar.add(home);
         titleBar.add(filler4);
 
-        address.setText("E:\\Share\\Documents\\sensor.csv");
         address.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         address.setFont(address.getFont());
         address.setMaximumSize(new java.awt.Dimension(2147483647, 26));
         address.setMinimumSize(new java.awt.Dimension(6, 30));
-        address.setPreferredSize(new java.awt.Dimension(6, 30));
+        address.setPreferredSize(new java.awt.Dimension(250, 30));
         address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressActionPerformed(evt);
             }
         });
         titleBar.add(address);
-        titleBar.add(filler3);
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(437, 50));
 
-        next.setText("Next");
+        next.setText("Open");
         next.setMaximumSize(new java.awt.Dimension(96, 23));
         next.setMinimumSize(new java.awt.Dimension(96, 23));
         next.setPreferredSize(new java.awt.Dimension(96, 23));
@@ -164,6 +154,23 @@ public final class Home extends javax.swing.JFrame {
 
         content.setBackground(new java.awt.Color(255, 255, 255));
         content.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setBackground(java.awt.Color.white);
+        jPanel4.setPreferredSize(new java.awt.Dimension(397, 20));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 397, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        content.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+
         getContentPane().add(content, java.awt.BorderLayout.CENTER);
 
         getAccessibleContext().setAccessibleName("CSVReader");
@@ -181,36 +188,45 @@ public final class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        if(!overviewActive){
-            back.setEnabled(true);
+        if (!loadfile) {
+            JFileChooser fc = new JFileChooser();
+            
+            fc.showDialog(this, "Attach");
 
-            try {
-                if (csvData.load()) {
-                    table = new Table(this);
-                    display("Data Overview", load, table);
+            String file = fc.getSelectedFile().getAbsolutePath();
 
-                }
-            } catch (IOException ex) {
+            address.setText(file);
+            address.setToolTipText(file);         
+            csvData.setFilename(file);
 
-            }
-            pack();
-
-            table.setVisible(true);
-
-            address.setText(csvData.getFilename());
-
-            overviewActive = true;
+            next.setText("Next");
+            
+            loadfile = true;
         }
         else{
-            next.setText("Close");
-            try {
-                table.setBorder(null);
-                main = new Main(this);
-                display("Main", table, main);
-            } catch (IOException ex) {
+            if(!overviewActive){
+                back.setEnabled(true);
 
+                if (csvData.load()) {
+                    table = new Table(this);
+                    
+                    //load = new Load(this);        
+                    content.add(table);
+                    
+                    //display("Data Overview", load, table);                    
+                }
+
+                pack();
+
+                overviewActive = true;
             }
+            else{
+                next.setText("Close");
 
+                main = new Main(this);
+
+                display("Main", table, main);
+            }
         }
     }//GEN-LAST:event_nextActionPerformed
     
@@ -225,13 +241,13 @@ public final class Home extends javax.swing.JFrame {
     public javax.swing.JFormattedTextField address;
     public javax.swing.JButton back;
     private javax.swing.JPanel content;
-    private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
     public javax.swing.JButton forward;
     public javax.swing.JButton home;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     public javax.swing.JButton next;
     private javax.swing.JToolBar titleBar;
     // End of variables declaration//GEN-END:variables

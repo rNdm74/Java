@@ -2,6 +2,7 @@
 package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.*;
 
@@ -31,6 +32,7 @@ public class Table extends javax.swing.JPanel {
                 
         JTable table = new JTable(data, columnNames);
         table.setBackground(getBackground());
+        table.setGridColor(Color.WHITE);
         table.setAutoCreateRowSorter(true);
         
         JScrollPane scrollPane = new JScrollPane(table);
@@ -56,7 +58,7 @@ public class Table extends javax.swing.JPanel {
         west = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        setBorder(null);
         setPreferredSize(new java.awt.Dimension(391, 291));
         setLayout(new java.awt.BorderLayout());
 
@@ -71,7 +73,7 @@ public class Table extends javax.swing.JPanel {
         north.setLayout(northLayout);
         northLayout.setHorizontalGroup(
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 389, Short.MAX_VALUE)
+            .addGap(0, 391, Short.MAX_VALUE)
         );
         northLayout.setVerticalGroup(
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +119,7 @@ public class Table extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2))
@@ -158,7 +160,7 @@ public class Table extends javax.swing.JPanel {
         );
         eastLayout.setVerticalGroup(
             eastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
+            .addGap(0, 211, Short.MAX_VALUE)
         );
 
         add(east, java.awt.BorderLayout.EAST);
@@ -174,7 +176,7 @@ public class Table extends javax.swing.JPanel {
         );
         westLayout.setVerticalGroup(
             westLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
+            .addGap(0, 211, Short.MAX_VALUE)
         );
 
         add(west, java.awt.BorderLayout.WEST);

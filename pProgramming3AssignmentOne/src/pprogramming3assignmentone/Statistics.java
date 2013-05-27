@@ -11,32 +11,25 @@ import javax.swing.JComboBox;
  */
 public class Statistics extends javax.swing.JPanel implements ActionListener {
 
-    public Statistics(Home welcome) {
-        this.welcome = welcome;
+    public Statistics(Home home) {
+        this.home = home;
         
         initComponents();
         
-//        for (int i = 0; i < statistics.getComponentCount(); i++) {
-//            if (statistics.getComponent(i).getName() != null) {
-//                JComboBox columnlist = (JComboBox)statistics.getComponent(i);
-//                
-//            }
-//        }
+        list.removeAllItems();
         
-        columnlist.removeAllItems();
-        
-        for (Object s: welcome.csvData.getData().get(0)) {
-            columnlist.addItem(((String)s).toUpperCase());
+        for (Object s: home.csvData.getData().get(0)) {
+            list.addItem(((String)s).toUpperCase());
         }
         
-        columnlist.addActionListener(this);
+        list.addActionListener(this);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        columnlist = new javax.swing.JComboBox();
+        list = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         max = new javax.swing.JLabel();
         min = new javax.swing.JLabel();
@@ -54,12 +47,13 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
         setBackground(java.awt.Color.white);
         setPreferredSize(new java.awt.Dimension(391, 291));
 
-        columnlist.setMaximumRowCount(100);
-        columnlist.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item", " " }));
-        columnlist.setMinimumSize(new java.awt.Dimension(47, 25));
-        columnlist.setName("columnlist"); // NOI18N
-        columnlist.setPreferredSize(new java.awt.Dimension(47, 25));
+        list.setMaximumRowCount(100);
+        list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item", " " }));
+        list.setMinimumSize(new java.awt.Dimension(47, 25));
+        list.setName("list"); // NOI18N
+        list.setPreferredSize(new java.awt.Dimension(47, 25));
 
+        jPanel1.setBackground(java.awt.Color.white);
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         max.setText("Max");
@@ -113,7 +107,7 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 267, Short.MAX_VALUE)
+            .addGap(0, 264, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -150,7 +144,7 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(columnlist, 0, 382, Short.MAX_VALUE)
+                    .addComponent(list, 0, 367, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -158,17 +152,17 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(columnlist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private Home welcome;
+    private Home home;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox columnlist;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox list;
     private javax.swing.JLabel max;
     private javax.swing.JFormattedTextField maxoutput;
     private javax.swing.JLabel mean;
@@ -188,13 +182,13 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String item = (String) ((JComboBox)e.getSource()).getSelectedItem();
         
-        int columnPosition = (column(item, welcome.csvData));
+        int columnPosition = (column(item, home.csvData));
         
-        maxoutput.setText((findMax(columnPosition, welcome.csvData)));
-        minoutput.setText((findMin(columnPosition, welcome.csvData)));
-        meanoutput.setText(findMean(columnPosition, welcome.csvData));
-        medianoutput.setText(findMedian(columnPosition, welcome.csvData));
-        modeoutput.setText(findMode(columnPosition, welcome.csvData));
+        maxoutput.setText((findMax(columnPosition, home.csvData)));
+        minoutput.setText((findMin(columnPosition, home.csvData)));
+        meanoutput.setText(findMean(columnPosition, home.csvData));
+        medianoutput.setText(findMedian(columnPosition, home.csvData));
+        modeoutput.setText(findMode(columnPosition, home.csvData));
         rangeoutput.setText(findRange());
     }
     
@@ -226,7 +220,7 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
        }  
     }  
     
-    private String findMax(int column, Worker file){
+    public String findMax(int column, Worker file){
         double maxValue = 0;
         
         for (int row = 1; row < file.getData().size(); row++) {
@@ -343,7 +337,6 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
     }
     private String findRange(){
         if (isValid(maxoutput.getText())){
-            //new ItemCompare().compare(maxoutput, minoutput);
             double maximum = Double.parseDouble(maxoutput.getText());
             double minimum = Double.parseDouble(minoutput.getText());
             return Double.toString(maximum - minimum);

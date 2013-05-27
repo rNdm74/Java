@@ -13,9 +13,9 @@ import java.util.List;
 import javax.swing.*;
 
 public class Activity extends JPanel {
-   private static int MAX_SCORE = 1023;
-   private static int PREF_W = 800;
-   private static int PREF_H = 600;
+   private int maxValue = 1023;
+   private static int prefWidth = 800;
+   private static int prefHeight = 600;
    
    private static final int BORDER_GAP = 20;
    private static final Color GRAPH_COLOR = Color.DARK_GRAY;
@@ -23,18 +23,13 @@ public class Activity extends JPanel {
    private static final Stroke GRAPH_STROKE = new BasicStroke(1f);
    private static final int GRAPH_POINT_WIDTH = 0;
    private static final int Y_HATCH_CNT = 0;
+
+   private List<Integer> data;
    
-   private List<Integer> scores;
-   
-   public Activity(Home welcome) {
-       scores = new ArrayList<>();
+   public Activity(Home home) {
+       data = new ArrayList<>();
        
-       PREF_W = welcome.csvData.getData().size();
-       
-       for (int i = 1; i < welcome.csvData.getData().size(); i++) {
-           int value = (int)Math.round((double) welcome.csvData.getData().get(i)[1]);
-           scores.add(value);
-       }
+       prefWidth = home.csvData.getData().size();
    }
 
    @Override
@@ -43,13 +38,13 @@ public class Activity extends JPanel {
       Graphics2D g2 = (Graphics2D)g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-      double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
-      double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
+      double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (getData().size() - 1);
+      double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (maxValue - 1);
 
       List<Point> graphPoints = new ArrayList<>();
-      for (int i = 0; i < scores.size(); i++) {
+      for (int i = 0; i < getData().size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
-         int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale + BORDER_GAP);
+         int y1 = (int) ((maxValue - getData().get(i)) * yScale + BORDER_GAP);
          graphPoints.add(new Point(x1, y1));
       }
 
@@ -67,8 +62,8 @@ public class Activity extends JPanel {
       }
 
       // and for x axis
-      for (int i = 0; i < scores.size() - 1; i++) {
-         int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (scores.size() - 1) + BORDER_GAP;
+      for (int i = 0; i < getData().size() - 1; i++) {
+         int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (getData().size() - 1) + BORDER_GAP;
          int x1 = x0;
          int y0 = getHeight() - BORDER_GAP;
          int y1 = y0 - GRAPH_POINT_WIDTH;
@@ -99,6 +94,14 @@ public class Activity extends JPanel {
 
    @Override
    public Dimension getPreferredSize() {
-      return new Dimension(PREF_W, PREF_H);
+      return new Dimension(prefWidth, prefHeight);
+   }
+        
+   public void setMaxValue(int maxValue) {
+       this.maxValue = maxValue;
+   }
+
+   public List<Integer> getData() {
+       return data;
    }
 }

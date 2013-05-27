@@ -1,23 +1,20 @@
 
 package pprogramming3assignmentone;
 
-import java.io.IOException;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
-
 /**
  *
  * @author rndm
  */
 public class Main extends javax.swing.JPanel {
 
-    public Main(Home welcome) throws IOException {
+    public Main(Home home){
         initComponents(); 
                                 
-        statistics = new Statistics(welcome);        
-        search = new Search(welcome);        
-        graph = new Graph(welcome);
+        statistics = new Statistics(home);        
+        search = new Search(home);        
+        graph = new Graph(home);
                 
-        mainpagetabs.add(welcome.table);
+        mainpagetabs.add(home.table);
         mainpagetabs.add(statistics);
         mainpagetabs.add(search);
         mainpagetabs.add(graph);
@@ -26,7 +23,6 @@ public class Main extends javax.swing.JPanel {
         mainpagetabs.setTitleAt(1, "Statistics"); 
         mainpagetabs.setTitleAt(2, "Search");
         mainpagetabs.setTitleAt(3, "Graph");
-       
     }
 
     @SuppressWarnings("unchecked")
@@ -35,9 +31,11 @@ public class Main extends javax.swing.JPanel {
 
         mainpagetabs = new javax.swing.JTabbedPane();
 
+        setBackground(java.awt.Color.white);
         setPreferredSize(new java.awt.Dimension(391, 291));
         setLayout(new java.awt.BorderLayout());
 
+        mainpagetabs.setBackground(java.awt.Color.white);
         mainpagetabs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         mainpagetabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         mainpagetabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
@@ -47,7 +45,7 @@ public class Main extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private javax.swing.JPanel graph;
-    private javax.swing.JPanel statistics;
+    public javax.swing.JPanel statistics;
     private javax.swing.JPanel search;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane mainpagetabs;
