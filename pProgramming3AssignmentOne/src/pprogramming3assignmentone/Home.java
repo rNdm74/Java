@@ -33,10 +33,10 @@ public final class Home extends javax.swing.JFrame {
 
         titleBar = new javax.swing.JToolBar();
         back = new javax.swing.JButton();
-        forward = new javax.swing.JButton();
         home = new javax.swing.JButton();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         address = new javax.swing.JFormattedTextField();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         jPanel1 = new javax.swing.JPanel();
         next = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -50,11 +50,14 @@ public final class Home extends javax.swing.JFrame {
         setName("CSVReader"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));
 
+        titleBar.setBackground(new java.awt.Color(255, 255, 255));
         titleBar.setFloatable(false);
         titleBar.setRollover(true);
+        titleBar.setMargin(new java.awt.Insets(0, 0, 0, -1));
         titleBar.setMinimumSize(new java.awt.Dimension(76, 40));
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
 
+        back.setBackground(new java.awt.Color(255, 255, 255));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
         back.setEnabled(false);
         back.setFocusable(false);
@@ -67,13 +70,7 @@ public final class Home extends javax.swing.JFrame {
         });
         titleBar.add(back);
 
-        forward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-right.png"))); // NOI18N
-        forward.setEnabled(false);
-        forward.setFocusable(false);
-        forward.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        forward.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        titleBar.add(forward);
-
+        home.setBackground(new java.awt.Color(255, 255, 255));
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
         home.setEnabled(false);
         home.setFocusable(false);
@@ -93,16 +90,17 @@ public final class Home extends javax.swing.JFrame {
             }
         });
         titleBar.add(address);
+        titleBar.add(filler5);
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(437, 50));
 
-        next.setText("Open");
+        next.setText("Attach");
         next.setMaximumSize(new java.awt.Dimension(96, 23));
         next.setMinimumSize(new java.awt.Dimension(96, 23));
-        next.setPreferredSize(new java.awt.Dimension(96, 23));
+        next.setPreferredSize(new java.awt.Dimension(96, 25));
         next.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextActionPerformed(evt);
@@ -123,7 +121,7 @@ public final class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
@@ -236,7 +234,7 @@ public final class Home extends javax.swing.JFrame {
     public javax.swing.JButton back;
     private javax.swing.JPanel content;
     private javax.swing.Box.Filler filler4;
-    public javax.swing.JButton forward;
+    private javax.swing.Box.Filler filler5;
     public javax.swing.JButton home;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

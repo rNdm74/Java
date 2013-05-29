@@ -33,10 +33,8 @@ public class Search extends javax.swing.JPanel {
         tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         examples = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
         searchField = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(391, 291));
@@ -58,7 +56,6 @@ public class Search extends javax.swing.JPanel {
 
         tableScrollPane.setBorder(null);
 
-        table.setBorder(null);
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null}
@@ -69,15 +66,14 @@ public class Search extends javax.swing.JPanel {
         ));
         table.setGridColor(java.awt.Color.white);
         table.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        table.setRowHeight(25);
         tableScrollPane.setViewportView(table);
 
         examples.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        examples.setPreferredSize(new java.awt.Dimension(56, 25));
 
-        jLabel1.setText("Basic");
-
-        searchField.setBorder(null);
         searchField.setForeground(java.awt.SystemColor.textInactiveText);
-        searchField.setText("  Search");
+        searchField.setText("  Advanced Search");
         searchField.setFont(searchField.getFont().deriveFont((float)12));
         searchField.setPreferredSize(new java.awt.Dimension(44, 26));
         searchField.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -104,14 +100,17 @@ public class Search extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+        jButton1.setOpaque(false);
+        jButton1.setRequestFocusEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Advanced");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -120,93 +119,32 @@ public class Search extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(examples, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))))
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(examples, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(examples, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
-                .addGap(13, 13, 13))
+                        .addComponent(examples, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        
-    }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
-       
-    }//GEN-LAST:event_searchFieldMouseClicked
-
-    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
-        searchField.setText("");
-    }//GEN-LAST:event_searchFieldFocusGained
-
-    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
-        searchField.setText("Search");
-    }//GEN-LAST:event_searchFieldFocusLost
-
-    private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
-                       
-        if (evt.getKeyCode() == 10) { 
-            
-      
-            /*8*/
-//            for (Object o: ) {
-//                ((String)o).
-//            }
-            
-//            for (int row = 0; row < data.get(pos).length; row++) {
-//                
-//            }
-//            
-//            int resultPos = Arrays.binarySearch(data.get(pos), searchField.getText(), new CompareString());
-//
-//            
-//            
-//            if (resultPos > 0) {
-//                ArrayList<String> rowData = new ArrayList<>();
-//            
-//                for (int column = 0; column < data.size(); column++) {
-//                    String search = searchField.getText();
-//                    String result = (String) data.get(column)[resultPos];
-//                    
-//                    if (!search.matches(result)) {
-//                        rowData.add(result);
-//                    }
-//                }
-//
-//                DefaultTableModel model = (DefaultTableModel)table.getModel();
-//                model.addRow(rowData.toArray());
-//            }
-        }        
-    }//GEN-LAST:event_searchFieldKeyPressed
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
         
@@ -261,11 +199,60 @@ public class Search extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
+
+        if (evt.getKeyCode() == 10) {
+
+            /*8*/
+            //            for (Object o: ) {
+                //                ((String)o).
+                //            }
+
+            //            for (int row = 0; row < data.get(pos).length; row++) {
+                //
+                //            }
+            //
+            //            int resultPos = Arrays.binarySearch(data.get(pos), searchField.getText(), new CompareString());
+            //
+            //
+            //
+            //            if (resultPos > 0) {
+                //                ArrayList<String> rowData = new ArrayList<>();
+                //
+                //                for (int column = 0; column < data.size(); column++) {
+                    //                    String search = searchField.getText();
+                    //                    String result = (String) data.get(column)[resultPos];
+                    //
+                    //                    if (!search.matches(result)) {
+                        //                        rowData.add(result);
+                        //                    }
+                    //                }
+                //
+                //                DefaultTableModel model = (DefaultTableModel)table.getModel();
+                //                model.addRow(rowData.toArray());
+                //            }
+        }
+    }//GEN-LAST:event_searchFieldKeyPressed
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        searchField.setText("Search");
+    }//GEN-LAST:event_searchFieldFocusLost
+
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        searchField.setText("");
+    }//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
+
+    }//GEN-LAST:event_searchFieldMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox examples;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox list;
     private javax.swing.JFormattedTextField searchField;
     private javax.swing.JTable table;

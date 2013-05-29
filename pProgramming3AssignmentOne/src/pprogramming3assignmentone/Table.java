@@ -4,8 +4,8 @@ package pprogramming3assignmentone;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalBorders;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class Table extends javax.swing.JPanel {
@@ -33,17 +33,15 @@ public class Table extends javax.swing.JPanel {
                 
         JTable table = new JTable(data, columnNames);
         
-        //table.setValueAt(table, WIDTH, WIDTH);
+        JTableHeader th = table.getTableHeader();
+        TableColumnModel tcm = th.getColumnModel();
         
-        //TableColumnModel model = (TableColumnModel)table.getModel();
-        
-        //model.
-        
-        //model.setColumnCount(0);
+        table.setRowHeight(25);
         
         for (int column = 0; column < columnNames.length; column++) {
             String item = ((String)columnNames[column]).toUpperCase();
-            table.setValueAt(item, 0, column);
+            TableColumn tc = tcm.getColumn(column);
+            tc.setHeaderValue(item);
         }
         
         table.setBackground(getBackground());
@@ -66,7 +64,6 @@ public class Table extends javax.swing.JPanel {
         west = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(null);
         setPreferredSize(new java.awt.Dimension(391, 291));
         setLayout(new java.awt.BorderLayout());
 
@@ -75,7 +72,7 @@ public class Table extends javax.swing.JPanel {
         add(centre, java.awt.BorderLayout.CENTER);
 
         north.setBackground(new java.awt.Color(255, 255, 255));
-        north.setPreferredSize(new java.awt.Dimension(400, 10));
+        north.setPreferredSize(new java.awt.Dimension(400, 11));
 
         javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
         north.setLayout(northLayout);
@@ -85,7 +82,7 @@ public class Table extends javax.swing.JPanel {
         );
         northLayout.setVerticalGroup(
             northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
+            .addGap(0, 11, Short.MAX_VALUE)
         );
 
         add(north, java.awt.BorderLayout.NORTH);
@@ -117,7 +114,7 @@ public class Table extends javax.swing.JPanel {
         );
         eastLayout.setVerticalGroup(
             eastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 261, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         add(east, java.awt.BorderLayout.EAST);
@@ -133,7 +130,7 @@ public class Table extends javax.swing.JPanel {
         );
         westLayout.setVerticalGroup(
             westLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 261, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         add(west, java.awt.BorderLayout.WEST);

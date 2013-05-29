@@ -4,6 +4,7 @@ package pprogramming3assignmentone;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,126 +17,53 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
         
         initComponents();
         
-        list.removeAllItems();
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+            
+        model.setColumnCount(0);
+        model.setRowCount(0);
         
-        for (Object s: home.csvData.getData().get(0)) {
-            list.addItem(((String)s).toUpperCase());
+        String[] names = {"", "Max", "Min", "Mean", "Mode", "Medium", "Range"};
+        
+        for (int column = 0; column < names.length; column++) {
+            model.addColumn(names[column]);
         }
         
-        list.addActionListener(this);
+        for (int row = 0; row < home.csvData.getData().get(0).length; row++) {
+            Object[] items = {
+                ((String)home.csvData.getData().get(0)[row]).toUpperCase(),
+                findMax(row, home.csvData),
+                findMin(row, home.csvData),
+                findMean(row, home.csvData),
+                findMedian(row, home.csvData),
+                findMode(row, home.csvData),
+                findRange(findMax(row, home.csvData), findMin(row, home.csvData))
+            };
+
+            model.addRow(items);    
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        list = new javax.swing.JComboBox();
-        jPanel1 = new javax.swing.JPanel();
-        max = new javax.swing.JLabel();
-        min = new javax.swing.JLabel();
-        mean = new javax.swing.JLabel();
-        median = new javax.swing.JLabel();
-        mode = new javax.swing.JLabel();
-        range = new javax.swing.JLabel();
-        maxoutput = new javax.swing.JFormattedTextField();
-        minoutput = new javax.swing.JFormattedTextField();
-        meanoutput = new javax.swing.JFormattedTextField();
-        medianoutput = new javax.swing.JFormattedTextField();
-        modeoutput = new javax.swing.JFormattedTextField();
-        rangeoutput = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(java.awt.Color.white);
         setPreferredSize(new java.awt.Dimension(391, 291));
 
-        list.setMaximumRowCount(100);
-        list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item", " " }));
-        list.setMinimumSize(new java.awt.Dimension(47, 25));
-        list.setName("list"); // NOI18N
-        list.setPreferredSize(new java.awt.Dimension(47, 25));
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jPanel1.setBackground(java.awt.Color.white);
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        max.setText("Max");
-
-        min.setText("Min");
-
-        mean.setText("Mean");
-
-        median.setText("Median");
-
-        mode.setText("Mode");
-
-        range.setText("Range");
-
-        maxoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        minoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        meanoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        medianoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        modeoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        rangeoutput.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(max, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(mean, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(min, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(mode, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(median, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(range, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(minoutput, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                        .addComponent(maxoutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(medianoutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(meanoutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rangeoutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(modeoutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap()))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 264, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(maxoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(max))
-                    .addGap(18, 21, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(min))
-                    .addGap(18, 21, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(meanoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mean))
-                    .addGap(18, 21, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(medianoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(median))
-                    .addGap(18, 19, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(modeoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mode))
-                    .addGap(18, 18, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(rangeoutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(range))
-                    .addContainerGap()))
-        );
+            },
+            new String [] {
+                "Title 1"
+            }
+        ));
+        table.setGridColor(new java.awt.Color(255, 255, 255));
+        table.setRowHeight(25);
+        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -143,50 +71,34 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list, 0, 367, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private Home home;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox list;
-    private javax.swing.JLabel max;
-    private javax.swing.JFormattedTextField maxoutput;
-    private javax.swing.JLabel mean;
-    private javax.swing.JFormattedTextField meanoutput;
-    private javax.swing.JLabel median;
-    private javax.swing.JFormattedTextField medianoutput;
-    private javax.swing.JLabel min;
-    private javax.swing.JFormattedTextField minoutput;
-    private javax.swing.JLabel mode;
-    private javax.swing.JFormattedTextField modeoutput;
-    private javax.swing.JLabel range;
-    private javax.swing.JFormattedTextField rangeoutput;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent e) {                
-        int pos = ((JComboBox)e.getSource()).getSelectedIndex();
-        
-        maxoutput.setText((findMax(pos, home.csvData)));
-        minoutput.setText((findMin(pos, home.csvData)));
-        meanoutput.setText(findMean(pos, home.csvData));
-        medianoutput.setText(findMedian(pos, home.csvData));
-        modeoutput.setText(findMode(pos, home.csvData));
-        rangeoutput.setText(findRange());
+//        int pos = ((JComboBox)e.getSource()).getSelectedIndex();
+//        
+//        maxoutput.setText((findMax(pos, home.csvData)));
+//        minoutput.setText((findMin(pos, home.csvData)));
+//        meanoutput.setText(findMean(pos, home.csvData));
+//        medianoutput.setText(findMedian(pos, home.csvData));
+//        modeoutput.setText(findMode(pos, home.csvData));
+//        rangeoutput.setText(findRange());
     }
     
     public boolean isValid(Object input){ 
@@ -316,10 +228,10 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
 
         return Double.toString(maxValue);
     }
-    private String findRange(){
-        if (isValid(maxoutput.getText())){
-            double maximum = Double.parseDouble(maxoutput.getText());
-            double minimum = Double.parseDouble(minoutput.getText());
+    private String findRange(String max, String min){
+        if (isValid(max)){
+            double maximum = Double.parseDouble(max);
+            double minimum = Double.parseDouble(min);
             return Double.toString(maximum - minimum);
         }    
         else{

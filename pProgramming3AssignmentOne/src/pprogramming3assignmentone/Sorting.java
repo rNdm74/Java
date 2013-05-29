@@ -1,11 +1,8 @@
 
 package pprogramming3assignmentone;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -75,10 +72,10 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             }
         });
 
+        tableScrollPane.setBackground(new java.awt.Color(255, 255, 255));
         tableScrollPane.setBorder(null);
 
         table.setAutoCreateRowSorter(true);
-        table.setBorder(null);
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null}
@@ -89,6 +86,7 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
         ));
         table.setGridColor(java.awt.Color.white);
         table.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        table.setRowHeight(25);
         tableScrollPane.setViewportView(table);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/filter.png"))); // NOI18N
@@ -99,10 +97,12 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             }
         });
 
+        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Overview");
 
+        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Single Item");
 
