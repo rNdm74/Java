@@ -13,16 +13,19 @@ public class Main extends javax.swing.JPanel {
         statistics = new Statistics(home);        
         search = new Search(home);        
         graph = new Graph(home);
+        sorting = new Sorting(home);
                 
         mainpagetabs.add(home.table);
-        mainpagetabs.add(statistics);
+        mainpagetabs.add(statistics);        
         mainpagetabs.add(search);
         mainpagetabs.add(graph);
+        mainpagetabs.add(sorting);
         
         mainpagetabs.setTitleAt(0, "Overview"); 
         mainpagetabs.setTitleAt(1, "Statistics"); 
         mainpagetabs.setTitleAt(2, "Search");
         mainpagetabs.setTitleAt(3, "Graph");
+        mainpagetabs.setTitleAt(4, "Sorting");
     }
 
     @SuppressWarnings("unchecked")
@@ -47,6 +50,7 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JPanel graph;
     public javax.swing.JPanel statistics;
     private javax.swing.JPanel search;
+    private javax.swing.JPanel sorting;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane mainpagetabs;
     // End of variables declaration//GEN-END:variables

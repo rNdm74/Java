@@ -1,8 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package pcollections;
+
+package pprogramming3assignmentone;
 
 import java.util.Comparator;
 
@@ -10,11 +7,11 @@ import java.util.Comparator;
  *
  * @author rndm
  */
-public class GenderCompare implements Comparator<Friend> {
-    
+public class CompareDouble implements Comparator<Double> {
+
     @Override
-    public int compare(Friend o1, Friend o2) {
-        return (o1.getGender() !=  '\u0000' && o2.getGender() != '\u0000') ? 
-                o1.getGender() - o2.getGender() : 0;
+    public int compare(Double o1, Double o2) {
+        return ((o1 !=  null && o2 != null) ? 
+                       o1.compareTo(o2) : 0);
     }
 }

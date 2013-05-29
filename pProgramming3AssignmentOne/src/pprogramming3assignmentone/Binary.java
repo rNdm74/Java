@@ -5,7 +5,7 @@ package pprogramming3assignmentone;
  * @author rndm
  */
 public class Binary {
-    public String binarySearch(int[] numbers, int wanted){
+    public int binarySearch(int[] numbers, int wanted){
         int left = 0;
         int right = numbers.length - 1;
         
@@ -14,7 +14,7 @@ public class Binary {
             int middle = (left + right) / 2;
             
             if (numbers[middle] == wanted) {  
-                return "Number found at slot number " + middle;
+                return middle;
             }
             else
             {
@@ -28,31 +28,31 @@ public class Binary {
             }
         }
         
-        return "Number not found";
+        return -1;
     }
     
-    public String binarySearch(String[] words, String wanted){
+    public int binarySearch(String[] strings, String wanted){
         int left = 0;
-        int right = words.length - 1;
+        int right = strings.length - 1;
                 
         while(left <= right && right >= left){
             int middle = (left + right) / 2;
             
-            if (wanted.equals(words[middle])) {  
-                return "Word found at slot number " + middle;
+            if (wanted.equals(strings[middle])) {  
+                return middle;
             }
             else
             {
-                if (wanted.compareTo(words[middle]) < 0) {                    
+                if (wanted.compareTo(strings[middle]) < 0) {                    
                     right = middle - 1;   
                 }
                 
-                if (wanted.compareTo(words[middle]) > 0) {
+                if (wanted.compareTo(strings[middle]) > 0) {
                     left = middle + 1;
                 }
             }
         }
         
-        return "Word not found";
+        return -1;
     }
 }

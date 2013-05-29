@@ -25,9 +25,6 @@ public final class Home extends javax.swing.JFrame {
         initComponents();
         
         csvData = new Worker(address.getText());
-        
-        //load = new Load(this);        
-        //content.add(load); 
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +75,7 @@ public final class Home extends javax.swing.JFrame {
         titleBar.add(forward);
 
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
+        home.setEnabled(false);
         home.setFocusable(false);
         home.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         home.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -208,15 +206,11 @@ public final class Home extends javax.swing.JFrame {
                 back.setEnabled(true);
 
                 if (csvData.load()) {
-                    table = new Table(this);
-                    
-                    //load = new Load(this);        
-                    content.add(table);
-                    
-                    //display("Data Overview", load, table);                    
+                    table = new Table(this);      
+                    content.add(table);                   
                 }
 
-                pack();
+                revalidate();
 
                 overviewActive = true;
             }

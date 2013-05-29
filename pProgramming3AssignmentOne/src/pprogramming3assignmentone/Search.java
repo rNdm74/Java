@@ -1,6 +1,7 @@
 
 package pprogramming3assignmentone;
 
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,9 +21,8 @@ public class Search extends javax.swing.JPanel {
         for (Object s: home.csvData.getData().get(0)) {
             list.addItem(((String)s).toUpperCase());
         }
-        
-        populateTable();      
-        
+           
+        populateTable();  
     }
     
     @SuppressWarnings("unchecked")
@@ -30,13 +30,13 @@ public class Search extends javax.swing.JPanel {
     private void initComponents() {
 
         list = new javax.swing.JComboBox();
-        searchPanel = new javax.swing.JPanel();
-        searchField = new javax.swing.JFormattedTextField();
-        searchLabel = new javax.swing.JLabel();
         tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         examples = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
+        searchField = new javax.swing.JFormattedTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(391, 291));
@@ -56,13 +56,30 @@ public class Search extends javax.swing.JPanel {
             }
         });
 
-        searchPanel.setBackground(new java.awt.Color(255, 255, 255));
-        searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        tableScrollPane.setBorder(null);
+
+        table.setBorder(null);
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null}
+            },
+            new String [] {
+                "Title 1"
+            }
+        ));
+        table.setGridColor(java.awt.Color.white);
+        table.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tableScrollPane.setViewportView(table);
+
+        examples.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Basic");
 
         searchField.setBorder(null);
         searchField.setForeground(java.awt.SystemColor.textInactiveText);
         searchField.setText("  Search");
         searchField.setFont(searchField.getFont().deriveFont((float)12));
+        searchField.setPreferredSize(new java.awt.Dimension(44, 26));
         searchField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchFieldMouseClicked(evt);
@@ -87,50 +104,14 @@ public class Search extends javax.swing.JPanel {
             }
         });
 
-        searchLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
-        searchLabel.setEnabled(false);
-        searchLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchLabelMouseClicked(evt);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
-        searchPanel.setLayout(searchPanelLayout);
-        searchPanelLayout.setHorizontalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(searchField)
-                .addGap(18, 18, 18)
-                .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        searchPanelLayout.setVerticalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(searchField))
-                .addGap(15, 15, 15))
-        );
-
-        tableScrollPane.setBorder(null);
-
-        table.setBorder(null);
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null}
-            },
-            new String [] {
-                "Title 1"
-            }
-        ));
-        table.setGridColor(java.awt.Color.white);
-        tableScrollPane.setViewportView(table);
-
-        examples.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel1.setText("Search example");
+        jLabel2.setText("Advanced");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,12 +121,18 @@ public class Search extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(list, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(searchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(examples, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(examples, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,25 +140,25 @@ public class Search extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(examples, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
+                .addGap(13, 13, 13))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         
     }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchLabelMouseClicked
-        
-    }//GEN-LAST:event_searchLabelMouseClicked
 
     private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
        
@@ -185,47 +172,62 @@ public class Search extends javax.swing.JPanel {
         searchField.setText("Search");
     }//GEN-LAST:event_searchFieldFocusLost
 
-    private int column(String item, Worker file){
-        int column = 0;
-        
-        int length = file.getData().get(0).length;
-                
-        for (int i = 0; i < length; i++) {
-            String s = ((String)file.getData().get(0)[i]).toUpperCase();
-                        
-            if (s == null ? item == null : s.equals(item)) {
-                column = i;
-            }            
-        }  
-        
-        return column;
-    }
-    
     private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
-        String item = (String)list.getSelectedItem();
-               
-        if (evt.getKeyCode() == 10) {
-            examples.removeAllItems();
+                       
+        if (evt.getKeyCode() == 10) { 
             
-            for (int i = 1; i < home.csvData.getData().size(); i++) {
-               String s = String.valueOf(home.csvData.getData().get(i)[column(item, home.csvData)]);
-               examples.addItem(((String)s).toUpperCase());
-            }
+      
+            /*8*/
+//            for (Object o: ) {
+//                ((String)o).
+//            }
+            
+//            for (int row = 0; row < data.get(pos).length; row++) {
+//                
+//            }
+//            
+//            int resultPos = Arrays.binarySearch(data.get(pos), searchField.getText(), new CompareString());
+//
+//            
+//            
+//            if (resultPos > 0) {
+//                ArrayList<String> rowData = new ArrayList<>();
+//            
+//                for (int column = 0; column < data.size(); column++) {
+//                    String search = searchField.getText();
+//                    String result = (String) data.get(column)[resultPos];
+//                    
+//                    if (!search.matches(result)) {
+//                        rowData.add(result);
+//                    }
+//                }
+//
+//                DefaultTableModel model = (DefaultTableModel)table.getModel();
+//                model.addRow(rowData.toArray());
+//            }
         }        
     }//GEN-LAST:event_searchFieldKeyPressed
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
-        populateTable();
+        
+        try{
+            populateTable();
+            populateSearchExamples((String)list.getSelectedItem());
+        }
+        catch(Exception e){
+            
+        }
     }                                    
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         model.setColumnCount(0);
         
-        for (int i = 0; i < list.getItemCount(); i++) {
-            if (list.getItemAt(i) != list.getSelectedItem()) {
-                model.addColumn(list.getItemAt(i));
-            }            
+        for (int column = 0; column < list.getItemCount(); column++) {
+            model.addColumn(list.getItemAt(column));
+//            if (list.getItemAt(i) != list.getSelectedItem()) {
+//                model.addColumn(list.getItemAt(i));
+//            }            
         }
     }//GEN-LAST:event_listActionPerformed
 
@@ -233,14 +235,109 @@ public class Search extends javax.swing.JPanel {
          
     }//GEN-LAST:event_listItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ArrayList<String[]> data = new ArrayList<>();
+        
+        int length = home.csvData.getData().get(0).length;
+
+        for (int column = 0; column < length; column++) {
+            String[] objects = new String[home.csvData.getData().size()];
+
+            for (int row = 0; row < home.csvData.getData().size(); row++) {
+                objects[row] = (String) home.csvData.getData().get(row)[column];
+            }
+
+            data.add(objects);
+        }
+
+        int pos = list.getSelectedIndex();
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.setNumRows(0);
+
+        for (int row = 0; row < data.get(pos).length; row++) {
+            if (examples.getSelectedItem().equals(data.get(pos)[row])) {                    
+                model.addRow(home.csvData.getData().get(row));
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox examples;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox list;
     private javax.swing.JFormattedTextField searchField;
-    private javax.swing.JLabel searchLabel;
-    private javax.swing.JPanel searchPanel;
     private javax.swing.JTable table;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
+
+    private void populateSearchExamples(String item) {
+        examples.removeAllItems();
+                        
+        for (int i = 1; i < home.csvData.getData().size(); i++) {
+           int pos = list.getSelectedIndex();
+           String s = String.valueOf(home.csvData.getData().get(i)[pos]);
+           examples.addItem(((String)s).toUpperCase());
+        }
+    }
+
+    private void search(Home home) {
+//        ArrayList<Object[]> data = new ArrayList<>();
+//        
+//        int length = home.csvData.getData().get(0).length;
+//        
+//        for (int column = 0; column < length; column++) {
+//            Object[] objects = new Object[home.csvData.getData().size()];
+//            
+//            for (int row = 0; row < home.csvData.getData().size(); row++) {
+//                objects[row] = home.csvData.getData().get(row)[column];
+//            }
+//            data.add(objects);
+//        }
+//        
+//        Arrays.sort(data.get(0));
+//        
+//        for (int i = 0; i < data.get(0).length; i++) {
+//            //System.out.println(data.get(0)[i]);
+//        }
+ 
+            
+       
+        
+//        String[] stringData = new String[home.csvData.getData().size()];
+//        Double[] doubleData = new Double[home.csvData.getData().size()];
+//        
+//        for(int i = 1; i < home.csvData.getData().size(); i++){
+//            Object o = home.csvData.getData().get(i)[list.getSelectedIndex()];
+//            
+//            if(isDouble(o)){
+//                doubleData[i - 1] = Double.parseDouble((String)o);
+//            }
+//            else{
+//                stringData[i - 1] = (String)o;
+//            }
+//        }
+//                
+//        Arrays.sort(stringData, new CompareString());
+//        Arrays.sort(doubleData, new CompareDouble());
+//                
+//        if (stringData[0] != null) {
+//            return new Binary().binarySearch(stringData, searchField.getText());
+//        }
+//        else{
+//            
+//            return Arrays.binarySearch(doubleData, Double.parseDouble(searchField.getText()));
+//        }
+        
+    }    
+    private boolean isDouble(Object o){
+        try{
+            Double.parseDouble((String)o);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
 }

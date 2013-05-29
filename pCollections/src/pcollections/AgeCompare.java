@@ -10,18 +10,18 @@ import java.util.Comparator;
  *
  * @author rndm
  */
-public class AgeCompare implements Comparator<Friend>{
+public class AgeCompare implements Comparator<Month>{
 
     @Override
-    public int compare(Friend o1, Friend o2) {
-//        if (o1.getBirthdate() != null && o2.getBirthdate() != null) {
-//            return o1.calculateAge() - o2.calculateAge();
+    public int compare(Month o1, Month o2) {
+//        if (o1.getYear() != null && o2.getYear() != null) {
+//            return o1.getYear() - o2.getYear();
 //        }
 //        else
 //        {
 //            return 0;
 //        }
-        return (o1.getBirthdate() != null && o2.getBirthdate() != null) 
-                ? o1.calculateAge() - o2.calculateAge() : 0;
+        return (o1.getYear() != null && o2.getYear() != null) 
+                ? o1.getYear() - o2.getYear() : 0;
     }    
 }

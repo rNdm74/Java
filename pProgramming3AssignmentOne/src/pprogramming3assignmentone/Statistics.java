@@ -177,35 +177,16 @@ public class Statistics extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JFormattedTextField rangeoutput;
     // End of variables declaration//GEN-END:variables
 
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-        String item = (String) ((JComboBox)e.getSource()).getSelectedItem();
+    public void actionPerformed(ActionEvent e) {                
+        int pos = ((JComboBox)e.getSource()).getSelectedIndex();
         
-        int columnPosition = (column(item, home.csvData));
-        
-        maxoutput.setText((findMax(columnPosition, home.csvData)));
-        minoutput.setText((findMin(columnPosition, home.csvData)));
-        meanoutput.setText(findMean(columnPosition, home.csvData));
-        medianoutput.setText(findMedian(columnPosition, home.csvData));
-        modeoutput.setText(findMode(columnPosition, home.csvData));
+        maxoutput.setText((findMax(pos, home.csvData)));
+        minoutput.setText((findMin(pos, home.csvData)));
+        meanoutput.setText(findMean(pos, home.csvData));
+        medianoutput.setText(findMedian(pos, home.csvData));
+        modeoutput.setText(findMode(pos, home.csvData));
         rangeoutput.setText(findRange());
-    }
-    
-    private int column(String item, Worker file){
-        int column = 0;
-        
-        int length = file.getData().get(0).length;
-                
-        for (int i = 0; i < length; i++) {
-            String s = ((String)file.getData().get(0)[i]).toUpperCase();
-                        
-            if (s == null ? item == null : s.equals(item)) {
-                column = i;
-            }            
-        }  
-        
-        return column;
     }
     
     public boolean isValid(Object input){ 
