@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.Classes;
 
 import java.util.Comparator;
 

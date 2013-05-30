@@ -1,5 +1,6 @@
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.Classes;
 
+import pprogramming3assignmentone.JPanels.Home;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;

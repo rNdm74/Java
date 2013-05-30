@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -33,8 +33,8 @@ public class Search extends javax.swing.JPanel {
         tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         examples = new javax.swing.JComboBox();
-        searchField = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        advancedSearch = new javax.swing.JFormattedTextField();
+        search = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(391, 291));
@@ -72,43 +72,41 @@ public class Search extends javax.swing.JPanel {
         examples.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         examples.setPreferredSize(new java.awt.Dimension(56, 25));
 
-        searchField.setForeground(java.awt.SystemColor.textInactiveText);
-        searchField.setText("  Advanced Search");
-        searchField.setFont(searchField.getFont().deriveFont((float)12));
-        searchField.setPreferredSize(new java.awt.Dimension(44, 26));
-        searchField.addMouseListener(new java.awt.event.MouseAdapter() {
+        advancedSearch.setForeground(java.awt.SystemColor.textInactiveText);
+        advancedSearch.setText("  Advanced Search");
+        advancedSearch.setFont(advancedSearch.getFont().deriveFont((float)12));
+        advancedSearch.setPreferredSize(new java.awt.Dimension(44, 26));
+        advancedSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchFieldMouseClicked(evt);
+                advancedSearchMouseClicked(evt);
             }
         });
-        searchField.addActionListener(new java.awt.event.ActionListener() {
+        advancedSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchFieldActionPerformed(evt);
+                advancedSearchActionPerformed(evt);
             }
         });
-        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+        advancedSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                searchFieldFocusGained(evt);
+                advancedSearchFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                searchFieldFocusLost(evt);
+                advancedSearchFocusLost(evt);
             }
         });
-        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+        advancedSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                searchFieldKeyPressed(evt);
+                advancedSearchKeyPressed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
-        jButton1.setOpaque(false);
-        jButton1.setRequestFocusEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
+        search.setBorderPainted(false);
+        search.setFocusPainted(false);
+        search.setRequestFocusEnabled(false);
+        search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchActionPerformed(evt);
             }
         });
 
@@ -123,25 +121,25 @@ public class Search extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(examples, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(examples, 0, 173, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(search))
+                    .addComponent(advancedSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(advancedSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(examples, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -173,7 +171,7 @@ public class Search extends javax.swing.JPanel {
          
     }//GEN-LAST:event_listItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         ArrayList<String[]> data = new ArrayList<>();
         
         int length = home.csvData.getData().get(0).length;
@@ -197,9 +195,9 @@ public class Search extends javax.swing.JPanel {
                 model.addRow(home.csvData.getData().get(row));
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_searchActionPerformed
 
-    private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
+    private void advancedSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_advancedSearchKeyPressed
 
         if (evt.getKeyCode() == 10) {
 
@@ -232,29 +230,29 @@ public class Search extends javax.swing.JPanel {
                 //                model.addRow(rowData.toArray());
                 //            }
         }
-    }//GEN-LAST:event_searchFieldKeyPressed
+    }//GEN-LAST:event_advancedSearchKeyPressed
 
-    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
-        searchField.setText("Search");
-    }//GEN-LAST:event_searchFieldFocusLost
+    private void advancedSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_advancedSearchFocusLost
+        advancedSearch.setText("Search");
+    }//GEN-LAST:event_advancedSearchFocusLost
 
-    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
-        searchField.setText("");
-    }//GEN-LAST:event_searchFieldFocusGained
+    private void advancedSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_advancedSearchFocusGained
+        advancedSearch.setText("");
+    }//GEN-LAST:event_advancedSearchFocusGained
 
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+    private void advancedSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedSearchActionPerformed
 
-    }//GEN-LAST:event_searchFieldActionPerformed
+    }//GEN-LAST:event_advancedSearchActionPerformed
 
-    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
+    private void advancedSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_advancedSearchMouseClicked
 
-    }//GEN-LAST:event_searchFieldMouseClicked
+    }//GEN-LAST:event_advancedSearchMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField advancedSearch;
     private javax.swing.JComboBox examples;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox list;
-    private javax.swing.JFormattedTextField searchField;
+    private javax.swing.JButton search;
     private javax.swing.JTable table;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables

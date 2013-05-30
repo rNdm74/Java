@@ -1,9 +1,11 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import pprogramming3assignmentone.Classes.Activity;
+import pprogramming3assignmentone.Classes.Worker;
 
 /**
  *

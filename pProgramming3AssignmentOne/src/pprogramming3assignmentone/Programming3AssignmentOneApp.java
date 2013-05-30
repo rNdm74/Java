@@ -1,6 +1,7 @@
 
 package pprogramming3assignmentone;
 
+import pprogramming3assignmentone.JPanels.Home;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
@@ -10,17 +11,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
 public class Programming3AssignmentOneApp {
 
     private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    
     private static final int desktopWidth = gd.getDisplayMode().getWidth();
     private static final int desktopHeight = gd.getDisplayMode().getHeight();
         
     public static void main(String[] args) throws FileNotFoundException, IOException {
         try {            
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  
+            
             Home gui = new Home();
             
             gui.setVisible(true); 
@@ -31,7 +34,7 @@ public class Programming3AssignmentOneApp {
                  InstantiationException | 
                  IllegalAccessException | 
                  UnsupportedLookAndFeelException e) {
-                System.out.println(e);
+                 System.out.println(e);
         } 
     }
 }

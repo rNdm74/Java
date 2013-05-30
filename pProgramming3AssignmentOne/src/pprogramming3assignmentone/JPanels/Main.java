@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;

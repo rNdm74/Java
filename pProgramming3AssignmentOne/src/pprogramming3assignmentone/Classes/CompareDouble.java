@@ -1,11 +1,11 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.Classes;
 
 import java.util.Comparator;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
 public class CompareDouble implements Comparator<Double> {
 

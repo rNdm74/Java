@@ -1,14 +1,16 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import pprogramming3assignmentone.Classes.CompareDouble;
+import pprogramming3assignmentone.Classes.CompareString;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
 public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
 
@@ -50,9 +52,9 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
         list = new javax.swing.JComboBox();
         tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        sort = new javax.swing.JButton();
+        overview = new javax.swing.JRadioButton();
+        single = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
 
@@ -89,22 +91,20 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
         table.setRowHeight(25);
         tableScrollPane.setViewportView(table);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/filter.png"))); // NOI18N
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        sort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/filter.png"))); // NOI18N
+        sort.setEnabled(false);
+        sort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                sortActionPerformed(evt);
             }
         });
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Overview");
+        buttonGroup1.add(overview);
+        overview.setSelected(true);
+        overview.setText("Overview");
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Single Item");
+        buttonGroup1.add(single);
+        single.setText("Single Item");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -115,13 +115,13 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(overview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(single)
                         .addGap(12, 12, 12)
                         .addComponent(list, 0, 179, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(sort)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -131,12 +131,12 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jRadioButton2)
-                        .addComponent(jRadioButton1))
+                        .addComponent(single)
+                        .addComponent(overview))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(sort)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -191,9 +191,9 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             }
     }//GEN-LAST:event_listActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortActionPerformed
         populateTable();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_sortActionPerformed
 
     public boolean isValid(Object input){ 
        try  
@@ -206,15 +206,15 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
           return false;  
        }  
     }
-        
-    private ArrayList<String[]> data;   
+       
     private Home home;
+    private ArrayList<String[]> data;  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JComboBox list;
+    private javax.swing.JRadioButton overview;
+    private javax.swing.JRadioButton single;
+    private javax.swing.JButton sort;
     private javax.swing.JTable table;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables

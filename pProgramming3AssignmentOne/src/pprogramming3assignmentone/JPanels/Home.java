@@ -1,10 +1,11 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.awt.Component;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import pprogramming3assignmentone.Classes.Worker;
 
 /**
  *
@@ -37,12 +38,12 @@ public final class Home extends javax.swing.JFrame {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         address = new javax.swing.JFormattedTextField();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
-        jPanel1 = new javax.swing.JPanel();
-        next = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        south = new javax.swing.JPanel();
+        attach = new javax.swing.JButton();
+        west = new javax.swing.JPanel();
+        east = new javax.swing.JPanel();
         content = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        north = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home - CSV Analyser 1.0");
@@ -57,7 +58,6 @@ public final class Home extends javax.swing.JFrame {
         titleBar.setMinimumSize(new java.awt.Dimension(76, 40));
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        back.setBackground(new java.awt.Color(255, 255, 255));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
         back.setEnabled(false);
         back.setFocusable(false);
@@ -70,7 +70,6 @@ public final class Home extends javax.swing.JFrame {
         });
         titleBar.add(back);
 
-        home.setBackground(new java.awt.Color(255, 255, 255));
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
         home.setEnabled(false);
         home.setFocusable(false);
@@ -94,78 +93,90 @@ public final class Home extends javax.swing.JFrame {
 
         getContentPane().add(titleBar, java.awt.BorderLayout.NORTH);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(437, 50));
+        south.setBackground(new java.awt.Color(255, 255, 255));
+        south.setPreferredSize(new java.awt.Dimension(437, 50));
 
-        next.setText("Attach");
-        next.setMaximumSize(new java.awt.Dimension(96, 23));
-        next.setMinimumSize(new java.awt.Dimension(96, 23));
-        next.setPreferredSize(new java.awt.Dimension(96, 25));
-        next.addActionListener(new java.awt.event.ActionListener() {
+        attach.setText("Attach");
+        attach.setMaximumSize(new java.awt.Dimension(96, 23));
+        attach.setMinimumSize(new java.awt.Dimension(96, 23));
+        attach.setPreferredSize(new java.awt.Dimension(96, 25));
+        attach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextActionPerformed(evt);
+                attachActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout southLayout = new javax.swing.GroupLayout(south);
+        south.setLayout(southLayout);
+        southLayout.setHorizontalGroup(
+            southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, southLayout.createSequentialGroup()
                 .addContainerGap(320, Short.MAX_VALUE)
-                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(attach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        southLayout.setVerticalGroup(
+            southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(southLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(attach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(south, java.awt.BorderLayout.PAGE_END);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setMaximumSize(new java.awt.Dimension(20, 32767));
-        jPanel2.setPreferredSize(new java.awt.Dimension(20, 50));
+        west.setBackground(new java.awt.Color(255, 255, 255));
+        west.setMaximumSize(new java.awt.Dimension(20, 32767));
+        west.setPreferredSize(new java.awt.Dimension(20, 50));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout westLayout = new javax.swing.GroupLayout(west);
+        west.setLayout(westLayout);
+        westLayout.setHorizontalGroup(
+            westLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        westLayout.setVerticalGroup(
+            westLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.WEST);
+        getContentPane().add(west, java.awt.BorderLayout.WEST);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setMaximumSize(new java.awt.Dimension(20, 32767));
-        jPanel3.setPreferredSize(new java.awt.Dimension(20, 100));
-        getContentPane().add(jPanel3, java.awt.BorderLayout.EAST);
+        east.setBackground(new java.awt.Color(255, 255, 255));
+        east.setMaximumSize(new java.awt.Dimension(20, 32767));
+        east.setPreferredSize(new java.awt.Dimension(20, 100));
+
+        javax.swing.GroupLayout eastLayout = new javax.swing.GroupLayout(east);
+        east.setLayout(eastLayout);
+        eastLayout.setHorizontalGroup(
+            eastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        eastLayout.setVerticalGroup(
+            eastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 265, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(east, java.awt.BorderLayout.EAST);
 
         content.setBackground(new java.awt.Color(255, 255, 255));
         content.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBackground(java.awt.Color.white);
-        jPanel4.setPreferredSize(new java.awt.Dimension(397, 20));
+        north.setBackground(java.awt.Color.white);
+        north.setPreferredSize(new java.awt.Dimension(397, 20));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
+        north.setLayout(northLayout);
+        northLayout.setHorizontalGroup(
+            northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 397, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        northLayout.setVerticalGroup(
+            northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        content.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        content.add(north, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(content, java.awt.BorderLayout.CENTER);
 
@@ -183,7 +194,7 @@ public final class Home extends javax.swing.JFrame {
         overviewActive = false;
     }//GEN-LAST:event_backActionPerformed
 
-    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
+    private void attachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachActionPerformed
         if (!loadfile) {
             JFileChooser fc = new JFileChooser();
             
@@ -195,7 +206,7 @@ public final class Home extends javax.swing.JFrame {
             address.setToolTipText(file);         
             csvData.setFilename(file);
 
-            next.setText("Next");
+            attach.setText("Next");
             
             loadfile = true;
         }
@@ -213,14 +224,14 @@ public final class Home extends javax.swing.JFrame {
                 overviewActive = true;
             }
             else{
-                next.setText("Close");
+                attach.setText("Close");
 
                 main = new Main(this);
 
                 display("Main", table, main);
             }
         }
-    }//GEN-LAST:event_nextActionPerformed
+    }//GEN-LAST:event_attachActionPerformed
     
     public void display(String name, Component remove, Component add){
         setTitle(name);
@@ -231,16 +242,16 @@ public final class Home extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JFormattedTextField address;
+    public javax.swing.JButton attach;
     public javax.swing.JButton back;
     private javax.swing.JPanel content;
+    private javax.swing.JPanel east;
     private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler5;
     public javax.swing.JButton home;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    public javax.swing.JButton next;
+    private javax.swing.JPanel north;
+    private javax.swing.JPanel south;
     private javax.swing.JToolBar titleBar;
+    private javax.swing.JPanel west;
     // End of variables declaration//GEN-END:variables
 }

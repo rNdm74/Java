@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.Classes;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
 public class Worker {
     private ArrayList<Object[]> data;

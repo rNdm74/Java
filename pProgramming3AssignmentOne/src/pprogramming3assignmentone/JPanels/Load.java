@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package pprogramming3assignmentone.JPanels;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
