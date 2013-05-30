@@ -14,6 +14,10 @@ import pprogramming3assignmentone.Classes.CompareString;
  */
 public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
 
+    /**
+     *
+     * @param home initializes the sorting JPanel
+     */
     public Sorting(Home home) {
         this.home = home;
         
@@ -99,10 +103,12 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             }
         });
 
+        overview.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(overview);
         overview.setSelected(true);
         overview.setText("Overview");
 
+        single.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(single);
         single.setText("Single Item");
 
@@ -141,17 +147,21 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortActionPerformed
+        populateTable();
+    }//GEN-LAST:event_sortActionPerformed
+
     private void listItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listItemStateChanged
 
     }//GEN-LAST:event_listItemStateChanged
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
+        
+    }//GEN-LAST:event_listActionPerformed
 
-        }
-
-        private void populateTable() {
+    private void populateTable() {
             DefaultTableModel model = (DefaultTableModel)table.getModel();
-            
+
             model.setColumnCount(0);
             model.setRowCount(0);
 
@@ -159,17 +169,17 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             table.setRowSorter(sorter);
 
             sorter.setModel(table.getModel());
-                
+
             for (int column = 0; column < list.getItemCount(); column++) {
-                                
+
                 int pos = list.getSelectedIndex();
-                
+
                 ArrayList<Object> columnData = new ArrayList<>();
-                                
+
                 for (int row = 1; row < data.get(pos).length; row++) {
-                    
+
                     Object item = data.get(column)[row];
-                    
+
                     if (isValid(item)) {
                         columnData.add(Double.parseDouble((String)item));
                     }
@@ -177,10 +187,10 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
                         columnData.add((String)item);
                     }
                 }
-                
+
                 model.addColumn(list.getItemAt(column),columnData.toArray());
-            }   
-            
+            }
+
             for (int column = 0; column < list.getItemCount(); column++) {
                 if (isValid(data.get(column)[1])) {
                     sorter.setComparator(column, new CompareDouble());
@@ -189,12 +199,13 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
                     sorter.setComparator(column, new CompareString());
                 }
             }
-    }//GEN-LAST:event_listActionPerformed
+    }
 
-    private void sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortActionPerformed
-        populateTable();
-    }//GEN-LAST:event_sortActionPerformed
-
+    /**
+     *
+     * @param input object to determine its variable type
+     * @return boolean true false
+     */
     public boolean isValid(Object input){ 
        try  
        {  
@@ -219,6 +230,11 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @param o sets the default sort
+     * @return object that is to be the default sort
+     */
     @Override
     public int compareTo(Object o) {
         return Integer.parseInt(data.get(0)[0]);

@@ -12,16 +12,42 @@ import pprogramming3assignmentone.Classes.Worker;
  * @author rndm
  */
 public final class Home extends javax.swing.JFrame {
+    /**
+     *
+     */
     public boolean loadfile;
+    /**
+     *
+     */
     public boolean overviewActive;
+    /**
+     *
+     */
     public boolean mainpageActive;
     
+    /**
+     *
+     */
     public Worker csvData;
     
+    /**
+     *
+     */
     public Load load;
+    /**
+     *
+     */
     public Table table;
+    /**
+     *
+     */
     public Main main;
     
+    /**
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public Home() throws FileNotFoundException, IOException {
         initComponents();
         
@@ -33,6 +59,7 @@ public final class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         titleBar = new javax.swing.JToolBar();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
         back = new javax.swing.JButton();
         home = new javax.swing.JButton();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20), new java.awt.Dimension(20, 20));
@@ -57,7 +84,9 @@ public final class Home extends javax.swing.JFrame {
         titleBar.setMargin(new java.awt.Insets(0, 0, 0, -1));
         titleBar.setMinimumSize(new java.awt.Dimension(76, 40));
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
+        titleBar.add(filler6);
 
+        back.setBackground(new java.awt.Color(255, 255, 255));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
         back.setEnabled(false);
         back.setFocusable(false);
@@ -70,6 +99,7 @@ public final class Home extends javax.swing.JFrame {
         });
         titleBar.add(back);
 
+        home.setBackground(new java.awt.Color(255, 255, 255));
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
         home.setEnabled(false);
         home.setFocusable(false);
@@ -233,6 +263,12 @@ public final class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_attachActionPerformed
     
+    /**
+     *
+     * @param name
+     * @param remove
+     * @param add
+     */
     public void display(String name, Component remove, Component add){
         setTitle(name);
         content.remove(remove);        
@@ -248,6 +284,7 @@ public final class Home extends javax.swing.JFrame {
     private javax.swing.JPanel east;
     private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
     public javax.swing.JButton home;
     private javax.swing.JPanel north;
     private javax.swing.JPanel south;

@@ -2,7 +2,6 @@
 package pprogramming3assignmentone.JPanels;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -17,19 +16,49 @@ public class Table extends javax.swing.JPanel {
      * @param home JTable that displays overview of CSV data
      */
     public Table(Home home) {
-        csvData = home.csvData.getData();
-                
         initComponents();
+        
+        csvData = home.csvData.getData();
                               
         centre.setLayout(new BorderLayout());
-                        
-        Object[] columnNames = csvData.get(0);
-        Object[][] data = returnData(columnNames);
+        centre.add(new JScrollPane(initTable()));
+    }
+
+    private JTable initTable() {
+        Object[] columnNames = csvData.get(0);        
+        setupTable(returnData(columnNames), columnNames);        
+        populateHeader(columnNames);        
+        return table;
+    }
+    
+    private void setupTable(Object[][] data, Object[] columnNames) {
+        table = new JTable(data, columnNames);
+        table.setRowHeight(25);
+        table.setBackground(getBackground());
+        table.setGridColor(getBackground());
+        table.setFillsViewportHeight(true);
+        table.setFocusable(false);
+    }
+    
+    private Object[][] returnData(Object[] columnNames) {
+        Object[][] data = new Object[csvData.size()-1][columnNames.length];
         
-        setupTable(data, columnNames);        
-        populateHeader(columnNames);
-                 
-        centre.add(new JScrollPane(table));
+        for (int row = 1; row < csvData.size(); row++) {
+            System.arraycopy(csvData.get(row), 0, data[row-1], 0, columnNames.length);            
+        }
+        
+        return data;
+    }
+
+    private void populateHeader(Object[] columnNames) {
+        JTableHeader header = table.getTableHeader();
+        TableColumnModel model = header.getColumnModel();
+                
+        for (int column = 0; column < columnNames.length; column++) {
+            String item = ((String)columnNames[column]).toUpperCase();            
+            TableColumn tablecolumn = model.getColumn(column);            
+            tablecolumn.setHeaderValue(item);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -115,8 +144,8 @@ public class Table extends javax.swing.JPanel {
         add(west, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
-    private JTable table;
-    private ArrayList<Object[]> csvData;
+    private java.util.ArrayList<Object[]> csvData;
+    private javax.swing.JTable table;    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel centre;
     private javax.swing.JPanel east;
@@ -124,35 +153,4 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JPanel south;
     private javax.swing.JPanel west;
     // End of variables declaration//GEN-END:variables
-
-    private Object[][] returnData(Object[] columnNames) {
-        Object[][] data = new Object[csvData.size()-1][columnNames.length];
-        for (int row = 1; row < csvData.size(); row++) {
-           
-            System.arraycopy(csvData.get(row), 0,data[row-1], 
-                             0, 
-                             columnNames.length
-                             );            
-        }
-        return data;
-    }
-
-    private void populateHeader(Object[] columnNames) {
-        JTableHeader header = table.getTableHeader();
-        TableColumnModel model = header.getColumnModel();
-                
-        for (int column = 0; column < columnNames.length; column++) {
-            String item = ((String)columnNames[column]).toUpperCase();
-            TableColumn tablecolumn = model.getColumn(column);
-            tablecolumn.setHeaderValue(item);
-        }
-    }
-
-    private void setupTable(Object[][] data, Object[] columnNames) {
-        table = new JTable(data, columnNames);
-        table.setRowHeight(25);
-        table.setBackground(getBackground());
-        table.setGridColor(getBackground());
-        table.setFillsViewportHeight(true);
-    }
 }
