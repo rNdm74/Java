@@ -54,7 +54,7 @@ public class Main extends javax.swing.JPanel {
         
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new JLabel(names[i]);
-            labels[i].setPreferredSize(new Dimension(50, height));
+            labels[i].setPreferredSize(new Dimension(50, 50));
             
             mainpagetabs.setTabComponentAt(i, labels[i]);
         }

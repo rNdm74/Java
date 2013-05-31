@@ -2,6 +2,7 @@
 package pprogramming3assignmentone.JPanels;
 
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -42,16 +43,61 @@ public final class Home extends javax.swing.JFrame {
      *
      */
     public Main main;
+
+    private void HomeScreen() throws HeadlessException {
+        JFileChooser fc = new JFileChooser();
+        
+        fc.showDialog(this, "Attach");
+
+        String file = fc.getSelectedFile().getAbsolutePath();
+
+        address.setText(file);
+        address.setToolTipText(file);         
+        csvData.setFilename(file);
+
+        attach.setText("Next");
+        
+        loadfile = true;
+    }
+
+    private void OverviewScreen() {
+        back.setEnabled(true);
+
+        if (csvData.load()) {
+            table = new Table(this);      
+            content.add(table);                   
+        }
+
+        revalidate();
+
+        overviewActive = true;
+    }
+
+    private void MainScreen() {
+        attach.setText("Close");
+
+        main = new Main(this);
+
+        display("Main", table, main);
+    }
     
     /**
      *
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException file is not found
+     * @throws IOException 
      */
+    public enum Display{
+        HOME,
+        OVERVIEW,
+        MAIN
+    }
+    
     public Home() throws FileNotFoundException, IOException {
         initComponents();
         
         csvData = new Worker(address.getText());
+        
+        content.add(new Welcome());
     }
 
     @SuppressWarnings("unchecked")
@@ -86,7 +132,6 @@ public final class Home extends javax.swing.JFrame {
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
         titleBar.add(filler6);
 
-        back.setBackground(new java.awt.Color(255, 255, 255));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
         back.setEnabled(false);
         back.setFocusable(false);
@@ -99,7 +144,6 @@ public final class Home extends javax.swing.JFrame {
         });
         titleBar.add(back);
 
-        home.setBackground(new java.awt.Color(255, 255, 255));
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
         home.setEnabled(false);
         home.setFocusable(false);
@@ -226,48 +270,26 @@ public final class Home extends javax.swing.JFrame {
 
     private void attachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachActionPerformed
         if (!loadfile) {
-            JFileChooser fc = new JFileChooser();
             
-            fc.showDialog(this, "Attach");
-
-            String file = fc.getSelectedFile().getAbsolutePath();
-
-            address.setText(file);
-            address.setToolTipText(file);         
-            csvData.setFilename(file);
-
-            attach.setText("Next");
-            
-            loadfile = true;
+            HomeScreen();
         }
         else{
             if(!overviewActive){
-                back.setEnabled(true);
 
-                if (csvData.load()) {
-                    table = new Table(this);      
-                    content.add(table);                   
-                }
-
-                revalidate();
-
-                overviewActive = true;
+                OverviewScreen();
             }
             else{
-                attach.setText("Close");
 
-                main = new Main(this);
-
-                display("Main", table, main);
+                MainScreen();
             }
         }
     }//GEN-LAST:event_attachActionPerformed
     
     /**
      *
-     * @param name
-     * @param remove
-     * @param add
+     * @param name sets the title on the JFrame
+     * @param remove component from JFrame
+     * @param add component from JFrame
      */
     public void display(String name, Component remove, Component add){
         setTitle(name);
