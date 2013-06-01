@@ -1,18 +1,20 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JComboBox;
-import pprogramming3assignmentone.Classes.Activity;
-import pprogramming3assignmentone.Classes.Worker;
 
 /**
  *
- * @author rNdm
+ * @author Adam Charlton
  */
 public class Graph extends javax.swing.JPanel{
    
+    /**
+     *
+     * @param home constructor receives the home class to access its variables
+     */
     public Graph(Home home) {
         this.home = home;
         initComponents();
@@ -124,7 +126,7 @@ public class Graph extends javax.swing.JPanel{
                 for (int i = 1; i < home.csvData.getData().size(); i++) { 
                         Double value = Double.parseDouble((String)home.csvData.getData().get(i)[pos]);                        
                         int newValue = (int)Math.round(value);
-                        System.out.println(newValue);
+                        //System.out.println(newValue);
                         drawGraph.getData().add(newValue);                           
                 }
             }
@@ -154,6 +156,11 @@ public class Graph extends javax.swing.JPanel{
         return maxValue;
     }
     
+    /**
+     *
+     * @param input argument is used to test if string is double
+     * @return true / false
+     */
     public boolean isValid(Object input){ 
        try  
        {  

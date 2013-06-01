@@ -1,7 +1,6 @@
 
-package pprogramming3assignmentone.Classes;
+package pprogramming3assignmentone;
 
-import pprogramming3assignmentone.JPanels.Home;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,10 +21,23 @@ public class Find {
     private int column;
     private ArrayList<Object[]> data;
     
+    /**
+     *
+     * @param home constructor that accesses variables from the home class
+     */
     public Find(Home home){
         data = home.csvData.getData();
     }
     
+    public Find(ArrayList<Object[]> data){
+        this.data = data;
+    }
+    
+    /**
+     *
+     * @param column receives specific column to calculate statistics
+     * @return object array of all calculations for specified column
+     */
     public Object[] returnStats(int column){
         this.column = column;
         
@@ -74,6 +86,10 @@ public class Find {
         }            
     }
     
+    /**
+     *
+     * @return max value of specific column
+     */
     public String max(){
         double maxValue = 0;
         
@@ -90,7 +106,7 @@ public class Find {
         return Double.toString(maxValue);
     }
     
-    private String min(){
+    public String min(){
         double minValue;   
         
         Object item = data.get(1)[column];
@@ -109,7 +125,8 @@ public class Find {
       
         return Double.toString(minValue);
     }    
-    private String mean(){
+    
+    public String mean(){
         double sum = 0;
     
         Object item = data.get(1)[column];
@@ -121,7 +138,7 @@ public class Find {
         return Double.toString(sum / data.size());
     }   
     
-    private String median(){       
+    public String median(){       
         double[] values = new double[data.size()];
                 
         for (int i = 1; i < values.length-1; i++) {
@@ -137,8 +154,9 @@ public class Find {
         } else {
             return Double.toString((values[middle-1] + values[middle]) / 2.0);
         }        
-    }    
-    private String mode(){
+    }   
+    
+    public String mode(){
         double maxValue = 0, maxCount = 0;
                 
         for (int i = 1; i < data.size(); ++i) {                
@@ -161,7 +179,8 @@ public class Find {
 
         return Double.toString(maxValue);
     }
-    private String range(String max, String min){
+    
+    public String range(String max, String min){
         double maximum = Double.parseDouble(max);
         double minimum = Double.parseDouble(min);
         

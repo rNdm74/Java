@@ -1,18 +1,15 @@
-package pprogramming3assignmentone.Classes;
+package pprogramming3assignmentone;
 
-import pprogramming3assignmentone.JPanels.Home;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import pprogramming3assignmentone.Home;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+/**
+ *
+ * @author Adam Charlton
+ */
 public class Activity extends JPanel {
    private int maxValue = 1023;
    private static int prefWidth = 800;
@@ -27,13 +24,21 @@ public class Activity extends JPanel {
 
    private List<Integer> data;
    
-   public Activity(Home home) {
+    /**
+     *
+     * @param home constructor that accesses variables from the home class
+     */
+    public Activity(Home home) {
        data = new ArrayList<>();
        
        prefWidth = home.csvData.getData().size();
    }
 
-   @Override
+    /**
+     *
+     * @param g graphics object used to paint graph to screen
+     */
+    @Override
    protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
@@ -93,16 +98,28 @@ public class Activity extends JPanel {
       }
    }
 
-   @Override
+    /**
+     *
+     * @return preferred size
+     */
+    @Override
    public Dimension getPreferredSize() {
       return new Dimension(prefWidth, prefHeight);
    }
         
-   public void setMaxValue(int maxValue) {
+    /**
+     *
+     * @param maxValue sets maximum value for graph
+     */
+    public void setMaxValue(int maxValue) {
        this.maxValue = maxValue;
    }
 
-   public List<Integer> getData() {
+    /**
+     *
+     * @return the data list of integers
+     */
+    public List<Integer> getData() {
        return data;
    }
 }

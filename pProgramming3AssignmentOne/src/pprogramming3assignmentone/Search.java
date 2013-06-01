@@ -1,16 +1,20 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rNdm
+ * @author Adam Charlton
  */
 public class Search extends javax.swing.JPanel {
     Home home;
     
+    /**
+     *
+     * @param home constructor receives the home class to access its variables
+     */
     public Search(Home home) {
         this.home = home;
         
@@ -100,7 +104,6 @@ public class Search extends javax.swing.JPanel {
             }
         });
 
-        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/16x16/search.png"))); // NOI18N
         search.setBorderPainted(false);
         search.setFocusPainted(false);
         search.setRequestFocusEnabled(false);
@@ -131,7 +134,7 @@ public class Search extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(advancedSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -161,9 +164,6 @@ public class Search extends javax.swing.JPanel {
         
         for (int column = 0; column < list.getItemCount(); column++) {
             model.addColumn(list.getItemAt(column));
-//            if (list.getItemAt(i) != list.getSelectedItem()) {
-//                model.addColumn(list.getItemAt(i));
-//            }            
         }
     }//GEN-LAST:event_listActionPerformed
 
@@ -201,7 +201,7 @@ public class Search extends javax.swing.JPanel {
 
         if (evt.getKeyCode() == 10) {
 
-            /*8*/
+            
             //            for (Object o: ) {
                 //                ((String)o).
                 //            }

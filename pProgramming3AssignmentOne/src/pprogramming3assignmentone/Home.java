@@ -1,71 +1,59 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
-import pprogramming3assignmentone.Classes.Worker;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
-public final class Home extends javax.swing.JFrame {
+public final class Home extends javax.swing.JFrame {              
     /**
      *
-     */
-    public boolean loadfile;
-    /**
-     *
-     */
-    public boolean overviewActive;
-    /**
-     *
-     */
-    public boolean mainpageActive;
-    
-    /**
-     *
-     */
-    public Worker csvData;
-    
-    /**
-     *
-     */
-    public Load load;
-    /**
-     *
-     */
-    public Table table;
-    /**
-     *
-     */
-    public Main main;
-
-    private void HomeScreen() throws HeadlessException {
-        JFileChooser fc = new JFileChooser();
+     * @throws FileNotFoundException file is not found
+     * @throws IOException error loading selected file
+     */    
+    public Home() throws FileNotFoundException, IOException {
+        initComponents();
         
-        fc.showDialog(this, "Attach");
-
-        String file = fc.getSelectedFile().getAbsolutePath();
-
-        address.setText(file);
-        address.setToolTipText(file);         
-        csvData.setFilename(file);
-
-        attach.setText("Next");
+        csvData = new Worker(address.getText());
         
-        loadfile = true;
+        welcome = new Welcome();
+        content.add(welcome);
+        
+        attach.requestFocus();
     }
 
-    private void OverviewScreen() {
-        back.setEnabled(true);
+    private void homeScreen() throws HeadlessException {        
+        try{
+            JFileChooser fc = new JFileChooser();
+            fc.showDialog(this, "Attach");
+            
+            String file = fc.getSelectedFile().getAbsolutePath();
+            
+            address.setText(file);
+            address.setToolTipText(file);         
+            csvData.setFilename(file);
+            attach.setText("Next");
+            
+            Welcome.csvfilefound.setText("FILE FOUND CLICK NEXT TO CONTINUE");
+            
+            loadfile = true;
+        }
+        catch(Exception e){            
+        }
+    }
 
+    private void overviewScreen() {
+        back.setEnabled(true);
+        
         if (csvData.load()) {
             table = new Table(this);      
-            content.add(table);                   
+            display("Overview - Analyzer CSV 1.0", welcome, table);                   
         }
 
         revalidate();
@@ -73,33 +61,28 @@ public final class Home extends javax.swing.JFrame {
         overviewActive = true;
     }
 
-    private void MainScreen() {
+    private void mainScreen() {
         attach.setText("Close");
 
         main = new Main(this);
 
-        display("Main", table, main);
+        display("Main - Analyzer CSV 1.0", table, main);
+        
+        home.setEnabled(true);
+        
+        mainActive = true;
     }
     
-    /**
-     *
-     * @throws FileNotFoundException file is not found
-     * @throws IOException 
-     */
-    public enum Display{
-        HOME,
-        OVERVIEW,
-        MAIN
+    private void returnHome(Component comp) {
+        display("Home - Analyzer CSV 1.0", comp, welcome);
+        overviewActive = false;
+        mainActive = false;
+        loadfile = false;
+        back.setEnabled(false);
+        attach.setText("Attach");
+        Welcome.csvfilefound.setText("No FILE FOUND CLICK ATTACH TO BEGIN");
     }
     
-    public Home() throws FileNotFoundException, IOException {
-        initComponents();
-        
-        csvData = new Worker(address.getText());
-        
-        content.add(new Welcome());
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -132,7 +115,9 @@ public final class Home extends javax.swing.JFrame {
         titleBar.setPreferredSize(new java.awt.Dimension(100, 50));
         titleBar.add(filler6);
 
+        back.setBackground(new java.awt.Color(255, 255, 255));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
+        back.setToolTipText("Back");
         back.setEnabled(false);
         back.setFocusable(false);
         back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -144,11 +129,18 @@ public final class Home extends javax.swing.JFrame {
         });
         titleBar.add(back);
 
+        home.setBackground(new java.awt.Color(255, 255, 255));
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
+        home.setToolTipText("Home");
         home.setEnabled(false);
         home.setFocusable(false);
         home.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         home.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeActionPerformed(evt);
+            }
+        });
         titleBar.add(home);
         titleBar.add(filler4);
 
@@ -171,6 +163,7 @@ public final class Home extends javax.swing.JFrame {
         south.setPreferredSize(new java.awt.Dimension(437, 50));
 
         attach.setText("Attach");
+        attach.setFocusCycleRoot(true);
         attach.setMaximumSize(new java.awt.Dimension(96, 23));
         attach.setMinimumSize(new java.awt.Dimension(96, 23));
         attach.setPreferredSize(new java.awt.Dimension(96, 25));
@@ -264,26 +257,37 @@ public final class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_addressActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        display("Home", table, load);
-        overviewActive = false;
+        if (overviewActive) {
+            returnHome(table);
+        }
+        
+        if (mainActive) {
+            
+        }
     }//GEN-LAST:event_backActionPerformed
 
     private void attachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachActionPerformed
-        if (!loadfile) {
-            
-            HomeScreen();
+        if (!loadfile) {            
+            homeScreen();
         }
         else{
             if(!overviewActive){
-
-                OverviewScreen();
+                overviewScreen();
             }
             else{
-
-                MainScreen();
+                if (!mainActive) {
+                    mainScreen();
+                }
+                else{
+                    System.exit(0);
+                }                
             }
         }
     }//GEN-LAST:event_attachActionPerformed
+
+    private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
+        returnHome(main);
+    }//GEN-LAST:event_homeActionPerformed
     
     /**
      *
@@ -298,6 +302,32 @@ public final class Home extends javax.swing.JFrame {
         content.repaint();
     }
     
+    /**
+     *  Load file state
+     */
+    public boolean loadfile;
+    /**
+     *  Overview window state
+     */
+    public boolean overviewActive;
+    /**
+     *  Main window state
+     */
+    public boolean mainActive;
+    /**
+     *  Class loads data from csv file
+     */
+    public Worker csvData;    
+    /**
+     *  Creates the overview table
+     */
+    public Table table;
+    /**
+     *  Main window for analyzing csv file
+     */
+    public Main main;  
+    
+    private Welcome welcome;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JFormattedTextField address;
     public javax.swing.JButton attach;

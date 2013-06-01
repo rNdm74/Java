@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
 import java.awt.Dimension;
 import javax.swing.JLabel;

@@ -1,10 +1,7 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-import pprogramming3assignmentone.Classes.Find;
 
 /**
  *
@@ -12,6 +9,10 @@ import pprogramming3assignmentone.Classes.Find;
  */
 public class Statistics extends javax.swing.JPanel {
 
+    /**
+     *
+     * @param home constructor that accesses variables from the home class
+     */
     public Statistics(Home home) {
         this.home = home;
         
@@ -52,6 +53,7 @@ public class Statistics extends javax.swing.JPanel {
             }
         ));
         table.setGridColor(new java.awt.Color(255, 255, 255));
+        table.setIntercellSpacing(new java.awt.Dimension(0, 0));
         table.setRowHeight(25);
         tableScrollPane.setViewportView(table);
 
@@ -61,14 +63,14 @@ public class Statistics extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

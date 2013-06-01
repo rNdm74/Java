@@ -1,7 +1,8 @@
 
-package pprogramming3assignmentone.JPanels;
+package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -34,6 +35,7 @@ public class Table extends javax.swing.JPanel {
     private void setupTable(Object[][] data, Object[] columnNames) {
         table = new JTable(data, columnNames);
         table.setRowHeight(25);
+        table.setIntercellSpacing(new Dimension(0,0));
         table.setBackground(getBackground());
         table.setGridColor(getBackground());
         table.setFillsViewportHeight(true);

@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone.Classes;
+package pprogramming3assignmentone;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,13 +13,21 @@ import java.util.ArrayList;
  */
 public class Worker {
     private ArrayList<Object[]> data;
-    private String filename;
+    private String filename;    
     public boolean loadComplete;
     
+    /**
+     *
+     * @param filename receives string that specifies the file path of a file
+     */
     public Worker(String filename) { 
         this.filename = filename; 
     } 
     
+    /**
+     *
+     * @return true false if file is loaded successfully
+     */
     public boolean load(){
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             data = new ArrayList<>();
@@ -39,36 +47,26 @@ public class Worker {
         }        
     }
     
-    private Object[] dataType(String line){
-        String[] s = line.split(",");
-        
-        Object[] o = new Object[s.length];
-        
-        for (int i = 0; i < o.length; i++) {
-            o[i] = (isNumber(s[i])) ? Double.parseDouble(s[i]) : s[i];
-        }   
-        
-        return o;
-    }
-    
-    private boolean isNumber(String s){
-        try{
-           Double.parseDouble(s);
-           return true;
-        }
-        catch(Exception e){
-           return false; 
-        }        
-    }
-
+    /**
+     *
+     * @return the loaded data arraylist
+     */
     public ArrayList<Object[]> getData() {
         return data;
     } 
     
+    /**
+     *
+     * @param filename sets the filename that is used by the file reader
+     */
     public void setFilename(String filename) {
         this.filename = filename;
     }
 
+    /**
+     *
+     * @return returns the current filename
+     */
     public String getFilename() {
         return filename;
     }

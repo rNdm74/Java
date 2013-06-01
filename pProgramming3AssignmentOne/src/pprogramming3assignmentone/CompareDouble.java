@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone.Classes;
+package pprogramming3assignmentone;
 
 import java.util.Comparator;
 
@@ -9,6 +9,12 @@ import java.util.Comparator;
  */
 public class CompareDouble implements Comparator<Double> {
 
+    /**
+     *
+     * @param o1 first variable to compare
+     * @param o2 second variable to compare
+     * @return returns either a zero or the > of the two variables
+     */
     @Override
     public int compare(Double o1, Double o2) {
         return ((o1 !=  null && o2 != null) ? 
