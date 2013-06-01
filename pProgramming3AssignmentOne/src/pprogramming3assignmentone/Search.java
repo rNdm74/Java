@@ -2,6 +2,7 @@
 package pprogramming3assignmentone;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -104,6 +105,7 @@ public class Search extends javax.swing.JPanel {
             }
         });
 
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/search16.png"))); // NOI18N
         search.setBorderPainted(false);
         search.setFocusPainted(false);
         search.setRequestFocusEnabled(false);
@@ -124,7 +126,7 @@ public class Search extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(examples, 0, 173, Short.MAX_VALUE)
+                        .addComponent(examples, 0, 159, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(search))
                     .addComponent(advancedSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

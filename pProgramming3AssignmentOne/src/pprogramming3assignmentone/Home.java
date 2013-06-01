@@ -2,9 +2,12 @@
 package pprogramming3assignmentone;
 
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 /**
@@ -38,9 +41,15 @@ public final class Home extends javax.swing.JFrame {
             address.setText(file);
             address.setToolTipText(file);         
             csvData.setFilename(file);
-            attach.setText("Next");
             
-            Welcome.csvfilefound.setText("FILE FOUND CLICK NEXT TO CONTINUE");
+            attach.setText("Next");
+            attach.setIcon(null);
+            
+            back.setEnabled(true);
+            
+            Welcome.guide.setText("CLICK NEXT TO CONTINUE");
+            Welcome.csvfound.setText("FILE FOUND");
+            Welcome.csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/check-alt.png")));
             
             loadfile = true;
         }
@@ -68,6 +77,7 @@ public final class Home extends javax.swing.JFrame {
 
         display("Main - Analyzer CSV 1.0", table, main);
         
+        back.setEnabled(false);
         home.setEnabled(true);
         
         mainActive = true;
@@ -75,12 +85,7 @@ public final class Home extends javax.swing.JFrame {
     
     private void returnHome(Component comp) {
         display("Home - Analyzer CSV 1.0", comp, welcome);
-        overviewActive = false;
-        mainActive = false;
-        loadfile = false;
-        back.setEnabled(false);
-        attach.setText("Attach");
-        Welcome.csvfilefound.setText("No FILE FOUND CLICK ATTACH TO BEGIN");
+        reset();
     }
     
     @SuppressWarnings("unchecked")
@@ -116,7 +121,7 @@ public final class Home extends javax.swing.JFrame {
         titleBar.add(filler6);
 
         back.setBackground(new java.awt.Color(255, 255, 255));
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/arrow-7-left.png"))); // NOI18N
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/arrow-7-left.png"))); // NOI18N
         back.setToolTipText("Back");
         back.setEnabled(false);
         back.setFocusable(false);
@@ -130,7 +135,7 @@ public final class Home extends javax.swing.JFrame {
         titleBar.add(back);
 
         home.setBackground(new java.awt.Color(255, 255, 255));
-        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/32x32/home.png"))); // NOI18N
+        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/home.png"))); // NOI18N
         home.setToolTipText("Home");
         home.setEnabled(false);
         home.setFocusable(false);
@@ -162,6 +167,7 @@ public final class Home extends javax.swing.JFrame {
         south.setBackground(new java.awt.Color(255, 255, 255));
         south.setPreferredSize(new java.awt.Dimension(437, 50));
 
+        attach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/attachment.png"))); // NOI18N
         attach.setText("Attach");
         attach.setFocusCycleRoot(true);
         attach.setMaximumSize(new java.awt.Dimension(96, 23));
@@ -257,6 +263,11 @@ public final class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_addressActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        if(loadfile){
+            reset();
+            back.setEnabled(false);
+        }
+        
         if (overviewActive) {
             returnHome(table);
         }
@@ -343,4 +354,18 @@ public final class Home extends javax.swing.JFrame {
     private javax.swing.JToolBar titleBar;
     private javax.swing.JPanel west;
     // End of variables declaration//GEN-END:variables
+
+    private void reset() {
+        overviewActive = false;
+        mainActive = false;
+        loadfile = false;
+        //back.setEnabled(false);
+        home.setEnabled(false);
+        attach.setText("Attach");
+        attach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/attachment.png")));
+        
+        Welcome.csvfound.setText("FILE NOT FOUND");
+        Welcome.csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/cancel.png")));
+        Welcome.guide.setText("CLICK ATTACH TO ADD A FILE");
+    }
 }

@@ -1,6 +1,5 @@
 package pprogramming3assignmentone;
 
-import pprogramming3assignmentone.Home;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +9,12 @@ import javax.swing.*;
  *
  * @author Adam Charlton
  */
-public class Activity extends JPanel {
+public class Activity extends JPanel{
    private int maxValue = 1023;
    private static int prefWidth = 800;
    private static int prefHeight = 600;
    
-   private static final int BORDER_GAP = 20;
+   private static final int BORDER_GAP = 35;
    private static final Color GRAPH_COLOR = Color.DARK_GRAY;
    private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(1f);
@@ -57,6 +56,9 @@ public class Activity extends JPanel {
       // create x and y axes 
       g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
       g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
+      g2.drawString("TIME", getWidth() / 2, getHeight() - BORDER_GAP / 3);
+      g2.drawString(Integer.toString(maxValue), 5, BORDER_GAP);
+      g2.drawString("0", 5, getHeight() - BORDER_GAP);
 
       // create hatch marks for y axis. 
       for (int i = 0; i < Y_HATCH_CNT; i++) {

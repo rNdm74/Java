@@ -2,12 +2,14 @@
 package pprogramming3assignmentone;
 
 import java.awt.Dimension;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 
 /**
  *
- * @author rndm
+ * @author Adam Charlton
  */
 public class Main extends javax.swing.JPanel {
 
@@ -18,7 +20,7 @@ public class Main extends javax.swing.JPanel {
     public Main(Home home){
         initComponents(); 
         initTabComponents(home);
-        setTabLookAndFeel(home);
+        setTabLookAndFeel();
     }
 
     private void initTabComponents(Home home) {
@@ -41,20 +43,24 @@ public class Main extends javax.swing.JPanel {
         splitPane.setLeftComponent(graph1);
         splitPane.setRightComponent(graph2);
         splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerSize(10);
         splitPane.setDividerLocation(home.getWidth());
         return splitPane;
     }
     
-    private void setTabLookAndFeel(Home home) {
-        String[] names = {"Overview", "Sorting", "Search", "Statistics", "Graph"};     
+    private void setTabLookAndFeel() {
+        String[] names = {"Overview", "Sorting", "Search", "Statistics", "Graph"};  
+        String[] iconNames = {"bookmark.png", "list-ordered.png", "search.png", "report.png", "statistics-pie-chart.png"};
         
         JLabel[] labels = new JLabel[names.length]; 
         
-        int height = (home.table.getHeight() / (labels.length)) - 5;
-        
         for (int i = 0; i < labels.length; i++) {
+            URL url = getClass().getResource("/pprogramming3assignmentone/icons/"+ iconNames[i]);
+                        
             labels[i] = new JLabel(names[i]);
-            labels[i].setPreferredSize(new Dimension(50, 50));
+            labels[i].setIcon(new ImageIcon(url));
+            //labels[i].setToolTipText(names[i]);
+            labels[i].setPreferredSize(new Dimension(100, 40));
             
             mainpagetabs.setTabComponentAt(i, labels[i]);
         }
@@ -71,9 +77,10 @@ public class Main extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         mainpagetabs.setBackground(java.awt.Color.white);
-        mainpagetabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         mainpagetabs.setToolTipText("");
+        mainpagetabs.setDoubleBuffered(true);
         mainpagetabs.setOpaque(true);
+        mainpagetabs.setPreferredSize(new java.awt.Dimension(50, 50));
         add(mainpagetabs, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     private javax.swing.JPanel sorting;

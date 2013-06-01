@@ -19,7 +19,7 @@ public class Welcome extends javax.swing.JPanel {
     private void initComponents() {
 
         analyzercsv = new javax.swing.JLabel();
-        csvfilefound = new javax.swing.JLabel();
+        guide = new javax.swing.JLabel();
         features = new javax.swing.JLabel();
         sorting = new javax.swing.JLabel();
         overview = new javax.swing.JLabel();
@@ -27,17 +27,18 @@ public class Welcome extends javax.swing.JPanel {
         statistics = new javax.swing.JLabel();
         trends = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
+        csvfound = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(0, 25));
+        setPreferredSize(new java.awt.Dimension(391, 291));
 
         analyzercsv.setFont(analyzercsv.getFont().deriveFont(analyzercsv.getFont().getStyle() | java.awt.Font.BOLD, analyzercsv.getFont().getSize()+11));
         analyzercsv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         analyzercsv.setText("Analyzer CSV 1.0");
 
-        csvfilefound.setFont(csvfilefound.getFont().deriveFont((csvfilefound.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, csvfilefound.getFont().getSize()+3));
-        csvfilefound.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        csvfilefound.setText("NO CSV FILE FOUND CLICK ATTACH TO BEGIN");
+        guide.setFont(guide.getFont().deriveFont(guide.getFont().getSize()+2f));
+        guide.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        guide.setText(" CLICK ATTACH TO ADD A FILE");
 
         features.setFont(features.getFont().deriveFont(features.getFont().getStyle() | java.awt.Font.BOLD, features.getFont().getSize()+3));
         features.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -72,27 +73,35 @@ public class Welcome extends javax.swing.JPanel {
         description.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         description.setText("Analyzer CSV 1.0 is analysis software to view data from a csv file in a human readable format");
 
+        csvfound.setFont(csvfound.getFont().deriveFont((csvfound.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, csvfound.getFont().getSize()+3));
+        csvfound.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/cancel.png"))); // NOI18N
+        csvfound.setText("NO CSV FILE FOUND");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(analyzercsv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(csvfilefound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(features, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(sorting, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(overview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(statistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(trends, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(description, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+            .addComponent(description, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+            .addComponent(trends, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(csvfound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(guide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(analyzercsv, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(description)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(features, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(overview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -104,15 +113,18 @@ public class Welcome extends javax.swing.JPanel {
                 .addComponent(statistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(trends, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(csvfilefound, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(guide, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                    .addComponent(csvfound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel analyzercsv;
-    public static javax.swing.JLabel csvfilefound;
+    public static javax.swing.JLabel csvfound;
     private javax.swing.JLabel description;
     private javax.swing.JLabel features;
+    public static javax.swing.JLabel guide;
     private javax.swing.JLabel overview;
     private javax.swing.JLabel search;
     private javax.swing.JLabel sorting;
