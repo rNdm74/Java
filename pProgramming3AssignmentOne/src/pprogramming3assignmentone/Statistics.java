@@ -14,8 +14,6 @@ public class Statistics extends javax.swing.JPanel {
      * @param home constructor that accesses variables from the home class
      */
     public Statistics(Home home) {
-        this.home = home;
-        
         initComponents();
         
         DefaultTableModel model = (DefaultTableModel)table.getModel();
@@ -75,7 +73,6 @@ public class Statistics extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private Home home;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable table;
     private javax.swing.JScrollPane tableScrollPane;

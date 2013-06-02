@@ -107,7 +107,7 @@ public final class Home extends javax.swing.JFrame {
         north = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Home - CSV Analyser 1.0");
+        setTitle("Home - Analyzer CSV 1.0");
         setMinimumSize(new java.awt.Dimension(400, 400));
         setName("CSVReader"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));

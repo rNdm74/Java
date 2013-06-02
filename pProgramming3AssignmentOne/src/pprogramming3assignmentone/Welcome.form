@@ -30,7 +30,7 @@
           <Component id="overview" alignment="0" max="32767" attributes="0"/>
           <Component id="search" alignment="0" max="32767" attributes="0"/>
           <Component id="statistics" alignment="0" max="32767" attributes="0"/>
-          <Component id="description" alignment="0" pref="593" max="32767" attributes="0"/>
+          <Component id="description" alignment="0" pref="589" max="32767" attributes="0"/>
           <Component id="trends" alignment="1" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <Component id="csvfound" max="32767" attributes="0"/>
@@ -43,9 +43,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="analyzercsv" min="-2" pref="61" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
               <Component id="description" min="-2" pref="17" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
               <Component id="features" min="-2" pref="27" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="overview" min="-2" max="-2" attributes="0"/>
@@ -57,7 +57,7 @@
               <Component id="statistics" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="trends" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" pref="37" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" pref="29" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="guide" pref="61" max="32767" attributes="0"/>
                   <Component id="csvfound" max="32767" attributes="0"/>
