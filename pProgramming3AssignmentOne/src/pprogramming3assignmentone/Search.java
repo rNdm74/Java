@@ -2,7 +2,6 @@
 package pprogramming3assignmentone;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,12 +20,8 @@ public class Search extends javax.swing.JPanel {
         
         initComponents();
         
-        list.removeAllItems();
+        initComboBox(home); 
         
-        for (Object s: home.csvData.getData().get(0)) {
-            list.addItem(((String)s).toUpperCase());
-        }
-           
         populateTable();  
     }
     
@@ -79,6 +74,7 @@ public class Search extends javax.swing.JPanel {
 
         advancedSearch.setForeground(java.awt.SystemColor.textInactiveText);
         advancedSearch.setText("  Advanced Search");
+        advancedSearch.setEnabled(false);
         advancedSearch.setFont(advancedSearch.getFont().deriveFont((float)12));
         advancedSearch.setPreferredSize(new java.awt.Dimension(44, 26));
         advancedSearch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -126,7 +122,7 @@ public class Search extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(examples, 0, 159, Short.MAX_VALUE)
+                        .addComponent(examples, 0, 173, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(search))
                     .addComponent(advancedSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -136,7 +132,7 @@ public class Search extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(advancedSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -150,15 +146,14 @@ public class Search extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
-        
         try{
             populateTable();
-            populateSearchExamples((String)list.getSelectedItem());
+            populateSearchExamples();
         }
         catch(Exception e){
-            
-        }
-    }                                    
+            System.out.println(e);
+        }    
+    }//GEN-LAST:event_listActionPerformed
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel)table.getModel();
@@ -167,15 +162,23 @@ public class Search extends javax.swing.JPanel {
         for (int column = 0; column < list.getItemCount(); column++) {
             model.addColumn(list.getItemAt(column));
         }
-    }//GEN-LAST:event_listActionPerformed
-
-    private void listItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listItemStateChanged
-         
-    }//GEN-LAST:event_listItemStateChanged
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        ArrayList<String[]> data = new ArrayList<>();
+    }
+    
+    private void populateTable(ArrayList<String[]> data) {
+        int pos = list.getSelectedIndex();
         
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        
+        model.setNumRows(0);
+
+        for (int row = 0; row < data.get(pos).length; row++) {
+            if (examples.getSelectedItem().equals(data.get(pos)[row])) {                    
+                model.addRow(home.csvData.getData().get(row));
+            }
+        }
+    }
+        
+    private void populateData(ArrayList<String[]> data) {
         int length = home.csvData.getData().get(0).length;
 
         for (int column = 0; column < length; column++) {
@@ -187,20 +190,39 @@ public class Search extends javax.swing.JPanel {
 
             data.add(objects);
         }
-
-        int pos = list.getSelectedIndex();
-        DefaultTableModel model = (DefaultTableModel)table.getModel();
-        model.setNumRows(0);
-
-        for (int row = 0; row < data.get(pos).length; row++) {
-            if (examples.getSelectedItem().equals(data.get(pos)[row])) {                    
-                model.addRow(home.csvData.getData().get(row));
-            }
+    }
+        
+    private void populateSearchExamples() {
+        examples.removeAllItems();
+                        
+        for (int i = 1; i < home.csvData.getData().size(); i++) {
+           int pos = list.getSelectedIndex();
+           String s = String.valueOf(home.csvData.getData().get(i)[pos]);
+           examples.addItem(((String)s).toUpperCase());
         }
+    }
+    
+    private void initComboBox(Home home) {
+        list.removeAllItems();
+        
+        for (Object s: home.csvData.getData().get(0)) {
+            list.addItem(((String)s).toUpperCase());
+        }
+    }
+
+    private void listItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listItemStateChanged
+         
+    }//GEN-LAST:event_listItemStateChanged
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        ArrayList<String[]> data = new ArrayList<>();
+        populateData(data);
+        populateTable(data);
     }//GEN-LAST:event_searchActionPerformed
 
     private void advancedSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_advancedSearchKeyPressed
 
+        // CODE NOT WORKING WILL IMPLEMENT AT A LATER DATE //
         if (evt.getKeyCode() == 10) {
 
             
@@ -258,73 +280,4 @@ public class Search extends javax.swing.JPanel {
     private javax.swing.JTable table;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
-
-    private void populateSearchExamples(String item) {
-        examples.removeAllItems();
-                        
-        for (int i = 1; i < home.csvData.getData().size(); i++) {
-           int pos = list.getSelectedIndex();
-           String s = String.valueOf(home.csvData.getData().get(i)[pos]);
-           examples.addItem(((String)s).toUpperCase());
-        }
-    }
-
-    private void search(Home home) {
-//        ArrayList<Object[]> data = new ArrayList<>();
-//        
-//        int length = home.csvData.getData().get(0).length;
-//        
-//        for (int column = 0; column < length; column++) {
-//            Object[] objects = new Object[home.csvData.getData().size()];
-//            
-//            for (int row = 0; row < home.csvData.getData().size(); row++) {
-//                objects[row] = home.csvData.getData().get(row)[column];
-//            }
-//            data.add(objects);
-//        }
-//        
-//        Arrays.sort(data.get(0));
-//        
-//        for (int i = 0; i < data.get(0).length; i++) {
-//            //System.out.println(data.get(0)[i]);
-//        }
- 
-            
-       
-        
-//        String[] stringData = new String[home.csvData.getData().size()];
-//        Double[] doubleData = new Double[home.csvData.getData().size()];
-//        
-//        for(int i = 1; i < home.csvData.getData().size(); i++){
-//            Object o = home.csvData.getData().get(i)[list.getSelectedIndex()];
-//            
-//            if(isDouble(o)){
-//                doubleData[i - 1] = Double.parseDouble((String)o);
-//            }
-//            else{
-//                stringData[i - 1] = (String)o;
-//            }
-//        }
-//                
-//        Arrays.sort(stringData, new CompareString());
-//        Arrays.sort(doubleData, new CompareDouble());
-//                
-//        if (stringData[0] != null) {
-//            return new Binary().binarySearch(stringData, searchField.getText());
-//        }
-//        else{
-//            
-//            return Arrays.binarySearch(doubleData, Double.parseDouble(searchField.getText()));
-//        }
-        
-    }    
-    private boolean isDouble(Object o){
-        try{
-            Double.parseDouble((String)o);
-            return true;
-        }
-        catch(Exception e){
-            return false;
-        }
-    }
 }

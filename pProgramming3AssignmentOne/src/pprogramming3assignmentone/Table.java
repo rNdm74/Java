@@ -1,8 +1,7 @@
 
 package pprogramming3assignmentone;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -40,7 +39,7 @@ public class Table extends javax.swing.JPanel {
         table.setGridColor(getBackground());
         table.setFillsViewportHeight(true);
         table.setFocusable(false);
-    }
+    } // Sets up table for displaying data
     
     private Object[][] returnData(Object[] columnNames) {
         Object[][] data = new Object[csvData.size()-1][columnNames.length];
@@ -50,7 +49,7 @@ public class Table extends javax.swing.JPanel {
         }
         
         return data;
-    }
+    } // Returns multi dimensional array 
 
     private void populateHeader(Object[] columnNames) {
         JTableHeader header = table.getTableHeader();

@@ -17,18 +17,22 @@ public class Statistics extends javax.swing.JPanel {
         initComponents();
         
         DefaultTableModel model = (DefaultTableModel)table.getModel();
-            
+        
+        // Reset rows to 0
         model.setColumnCount(0);
         model.setRowCount(0);
         
+        // Create header names
         String[] names = {"", "Max", "Min", "Mean", "Mode", "Medium", "Range"};
         
+        // Create header columns
         for (int column = 0; column < names.length; column++) {
             model.addColumn(names[column].toUpperCase());
         }
-        
+                        
+        // Add rows
         for (int row = 0; row < home.csvData.getData().get(0).length; row++) {            
-            model.addRow(new Find(home).returnStats(row));    
+            model.addRow(new Find(home).returnStats(row)); 
         }
     }
 

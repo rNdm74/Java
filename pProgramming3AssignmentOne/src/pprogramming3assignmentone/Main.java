@@ -24,17 +24,24 @@ public class Main extends javax.swing.JPanel {
     }
 
     private void initTabComponents(Home home) {
-        statistics = new Statistics(home);
-        sorting = new Sorting(home);
-        search = new Search(home);        
-        graph1 = new Graph(home);
-        graph2 = new Graph(home);
-                        
+        initComponents(home);
+        addComponents(home);
+    }
+    
+    private void addComponents(Home home) {
         mainpagetabs.add(home.table);
         mainpagetabs.add(sorting);               
         mainpagetabs.add(search);
         mainpagetabs.add(statistics); 
         mainpagetabs.add(splitPane(home));
+    }
+
+    private void initComponents(Home home) {
+        statistics = new Statistics(home);
+        sorting = new Sorting(home);
+        search = new Search(home);        
+        graph1 = new Graph(home);
+        graph2 = new Graph(home);
     }
     
     private JSplitPane splitPane(Home home) {
@@ -59,7 +66,6 @@ public class Main extends javax.swing.JPanel {
                         
             labels[i] = new JLabel(names[i]);
             labels[i].setIcon(new ImageIcon(url));
-            //labels[i].setToolTipText(names[i]);
             labels[i].setPreferredSize(new Dimension(100, 40));
             
             mainpagetabs.setTabComponentAt(i, labels[i]);

@@ -1,10 +1,8 @@
 
 package pprogramming3assignmentone;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import java.util.*;
+import javax.swing.table.*;
 
 /**
  *
@@ -17,16 +15,29 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
      * @param home initializes the sorting JPanel
      */
     public Sorting(Home home) {
-        this.home = home;
+        //this.home = home;
         
         initComponents();
         
+        initComboBox(home);
+        
+        populateData(home);
+        
+        // Sort data on first column
+        Arrays.sort(data.get(0));
+        
+        populateTable();
+    }
+    
+    private void initComboBox(Home home) {
         list.removeAllItems();
         
         for (Object s: home.csvData.getData().get(0)) {
             list.addItem(((String)s).toUpperCase());
         }
-               
+    }
+
+    private void populateData(Home home) {
         data = new ArrayList<>();
         
         int length = home.csvData.getData().get(0).length;
@@ -40,10 +51,40 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
 
             data.add(objects);
         }
-        
-        Arrays.sort(data.get(0));
-        
-        populateTable();
+    }
+
+    private void populateColumnData(DefaultTableModel model) throws NumberFormatException {
+        for (int column = 0; column < list.getItemCount(); column++) {
+
+            int pos = list.getSelectedIndex();
+
+            ArrayList<Object> columnData = new ArrayList<>();
+
+            for (int row = 1; row < data.get(pos).length; row++) {
+
+                Object item = data.get(column)[row];
+
+                if (isValid(item)) {
+                    columnData.add(Double.parseDouble((String)item));
+                }
+                else{
+                    columnData.add((String)item);
+                }
+            }
+
+            model.addColumn(list.getItemAt(column),columnData.toArray());
+        }
+    }
+
+    private void setComparator(TableRowSorter sorter) {
+        for (int column = 0; column < list.getItemCount(); column++) {
+            if (isValid(data.get(column)[1])) {
+                sorter.setComparator(column, new CompareDouble());
+            }
+            else{
+                sorter.setComparator(column, new CompareString());
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -101,14 +142,13 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
             }
         });
 
-        overview.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(overview);
         overview.setSelected(true);
         overview.setText("Overview");
 
-        single.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(single);
         single.setText("Single Item");
+        single.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,8 +175,8 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
                 .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(single)
                         .addComponent(overview))
                     .addComponent(sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -158,44 +198,16 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
 
     private void populateTable() {
             DefaultTableModel model = (DefaultTableModel)table.getModel();
-
             model.setColumnCount(0);
             model.setRowCount(0);
 
             TableRowSorter sorter = new TableRowSorter();
             table.setRowSorter(sorter);
-
             sorter.setModel(table.getModel());
-
-            for (int column = 0; column < list.getItemCount(); column++) {
-
-                int pos = list.getSelectedIndex();
-
-                ArrayList<Object> columnData = new ArrayList<>();
-
-                for (int row = 1; row < data.get(pos).length; row++) {
-
-                    Object item = data.get(column)[row];
-
-                    if (isValid(item)) {
-                        columnData.add(Double.parseDouble((String)item));
-                    }
-                    else{
-                        columnData.add((String)item);
-                    }
-                }
-
-                model.addColumn(list.getItemAt(column),columnData.toArray());
-            }
-
-            for (int column = 0; column < list.getItemCount(); column++) {
-                if (isValid(data.get(column)[1])) {
-                    sorter.setComparator(column, new CompareDouble());
-                }
-                else{
-                    sorter.setComparator(column, new CompareString());
-                }
-            }
+            
+            populateColumnData(model);
+            
+            setComparator(sorter);
     }
 
     /**
@@ -215,7 +227,7 @@ public class Sorting extends javax.swing.JPanel implements Comparable<Object>{
        }  
     }
        
-    private Home home;
+    //private Home home;
     private ArrayList<String[]> data;  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

@@ -1,13 +1,9 @@
 
 package pprogramming3assignmentone;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.HeadlessException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.awt.*;
+import java.io.*;
+import java.net.URL;
 import javax.swing.JFileChooser;
 
 /**
@@ -17,47 +13,71 @@ import javax.swing.JFileChooser;
 public final class Home extends javax.swing.JFrame {              
     /**
      *
+     * @param desktop receives the dimension of the current desktop
      * @throws FileNotFoundException file is not found
      * @throws IOException error loading selected file
      */    
-    public Home() throws FileNotFoundException, IOException {
+    public Home(Dimension desktop) throws FileNotFoundException, IOException {
         initComponents();
+          
+        // Taskbar icon
+        URL url = getClass().getResource("/pprogramming3assignmentone/icons/home.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        setIconImage(image);
         
+        
+        // Creates X,Y co-ordinates
+        int x = ((desktop.width / 2) - (getWidth() / 2));
+        int y = ((desktop.height / 2) - (getHeight() / 2));
+        
+        // Sets form location
+        setLocation(new Point(x, y));
+        
+        // Creates the worker class for reading the CSV file
         csvData = new Worker(address.getText());
         
+        // Creates the welcome pane on the home frame
         welcome = new Welcome();
         content.add(welcome);
         
+        // Gives focus to the 'ATTACH' button
         attach.requestFocus();
     }
 
     private void homeScreen() throws HeadlessException {        
         try{
+            // Opens dialog to choose file
             JFileChooser fc = new JFileChooser();
             fc.showDialog(this, "Attach");
             
+            // Adds selected file path
             String file = fc.getSelectedFile().getAbsolutePath();
             
+            // Setup components on form
             address.setText(file);
-            address.setToolTipText(file);         
-            csvData.setFilename(file);
+            address.setToolTipText(file);
+            
+            csvData.setFilename(file); 
             
             attach.setText("Next");
-            attach.setIcon(null);
+            attach.setIcon(null);    
             
             back.setEnabled(true);
             
+            // Sets welcome screen labels
             Welcome.guide.setText("CLICK NEXT TO CONTINUE");
             Welcome.csvfound.setText("FILE FOUND");
             Welcome.csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/check-alt.png")));
             
+            // File path location has been completed
             loadfile = true;
         }
-        catch(Exception e){            
+        catch(Exception e){  
+            System.out.println(e);
         }
     }
 
-    private void overviewScreen() {
+    private void overviewScreen() {        
         back.setEnabled(true);
         
         if (csvData.load()) {
@@ -68,7 +88,7 @@ public final class Home extends javax.swing.JFrame {
         revalidate();
 
         overviewActive = true;
-    }
+    } // Displays overview screen
 
     private void mainScreen() {
         attach.setText("Close");
@@ -81,12 +101,12 @@ public final class Home extends javax.swing.JFrame {
         home.setEnabled(true);
         
         mainActive = true;
-    }
+    } // Displays main screen
     
     private void returnHome(Component comp) {
         display("Home - Analyzer CSV 1.0", comp, welcome);
         reset();
-    }
+    } // Displays reset home screen
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -299,7 +319,6 @@ public final class Home extends javax.swing.JFrame {
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         returnHome(main);
     }//GEN-LAST:event_homeActionPerformed
-    
     /**
      *
      * @param name sets the title on the JFrame
@@ -312,6 +331,19 @@ public final class Home extends javax.swing.JFrame {
         content.add(add); 
         content.repaint();
     }
+    
+    private void reset() {
+        overviewActive = false;
+        mainActive = false;
+        loadfile = false;
+        home.setEnabled(false);
+        attach.setText("Attach");
+        attach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/attachment.png")));
+        
+        Welcome.csvfound.setText("FILE NOT FOUND");
+        Welcome.csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/cancel.png")));
+        Welcome.guide.setText("CLICK ATTACH TO ADD A FILE");
+    } // Reset file that is loaded into the form
     
     /**
      *  Load file state
@@ -338,6 +370,9 @@ public final class Home extends javax.swing.JFrame {
      */
     public Main main;  
     
+    /**
+     *  Welcome panel for analyzing csv file
+     */
     private Welcome welcome;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JFormattedTextField address;
@@ -354,18 +389,4 @@ public final class Home extends javax.swing.JFrame {
     private javax.swing.JToolBar titleBar;
     private javax.swing.JPanel west;
     // End of variables declaration//GEN-END:variables
-
-    private void reset() {
-        overviewActive = false;
-        mainActive = false;
-        loadfile = false;
-        //back.setEnabled(false);
-        home.setEnabled(false);
-        attach.setText("Attach");
-        attach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/attachment.png")));
-        
-        Welcome.csvfound.setText("FILE NOT FOUND");
-        Welcome.csvfound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pprogramming3assignmentone/icons/cancel.png")));
-        Welcome.guide.setText("CLICK ATTACH TO ADD A FILE");
-    }
 }

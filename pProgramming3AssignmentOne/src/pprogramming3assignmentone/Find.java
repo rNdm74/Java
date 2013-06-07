@@ -29,6 +29,11 @@ public class Find {
         data = home.csvData.getData();
     }
     
+    // Constructor for unit testing
+    /**
+     *
+     * @param data
+     */
     public Find(ArrayList<Object[]> data){
         this.data = data;
     }
@@ -41,6 +46,7 @@ public class Find {
     public Object[] returnStats(int column){
         this.column = column;
         
+        // Object array that contains all calculations for a specific CSV column
         Object[] items = {
                 ((String)data.get(0)[column]).toUpperCase(),
                 calculate(Methods.MAX),
@@ -57,6 +63,7 @@ public class Find {
     private String calculate(Methods calcs){
         String result;        
                         
+        // string is valid return value else return null
         if (new Validation().number(data.get(1)[column])) {
             result = methodReturnValue(calcs);
         }
@@ -68,6 +75,7 @@ public class Find {
     }
     
     private String methodReturnValue(Methods calcs){
+        // Return method strings
         switch(calcs){
             case MAX:
                 return max();
@@ -106,6 +114,10 @@ public class Find {
         return Double.toString(maxValue);
     }
     
+    /**
+     *
+     * @return calculated min value
+     */
     public String min(){
         double minValue;   
         
@@ -126,6 +138,10 @@ public class Find {
         return Double.toString(minValue);
     }    
     
+    /**
+     *
+     * @return calculated mean value
+     */
     public String mean(){
         double sum = 0;
     
@@ -138,6 +154,10 @@ public class Find {
         return Double.toString(sum / data.size());
     }   
     
+    /**
+     *
+     * @return calculated median value
+     */
     public String median(){       
         double[] values = new double[data.size()];
                 
@@ -156,6 +176,10 @@ public class Find {
         }        
     }   
     
+    /**
+     *
+     * @return calculated mode value
+     */
     public String mode(){
         double maxValue = 0, maxCount = 0;
                 
@@ -180,6 +204,12 @@ public class Find {
         return Double.toString(maxValue);
     }
     
+    /**
+     *
+     * @param max value from array
+     * @param min value from array
+     * @return calculated range from min and max values
+     */
     public String range(String max, String min){
         double maximum = Double.parseDouble(max);
         double minimum = Double.parseDouble(min);

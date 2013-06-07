@@ -3,6 +3,7 @@ package pprogramming3assignmentone;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 /**
@@ -17,33 +18,16 @@ public class Graph extends javax.swing.JPanel{
      */
     public Graph(Home home) {
         this.home = home;
+        
         initComponents();
         
-        list.removeAllItems();
+        initComboBox(home);
         
-        for (Object s: home.csvData.getData().get(0)) {
-            list.addItem(((String)s).toUpperCase());
-        }
-                
-        activity.setLayout(new BorderLayout());
+        initGraph(home);
         
-        drawGraph = new Activity(home);
+        populateGraph(home);
         
-        drawGraph.getData().clear();
-        
-        int pos = list.getSelectedIndex();
-        
-        for (int i = 1; i < home.csvData.getData().size(); i++) {            
-            if (isGraphable((String)home.csvData.getData().get(i)[pos])) {
-                String value = (String)home.csvData.getData().get(i)[pos];
-            
-                drawGraph.getData().add(Integer.parseInt(value));
-            }            
-        }
-        
-        drawGraph.setBackground(Color.WHITE);
-        
-        activity.add(drawGraph, BorderLayout.CENTER);
+        addGraph();
     }
     
     private boolean isGraphable(String s){
@@ -55,7 +39,92 @@ public class Graph extends javax.swing.JPanel{
             return false;
         }
     }
+    
+    private boolean isValid(Object input){ 
+       try  
+       {  
+          Double.parseDouble((String) input);  
+          return true;  
+       }  
+       catch( Exception e)  
+       {  
+          return false;  
+       }  
+    }
 
+    private double findMax(int column, Worker file){
+        double maxValue = 0;
+        
+        for (int row = 1; row < file.getData().size(); row++) {
+            Object item = file.getData().get(row)[column];
+            
+            if (isValid(item)) {
+                double temp = Double.parseDouble((String)item);
+                if (temp > maxValue) {
+                    maxValue = temp;
+                }
+            } 
+            else{
+                return 0;
+            }
+        }
+      
+        return maxValue;
+    }
+    
+    private void initComboBox(Home home) {
+        list.removeAllItems();
+        
+        for (Object s: home.csvData.getData().get(0)) {
+            list.addItem(((String)s).toUpperCase());
+        }
+    }
+
+    private void initGraph(Home home) {
+        drawGraph = new Activity(home);        
+        drawGraph.getData().clear();        
+        drawGraph.setBackground(Color.WHITE);
+    }
+
+    private void populateGraph(Home home) throws NumberFormatException {
+        int pos = list.getSelectedIndex();
+        
+        for (int i = 1; i < home.csvData.getData().size(); i++) {            
+            if (isGraphable((String)home.csvData.getData().get(i)[pos])) {
+                String value = (String)home.csvData.getData().get(i)[pos];
+            
+                drawGraph.getData().add(Integer.parseInt(value));
+            }            
+        }
+    }
+
+    private void addGraph() {
+        activity.setLayout(new BorderLayout());
+        activity.add(drawGraph, BorderLayout.CENTER);
+    }
+
+    private void drawGraph(ActionEvent evt) throws NumberFormatException {
+        drawGraph.getData().clear();
+        
+        int pos = ((JComboBox)evt.getSource()).getSelectedIndex();
+        
+        double max = findMax(pos, home.csvData);
+        
+        drawGraph.setMaxValue((int)Math.round(max));
+        
+        if (isValid((String)home.csvData.getData().get(1)[pos])) {
+            
+            for (int i = 1; i < home.csvData.getData().size(); i++) { 
+                    Double value = Double.parseDouble((String)home.csvData.getData().get(i)[pos]);                        
+                    int newValue = (int)Math.round(value);
+                    //System.out.println(newValue);
+                    drawGraph.getData().add(newValue);                           
+            }
+        }
+        
+        repaint();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,72 +181,15 @@ public class Graph extends javax.swing.JPanel{
     }// </editor-fold>//GEN-END:initComponents
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
-        if (drawGraph != null) {
-            drawGraph.getData().clear();
-            
-            int pos = ((JComboBox)evt.getSource()).getSelectedIndex();
-            
-            double max = findMax(pos, home.csvData);
-            
-            drawGraph.setMaxValue((int)Math.round(max));
-            
-            if (isValid((String)home.csvData.getData().get(1)[pos])) {
-                
-                for (int i = 1; i < home.csvData.getData().size(); i++) { 
-                        Double value = Double.parseDouble((String)home.csvData.getData().get(i)[pos]);                        
-                        int newValue = (int)Math.round(value);
-                        //System.out.println(newValue);
-                        drawGraph.getData().add(newValue);                           
-                }
-            }
-            
-            repaint(); 
-        }
-        
+        if (drawGraph != null) {            
+            drawGraph(evt); 
+        }        
     }//GEN-LAST:event_listActionPerformed
 
-    private double findMax(int column, Worker file){
-        double maxValue = 0;
-        
-        for (int row = 1; row < file.getData().size(); row++) {
-            Object item = file.getData().get(row)[column];
-            
-            if (isValid(item)) {
-                double temp = Double.parseDouble((String)item);
-                if (temp > maxValue) {
-                    maxValue = temp;
-                }
-            } 
-            else{
-                return 0;
-            }
-        }
-      
-        return maxValue;
-    }
-    
-    /**
-     *
-     * @param input argument is used to test if string is double
-     * @return true / false
-     */
-    public boolean isValid(Object input){ 
-       try  
-       {  
-          Double.parseDouble((String) input);  
-          return true;  
-       }  
-       catch( Exception e)  
-       {  
-          return false;  
-       }  
-    }
-    
     private Home home;
     private Activity drawGraph;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel activity;
     private javax.swing.JComboBox list;
     // End of variables declaration//GEN-END:variables
-    
 }
