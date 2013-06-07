@@ -1,5 +1,5 @@
 
-package pprogramming3assignmentone;
+package xml;
 
 import java.util.Comparator;
 
@@ -7,7 +7,7 @@ import java.util.Comparator;
  *
  * @author Adam Charlton
  */
-public class CompareString implements Comparator<String> {
+public class CompareTexture implements Comparator<Texture> {
     
     /**
      *
@@ -16,8 +16,8 @@ public class CompareString implements Comparator<String> {
      * @return returns either a zero or the > of the two variables
      */
     @Override
-    public int compare(String o1, String o2) {
+    public int compare(Texture o1, Texture o2) {
         return (o1 !=  null && o2 != null) ? 
-                o1.compareToIgnoreCase(o2) : 0;
+                o1.getID() - o2.getID() : 0;
     }
 }

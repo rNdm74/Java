@@ -23,9 +23,13 @@ public class ReadXML {
     
     private ArrayList<Texture> imageData;
     
-    public ReadXML(){       
+    private String[] items;
+    private String[] images = {"name","x","y","width","height"};
+    private String[] fonts = {"letter","x","y","width","height", "id"};
+    
+    public ReadXML(String file){       
         try {
-            File file = new File("atlas.xml");
+            File xml = new File(file);
             
             imageData = new ArrayList<>();            
                     
@@ -33,33 +37,29 @@ public class ReadXML {
             
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             
-            document = documentBuilder.parse(file);
+            document = documentBuilder.parse(xml);
             
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             System.out.println(ex);
         }
     }
     
-    public ArrayList<Texture> getImageData(){        
-        for (int i = 0; i < document.getElementsByTagName("SubTexture").getLength(); i++) {
-            NamedNodeMap namedNodeMap = document.getElementsByTagName("SubTexture").item(i).getAttributes();
+    public ArrayList<Texture> getImageData(String tagName){   
+        items = (tagName.equals("char"))? fonts : images;
+        for (int i = 0; i < document.getElementsByTagName(tagName).getLength(); i++) {
+            NamedNodeMap namedNodeMap = document.getElementsByTagName(tagName).item(i).getAttributes();
             imageData.add(new Texture(values(namedNodeMap)));
         }          
         return imageData;
     }    
     
     private Object[] values(NamedNodeMap namedNodeMap) throws DOMException {
-        Object[] values = {
-            namedNodeMap.getNamedItem("name").getNodeValue(),
-            namedNodeMap.getNamedItem("x").getNodeValue(),
-            namedNodeMap.getNamedItem("y").getNodeValue(),
-            namedNodeMap.getNamedItem("width").getNodeValue(),
-            namedNodeMap.getNamedItem("height").getNodeValue(),
-//            namedNodeMap.getNamedItem("frameX").getNodeValue(),
-//            namedNodeMap.getNamedItem("frameY").getNodeValue(),
-//            namedNodeMap.getNamedItem("frameWidth").getNodeValue(),
-//            namedNodeMap.getNamedItem("frameHeight").getNodeValue()
-        };        
+        Object[] values = new Object[items.length];
+        
+        for (int item = 0; item < values.length; item++) {
+            values[item] = namedNodeMap.getNamedItem(items[item]).getNodeValue();
+        }
+        
         return values;
     }
 }
