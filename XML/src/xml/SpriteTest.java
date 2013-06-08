@@ -82,6 +82,8 @@ public class SpriteTest extends JApplet
     
     private int q = 0;
     
+    private int w ;
+    
     private FontManager fm;
     
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
@@ -136,9 +138,9 @@ public class SpriteTest extends JApplet
             
             oneTimesTable.get(q).updateEquation(fm);   
             
-            int w = oneTimesTable.get(q).getEquationSize().width;
+            w = oneTimesTable.get(q).getEquationSize().width;
             
-            oneTimesTable.get(q).setEquationLocation(new Point(1920/2 - w/2, 999 - 140));
+            oneTimesTable.get(q).setEquationLocation(new Point(dim.width/2 - w/2, dim.height - 140));
             
             //System.out.println(oneTimesTable.get(0).getEquation());
         
@@ -351,9 +353,9 @@ public class SpriteTest extends JApplet
                 updateScore();
                 
                 hit = true;
-                numbersX = 1920f;
+                numbersX = dim.width;
                 q = new Random().nextInt(oneTimesTable.size());
-                numbersY = new Random().nextInt(999-numbers.get(0).getHeight(this)); 
+                numbersY = new Random().nextInt(dim.height-numbers.get(0).getHeight(this)); 
                 hit = false;
             } 
                         
@@ -416,7 +418,8 @@ public class SpriteTest extends JApplet
     }
 
     private void updateQuestion(Graphics2D g) {
-        oneTimesTable.get(q).setEquationLocation(new Point(1920/2, 999 - 140));
+        //Dimension d = //oneTimesTable.get(q).getEquationSize();
+        oneTimesTable.get(q).setEquationLocation(new Point(dim.width/2 - w/2, dim.height - 140));
         oneTimesTable.get(q).updateEquation(fm);        
         oneTimesTable.get(q).drawEquation(g);
     }
