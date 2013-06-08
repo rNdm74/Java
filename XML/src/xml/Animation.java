@@ -1,6 +1,7 @@
 
 package xml;
 
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  * @author rNdm
  */
 class Animation {
+    AudioClip sound;
+
     ArrayList<BufferedImage> frames;
     
     BufferedImage sprite;
@@ -18,8 +21,13 @@ class Animation {
     private long previousTime, speed;
     private int frameAtPause,  currentFrame;
     
-    public Animation(ArrayList<BufferedImage> frames){
+    public Animation(ArrayList<BufferedImage> frames, AudioClip sound){
+        this.sound = sound;
         this.frames = frames;
+    }
+    
+    public void playSound(){
+       
     }
     
     public void setSpeed(long speed){
@@ -29,15 +37,20 @@ class Animation {
     public void update(long time){
         if(running){
             if (time - previousTime >= speed) {
-                // update animation
+                // update animation                
                 currentFrame++;
                 try{
                     sprite = frames.get(currentFrame);
                     
                 }catch(IndexOutOfBoundsException e){
+                    
                     currentFrame = 0;
                     sprite = frames.get(currentFrame);                    
-                }                        
+                }    
+                
+                if (currentFrame == 4) {
+                    sound.play();
+                }
                 previousTime = time;
             }
         }

@@ -1,6 +1,7 @@
 
 package xml;
 
+import java.applet.AudioClip;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -76,6 +77,10 @@ public class SpriteTest extends JApplet
     
     private Desyrel[] scoreLabel;
     
+    private Desyrel[] timesTableLabel;
+    
+    private Desyrel[] levelLabel;
+    
     private ArrayList<Desyrel> score = new ArrayList<>();
     
     private int playerScore = 1000;
@@ -85,15 +90,28 @@ public class SpriteTest extends JApplet
     private int w ;
     
     private FontManager fm;
+    AudioClip bird;
+    AudioClip music;
+    AudioClip eat;
     
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
     public void init() {
+        
+        bird = getAudioClip(getDocumentBase(), "wing_flap.wav");
+        music = getAudioClip(getDocumentBase(), "music.wav");
+        eat = getAudioClip(getDocumentBase(), "eat.wav");
+        
         setFocusable(true);
         requestFocusInWindow();
+                
+        Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
         
-        dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(dim.width, dim.height);
+        setSize(res.width, res.height);
+        
+        dim = getContentPane().getSize();
+        
+        System.out.println(dim);
         
         oneTimesTable = new ReadXML("tables.xml").getTableData("One");
         fonts = new ReadXML("desyrel.xml").getImageData("char");
@@ -119,7 +137,7 @@ public class SpriteTest extends JApplet
         bg = new SpriteSheet(background);
         dl = new SpriteSheet(desyrel);
         
-        backdrop = bg.getSprite(0, 0, 5955, dim.height);
+        backdrop = bg.getSprite(0, 0, 5955, res.height - 81);
         
         gameFonts = createSprites(dl, fonts);
                        
@@ -127,7 +145,7 @@ public class SpriteTest extends JApplet
             numbers.add(i);
         }
         
-        animator = new Animation(createSprites(ss, sprites));
+        animator = new Animation(createSprites(ss, sprites), bird);
         animator.setSpeed(90);
         animator.start();
         
@@ -142,7 +160,20 @@ public class SpriteTest extends JApplet
             
             oneTimesTable.get(q).setEquationLocation(new Point(dim.width/2 - w/2, dim.height - 140));
             
-            //System.out.println(oneTimesTable.get(0).getEquation());
+            levelLabel = new Desyrel[]{
+                fm.getLetter("O"),
+                fm.getLetter("n"),
+                fm.getLetter("e")                
+            };
+            
+            timesTableLabel = new Desyrel[]{
+                fm.getLetter("L"),
+                fm.getLetter("e"),
+                fm.getLetter("v"),
+                fm.getLetter("e"),
+                fm.getLetter("l"),
+                fm.getLetter(":")
+            };
         
             scoreLabel = new Desyrel[]{
                 fm.getLetter("s"),
@@ -150,9 +181,7 @@ public class SpriteTest extends JApplet
                 fm.getLetter("o"),
                 fm.getLetter("r"),
                 fm.getLetter("e"),
-                fm.getLetter(":")
-                    
-                 
+                fm.getLetter(":")                    
             };
         } catch (IOException ex) {
         }
@@ -166,6 +195,8 @@ public class SpriteTest extends JApplet
         
     @Override
     public void start() {
+        //eat.play();
+        music.loop();
         this.requestFocusInWindow();
     }
     
@@ -176,7 +207,8 @@ public class SpriteTest extends JApplet
     public void destroy(){}
     
     @Override
-    public void paint(Graphics g){         
+    public void paint(Graphics g){  
+        dim = getContentPane().getSize();
         doubleBufferedImage = createImage(getWidth(), getHeight());
         doubleBufferedGraphics = doubleBufferedImage.getGraphics();
         paintComponent((Graphics2D) doubleBufferedGraphics);
@@ -189,6 +221,7 @@ public class SpriteTest extends JApplet
         
         updateBird(g);
         
+        updateTimesTableLabels(g);
         updateScoreLabel(g);
         updateQuestion(g);
         
@@ -350,6 +383,8 @@ public class SpriteTest extends JApplet
                 
                 playerScore += 100;
                 
+                eat.play();
+                
                 updateScore();
                 
                 hit = true;
@@ -385,6 +420,20 @@ public class SpriteTest extends JApplet
                     );
                     break;            
             }
+        }
+    }
+    
+    private void updateTimesTableLabels(Graphics2D g){
+        for (int i = 0; i < levelLabel.length; i++) {
+            levelLabel[i].update();
+            levelLabel[i].setCentre(new Point((dim.width - 150) + (50*i), 50));
+            levelLabel[i].draw(g);
+        }
+        
+        for (int i = 0; i < timesTableLabel.length; i++) {
+            timesTableLabel[i].update();
+            timesTableLabel[i].setCentre(new Point((dim.width - 450) + (40*i), 50));
+            timesTableLabel[i].draw(g);
         }
     }
     
@@ -496,7 +545,7 @@ public class SpriteTest extends JApplet
 
     @Override
     public void mouseDragged(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mousePointer = me.getPoint();
     }
 
     @Override
