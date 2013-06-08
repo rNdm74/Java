@@ -13,14 +13,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Vector;
-import javax.sound.midi.Soundbank;
 import javax.swing.JApplet;
 
 /**
@@ -29,15 +26,21 @@ import javax.swing.JApplet;
  */
 public class SpriteTest extends JApplet 
     implements KeyListener, MouseListener, MouseMotionListener{
-    
+
     private enum Direction{
-        LEFT,RIGHT
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     }
+    
+    private ArrayList<BufferedImage> gameFonts;
     
     private static ArrayList<Texture> sprites;
     private static ArrayList<Texture> fonts;
+    private static ArrayList<Equation> oneTimesTable;
     
-    private ArrayList<BufferedImage> gameFonts;
+    
     
     private Image backdrop;
     private ArrayList<Image> numbers = new ArrayList<>();
@@ -48,18 +51,11 @@ public class SpriteTest extends JApplet
     
     private Animation animator;
         
-    private Point speed = new Point(0, 0);
-    private Point velocity = new Point((int)0.01f, (int)0.01f);
-    
-    private Point birdPosition = new Point(0, 0);
-    private Point2D birdPoint;
-    
-    
-    private Point2D mousePointer = new Point();
+    private Point speed = new Point();    
+    private Point birdCenter = new Point();
+    private Point birdPosition = new Point();
+    private Point mousePointer = new Point();
        
-    
-    private float x = 0;
-    private float y = 0;
     
     private float backgroundX = 0f;
     private float backgroundY = 0f;
@@ -75,10 +71,20 @@ public class SpriteTest extends JApplet
     
     private Dimension dim;
     
-    /**
-     * Initialization method that will be called after the applet is loaded into
-     * the browser.
-     */
+    private Image doubleBufferedImage;        
+    private Graphics doubleBufferedGraphics;
+    
+    private Desyrel[] scoreLabel;
+    
+    private ArrayList<Desyrel> score = new ArrayList<>();
+    
+    private int playerScore = 1000;
+    
+    private int q = 0;
+    
+    private FontManager fm;
+    
+    //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
     public void init() {
         setFocusable(true);
@@ -87,8 +93,11 @@ public class SpriteTest extends JApplet
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(dim.width, dim.height);
         
+        oneTimesTable = new ReadXML("tables.xml").getTableData("One");
         fonts = new ReadXML("desyrel.xml").getImageData("char");
         sprites = new ReadXML("atlas.xml").getImageData("SubTexture");
+        
+        
         
         Collections.sort(fonts, new CompareTexture());
         
@@ -120,9 +129,34 @@ public class SpriteTest extends JApplet
         animator.setSpeed(90);
         animator.start();
         
-        x = 200;
-        y = getHeight() / 2;
+        try {
+            fm = new FontManager(fonts);
+            
+            q = new Random().nextInt(oneTimesTable.size());
+            
+            oneTimesTable.get(q).updateEquation(fm);   
+            
+            int w = oneTimesTable.get(q).getEquationSize().width;
+            
+            oneTimesTable.get(q).setEquationLocation(new Point(1920/2 - w/2, 999 - 140));
+            
+            //System.out.println(oneTimesTable.get(0).getEquation());
         
+            scoreLabel = new Desyrel[]{
+                fm.getLetter("s"),
+                fm.getLetter("c"),
+                fm.getLetter("o"),
+                fm.getLetter("r"),
+                fm.getLetter("e"),
+                fm.getLetter(":")
+                    
+                 
+            };
+        } catch (IOException ex) {
+        }
+        
+        updateScore();
+                
         addKeyListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -133,150 +167,35 @@ public class SpriteTest extends JApplet
         this.requestFocusInWindow();
     }
     
-    Image dbImage;        
-    Graphics dpg;
-        
+    @Override
+    public void stop(){}
+    
+    @Override
+    public void destroy(){}
+    
     @Override
     public void paint(Graphics g){         
-        dbImage = createImage(getWidth(), getHeight());
-        dpg = dbImage.getGraphics();
-        paintComponent((Graphics2D) dpg);
-        g.drawImage(dbImage, 0,0,null);
-    }
-    
-    public void paintComponent(Graphics2D g){
+        doubleBufferedImage = createImage(getWidth(), getHeight());
+        doubleBufferedGraphics = doubleBufferedImage.getGraphics();
+        paintComponent((Graphics2D) doubleBufferedGraphics);
+        g.drawImage(doubleBufferedImage, 0,0,null);
+    }    
+    public void paintComponent(Graphics2D g){        
+        updateBackground(g);
         
-        g.drawImage(backdrop, 
-                (int)backgroundX,
-                (int)backgroundY,
-                backdrop.getWidth(this), 
-                backdrop.getHeight(this), 
-                null
-        );
+        updateAnswer(g);
         
-        g.drawImage(backdrop, 
-                (int)backgroundX + 5955,
-                (int)backgroundY,
-                backdrop.getWidth(this), 
-                backdrop.getHeight(this), 
-                null
-        );
+        updateBird(g);
         
-        if (!hit) {
-            for (int i = 0; i < numbers.size(); i++) {            
-                g.drawImage(numbers.get(i), 
-                    (int)numbersX +(50*i), 
-                    (int)numbersY, 
-                    numbers.get(i).getWidth(this), 
-                    numbers.get(i).getHeight(this), 
-                    null
-                );     
-            }
-        }
+        updateScoreLabel(g);
+        updateQuestion(g);
         
-        
-                 
-        
-        if (animator != null) {
-            animator.update(System.currentTimeMillis());
-            
-            birdPosition.x += speed.x;
-            birdPosition.y += speed.y;
-            
-            System.out.println(mousePointer.distance(birdPosition));
-            
-            if (birdPosition.x < mousePointer.getX()) {
-                speed.x = 5;
-            }
-            
-            if (birdPosition.x > mousePointer.getX()) {
-                speed.x = -5;
-            }
-            
-            if (birdPosition.y < mousePointer.getY()) {
-                speed.y = 5;
-            }
-            
-            if (birdPosition.y > mousePointer.getY()) {
-                speed.y = -5;
-            }
-            
-            //{
-            //    speed = new Point(0, 0);
-            //}
-//            clipping = new Rectangle(
-//                    (birdPosition.x + (animator.sprite.getWidth() / 2)) - 20, 
-//                    (birdPosition.y + (animator.sprite.getHeight() / 2)) - 20,
-//                    40,40
-//            );
-            
-            clipping = new Rectangle(
-                    (birdPosition.x + 20), 
-                    (birdPosition.y + 20),
-                    animator.sprite.getWidth() - 20,
-                    animator.sprite.getHeight() - 20
-            );
-            
-            if (clipping.contains(new Point(
-                    (int)numbersX + (numbers.get(0).getWidth(this) / 2),
-                    (int)numbersY + (numbers.get(0).getWidth(this) / 2)
-            ))) {
-                //System.out.println(hit);
-                hit = true;
-                numbersX = 1920f;
-                numbersY = new Random().nextInt(999-numbers.get(0).getHeight(this)); 
-                hit = false;
-            } 
-            
-            //System.out.println(getContentPane().getHeight());
-            
-            
-            switch(d){
-                case LEFT:
-                    g.drawImage(animator.sprite, 
-                        birdPosition.x + animator.sprite.getWidth() , 
-                        birdPosition.y, 
-                        -animator.sprite.getWidth(), 
-                        animator.sprite.getHeight(),                    
-                        null
-                    );
-                    break;
-                case RIGHT:
-                    g.drawImage(animator.sprite, 
-                        birdPosition.x, 
-                        birdPosition.y, 
-                        animator.sprite.getWidth(), 
-                        animator.sprite.getHeight(),                    
-                        null
-                    );
-                    break;            
-            }
-            
-            
-            
-            g.dispose();
-
-            
-            if (numbersX > -10) {
-                numbersX -= 3f;
-            }
-            else{
-                numbersX = 1920f;
-            }
-            
-            
-            if (backgroundX > 5955 * -1) {
-                backgroundX -= 0.5f * 2f;
-            }
-            else{
-                backgroundX = 0;
-            }
-        }
+        g.dispose();
         repaint();
-    }
-   
-    // TODO overwrite start(), stop() and destroy() methods
+    }   
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Applet Methods ">
     private ArrayList<BufferedImage> createSprites(SpriteSheet spriteSheet, ArrayList<Texture> textures) {
         ArrayList<BufferedImage> images = new ArrayList<>();
         for (int i = 0; i < textures.size() - 1; i++) {
@@ -300,7 +219,7 @@ public class SpriteTest extends JApplet
             }
         }
         return images;
-    }
+    }   
     
     private boolean isInteger(String s){
         try{
@@ -309,11 +228,203 @@ public class SpriteTest extends JApplet
         }catch(Exception e){
             return false;
         }
+    }   
+    
+    private void updateBackground(Graphics2D g) {
+        if (backgroundX > 5955 * -1) {
+            backgroundX -= 0.5f * 2f;
+        }
+        else{
+            backgroundX = 0;
+        }
+        
+        g.drawImage(backdrop, 
+                (int)backgroundX,
+                (int)backgroundY,
+                backdrop.getWidth(this), 
+                backdrop.getHeight(this), 
+                null
+        );
+        
+        g.drawImage(backdrop, 
+                (int)backgroundX + 5955,
+                (int)backgroundY,
+                backdrop.getWidth(this), 
+                backdrop.getHeight(this), 
+                null
+        );
     }
     
-    @Override
-    public void keyTyped(KeyEvent ke) {
+    private void updateAnswer(Graphics2D g) {
+        if (numbersX > -10) {
+            numbersX -= 3f;
+        }
+        else{
+            numbersX = 1920f;
+        }
+        
+        if (!hit) {
+            oneTimesTable.get(q).setAnswerLocation(new Point((int)numbersX, (int)numbersY));
+            oneTimesTable.get(q).updateAnswer(fm);        
+            oneTimesTable.get(q).drawAnswer(g);
+        }
     }
+    
+    private void updateBird(Graphics2D g) {
+        if (animator != null) {
+            animator.update(System.currentTimeMillis());
+            
+            clipping = new Rectangle(
+                    (birdPosition.x + 20), 
+                    (birdPosition.y + 20),
+                    animator.sprite.getWidth() - 20,
+                    animator.sprite.getHeight() - 20
+            );
+            
+            birdCenter.x += speed.x;
+            birdCenter.y += speed.y;
+                                    
+            Rectangle centre = new Rectangle(
+                    birdCenter.x - 10,
+                    birdCenter.y - 10,
+                    20,20
+            );
+            
+            if (!centre.contains(mousePointer)) {
+                if (birdCenter.x < mousePointer.x) {                    
+                    d = Direction.RIGHT;
+                    speed.x = 10;
+                }
+                else{
+                    if (birdCenter.x > mousePointer.x - 20 &&
+                        birdCenter.x < mousePointer.x + 20) {
+                        birdCenter.x = mousePointer.x;
+                    }                    
+                }
+
+                if (birdCenter.x > mousePointer.x) {
+                    d = Direction.LEFT;
+                    speed.x = -10;
+                }
+                else{
+                    if (birdCenter.x > mousePointer.x - 20 &&
+                        birdCenter.x < mousePointer.x + 20) {
+                        birdCenter.x = mousePointer.x;
+                    }                    
+                }
+
+                
+                if (birdCenter.y < mousePointer.y) {
+                    speed.y = 10;
+                }
+                else{
+                    if (birdCenter.y > mousePointer.y - 20 &&
+                        birdCenter.y < mousePointer.y + 20) {
+                        birdCenter.y = mousePointer.y;
+                    }
+                }
+
+                if (birdCenter.y > mousePointer.y) {
+                    speed.y = -10;
+                }
+                else{
+                    if (birdCenter.y > mousePointer.y - 20 &&
+                        birdCenter.y < mousePointer.y + 20) {
+                        birdCenter.y = mousePointer.y;
+                    }
+                }
+                
+            }else{
+                birdCenter = mousePointer;
+                speed.x = 0;
+                speed.y = 0;
+            }
+                        
+            
+            if (clipping.contains(new Point(
+                    (int)numbersX + (numbers.get(0).getWidth(this) / 2),
+                    (int)numbersY + (numbers.get(0).getWidth(this) / 2)
+            ))) {
+                
+                playerScore += 100;
+                
+                updateScore();
+                
+                hit = true;
+                numbersX = 1920f;
+                q = new Random().nextInt(oneTimesTable.size());
+                numbersY = new Random().nextInt(999-numbers.get(0).getHeight(this)); 
+                hit = false;
+            } 
+                        
+            switch(d){
+                case LEFT:
+                    birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2) + animator.sprite.getWidth();
+                    birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
+            
+                    g.drawImage(animator.sprite, 
+                        birdPosition.x, 
+                        birdPosition.y, 
+                        -animator.sprite.getWidth(), 
+                        animator.sprite.getHeight(),                    
+                        null
+                    );
+                    break;
+                case RIGHT:
+                    birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2);
+                    birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
+                    
+                    g.drawImage(animator.sprite, 
+                        birdPosition.x, 
+                        birdPosition.y, 
+                        animator.sprite.getWidth(), 
+                        animator.sprite.getHeight(),                    
+                        null
+                    );
+                    break;            
+            }
+        }
+    }
+    
+    private void updateScoreLabel(Graphics2D g) {
+        for (int i = 0; i < scoreLabel.length; i++) {
+            scoreLabel[i].update();
+            scoreLabel[i].setCentre(new Point(
+                    50 + (30 * i),
+                    50
+            ));
+            
+            scoreLabel[i].draw(g);
+        }
+        
+        for (int i = 0; i < score.size(); i++) {
+            score.get(i).update();
+            score.get(i).setCentre(new Point(300 + (40*i), 50));
+            score.get(i).draw(g);
+        }
+        
+    }
+
+    private void updateScore() {
+        score.clear();
+        String ps = Integer.toString(playerScore);
+
+        for (int i = 0; i < ps.length(); i++) {                
+            score.add(fm.getLetter(Character.toString(ps.charAt(i))));
+            score.get(i).setCentre(new Point(300 + (40*i), 50));
+        }
+    }
+
+    private void updateQuestion(Graphics2D g) {
+        oneTimesTable.get(q).setEquationLocation(new Point(1920/2, 999 - 140));
+        oneTimesTable.get(q).updateEquation(fm);        
+        oneTimesTable.get(q).drawEquation(g);
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" Implements Overrides ">
+    @Override
+    public void keyTyped(KeyEvent ke) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -389,4 +500,5 @@ public class SpriteTest extends JApplet
     public void mouseMoved(MouseEvent me) {
         
     }
+    //</editor-fold>
 }

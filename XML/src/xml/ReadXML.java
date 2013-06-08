@@ -21,17 +21,16 @@ public class ReadXML {
     private DocumentBuilder documentBuilder;
     private Document document;
     
-    private ArrayList<Texture> imageData;
+    
     
     private String[] items;
+    private String[] equation = {"equation","answer"};
     private String[] images = {"name","x","y","width","height"};
     private String[] fonts = {"letter","x","y","width","height", "id"};
     
     public ReadXML(String file){       
         try {
-            File xml = new File(file);
-            
-            imageData = new ArrayList<>();            
+            File xml = new File(file);         
                     
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
             
@@ -43,14 +42,30 @@ public class ReadXML {
             System.out.println(ex);
         }
     }
-    
-    public ArrayList<Texture> getImageData(String tagName){   
-        items = (tagName.equals("char"))? fonts : images;
+    public ArrayList<Equation> getTableData(String tagName){
+        ArrayList<Equation> xmlData = new ArrayList<>();
+        
+        items = equation;
+        
         for (int i = 0; i < document.getElementsByTagName(tagName).getLength(); i++) {
             NamedNodeMap namedNodeMap = document.getElementsByTagName(tagName).item(i).getAttributes();
-            imageData.add(new Texture(values(namedNodeMap)));
-        }          
-        return imageData;
+            xmlData.add(new Equation(values(namedNodeMap)));
+        }     
+        
+        return xmlData;   
+    }
+    
+    public ArrayList<Texture> getImageData(String tagName){  
+        ArrayList<Texture> xmlData = new ArrayList<>();
+        
+        items = (tagName.equals("char"))? fonts : images;
+        
+        for (int i = 0; i < document.getElementsByTagName(tagName).getLength(); i++) {
+            NamedNodeMap namedNodeMap = document.getElementsByTagName(tagName).item(i).getAttributes();
+            xmlData.add(new Texture(values(namedNodeMap)));
+        }     
+        
+        return xmlData;
     }    
     
     private Object[] values(NamedNodeMap namedNodeMap) throws DOMException {

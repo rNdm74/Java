@@ -8,6 +8,6 @@ package pnewspapersubscriber;
  *
  * @author rndm
  */
-public class WeekendSubscriber extends NewspaperSubscriber{
-    
-}
+//public class WeekendSubscriber extends NewspaperSubscriber{
+//    
+//}

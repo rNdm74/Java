@@ -8,10 +8,10 @@ package pnewspapersubscriber;
  *
  * @author rndm
  */
-public class SevenDaySubscriber extends NewspaperSubscriber{
-//    public SevenDaySubscriber(){
-//        
-//    }
-    
-    
-}
+//public class SevenDaySubscriber extends NewspaperSubscriber{
+////    public SevenDaySubscriber(){
+////        
+////    }
+//    
+//    
+//}
