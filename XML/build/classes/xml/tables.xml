@@ -143,16 +143,17 @@
     <Eleven equation="11 x 11" answer="121"></Eleven>
     <Eleven equation="12 x 11" answer="132"></Eleven>
 
-    <Tweleve equation="1 x 12" answer="12"></Tweleve>
-    <Tweleve equation="2 x 12" answer="24"></Tweleve>
-    <Tweleve equation="3 x 12" answer="36"></Tweleve>
-    <Tweleve equation="4 x 12" answer="48"></Tweleve>
-    <Tweleve equation="5 x 12" answer="60"></Tweleve>
-    <Tweleve equation="6 x 12" answer="72"></Tweleve>
-    <Tweleve equation="7 x 12" answer="84"></Tweleve>
-    <Tweleve equation="8 x 12" answer="96"></Tweleve>
-    <Tweleve equation="9 x 12" answer="108"></Tweleve>
-    <Tweleve equation="10 x 12" answer="120"></Tweleve>
-    <Tweleve equation="11 x 12" answer="132"></Tweleve>
-    <Tweleve equation="12 x 12" answer="144"></Tweleve>
+    <Twelve equation="1 x 12" answer="12"></Twelve>
+    <Twelve equation="2 x 12" answer="24"></Twelve>
+    <Twelve equation="3 x 12" answer="36"></Twelve>
+    <Twelve equation="4 x 12" answer="48"></Twelve>
+    <Twelve equation="5 x 12" answer="60"></Twelve>
+    <Twelve equation="6 x 12" answer="72"></Twelve>
+    <Twelve equation="7 x 12" answer="84"></Twelve>
+    <Twelve equation="8 x 12" answer="96"></Twelve>
+    <Twelve equation="9 x 12" answer="108"></Twelve>
+    <Twelve equation="10 x 12" answer="120"></Twelve>
+    <Twelve equation="11 x 12" answer="132"></Twelve>
+    <Twelve equation="12 x 12" answer="144"></Twelve>
+    
 </TimesTables>

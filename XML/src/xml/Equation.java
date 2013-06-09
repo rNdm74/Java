@@ -11,25 +11,25 @@ import java.util.ArrayList;
  * @author rNdm
  */
 public class Equation {
-    private ArrayList<Desyrel> equationLetters = new ArrayList<>();
+    private ArrayList<Desyrel> questionLetters = new ArrayList<>();
     private ArrayList<Desyrel> answerLetters = new ArrayList<>();
     
-    private Point equationLocation = new Point();
-    private Dimension equationSize = new Dimension();
+    private Point questionLocation = new Point();
+    private Dimension questionSize = new Dimension();
     
     private Point answerLocation = new Point();
     private Dimension answerSize = new Dimension();
     
-    private String equation;
+    private String question;
     private String answer;    
     
     public Equation(Object[] values){
-        this.equation = (String) values[0];
+        this.question = (String) values[0];
         this.answer = (String) values[1];
     }
 
-    public String getEquation() {
-        return equation;
+    public String getQuestion() {
+        return question;
     }
 
     public String getAnswer() {
@@ -40,7 +40,6 @@ public class Equation {
         answerLetters.clear();
         for (int i = 0; i < answer.length(); i++) {                
             answerLetters.add(fm.getLetter(Character.toString(answer.charAt(i))));
-            //item.get(i).setCentre(new Point(getLocation().x + (40*i), getLocation().y));
         }
     }
     
@@ -54,33 +53,42 @@ public class Equation {
         }
     }
     
-    public void updateEquation(FontManager fm){  
-        equationLetters.clear();
-        for (int i = 0; i < equation.length(); i++) {                
-            equationLetters.add(fm.getLetter(Character.toString(equation.charAt(i))));
-            //item.get(i).setCentre(new Point(getLocation().x + (40*i), getLocation().y));
+    public Dimension getAnswerSize() {
+        for (int i = 0; i < answerLetters.size(); i++) {
+            if(answerLetters.get(i) != null){
+                answerSize.width+= answerLetters.get(i).getBounds().width;
+            }
+        }
+        answerSize.height = answerLetters.get(0).getBounds().height;
+        return answerSize;
+    }
+    
+    public void updateQuestion(FontManager fm){  
+        questionLetters.clear();
+        
+        for (int i = 0; i < question.length(); i++) {                
+            questionLetters.add(fm.getLetter(Character.toString(question.charAt(i))));
         }
     }
     
-    public void drawEquation(Graphics2D g){
-        for (int i = 0; i < equationLetters.size(); i++) {
-            if(equationLetters.get(i) != null){
-                equationLetters.get(i).update();
-                equationLetters.get(i).setCentre(new Point(getEquationLocation().x + (40*i), getEquationLocation().y));
-                equationLetters.get(i).draw(g);
+    public void drawQuestion(Graphics2D g){
+        for (int i = 0; i < questionLetters.size(); i++) {
+            if(questionLetters.get(i) != null){
+                questionLetters.get(i).update();
+                questionLetters.get(i).setCentre(new Point(getQuestionLocation().x + (40*i), getQuestionLocation().y));
+                questionLetters.get(i).draw(g);
             }            
         }
     }
     
-    public Dimension getEquationSize() {
-        for (int i = 0; i < equationLetters.size(); i++) {
-            if(equationLetters.get(i) != null){
-                equationSize.width+= equationLetters.get(i).getBounds().width;
+    public Dimension getQuestionSize() {
+        for (int i = 0; i < questionLetters.size(); i++) {
+            if(questionLetters.get(i) != null){
+                questionSize.width+= questionLetters.get(i).getBounds().width;
             }
         }
-        equationSize.height = equationLetters.get(0).getBounds().height;
-        System.out.println(equationSize.width);
-        return equationSize;
+        questionSize.height = questionLetters.get(0).getBounds().height;
+        return questionSize;
     }
     
     public Point getAnswerLocation() {
@@ -91,11 +99,11 @@ public class Equation {
         this.answerLocation = location;
     }
 
-    public Point getEquationLocation() {
-        return equationLocation;
+    public Point getQuestionLocation() {
+        return questionLocation;
     }
 
-    public void setEquationLocation(Point location) {
-        this.equationLocation = location;
+    public void setQuestionLocation(Point location) {
+        this.questionLocation = location;
     }
 }
