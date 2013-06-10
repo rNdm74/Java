@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,41 +27,35 @@ import javax.swing.JApplet;
  */
 public class SpriteTest extends JApplet 
     implements KeyListener, MouseListener, MouseMotionListener{
-    private int question;
 
-    private void updateLevelLabels() {
-        for (int timesTable = 0; timesTable < timesTables.size(); timesTable++) {
-            
-            String s = timesTables.get(timesTable).getName();
-            
-            Desyrel[] chars = new Desyrel[s.length()];
-            
-            for (int i = 0; i < s.length(); i++) {                    
-                char c = s.charAt(i);                    
-                chars[i] = fm.getLetter(Character.toString(c));
-            }                
-            
-            levelLabels.add(chars);
-        }
+    private void sleep() {
+//        try { 
+//            //Thread.sleep(500);
+//        } catch (InterruptedException ex) {
+//        }
     }
 
-    private void answersReset() {       
-        
-        updateScore();
-                
-        numbersX = dim.width + 200;
-        
-        if (question == playedQuestions.size()-1) {
-            newLevel.play();
-            question = 0;
-            level++;
-            table = timesTables.get(level);
-            updateLevelLabels();                    
-        }else{
-            q = playedQuestions.get(++question);
+    private void updateGameOver(Graphics2D g) {
+        if (gameEnd) {
+            for (int i = 0; i < gameOver.length; i++) {
+                gameOver[i].update();
+                gameOver[i].setCentre(new Point(
+                        ((contentPaneDimensions.width / 2) - 120) + (40 * i),
+                        contentPaneDimensions.height / 2 - 50
+                ));
+            
+                gameOver[i].draw(g);
+            }             
+            
         }
     }
-
+    
+    private enum Menu{
+        MENU,
+        GAME
+        
+    }
+            
     private enum Direction{
         LEFT,
         RIGHT,
@@ -70,17 +63,67 @@ public class SpriteTest extends JApplet
         DOWN
     }
     
+    private enum Levels{
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        ELEVEN,
+        TWELVE
+    }
+    
+    private int returnLevelNumber(Levels l){
+        switch(l){
+            case ONE:
+                return 1;
+            case TWO:
+                return 2;
+            case THREE:
+                return 3;
+            case FOUR:
+                return 4;
+            case FIVE:
+                return 5;
+            case SIX:
+                return 6;
+            case SEVEN:
+                return 7;
+            case EIGHT:
+                return 8;
+            case NINE:
+                return 9;
+            case TEN:
+                return 10;
+            case ELEVEN:
+                return 11;
+            case TWELVE:
+                return 12;
+            default:
+                return 0;            
+        }        
+    }
+    
+    private int question;
+    
+    
+    
     private ArrayList<BufferedImage> gameFonts;
     
-    private static ArrayList<Texture> sprites;
-    private static ArrayList<Texture> fonts;
-    //private static ArrayList<Equation> oneTimesTable;
+    private ArrayList<Texture> sprites;
+    private ArrayList<Texture> fonts;
     
     private ArrayList<TimesTable> timesTables = new ArrayList<>();
     
     TimesTable table;
     
     private Image backdrop;
+    
     private ArrayList<Image> numbers = new ArrayList<>();
     
     private SpriteSheet ss;
@@ -99,13 +142,12 @@ public class SpriteTest extends JApplet
     private float backgroundY = 0f;
     
     private float numbersX = 1920f;
-    private float numbersY = 540f;
     
     private Rectangle clipping;
     
-    private Direction d = Direction.RIGHT;
+    private Direction birdDirection = Direction.RIGHT;
         
-    private Dimension dim;
+    private Dimension contentPaneDimensions;
     
     private Image doubleBufferedImage;        
     private Graphics doubleBufferedGraphics;
@@ -114,17 +156,22 @@ public class SpriteTest extends JApplet
     
     private Desyrel[] timesTableLabel;
     
+    private Desyrel[] correct;
+    private Desyrel[] tryAgain;
+    private Desyrel[] gameOver;
+    
+    
     private ArrayList<Desyrel[]> levelLabels;
     
     private ArrayList<Desyrel> score = new ArrayList<>();
     
-    private int playerScore = 1000;
+    private int playerScore = 0;
     
-    private int q = 0;
-    private int fq1 = new Random().nextInt(12);
-    private int fq2 = new Random().nextInt(12);
+    private int currentQuestion = 0;
+    private int falseQuestion1;
+    private int falseQuestion2;
     
-    private int w ;
+    private int questionWidth ;
     
     private FontManager fm;
     
@@ -150,12 +197,23 @@ public class SpriteTest extends JApplet
     private Answer falseAnswer1;
     private Answer falseAnswer2;
     
+    boolean answeredCorrect;
+    boolean answeredWrong;
+    boolean gameEnd;
     
     private int level = 0;
+    
+    private long timer = 0;
+    
+    Thread Xeq;
     
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
     public void init() {
+        Xeq = new Thread();  
+        if (Xeq == null) {  
+            Xeq.start();   
+        }
         
         bird = getAudioClip(getDocumentBase(), "wing_flap.wav");
         music = getAudioClip(getDocumentBase(), "music.wav");
@@ -166,34 +224,34 @@ public class SpriteTest extends JApplet
         setFocusable(true);
         requestFocusInWindow();
                 
-        Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-        
+        Dimension res = Toolkit.getDefaultToolkit().getScreenSize();        
         setSize(res.width, res.height);
         
-        dim = getContentPane().getSize();
+        mousePointer = new Point(res.width /2, res.height/2);
+        
+        contentPaneDimensions = getContentPane().getSize();
+        
+         
         
         String[] levels = {
-            "One",
-            "Two",
+            //"One",
+            //"Two",
             "Three",
             "Four",
-            "Five",
+            //"Five",
             "Six",
             "Seven",
             "Eight",
             "Nine",
-            "Ten",
-            "Eleven",
-            "Twelve"                        
+            //"Ten",
+            //"Eleven",
+            //"Twelve"                        
         };
         
         for (String s: levels) {
             timesTables.add(new TimesTable(s));
         }
         
-        //System.out.println(timesTables.get(10).getTimesTable());
-        
-        //oneTimesTable = new ReadXML("tables.xml").getTableData("One");
         fonts = new ReadXML("desyrel.xml").getImageData("char");
         sprites = new ReadXML("atlas.xml").getImageData("SubTexture");
                         
@@ -239,32 +297,61 @@ public class SpriteTest extends JApplet
         try {
             fm = new FontManager(fonts);
             
-            q = playedQuestions.get(question);
+            currentQuestion = playedQuestions.get(question);
+                                    
+            table.getTimesTable().get(currentQuestion).updateQuestion(fm);   
             
+            questionWidth = table.getTimesTable().get(currentQuestion).getQuestionSize().width;
             
-            
-            table.getTimesTable().get(q).updateQuestion(fm);   
-            
-            w = table.getTimesTable().get(q).getQuestionSize().width;
-            
-            table.getTimesTable().get(q).setQuestionLocation(new Point(dim.width/2 - w/2, dim.height - 100));
+            table.getTimesTable().get(currentQuestion).setQuestionLocation(new Point(contentPaneDimensions.width/2 - questionWidth/2, contentPaneDimensions.height - 100));
             
             levelLabels = new ArrayList<>();
             
             updateLevelLabels();
             
-//            levelLabels.add(new Desyrel[]{
-//                fm.getLetter("O"),
-//                fm.getLetter("n"),
-//                fm.getLetter("e")                
-//            });
+            correct = new Desyrel[]{
+                fm.getLetter("C"),
+                fm.getLetter("O"),
+                fm.getLetter("R"),
+                fm.getLetter("R"),
+                fm.getLetter("E"),
+                fm.getLetter("C"),
+                fm.getLetter("T")
+            };
             
+            tryAgain = new Desyrel[]{
+                fm.getLetter("T"),
+                fm.getLetter("R"),
+                fm.getLetter("Y"),
+                fm.getLetter("A"),
+                fm.getLetter("G"),
+                fm.getLetter("A"),
+                fm.getLetter("I"),
+                fm.getLetter("N")
+            };
+            
+            gameOver = new Desyrel[]{
+                fm.getLetter("G"),
+                fm.getLetter("A"),
+                fm.getLetter("M"),
+                fm.getLetter("E"),
+                fm.getLetter("O"),
+                fm.getLetter("V"),
+                fm.getLetter("E"),
+                fm.getLetter("R")
+            };
+                        
             timesTableLabel = new Desyrel[]{
-                fm.getLetter("L"),
+                fm.getLetter("T"),
+                fm.getLetter("i"),
+                fm.getLetter("m"),
                 fm.getLetter("e"),
-                fm.getLetter("v"),
-                fm.getLetter("e"),
+                fm.getLetter("s"),
+                fm.getLetter("T"),
+                fm.getLetter("a"),
+                fm.getLetter("b"),
                 fm.getLetter("l"),
+                fm.getLetter("e"),
                 fm.getLetter(":")
             };
         
@@ -278,26 +365,25 @@ public class SpriteTest extends JApplet
             };
         } catch (IOException ex) {
         }
-        
-        //System.out.println(playedQuestions.get(0) + 1);
-        
-        
-        for (int i: playedQuestions) {
-            //System.out.println(i+1);
-        }
-        
-        updateScore();
                 
+        updateScore();
+            
+        randomizeTimeTableQuestions();
+        
         addKeyListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
+        
+       
     }
         
     @Override
     public void start() {
         //eat.play();
-        music.loop();
+        //music.loop();
         this.requestFocusInWindow();
+        
+        
     }
     
     @Override
@@ -312,19 +398,15 @@ public class SpriteTest extends JApplet
     
     @Override
     public void paint(Graphics g){  
-        dim = getContentPane().getSize();
+        contentPaneDimensions = getContentPane().getSize();
         
         gameContentArea.y = 200;
-        gameContentArea.width = dim.width;
-        gameContentArea.height = dim.height - 200;
-        
-        System.out.println(gameContentArea.height);
+        gameContentArea.width = contentPaneDimensions.width;
+        gameContentArea.height = contentPaneDimensions.height - 200;
         
         top.y = gameContentArea.y;
         center.y = gameContentArea.y + gameContentArea.height / 3;
         bottom.y = gameContentArea.height;
-        
-        
         
         doubleBufferedImage = createImage(getWidth(), getHeight());
         doubleBufferedGraphics = doubleBufferedImage.getGraphics();
@@ -335,14 +417,21 @@ public class SpriteTest extends JApplet
         
         updateBackground(g);
         
-        updateAnswer(g);
+        if (!gameEnd) {
+            updateAnswer(g);
         
-        updateBird(g);
+            updateBird(g);
+
+            updateTimesTableLabels(g);
+            updateScoreLabel(g);
+            updateQuestion(g);
+            updateCorrect(g);
+            updateTryAgain(g);
+        }
         
-        updateTimesTableLabels(g);
-        updateScoreLabel(g);
-        updateQuestion(g);
-                        
+        
+        updateGameOver(g);
+        
         g.dispose();
         repaint();
     }   
@@ -381,8 +470,73 @@ public class SpriteTest extends JApplet
         }catch(Exception e){
             return false;
         }
-    }   
+    }  
+        
+    private void answersReset(String answered) {   
+                
+        numbersX = contentPaneDimensions.width + 200;
+        
+        if (question == playedQuestions.size() - 1) {
+            newLevel.play();
+            if (playerScore > 1000) {
+                // progress to next level
+                question = 0;
+                level++;
+                table = timesTables.get(level);
+                updateLevelLabels();
+            }
+            else{
+                gameEnd = true;
+                
+                // reset game to 3 times table
+                playerScore = 0;
+                question = 0;
+                currentQuestion = 0;
+                playedQuestions.clear();
+                
+                while(playedQuestions.size() != table.getTimesTable().size()) {
+                    int questionNumber = new Random().nextInt(table.getTimesTable().size());              
+                
+                    if (!playedQuestions.contains(questionNumber)) {
+                        playedQuestions.add(questionNumber);
+                    }
+                }
+            }                                
+        }else{
+            // if answer is correct move to next question
+            if (answered.equals("correct")) {
+                currentQuestion = playedQuestions.get(++question);
+            }            
+        }
+        
+        updateScore();
+    }
     
+    
+    private void updateLevelLabels() {
+        for (int timesTable = 0; timesTable < timesTables.size(); timesTable++) {
+            
+            String s = "";
+            
+            String tableName = timesTables.get(timesTable).getName();
+                        
+            for (int i = 0; i < Levels.values().length; i++) {
+                if(tableName.equalsIgnoreCase(Levels.values()[i].toString())){
+                    s = Integer.toString(returnLevelNumber(Levels.values()[i]));
+                }              
+            }
+            
+            Desyrel[] chars = new Desyrel[s.length()];
+            
+            for (int i = 0; i < s.length(); i++) {                    
+                char c = s.charAt(i);                    
+                chars[i] = fm.getLetter(Character.toString(c));
+            }                
+            
+            levelLabels.add(chars);
+        }
+    }
+
     private void updateBackground(Graphics2D g) {
         if (backgroundX > 5955 * -1) {
             backgroundX -= 0.5f * 2f;
@@ -413,31 +567,37 @@ public class SpriteTest extends JApplet
             numbersX -= 3f;
         }
         else{
-            numbersX = dim.width +200;
+            numbersX = contentPaneDimensions.width +200;
+        }
+        
+        if (numbersX < contentPaneDimensions.width) {
+            answeredCorrect = false;
+            answeredWrong = false;
         }
         
         correctAnswerPoint.x = (int)numbersX;
         falseAnswer1Point.x = (int)numbersX;
         falseAnswer2Point.x = (int)numbersX;
         
-        correctAnswer = new Answer(table, q, fm);
+        correctAnswer = new Answer(table, currentQuestion, fm);
         correctAnswer.setLocation(correctAnswerPoint);
         correctAnswer.update(g);
         
-        falseAnswer1 = new Answer(table, fq1, fm);
+        falseAnswer1 = new Answer(table, falseQuestion1, fm);
         falseAnswer1.setLocation(falseAnswer1Point);
         falseAnswer1.update(g);
         
-        falseAnswer2 = new Answer(table, fq2, fm);
+        falseAnswer2 = new Answer(table, falseQuestion2, fm);
         falseAnswer2.setLocation(falseAnswer2Point);
         falseAnswer2.update(g); 
     }
     
     private void updateBird(Graphics2D g) {
+        
         if (animator != null) {
             animator.update(System.currentTimeMillis());
             
-            switch(d){
+            switch(birdDirection){
                 case LEFT:
                     clipping = new Rectangle(
                         birdCenter.x - 80, 
@@ -472,7 +632,7 @@ public class SpriteTest extends JApplet
             
             if (!centre.contains(mousePointer)) {
                 if (birdCenter.x < mousePointer.x) {                    
-                    d = Direction.RIGHT;
+                    birdDirection = Direction.RIGHT;
                     speed.x = 10;
                 }
                 else{
@@ -483,7 +643,7 @@ public class SpriteTest extends JApplet
                 }
 
                 if (birdCenter.x > mousePointer.x) {
-                    d = Direction.LEFT;
+                    birdDirection = Direction.LEFT;
                     speed.x = -10;
                 }
                 else{
@@ -521,52 +681,62 @@ public class SpriteTest extends JApplet
             }
                   
             if (clipping.intersects(correctAnswer.clipping)) {
+                sleep();
+                answeredCorrect = true;
                 correctAnswer.setIsHit(true);
                 
                 playerScore += 100;
         
                 eat.play();
                 
-                answersReset();
+                answersReset("correct");
                 
-                correctAnswerPoint = top;
+                randomizeQuestions();
+                
+                randomizeTimeTableQuestions();
                 
                 correctAnswer.setIsHit(false);
             }
             
             if (clipping.intersects(falseAnswer1.clipping)) {
+                sleep();
+                answeredWrong = true;
                 falseAnswer1.setIsHit(true);
                 
                 playerScore -= 50;
                 
                 wrong.play();
+                                                
+                answersReset("wrong");
                 
-                answersReset();
+                randomizeQuestions();
                 
-                falseAnswer1Point = center;
+                randomizeTimeTableQuestions();
                 
-                fq1 = new Random().nextInt(12);
                 falseAnswer1.setIsHit(false);
             }
             
             if (clipping.intersects(falseAnswer2.clipping)) {
+                sleep();
+                answeredWrong = true;
                 falseAnswer2.setIsHit(true);
                 
-                playerScore -= 50;
+                playerScore -= 150;
                 
                 wrong.play();
                 
-                answersReset();
+                answersReset("wrong");
                 
-                falseAnswer2Point = bottom;
+                randomizeQuestions();
                 
-                fq2 = new Random().nextInt(12);
+                randomizeTimeTableQuestions();
+                
                 falseAnswer1.setIsHit(false);
             }
             
             
                                                 
-            switch(d){
+            switch(birdDirection){
                 case LEFT:
                     birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2) + animator.sprite.getWidth();
                     birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
@@ -599,28 +769,75 @@ public class SpriteTest extends JApplet
         }
     }
     
-    private Point randomPosition(Rectangle contentArea){
-        int low = contentArea.y;
-        int high = contentArea.y + contentArea.height;
-
-        int x = (int)numbersX;
-        int y = new Random().nextInt(high - low) + low; 
-
-        return new Point(x,y);        
+    private void randomizeQuestions(){
+        ArrayList<Point> points = new ArrayList();
+        
+        points.add(top);
+        points.add(center);
+        points.add(bottom);
+        
+        java.util.Collections.shuffle(points);
+            
+        correctAnswerPoint = points.get(0);
+        falseAnswer1Point = points.get(1);
+        falseAnswer2Point = points.get(2);
+    }
+      
+    private void randomizeTimeTableQuestions(){
+        ArrayList<Integer> questions = new ArrayList();
+        
+        for (int i = 0; i < 12; i++) {
+            if (i != currentQuestion) {
+                questions.add(i);
+            }
+        }
+        
+        java.util.Collections.shuffle(questions);
+            
+        falseQuestion1 = questions.get(0);
+        falseQuestion2 = questions.get(questions.size()-1);
     }
     
     private void updateTimesTableLabels(Graphics2D g){
         for (int i = 0; i < levelLabels.get(level).length; i++) {
             levelLabels.get(level)[i].update();
-            levelLabels.get(level)[i].setCentre(new Point((dim.width - 180) + (35*i), 50));
+            levelLabels.get(level)[i].setCentre(new Point((contentPaneDimensions.width - 60) + (50*i), 50));
             levelLabels.get(level)[i].draw(g);
         }
         
         for (int i = 0; i < timesTableLabel.length; i++) {
             timesTableLabel[i].update();
-            timesTableLabel[i].setCentre(new Point((dim.width - 450) + (30*i), 50));
+            timesTableLabel[i].setCentre(new Point((contentPaneDimensions.width - 450) + (30*i), 50));
             timesTableLabel[i].draw(g);
         }
+    }
+    
+    private void updateCorrect(Graphics2D g) {        
+        if (answeredCorrect) {
+            for (int i = 0; i < correct.length; i++) {
+                correct[i].update();
+                correct[i].setCentre(new Point(
+                        ((contentPaneDimensions.width / 2) - 120) + (40 * i),
+                        contentPaneDimensions.height - 50
+                ));
+            
+                correct[i].draw(g);
+            }  
+        }                   
+    }
+    
+    private void updateTryAgain(Graphics2D g) {
+        if (answeredWrong) {
+            for (int i = 0; i < tryAgain.length; i++) {
+                tryAgain[i].update();
+                tryAgain[i].setCentre(new Point(
+                        ((contentPaneDimensions.width / 2) - 130) + (40 * i),
+                        contentPaneDimensions.height - 50
+                ));
+
+                tryAgain[i].draw(g);
+            } 
+        }           
     }
     
     private void updateScoreLabel(Graphics2D g) {
@@ -653,9 +870,12 @@ public class SpriteTest extends JApplet
     }
 
     private void updateQuestion(Graphics2D g) {
-        table.getTimesTable().get(q).setQuestionLocation(new Point(dim.width/2 - w/2, dim.height - 50));
-        table.getTimesTable().get(q).updateQuestion(fm);        
-        table.getTimesTable().get(q).drawQuestion(g);
+        
+        if (!answeredCorrect && !answeredWrong){
+            table.getTimesTable().get(currentQuestion).setQuestionLocation(new Point(contentPaneDimensions.width/2 - questionWidth / 2 , contentPaneDimensions.height - 50));
+            table.getTimesTable().get(currentQuestion).updateQuestion(fm);        
+            table.getTimesTable().get(currentQuestion).drawQuestion(g);
+        }        
     }
     //</editor-fold>
     
@@ -667,11 +887,11 @@ public class SpriteTest extends JApplet
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
-                d = Direction.LEFT;
+                birdDirection = Direction.LEFT;
                 speed.x = -10;
                 break;
             case KeyEvent.VK_D:
-                d = Direction.RIGHT;
+                birdDirection = Direction.RIGHT;
                 speed.x = 10;
                 break;
             case KeyEvent.VK_S:
@@ -730,7 +950,7 @@ public class SpriteTest extends JApplet
 
     @Override
     public void mouseDragged(MouseEvent me) {
-        //mousePointer = me.getPoint();
+        mousePointer = me.getPoint();
     }
 
     @Override
