@@ -132,6 +132,7 @@ public class SpriteTest extends JApplet
     private AudioClip music;
     private AudioClip eat;
     private AudioClip newLevel;
+    private AudioClip wrong;
     
     private Rectangle gameContentArea = new Rectangle();
     
@@ -160,6 +161,7 @@ public class SpriteTest extends JApplet
         music = getAudioClip(getDocumentBase(), "music.wav");
         eat = getAudioClip(getDocumentBase(), "eat.wav");
         newLevel = getAudioClip(getDocumentBase(), "level.wav");
+        wrong = getAudioClip(getDocumentBase(), "wrong.wav");
         
         setFocusable(true);
         requestFocusInWindow();
@@ -294,7 +296,7 @@ public class SpriteTest extends JApplet
     @Override
     public void start() {
         //eat.play();
-        //music.loop();
+        music.loop();
         this.requestFocusInWindow();
     }
     
@@ -315,6 +317,14 @@ public class SpriteTest extends JApplet
         gameContentArea.y = 200;
         gameContentArea.width = dim.width;
         gameContentArea.height = dim.height - 200;
+        
+        System.out.println(gameContentArea.height);
+        
+        top.y = gameContentArea.y;
+        center.y = gameContentArea.y + gameContentArea.height / 3;
+        bottom.y = gameContentArea.height;
+        
+        
         
         doubleBufferedImage = createImage(getWidth(), getHeight());
         doubleBufferedGraphics = doubleBufferedImage.getGraphics();
@@ -526,6 +536,11 @@ public class SpriteTest extends JApplet
             
             if (clipping.intersects(falseAnswer1.clipping)) {
                 falseAnswer1.setIsHit(true);
+                
+                playerScore -= 50;
+                
+                wrong.play();
+                
                 answersReset();
                 
                 falseAnswer1Point = center;
@@ -536,6 +551,11 @@ public class SpriteTest extends JApplet
             
             if (clipping.intersects(falseAnswer2.clipping)) {
                 falseAnswer2.setIsHit(true);
+                
+                playerScore -= 50;
+                
+                wrong.play();
+                
                 answersReset();
                 
                 falseAnswer2Point = bottom;
