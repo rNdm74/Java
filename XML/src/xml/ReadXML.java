@@ -20,15 +20,13 @@ public class ReadXML {
     private DocumentBuilderFactory documentBuilderFactory;
     private DocumentBuilder documentBuilder;
     private Document document;
-    
-    
-    
+        
     private String[] items;
     private String[] equation = {"equation","answer"};
     private String[] images = {"name","x","y","width","height"};
     private String[] fonts = {"letter","x","y","width","height", "id"};
     
-    public ReadXML(String file){       
+    public ReadXML(String file){         
         try {
             File xml = new File(file);         
                     

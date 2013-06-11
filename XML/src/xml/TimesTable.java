@@ -16,7 +16,11 @@ public class TimesTable {
     public TimesTable(String name){
         this.name = name;
         timesTable = new ReadXML("tables.xml").getTableData(name);   
-    }    
+    }   
+    
+    public void loadTimeTableEquations(){
+        
+    }
 
     public String getName() {
         return name;

@@ -10,7 +10,7 @@ import javax.swing.JApplet;
  */
 public class SpriteTest extends JApplet {
     private AudioClip bird;
-    private AudioClip music;
+    public static AudioClip music;
     private AudioClip eat;
     private AudioClip newLevel;
     private AudioClip wrong;
@@ -18,6 +18,9 @@ public class SpriteTest extends JApplet {
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
     public void init() {
+        setSize(1366, 768);
+        setFocusable(true);
+        requestFocusInWindow();
         
         bird = getAudioClip(getDocumentBase(), "wing_flap.wav");
         music = getAudioClip(getDocumentBase(), "music.wav");
@@ -40,13 +43,13 @@ public class SpriteTest extends JApplet {
     @Override
     public void start() {
         this.requestFocusInWindow();
-        music.loop();        
+        //getMusic().loop();        
     }
     
     @Override
     public void stop(){
         bird.stop();
-        music.stop();
+        getMusic().stop();
         eat.stop();
         newLevel.stop();
         wrong.stop();
@@ -55,5 +58,9 @@ public class SpriteTest extends JApplet {
     @Override
     public void destroy(){}
     //</editor-fold>    
+
+    public AudioClip getMusic() {
+        return music;
+    }
 
 }

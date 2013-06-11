@@ -13,15 +13,12 @@ import java.util.ArrayList;
 public class FontManager {
     private SpriteSheet dl;
     
-    private ArrayList<Texture> fonts;
     private ArrayList<Desyrel> gameFonts = new ArrayList<>();
     
     private BufferedImage desyrel = null;
     private BufferedImageLoader loader = new BufferedImageLoader();
     
-    public FontManager(ArrayList<Texture> fonts) throws IOException{
-        this.fonts = fonts;
-        
+    public FontManager(ArrayList<Texture> fonts) throws IOException{        
         desyrel = loader.loadImage("desyrel.png");
         dl = new SpriteSheet(desyrel);
         
