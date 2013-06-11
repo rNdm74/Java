@@ -32,7 +32,7 @@ public class SpriteTest extends JApplet {
             wrong
         };
         
-        setContentPane(new Game(sounds));
+        setContentPane(new Game(this, sounds));
     }
     
     
@@ -55,4 +55,5 @@ public class SpriteTest extends JApplet {
     @Override
     public void destroy(){}
     //</editor-fold>    
+
 }

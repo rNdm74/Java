@@ -43,7 +43,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     }
 
     private void updateMenuScreen(Graphics2D g) {
-        mtt.update(g, contentPaneDimensions);
+        mtt.update(g, contentPaneDimensions, mousePointer, this);
     }
         
     private void sleep() { }
@@ -62,8 +62,9 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         }
     }
       
-    public Game(Object[] sounds) throws HeadlessException { 
-                
+    public Game(SpriteTest spriteTest, Object[] sounds) throws HeadlessException { 
+        this.spriteTest = spriteTest;        
+        
         Xeq = new Thread();
         
         if (Xeq == null) {  
@@ -78,14 +79,13 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         setFocusable(true);
         requestFocusInWindow();
                 
-        Dimension res = Toolkit.getDefaultToolkit().getScreenSize();        
+        Dimension res = Toolkit.getDefaultToolkit().getScreenSize();  
+        
         setSize(res.width, res.height);
         
-        mousePointer = new Point(res.width /2, res.height/2);
+        //mousePointer = new Point(res.width /2, res.height/2);
         
         contentPaneDimensions = getSize();
-        
-         
         
         String[] levels = {
             //"One",
@@ -127,7 +127,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         bg = new SpriteSheet(background);
         dl = new SpriteSheet(desyrel);
         
-        backdrop = bg.getSprite(0, 0, 5955, res.height - 81);
+        backdrop = bg.getSprite(0, 200, 5955, res.height - 81);
         
         gameFonts = createSprites(dl, fonts);
                        
@@ -228,9 +228,10 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         
         menu = Display.MENU;
         
-        addKeyListener(this);
+        
         addMouseMotionListener(this);
         addMouseListener(this);
+        addKeyListener(this);
     }
 
     private void updateScreenBounds() {
@@ -298,16 +299,22 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
                 play(g);
                 break;        
         }
-        
-                
+                        
         updateGameOver(g);
         
         g.dispose();
         repaint();
     }   
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(int level) {
+        this.level = level;
+    }
     
     //<editor-fold defaultstate="collapsed" desc=" Applet Enums ">
-    private static enum Display{
+    public static enum Display{
         MENU,
         PLAY        
     }
@@ -385,7 +392,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
             }
             else{
                 gameEnd = true;
-                
+                menu = Display.MENU;
                 // reset game to 3 times table
                 playerScore = 0;
                 question = 0;
@@ -791,6 +798,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseClicked(MouseEvent me) {
+        //System.out.println(me.getPoint());
     }
 
     @Override
@@ -812,14 +820,19 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent me) {
+        //mousePointer = me.getPoint();
+        //spriteTest.showStatus(me.getPoint().toString());
     }
 
     @Override
     public void mouseMoved(MouseEvent me) {
+        
     }    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc=" Applet Variables ">
+    private SpriteTest spriteTest;
+    
     Display menu;
     
     private int question;
@@ -862,10 +875,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     
     private Image doubleBufferedImage;        
     private Graphics doubleBufferedGraphics;
-    
-    
-    
-    
+        
     private MenuTimesTables mtt;
     
     private Desyrel[] scoreLabel;    
