@@ -2,6 +2,8 @@
 package xml;
 
 import java.applet.AudioClip;
+import java.io.File;
+import java.net.URL;
 import javax.swing.JApplet;
 
 /**
@@ -17,16 +19,18 @@ public class SpriteTest extends JApplet {
         
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
-    public void init() {
+    public void init() {        
+
         setSize(1366, 768);
         setFocusable(true);
         requestFocusInWindow();
         
-        bird = getAudioClip(getDocumentBase(), "wing_flap.wav");
-        music = getAudioClip(getDocumentBase(), "music.wav");
-        eat = getAudioClip(getDocumentBase(), "eat.wav");
-        newLevel = getAudioClip(getDocumentBase(), "level.wav");
-        wrong = getAudioClip(getDocumentBase(), "wrong.wav");
+        
+        bird = getAudioClip(getClass().getResource("wing_flap.wav"));        
+        music = getAudioClip(getClass().getResource("music.wav"));
+        eat = getAudioClip(getClass().getResource("eat.wav"));
+        newLevel = getAudioClip(getClass().getResource("level.wav"));
+        wrong = getAudioClip(getClass().getResource("wrong.wav"));
         
         Object[] sounds = {
             bird,
@@ -38,8 +42,6 @@ public class SpriteTest extends JApplet {
         setContentPane(new Game(this, sounds));
     }
     
-    
-        
     @Override
     public void start() {
         this.requestFocusInWindow();
