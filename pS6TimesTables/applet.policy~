@@ -1,0 +1,13 @@
+grant {
+  permission java.security.AllPermission "<<ALL FILES>>", "read";  
+};
+
+/*
+grant codeBase "file:///D:/Work/Java/XML/build/classes/xml/" {
+  permission java.io.FilePermission "<<ALL FILES>>", "read";  
+  permission java.io.FilePermission "<<ALL FILES>>", "write";  
+  permission java.util.PropertyPermission "*", "read, write";  
+  permission java.util.PropertyPermission "user.home", "read";  
+  permission java.lang.RuntimePermission "*";
+};
+*/
