@@ -1,16 +1,14 @@
 
-package xml;
+package S6TimesTables;
 
 import java.applet.AudioClip;
-import java.io.File;
-import java.net.URL;
 import javax.swing.JApplet;
 
 /**
  *
  * @author rNdm
  */
-public class SpriteTest extends JApplet {
+public class Run extends JApplet {
     private AudioClip bird;
     public static AudioClip music;
     private AudioClip eat;

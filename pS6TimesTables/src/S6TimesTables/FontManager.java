@@ -1,5 +1,5 @@
 
-package xml;
+package S6TimesTables;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;

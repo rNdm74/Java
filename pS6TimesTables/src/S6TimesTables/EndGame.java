@@ -1,12 +1,12 @@
 
-package xml;
+package S6TimesTables;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import xml.Game.Display;
+import S6TimesTables.Game.Display;
 
 /**
  *

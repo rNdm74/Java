@@ -1,5 +1,5 @@
 
-package xml;
+package S6TimesTables;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -49,7 +49,7 @@ public class Answer {
     
     public void drawQuestion(Graphics2D g){
         if (!hit){            
-            table.getTimesTable().get(getQuestion()).setQuestionLocation(new Point((1366 / 2) - (40 / 2), 768 - 50));
+            table.getTimesTable().get(getQuestion()).setQuestionLocation(new Point((1366 / 2) - (40 / 2), 768 - 150));
             table.getTimesTable().get(getQuestion()).updateQuestion(fm);
             table.getTimesTable().get(getQuestion()).drawQuestion(g);
         }

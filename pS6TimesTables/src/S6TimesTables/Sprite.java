@@ -1,7 +1,5 @@
 
-package xml;
-
-import java.awt.Image;
+package S6TimesTables;
 
 /**
  *

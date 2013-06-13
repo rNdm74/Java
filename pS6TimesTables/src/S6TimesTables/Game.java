@@ -1,5 +1,5 @@
 
-package xml;
+package S6TimesTables;
 
 
 import java.applet.AudioClip;
@@ -26,9 +26,9 @@ import javax.swing.JPanel;
  *
  * @author rNdm
  */
-public class Game extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
+public final class Game extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
-    public Game(SpriteTest spriteTest, Object[] sounds) throws HeadlessException { 
+    public Game(Run spriteTest, Object[] sounds) throws HeadlessException { 
         this.spriteTest = spriteTest;        
                 
         bird = (AudioClip) sounds[0];
@@ -205,7 +205,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         top.y = gameContentArea.y;
         center.y = gameContentArea.y + gameContentArea.height / 3;
         bottom.y = gameContentArea.height;
-        System.out.println(contentPaneDimensions);
+        //System.out.println(contentPaneDimensions);
     }
     
     private int returnLevelNumber(Levels l){
@@ -815,7 +815,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
                 correct[i].update();
                 correct[i].setCentre(new Point(
                         ((contentPaneDimensions.width / 2) - 120) + (40 * i),
-                        contentPaneDimensions.height - 50
+                        contentPaneDimensions.height - 150
                 ));
             
                 correct[i].draw(g);
@@ -829,7 +829,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
                 tryAgain[i].update();
                 tryAgain[i].setCentre(new Point(
                         ((contentPaneDimensions.width / 2) - 130) + (40 * i),
-                        contentPaneDimensions.height - 50
+                        contentPaneDimensions.height - 150
                 ));
 
                 tryAgain[i].draw(g);
@@ -925,7 +925,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     
     private EndGame endGame;
     
-    private SpriteTest spriteTest;
+    private Run spriteTest;
     
     public Display menu;
     
@@ -1000,9 +1000,9 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     
     private Rectangle gameContentArea = new Rectangle();
     
-    private Point top = new Point(1920, 280);
-    private Point center = new Point(1920, 540);
-    private Point bottom = new Point(1920, 800);
+    private Point top = new Point(0, 0);
+    private Point center = new Point(0, 0);
+    private Point bottom = new Point(0, 0);
     
     private Point correctAnswerPoint = top;
     private Point falseAnswer1Point = center;

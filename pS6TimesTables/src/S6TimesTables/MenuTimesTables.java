@@ -1,5 +1,5 @@
 
-package xml;
+package S6TimesTables;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import xml.Game.Display;
+import S6TimesTables.Game.Display;
 
 /**
  *
@@ -170,7 +170,7 @@ public class MenuTimesTables{
                 if (!selectedItem.equals(menuItems[i].getQuestion())) {
                     game.menu = Display.PLAY;
                     game.setMousePointer(new Point(150, 768 / 2));
-                    SpriteTest.music.loop();
+                    Run.music.loop();
                     int level = getLevel(menuItems[i].getQuestion());
                     game.setPlayerScore(0);
                     game.setLevel(level);

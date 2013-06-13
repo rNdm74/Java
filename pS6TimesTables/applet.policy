@@ -1,10 +1,9 @@
-/* AUTOMATICALLY GENERATED ON Wed Jun 12 11:57:09 NZST 2013*/
-/* DO NOT EDIT */
-
 grant {
-  permission java.security.AllPermission "<<ALL FILES>>", "read";  
+  permission java.security.AllPermission "<<ALL FILES>>", "read";
+  permission java.net.SocketPermission "connect", "resolve";  
 };
 
+/*
 grant codeBase "file:///D:/Work/Java/XML/build/classes/xml/" {
   permission java.io.FilePermission "<<ALL FILES>>", "read";  
   permission java.io.FilePermission "<<ALL FILES>>", "write";  
@@ -12,4 +11,4 @@ grant codeBase "file:///D:/Work/Java/XML/build/classes/xml/" {
   permission java.util.PropertyPermission "user.home", "read";  
   permission java.lang.RuntimePermission "*";
 };
-
+*/
