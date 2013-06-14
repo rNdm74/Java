@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.Permission;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,16 +32,13 @@ public class ReadXML {
     
     public ReadXML(String file){         
         try {
-            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + file);
-            //System.out.println(url);
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("GET");
-            //connection.getPermission().
-            connection.connect();
-            
-            InputStream stream = connection.getInputStream();
+//            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + file);
+//            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//            connection.setRequestMethod("GET");
+//            connection.connect();            
+//            InputStream stream = connection.getInputStream();
                         
-            //File xml = new File(file);         
+            File stream = new File(file);         
                     
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
             
@@ -48,7 +46,7 @@ public class ReadXML {
             
             document = documentBuilder.parse(stream);
             
-            connection.disconnect();
+            //connection.disconnect();
             
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             System.out.println(ex);

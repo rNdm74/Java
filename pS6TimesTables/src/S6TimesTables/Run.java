@@ -9,47 +9,49 @@ import javax.swing.JApplet;
  * @author rNdm
  */
 public class Run extends JApplet {
-    private AudioClip bird;
     public static AudioClip music;
-    private AudioClip eat;
+    
     private AudioClip newLevel;
     private AudioClip wrong;
+    private AudioClip bird;    
+    private AudioClip eat;
         
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
     public void init() {        
-
-        setSize(1366, 768);
+        
+        setSize(800, 600);
+        setPreferredSize(getSize());
         setFocusable(true);
         requestFocusInWindow();
-        
-        
-        bird = getAudioClip(getClass().getResource("wing_flap.wav"));        
-        music = getAudioClip(getClass().getResource("music.wav"));
-        eat = getAudioClip(getClass().getResource("eat.wav"));
+                
+        bird = getAudioClip(getClass().getResource("wing_flap.wav")); 
         newLevel = getAudioClip(getClass().getResource("level.wav"));
         wrong = getAudioClip(getClass().getResource("wrong.wav"));
-        
-        Object[] sounds = {
+        music = getAudioClip(getClass().getResource("music.wav"));
+        eat = getAudioClip(getClass().getResource("eat.wav"));
+                
+        Object[] setup = {
+            this,
             bird,
             eat,
             newLevel,
             wrong
         };
         
-        setContentPane(new Game(this, sounds));
+        setContentPane(new Game(setup));
+        
     }
     
     @Override
     public void start() {
-        this.requestFocusInWindow();
-        //getMusic().loop();        
+        requestFocusInWindow();
     }
     
     @Override
     public void stop(){
         bird.stop();
-        getMusic().stop();
+        music.stop();
         eat.stop();
         newLevel.stop();
         wrong.stop();
@@ -62,5 +64,4 @@ public class Run extends JApplet {
     public AudioClip getMusic() {
         return music;
     }
-
 }

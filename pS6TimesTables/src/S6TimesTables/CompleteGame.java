@@ -5,14 +5,13 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import S6TimesTables.Game.Display;
 
 /**
  *
  * @author rNdm
  */
-public class EndGame {
+public class CompleteGame {
     private Point mousepoint = new Point();
     
     private Rectangle bound;
@@ -24,7 +23,7 @@ public class EndGame {
     private Equation back = new Equation(new Object[]{"BACK",""});
     private Equation wellDone = new Equation(new Object[]{"WELL","DONE"});
     
-    public EndGame(FontManager fm){
+    public CompleteGame(FontManager fm){
         back.updateQuestion(fm);            
         backSize = back.getQuestionSize();
         
@@ -32,23 +31,23 @@ public class EndGame {
         wellDoneSize = wellDone.getQuestionSize();
     }  
     
-    public void update(Graphics2D g, Point mousePoint, Game game){
-        this.mousepoint = mousePoint;
+    public void update(Graphics2D g, Point mousepoint, Game game){
+        this.mousepoint = mousepoint;
                         
         bound = new Rectangle(new Point(
                 (getBack().getQuestionLocation().x) - 35,
                 (getBack().getQuestionLocation().y) - (backSize.height / 2)),
                 backSize
         );
-        
-        //g.draw(bound);
-                
+                            
         getBack().drawQuestion(g);
             
         if (bound.contains(mousepoint)) {
             game.menu = Display.MENU;
-            mousePoint = new Point(0,0);
-        }                  
+            this.mousepoint = new Point(50, 300);
+        }   
+        
+        game.drawBird(g);    
     }
 
     /**

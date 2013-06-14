@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author rNdm
  */
-class Animation {
+public class Animation {
     AudioClip sound;
 
     ArrayList<BufferedImage> frames;

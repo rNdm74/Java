@@ -10,11 +10,12 @@ import java.awt.Rectangle;
  *
  * @author rNdm
  */
-public class Answer {
+public class EquationManager {
     private boolean correct;
     private boolean hit;
     
-    private Point location = new Point();
+    private Point answerLocation = new Point();
+    private Point questionLocation = new Point();
     
     private Dimension bounds = new Dimension(50, 50);
     
@@ -26,7 +27,7 @@ public class Answer {
     
     private int question;
     
-    public Answer(TimesTable table, int question, FontManager fm){
+    public EquationManager(TimesTable table, int question, FontManager fm){
         this.table = table;
         this.question = question;
         this.fm = fm;
@@ -34,32 +35,28 @@ public class Answer {
     
     public void drawAnswer(Graphics2D g){
         if (!hit){            
-            table.getTimesTable().get(getQuestion()).setAnswerLocation(location);
+            table.getTimesTable().get(getQuestion()).setAnswerLocation(getAnswerLocation());
             table.getTimesTable().get(getQuestion()).updateAnswer(fm);
             table.getTimesTable().get(getQuestion()).drawAnswer(g);
         }
                 
         setClipping(new Rectangle(new Point(
-                 location.x - bounds.width / 2, 
-                 location.y - bounds.height / 2), 
-                 bounds));
-                
-        //g.draw(getClipping());                
+                 getAnswerLocation().x - bounds.width / 2, 
+                 getAnswerLocation().y - bounds.height / 2), 
+                 bounds));               
     }
     
     public void drawQuestion(Graphics2D g){
         if (!hit){            
-            table.getTimesTable().get(getQuestion()).setQuestionLocation(new Point((1366 / 2) - (40 / 2), 768 - 150));
+            table.getTimesTable().get(getQuestion()).setQuestionLocation(getQuestionLocation());
             table.getTimesTable().get(getQuestion()).updateQuestion(fm);
             table.getTimesTable().get(getQuestion()).drawQuestion(g);
         }
                 
         setClipping(new Rectangle(new Point(
-                 location.x - bounds.width / 2, 
-                 location.y - bounds.height / 2), 
-                 bounds));
-                
-        //g.draw(getClipping());                
+                 getAnswerLocation().x - bounds.width / 2, 
+                 getAnswerLocation().y - bounds.height / 2), 
+                 bounds));             
     }
     
     public boolean isCorrect() {
@@ -77,15 +74,7 @@ public class Answer {
     public void setHit(boolean isHit) {
         this.hit = isHit;
     }
-
-    public Point getLocation() {
-        return location;
-    }
-
-    public void setLocation(Point location) {
-        this.location = location;
-    }
-
+    
     public TimesTable getTable() {
         return table;
     }
@@ -108,5 +97,21 @@ public class Answer {
 
     public void setClipping(Rectangle clipping) {
         this.clipping = clipping;
+    }
+
+    public Point getAnswerLocation() {
+        return answerLocation;
+    }
+
+    public void setAnswerLocation(Point answerLocation) {
+        this.answerLocation = answerLocation;
+    }
+
+    public Point getQuestionLocation() {
+        return questionLocation;
+    }
+
+    public void setQuestionLocation(Point questionLocation) {
+        this.questionLocation = questionLocation;
     }
 }

@@ -1,61 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package pembeddedminor;
 
-import java.util.ArrayList;
-import java.util.Random;
+package S6TimesTables;
+
+import static S6TimesTables.Game.Display.END;
+import static S6TimesTables.Game.Display.MENU;
+import static S6TimesTables.Game.Display.PLAY;
 import java.util.TimerTask;
-import javax.swing.JLabel;
 
 /**
  *
- * @author rNdm
+ * @author Adam Charlton
  */
 public class Task extends TimerTask {
-    int time = 0;
+    private Game game;    
     
-    private JLabel label;
-    private JLabel label1;
-    private ArrayList<Integer> list;
-    
-    public Task(ArrayList<Integer> list,
-                JLabel label,
-                JLabel label1){        
-        this.label = label;
-        this.label1 = label1;
-        this.list = list;
-    }
-    
-    public Task(ArrayList<Integer> list,
-                JLabel label){        
-        this.label = label;
-        this.list = list;
+    public Task(Game g){ 
+        this.game = g;
     }
     
     @Override
-    public void run() {
-        String s;
-        int r = new Random().nextInt(110)+ 5;
-        s = new StringBuilder().append(r).toString();
-        label.setText(s);
-        
-        if (label1 != null) {
-            label1.setText(s);
-        }
-        
-        list.add(r);
-        //System.out.println(value);
-//        times++;
-//        
-//        if (times <= 5) {
-//            System.out.println("I'm alive...");
-//        } else {
-//            System.out.println("Timer stops now...");
-// 
-//            //Stop Timer.
-//            this.cancel();
-//        }    
+    public void run() {         
+        try{
+            switch(game.menu){
+                case MENU:
+                    game.moveBackground();
+                    game.getBird().move(game.getMousePointer());
+                    break;
+                case PLAY:
+                    game.moveBackground();
+                    game.updateAnswers();
+                    game.updateCorrectAnswer();
+                    game.moveAnswers();                
+                    game.hitDetection(game.getBird().getClipping());
+                    game.getBird().move(game.getMousePointer());
+                    break;
+                case END:
+                    game.moveBackground();
+                    game.getBird().move(game.getMousePointer());
+                    break;            
+            }
+        }catch(Exception e){} 
     }
 }
