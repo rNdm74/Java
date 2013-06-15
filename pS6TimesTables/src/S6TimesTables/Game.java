@@ -28,17 +28,40 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         correctSound = (AudioClip) setup[2];
         roundCompleteSound = (AudioClip) setup[3];
         wrongSound = (AudioClip) setup[4];
-                
-       
-        
-        
-        
+                  
         contentPaneDimensions = run.getPreferredSize();
         
         updateScreenBounds();
         
+         
+        BufferedImageLoader loader = new BufferedImageLoader();
+        BufferedImage spriteSheet;
+        BufferedImage background;
+        BufferedImage desyrel;
         
-                        
+        try{
+            spriteSheet = loader.loadImage("atlas.png");
+            background = loader.loadImage("bg.png");
+            
+            
+            ss = new SpriteSheet(spriteSheet);
+            bg = new SpriteSheet(background);
+            
+            
+            sprites = new ReadXML("atlas.xml").getImageData("SubTexture");
+
+            desyrel = loader.loadImage("desyrel.png");
+            dl = new SpriteSheet(desyrel);            
+            fonts = new ReadXML("desyrel.xml").getImageData("char");
+            Collections.sort(fonts, new CompareTexture());
+            
+            fm = new FontManager(fonts);
+            
+            //gameFonts = createSprites(dl, fonts);
+            
+        } catch(IOException e){           
+        }
+        
         String[] levels = {
             //"One",
             //"Two",
@@ -53,70 +76,48 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             //"Eleven",
             //"Twelve"                        
         };
-         
-        BufferedImageLoader loader = new BufferedImageLoader();
-        BufferedImage spriteSheet;
-        BufferedImage background;
-        BufferedImage desyrel;
-        
-        try{
-            spriteSheet = loader.loadImage("atlas.png");
-            background = loader.loadImage("bg.png");
-            desyrel = loader.loadImage("desyrel.png");
-            
-            ss = new SpriteSheet(spriteSheet);
-            bg = new SpriteSheet(background);
-            dl = new SpriteSheet(desyrel);
-            
-            fonts = new ReadXML("desyrel.xml").getImageData("char");
-            sprites = new ReadXML("atlas.xml").getImageData("SubTexture");
-
-            Collections.sort(fonts, new CompareTexture());
-            fm = new FontManager(fonts);
-            
-        } catch(IOException e){           
-        }
-        
                 
         for (String s: levels) {
+            TimesTable t = new TimesTable(s);
+            
+            for(int item = 0; item < t.getTimesTable().size(); item++){
+                t.getTimesTable().get(item).updateQuestion(fm);
+                t.getTimesTable().get(item).updateAnswer(fm);
+            }
+            
             timesTables.add(new TimesTable(s));
         }
         
-        backdrop = bg.getSprite(0, 200, 1600, contentPaneDimensions.height);
-        
-        gameFonts = createSprites(dl, fonts);
-                   
-        for (int l = 0; l < timesTables.size(); l++) {            
-            for (int i = 0; i < timesTables.get(l).getTimesTable().size(); i++) {
-                timesTables.get(l).getTimesTable().get(i).updateQuestion(fm);
-                timesTables.get(l).getTimesTable().get(i).updateAnswer(fm);
-            }
-        }
-        
-        // pulls timetable from list e.g. timetable 3
+        // pulls timestable from list e.g. timetable 3
         table = timesTables.get(playerLevel);
         
+  
+        backdrop = bg.getSprite(0, 200, 1600, contentPaneDimensions.height);
+        
+        
+        
+        
+        
         populateShuffledQuestions();
+        createQuestionAnswers();
+        //shuffleQuestions();
+         
+        
         
         //currentQuestion = playedQuestions.get(question);
                                     
         //table.getTimesTable().get(currentQuestion).updateQuestion(fm);  
 
         //questionWidth = table.getTimesTable().get(currentQuestion).getQuestionSize().width;
-
+        
+        menu = Display.MENU;
         mainMenu = new Menu(fm, this);
 
         lm = new LabelManager(fm, contentPaneDimensions);
-        
-        //createLabels();
-        
+                
         bird = createBird();
-                        
-        //updateScore();
-            
-        shuffleQuestions();
+                                    
         
-        menu = Display.MENU;
         
         
         
@@ -125,7 +126,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         completeGame = new CompleteGame(fm);
         completeGame.getBack().setQuestionLocation(new Point(50, getContentPaneDimensions().height - 50));
         
-        createQuestionAnswers();  
+         
         
         addMouseListener(this);
         addMouseListener(mainMenu);        
@@ -157,7 +158,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
                 break;
         }                 
         g.dispose();
-        repaint();
+        super.repaint();
     }   
           
     private void play(Graphics2D g) {
@@ -165,8 +166,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         
         drawAnswers(g);
         
-        drawQuestion(g);
-               
+        drawQuestion(g);               
                 
         drawBird(g);
     }
@@ -256,30 +256,32 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
     boolean correctAnswerHit = false;
     boolean falseAnswerHit;
+    int count = 0;
     
-    public void hitDetection(Rectangle2D clipping) {
-        //correctAnswerHit = 
-        falseAnswerHit = (clipping.intersects(falseAnswer1.getClipping()) ||
-            clipping.intersects(falseAnswer2.getClipping())) ? true : false;
+    
+    public void hitDetection() {
+//        falseAnswerHit = (bird.getClipping().intersects(falseAnswer1.getClipping()) ||
+//            clipping.intersects(falseAnswer2.getClipping())) ? true : false;
             
         //System.out.println(correctAnswerHit);
         //System.out.println(falseAnswerHit);
-        boolean t = (clipping.intersects(correctAnswer.getClipping()));        
-        
-        //System.out.println(t);
-        
+        //boolean t = ();        
+        System.out.println(bird.getClipping());       
             
-        if (correctAnswerHit != t) {  
-            correctSound.play(); 
-            answeredCorrect = true;            
-            correctAnswer.setHit(answeredCorrect);
-                       
-            resetQuestion(getPlayerScore() + 100, "correct");
+//        if (correctAnswerHit != bird.getClipping().intersects(correctAnswer.getClipping())) {  
+//            
+//            correctSound.play(); 
+//            answeredCorrect = bird.getClipping().intersects(correctAnswer.getClipping());            
+//            correctAnswer.setHit(answeredCorrect);
+//                       
+//            resetQuestion(getPlayerScore() + 100, "correct");
+//            
+//            
+//            System.out.println(count++);
+//            
+//            correctAnswerHit = bird.getClipping().intersects(correctAnswer.getClipping());            
+//        }
             
-            System.out.println(question);
-            
-        }
-        correctAnswerHit = t;    
         if (falseAnswerHit) {            
 //                answeredWrong = true;  
 //                falseAnswer1.setHit(answeredWrong);
@@ -345,7 +347,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         points.add(center);
         points.add(bottom);
         
-        java.util.Collections.shuffle(points);
+        Collections.shuffle(points);
             
         correctAnswerPoint = points.get(0);
         falseAnswer1Point = points.get(1);
@@ -361,7 +363,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             }
         }
         
-        java.util.Collections.shuffle(questions);
+        Collections.shuffle(questions);
             
         falseQuestion1 = questions.get(0);
         falseQuestion2 = questions.get(questions.size()-1);
@@ -416,7 +418,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     }
 
                
-    public void updateAnswers() {        
+    public void updateQuestionAnswers() {        
         correctAnswerPoint.x = (int)numbersX;
         falseAnswer1Point.x = (int)numbersX;
         falseAnswer2Point.x = (int)numbersX;
@@ -428,8 +430,6 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             correctAnswer.setHit(answeredCorrect);
             falseAnswer1.setHit(answeredWrong);
             falseAnswer2.setHit(answeredWrong);
-            
-            
         }
         
         falseAnswer1.setTable(table);
@@ -556,9 +556,8 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     }
         
     private void populateShuffledQuestions() {
-        for (int i = 0; i < table.getTimesTable().size(); i++)playedQuestions.add(i);
-        
-        Collections.shuffle(playedQuestions);
+        for (int i = 0; i < table.getTimesTable().size(); i++)playedQuestions.add(i);        
+        //Collections.shuffle(playedQuestions);
     }
 
     
