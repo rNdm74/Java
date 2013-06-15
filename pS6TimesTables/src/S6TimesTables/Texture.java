@@ -10,14 +10,15 @@ import java.awt.Point;
  */
 public class Texture {
     private int ID;
-    private String name;
+    private String s;
     private Point location = new Point();
     private Point frameLocation = new Point();
     private Dimension size = new Dimension();
     private Dimension frameSize = new Dimension();
 
     public Texture(Object[] items){
-        name = (String)items[0];
+        
+        s = (String)items[0];
         location.x = Integer.parseInt((String)items[1]);
         location.y = Integer.parseInt((String)items[2]);
         size.width = Integer.parseInt((String)items[3]);
@@ -29,8 +30,8 @@ public class Texture {
 
     }
 
-    public String getName() {
-        return name;
+    public Object getText() {
+        return s;
     }
 
     public Point getLocation() {

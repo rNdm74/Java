@@ -23,7 +23,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         task = new Task(this);
         timer.schedule(task, 0,  1);
         
-        run = (Run)setup[0];    
+        run = (MainApp)setup[0];    
         birdSound = (AudioClip) setup[1];
         correctSound = (AudioClip) setup[2];
         roundCompleteSound = (AudioClip) setup[3];
@@ -56,40 +56,40 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             Collections.sort(fonts, new CompareTexture());
             
             fm = new FontManager(fonts);
-            
+            lm = new LabelManager(fm, contentPaneDimensions , table);
             //gameFonts = createSprites(dl, fonts);
             
         } catch(IOException e){           
         }
         
-        String[] levels = {
-            //"One",
-            //"Two",
-            "Three",
-            "Four",
-            //"Five",
-            "Six",
-            "Seven",
-            "Eight",
-            "Nine",
-            //"Ten",
-            //"Eleven",
-            //"Twelve"                        
-        };
+//        String[] levels = {
+//            //"One",
+//            //"Two",
+//            "Three",
+//            "Four",
+//            //"Five",
+//            "Six",
+//            "Seven",
+//            "Eight",
+//            "Nine",
+//            //"Ten",
+//            //"Eleven",
+//            //"Twelve"                        
+//        };
                 
-        for (String s: levels) {
-            TimesTable t = new TimesTable(s);
-            
-            for(int item = 0; item < t.getTimesTable().size(); item++){
-                t.getTimesTable().get(item).updateQuestion(fm);
-                t.getTimesTable().get(item).updateAnswer(fm);
-            }
-            
-            timesTables.add(new TimesTable(s));
-        }
+//        for (String s: levels) {
+//            TimesTable t = new TimesTable(s);
+//            
+//            for(int item = 0; item < t.getTimesTable().size(); item++){
+//                t.getTimesTable().get(item).updateQuestion(fm);
+//                t.getTimesTable().get(item).updateAnswer(fm);
+//            }
+//            
+//            timesTables.add(new TimesTable(s));
+//        }
         
         // pulls timestable from list e.g. timetable 3
-        table = timesTables.get(playerLevel);
+//        table = timesTables.get(playerLevel);
         
   
         backdrop = bg.getSprite(0, 200, 1600, contentPaneDimensions.height);
@@ -111,9 +111,9 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         //questionWidth = table.getTimesTable().get(currentQuestion).getQuestionSize().width;
         
         menu = Display.MENU;
-        mainMenu = new Menu(fm, this);
+        mainMenu = new Menu(fm, lm, this);
 
-        lm = new LabelManager(fm, contentPaneDimensions);
+        
                 
         bird = createBird();
                                     
@@ -124,7 +124,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         setMousePointer(new Point(150, 300));
         
         completeGame = new CompleteGame(fm);
-        completeGame.getBack().setQuestionLocation(new Point(50, getContentPaneDimensions().height - 50));
+        //completeGame.getBack().setQuestionLocation(new Point(50, getContentPaneDimensions().height - 50));
         
          
         
@@ -164,9 +164,9 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     private void play(Graphics2D g) {
         drawLabels(g);
         
-        drawAnswers(g);
+        //drawAnswers(g);
         
-        drawQuestion(g);               
+        //drawQuestion(g);               
                 
         drawBird(g);
     }
@@ -177,7 +177,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         completeGame.update(g, getMousePointer(), this);
         
         lm.updateScoreLabel(g); 
-        lm.updateGameOverLabel(g);
+        //lm.updateGameOverLabel(g);
     }
     //</editor-fold>  
 
@@ -217,12 +217,15 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     }
     //</editor-fold>
       
+    public int pickedTimesTable;
         
     private void drawLabels(Graphics2D g){
         if (answeredCorrect)lm.updateCorrectLabel(g);
         if (answeredWrong)lm.updateWrongLabel(g);
         lm.updateScoreLabel(g);
         lm.updateScore(getPlayerScore());
+        lm.drawPickedTimesTableQuestion(g, pickedTimesTable);
+        lm.drawPickedTimesTableAnwser(g, pickedTimesTable);
     }
     
     private void checkPlayerScore() {
@@ -266,7 +269,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         //System.out.println(correctAnswerHit);
         //System.out.println(falseAnswerHit);
         //boolean t = ();        
-        System.out.println(bird.getClipping());       
+        //System.out.println(bird.getClipping());       
             
 //        if (correctAnswerHit != bird.getClipping().intersects(correctAnswer.getClipping())) {  
 //            
@@ -331,8 +334,8 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         }else{
             // if answer is correct move to next question
             if (answered.equals("correct")) {
-                System.out.println(question);
-                run.getAppletContext().showStatus(Integer.toString(question));
+                //System.out.println(question);
+                //run.getAppletContext().showStatus(Integer.toString(question));
                 currentQuestion = playedQuestions.get(question++);                
         }            
         }
@@ -408,13 +411,21 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             backgroundX = 0;
         }
     }
-    public void moveAnswers() {
-        if (numbersX > -10) {
-            numbersX -= 0.06f * 2f;
+    
+    
+    public void moveAnswers() {  
+        System.out.println(lm.pos.x);
+        if (count > 10) {
+            lm.pos.x -= 1f;
+            count = 0;
         }
-        else{
-            numbersX = getContentPaneDimensions().width + 200;
+        
+        
+        if (lm.pos.x <= 0) {
+            lm.pos.x = getContentPaneDimensions().width + 200;
         }
+        
+        count++;
     }
 
                
@@ -432,6 +443,8 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             falseAnswer2.setHit(answeredWrong);
         }
         
+        
+        
         falseAnswer1.setTable(table);
         falseAnswer1.setQuestion(falseQuestion1);
         falseAnswer1.setAnswerLocation(falseAnswer1Point);
@@ -446,6 +459,10 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         correctAnswer.setQuestion(currentQuestion);
         correctAnswer.setAnswerLocation(correctAnswerPoint);
             
+        falseAnswer1.updateAnswer();
+        falseAnswer2.updateAnswer();
+        correctAnswer.updateAnswer();
+        correctAnswer.updateQuestion();
     }     
     public void updateCorrectAnswer() {
         correctAnswer.setQuestionLocation(new Point(
@@ -497,12 +514,12 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             int height = textures.get(i).getSize().height;
                 
             if(textures.size() < 90){            
-                if (textures.get(i).getName().contains("flight")) {                  
+                if (((String)textures.get(i).getText()).contains("flight")) {                  
                     images.add(spriteSheet.getSprite(p.x, p.y, width, height));
                 }
             }
             else{
-                if (isInteger(textures.get(i).getName())) {
+                if (isInteger((String)textures.get(i).getText())) {
                     images.add(spriteSheet.getSprite(p.x, p.y, width, height));
                 }                
             }
@@ -538,9 +555,12 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         );
     }  
     private void drawAnswers(Graphics2D g){
-        falseAnswer1.drawAnswer(g);
-        falseAnswer2.drawAnswer(g);
-        correctAnswer.drawAnswer(g);    
+        try{
+            falseAnswer1.drawAnswer(g);
+            falseAnswer2.drawAnswer(g);
+            correctAnswer.drawAnswer(g); 
+        }catch(Exception e){}
+           
     }
     private void drawQuestion(Graphics2D g) {        
         if (!answeredCorrect && !answeredWrong)correctAnswer.drawQuestion(g);                
@@ -550,13 +570,13 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
         
     private void createQuestionAnswers() {
-        correctAnswer = new EquationManager(table, currentQuestion, fm);
-        falseAnswer1 = new EquationManager(table, falseQuestion1, fm);
-        falseAnswer2 = new EquationManager(table, falseQuestion2, fm);
+        //correctAnswer = new EquationManager(table, currentQuestion, fm);
+        //falseAnswer1 = new EquationManager(table, falseQuestion1, fm);
+        //falseAnswer2 = new EquationManager(table, falseQuestion2, fm);
     }
         
     private void populateShuffledQuestions() {
-        for (int i = 0; i < table.getTimesTable().size(); i++)playedQuestions.add(i);        
+//        for (int i = 0; i < table.getTimesTable().size(); i++)playedQuestions.add(i);        
         //Collections.shuffle(playedQuestions);
     }
 
@@ -574,12 +594,15 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
     @Override
     public void mouseClicked(MouseEvent me) {
-        
+        pickedTimesTable++;
+        playerScore += 20;
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        setMousePointer(me.getPoint());        
+        setMousePointer(me.getPoint()); 
+        bird.birdStopped = false;
+        bird.SPEED = 2;
     }
 
     @Override
@@ -601,7 +624,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
     private Menu mainMenu;
     private CompleteGame completeGame;    
-    private Run run;
+    private MainApp run;
     
     public Display menu;
     
@@ -640,9 +663,9 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     private Image doubleBufferedImage;        
     private Graphics doubleBufferedGraphics;
     
-    private int playerLevel = 0;
-    private int playerScore = 0;    
-    private int currentQuestion = 0;    
+    private int playerLevel;
+    private int playerScore;    
+    private int currentQuestion;    
     private int falseQuestion1;
     private int falseQuestion2; 
     

@@ -19,7 +19,7 @@ public class EquationManager {
     
     private Dimension bounds = new Dimension(50, 50);
     
-    private Rectangle clipping;
+    private Rectangle clipping = new Rectangle();
         
     private FontManager fm;
     
@@ -31,33 +31,64 @@ public class EquationManager {
         this.table = table;
         this.question = question;
         this.fm = fm;
+        
+        clipping.setSize(bounds);
+    }
+    
+    public void updateAnswer(){
+//        table.getTimesTable().get(getQuestion()).setAnswerLocation(getAnswerLocation());        
+//        table.getTimesTable().get(getQuestion()).updateAnswer(fm);
+//                
+//        clipping.setLocation(
+//                getAnswerLocation().x - bounds.width / 2,
+//                getAnswerLocation().y - bounds.height / 2
+//        );
     }
     
     public void drawAnswer(Graphics2D g){
-        if (!hit){            
-            table.getTimesTable().get(getQuestion()).setAnswerLocation(getAnswerLocation());
-            table.getTimesTable().get(getQuestion()).updateAnswer(fm);
-            table.getTimesTable().get(getQuestion()).drawAnswer(g);
-        }
-                
-        setClipping(new Rectangle(new Point(
-                 getAnswerLocation().x - bounds.width / 2, 
-                 getAnswerLocation().y - bounds.height / 2), 
-                 bounds));               
+        //table.getTimesTable().get(getQuestion()).drawAnswer(g);
+        g.draw(clipping);
+    }
+    
+    public void updateQuestion(){
+        
+//        table.getTimesTable().get(getQuestion()).setQuestionLocation(getQuestionLocation());
+//        table.getTimesTable().get(getQuestion()).updateQuestion(fm);
+        
+//        clipping.setLocation(
+//                getAnswerLocation().x - bounds.width / 2,
+//                getAnswerLocation().y - bounds.height / 2
+//        );
     }
     
     public void drawQuestion(Graphics2D g){
-        if (!hit){            
-            table.getTimesTable().get(getQuestion()).setQuestionLocation(getQuestionLocation());
-            table.getTimesTable().get(getQuestion()).updateQuestion(fm);
-            table.getTimesTable().get(getQuestion()).drawQuestion(g);
+        //System.out.println(question);
+        if (table.getTimesTable().get(getQuestion()) != null) {
+            //table.getTimesTable().get(getQuestion()).drawQuestion(g);
         }
-                
-        setClipping(new Rectangle(new Point(
-                 getAnswerLocation().x - bounds.width / 2, 
-                 getAnswerLocation().y - bounds.height / 2), 
-                 bounds));             
+        
     }
+    
+//    public void drawAnswer(Graphics2D g){
+//        if (!hit){            
+//            
+//            
+//        }
+//                
+//                       
+//    }
+//    
+//    public void drawQuestion(Graphics2D g){
+//        if (!hit){            
+//            
+//            
+//        }
+//                
+//        setClipping(new Rectangle(new Point(
+//                 getAnswerLocation().x - bounds.width / 2, 
+//                 getAnswerLocation().y - bounds.height / 2), 
+//                 bounds));             
+//    }
     
     public boolean isCorrect() {
         return correct;

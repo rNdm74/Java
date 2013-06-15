@@ -8,7 +8,7 @@ import javax.swing.JApplet;
  *
  * @author rNdm
  */
-public class Run extends JApplet {
+public class MainApp extends JApplet {
     public static AudioClip music;
     
     private AudioClip newLevel;

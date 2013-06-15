@@ -27,9 +27,10 @@ public class Task extends TimerTask {
                     break;
                 case PLAY:
                     game.moveBackground();
-                    game.updateQuestionAnswers();
-                    game.updateCorrectAnswer();
+                    //game.updateQuestionAnswers();
+                    //game.updateCorrectAnswer();
                     game.moveAnswers(); 
+                    
                     game.getBird().move(game.getMousePointer());
                     
                     game.hitDetection();

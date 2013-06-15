@@ -11,66 +11,73 @@ import java.awt.image.BufferedImage;
  *
  * @author rNdm
  */
-public class Desyrel{
-        private String letter;
+public class GameText{
+        private char c;
         
-        private Point c = new Point();
+        private Point center = new Point();
         
-        private Point p = new Point(); 
+        private Point location = new Point(); 
         
-        private Dimension d;
+        private Dimension size;
         
-        private Rectangle b;
+        private Rectangle bounds;
         
         private BufferedImage image;
         
-        public Desyrel(String letter, BufferedImage image){
-            this.letter = letter;
+        public GameText(char c, BufferedImage image){
+            this.c = c;
             this.image = image;
-            d = new Dimension(image.getWidth(), image.getHeight());
-            b = new Rectangle(p,d);
+            size = new Dimension(image.getWidth(), image.getHeight());
+            bounds = new Rectangle(location,size);
             
-            p = b.getLocation();
+            location = bounds.getLocation();
         }
         
         public void update(){
             if (image != null) {
-                b = new Rectangle(
-                    c.x - d.width / 2,
-                    c.y - d.height / 2,
-                    d.width,
-                    d.height
+                bounds = new Rectangle(
+                    center.x - size.width / 2,
+                    center.y - size.height / 2,
+                    size.width,
+                    size.height
                 );
             }
         }
         
         public void draw(Graphics2D g){
-            p = b.getLocation();
+            location = bounds.getLocation();
             
             if (image != null) {
                 g.drawImage(image, 
-                    p.x,
-                    p.y,
+                    location.x,
+                    location.y,
                     image.getWidth(), 
                     image.getHeight(), 
                     null
                 );
+                
+                g.draw(bounds);
             }            
         }
 
         public Rectangle getBounds() {
-            return b;
+            return bounds;
         }
 
-        public Point getCentre() {
-            return c;
+        public Point getCenter() {
+            return center;
         }
         
-        public void setCentre(Point c) {
-            this.c = c;
+        public void setCenter(Point c) {
+            this.center = c;
+        }
+        
+        public void setCenter(int x, int y) {
+            this.center.x = x;
+            this.center.y = y;
         }
 
-        public String getLetter() {
-            return letter;
+        public char getChar() {
+            return c;
         }
     }

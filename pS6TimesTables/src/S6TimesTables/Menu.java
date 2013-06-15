@@ -22,66 +22,36 @@ public class Menu implements MouseMotionListener, MouseListener{
     private Point mousePosition = new Point();
     private boolean mousePressed = false;
     
-    private Desyrel[] stage; 
-    private Desyrel[] table;
+    private ArrayList<GameText> stage; 
+    private ArrayList<GameText> table;
+    private ArrayList<ArrayList<GameText>> menuItems;
     
     private ArrayList<Rectangle> rects;
     
-    String[] tableItems = {"3","4","6","7","8","9"};    
-    String selectedItem = "";
-    
-    private Equation[] menuItems = new Equation[tableItems.length];    
-    private Dimension[] menuItemSizes = new Dimension[tableItems.length];
+    private boolean hover = false;
     
     private Game game;
     private Dimension d;    
     
-    private Desyrel selectLeft;
-    private Desyrel selectRight;
+    private GameText selectLeft;
+    private GameText selectRight;
             
-    public Menu(FontManager fm, Game game){
+    public Menu(FontManager fm, LabelManager lm, Game game){
             this.game = game;
             d = game.getContentPaneDimensions();
             
             rects = new ArrayList<>();
 
             for (int y = 0; y < 6; y++) {  
-                Point p = new Point(800 - 100,  50 + (90 * y));
-                rects.add(new Rectangle(p, new Dimension(50,50)));
+                Point p = new Point(800 - 250,  50 + (90 * y));
+                rects.add(new Rectangle(p, new Dimension(200,50)));                
             }
             
-            selectLeft = fm.getLetter("[");
-            selectRight = fm.getLetter("]");
-            
-            table = new Desyrel[]{
-                fm.getLetter("T"),
-                fm.getLetter("i"),
-                fm.getLetter("m"),
-                fm.getLetter("e"),
-                fm.getLetter("s"),
-                fm.getLetter("T"),
-                fm.getLetter("a"),
-                fm.getLetter("b"),
-                fm.getLetter("l"),
-                fm.getLetter("e"),
-                fm.getLetter("s"),
-            };
-            
-            stage = new Desyrel[]{
-                fm.getLetter("S"),
-                fm.getLetter("t"),
-                fm.getLetter("a"),
-                fm.getLetter("g"),
-                fm.getLetter("e"),
-                fm.getLetter("-"),
-                fm.getLetter("6")
-            };
-            
-            for (int i = 0; i < tableItems.length; i++) {
-                menuItems[i] = new Equation(new Object[]{tableItems[i].toUpperCase(),""});
-                menuItems[i].updateQuestion(fm);            
-                menuItemSizes[i] = menuItems[i].getQuestionSize();
-            }            
+            selectLeft = fm.getLetter('<');
+            selectRight = fm.getLetter(']');
+            table = lm.timesTableLabel;            
+            stage = lm.stage6Label;
+            menuItems = lm.menuLabels;   
     }
     
     public void update(Graphics2D g, Point mousePoint){
@@ -96,36 +66,17 @@ public class Menu implements MouseMotionListener, MouseListener{
         game.drawBird(g);
     }
     
-    private int getLevel(String item){
-        switch(item.toLowerCase()){
-            case "3":
-                return 0;
-            case "4":
-                return 1;
-            case "6":
-                return 2;
-            case "7":
-                return 3;
-            case "8":
-                return 4;
-            case "9":
-                return 5;
-            default:
-                return 6;
-        }
-    }
-    
     private void updateSelect(Graphics2D g) {       
         
         if (selectRight != null) {
             selectRight.update(); 
-            selectRight.setCentre(resetPosition);
+            selectRight.setCenter(resetPosition);
             selectRight.draw(g);
         }
         
         if (selectLeft != null) {
             selectLeft.update();
-            selectLeft.setCentre(resetPosition);
+            selectLeft.setCenter(resetPosition);
             selectLeft.draw(g);
         }
     }
@@ -134,61 +85,74 @@ public class Menu implements MouseMotionListener, MouseListener{
         Point p = new Point(50, d.height - 50);
         
         if (table != null) {
-            for (int i = 0; i < table.length; i++) {
-                table[i].update();
-                table[i].setCentre(new Point((p.x) + (40 * i), p.y));            
-                table[i].draw(g);
+            for (int i = 0; i < table.size(); i++) {
+                table.get(i).update();
+                table.get(i).setCenter(new Point((p.x) + (40 * i), p.y));            
+                table.get(i).draw(g);
             }
         }
     }
     
     private void updateStage(Graphics2D g) {
         if (stage != null) {
-            for (int i = 0; i < stage.length; i++) {
-                stage[i].update();
-                stage[i].setCentre(new Point((50) + (40 * i),
+            for (int i = 0; i < stage.size(); i++) {
+                stage.get(i).update();
+                stage.get(i).setCenter(new Point((50) + (40 * i),
                         d.height - 150
                 ));
             
-                stage[i].draw(g);
+                stage.get(i).draw(g);
             }
         }
     }
 
     private void updateMenuItems(Graphics2D g) { 
-        for (int i = 0; i < menuItems.length; i++) {
+        for (int i = 0; i < menuItems.size(); i++) {
             if(rects.get(i).contains(mousePosition)){
-                Point leftPoint = new Point(rects.get(i).x  - 20, rects.get(i).y + 25);
-                Point rightPoint = new Point(rects.get(i).x  + 90, rects.get(i).y + 25);
-                selectLeft.setCentre(leftPoint);
-                selectRight.setCentre(rightPoint);
+                
+                Point leftPoint = new Point(rects.get(i).x  - 50, rects.get(i).y + 25);
+                Point rightPoint = new Point(rects.get(i).x  + 150, rects.get(i).y + 25);
+                selectLeft.setCenter(leftPoint);
+                //selectRight.setCenter(rightPoint);
+                g.draw(rects.get(i));
             }
         }
         
-        for (int i = 0; i < menuItems.length; i++) {
-            menuItems[i].setQuestionLocation(new Point(
-                    (rects.get(i).x + (rects.get(i).width / 2) - (menuItemSizes[i].width / 2) + 30), 
-                    ((rects.get(i).y + (rects.get(i).height / 2) - (menuItemSizes[i].height / 2)) + 30)
-            ));
+        for (int i = 0; i < menuItems.size(); i++) {
+            for (int c = 0; c < menuItems.get(i).size(); c++) {
+                hover = (menuItems.get(i).get(c).getBounds().contains(mousepoint)) ? true : false;
+                menuItems.get(i).get(c).update();
+                menuItems.get(i).get(c).setCenter(new Point((rects.get(i).x + (rects.get(i).width / 2) - 70) + (40 * c), rects.get(i).y + 25));
             
-            menuItems[i].drawQuestion(g);
+                menuItems.get(i).get(c).draw(g);
+                
+            }
+            
+//            menuItems[i].setQuestionLocation(new Point(
+//                    (rects.get(i).x + (rects.get(i).width / 2) - (menuItemSizes[i].width / 2) + 30), 
+//                    ((rects.get(i).y + (rects.get(i).height / 2) - (menuItemSizes[i].height / 2)) + 30)
+//            ));
+//            
+//            menuItems[i].drawQuestion(g);
             
             if (rects.get(i).contains(mousepoint) &&
                 game.getBird().getClipping().intersects(rects.get(i))) {
-                
-                
-                if (!selectedItem.equals(menuItems[i].getQuestion())) {
-                    game.menu = Display.PLAY;
-                    game.setMousePointer(new Point(150, 768 / 2));
-                    Run.music.loop();
-                    int level = getLevel(menuItems[i].getQuestion());
-                    game.setPlayerScore(0);
-                    game.setLevel(level);
-                    game.setTable(game.getTimesTables().get(level));                    
-                }
-                
-                selectedItem = menuItems[i].getQuestion();
-            }
+                game.pickedTimesTable = i * 12;
+                game.menu = Display.PLAY;
+                game.getBird().SPEED = 0;
+                //game.setMousePointer(mousepoint);
+//                if (!selectedItem.equals(menuItems[i].getQuestion())) {
+//                    
+                    game.setMousePointer(new Point(150, 600 / 2));
+//                    MainApp.music.loop();
+//                    int level = getLevel(menuItems[i].getQuestion());
+//                    game.setPlayerScore(0);
+//                    game.setLevel(level);
+//                    game.setTable(game.getTimesTables().get(level));                    
+//                }
+//                
+//                selectedItem = menuItems[i].getQuestion();
+            }            
         }
     }
 

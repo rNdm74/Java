@@ -17,47 +17,10 @@ public class Bird {
         animator.start();
     }
 
-    /**
-     * @return the clipping
-     */
     public Rectangle getClipping() {
         return clipping;
     }
 
-    /**
-     * @param clipping the clipping to set
-     */
-    public void setClipping(Rectangle clipping) {
-        this.clipping = clipping;
-    }
-
-    /**
-     * @return the speed
-     */
-    public Point getSpeed() {
-        return speed;
-    }
-
-    /**
-     * @param speed the speed to set
-     */
-    public void setSpeed(Point speed) {
-        this.speed = speed;
-    }
-
-//    /**
-//     * @return the mousePointer
-//     */
-//    public Point getMousePointer() {
-//        return mousePointer;
-//    }
-//
-//    /**
-//     * @param mousePointer the mousePointer to set
-//     */
-//    public void setMousePointer(Point mousePointer) {
-//        this.mousePointer = mousePointer;
-//    }
     private enum Direction{
         LEFT,
         RIGHT,
@@ -68,39 +31,19 @@ public class Bird {
     // Variables
     private Direction birdDirection = Direction.RIGHT;
     
+    public boolean birdStopped = false;
+    
     private Rectangle center;
     private Rectangle clipping;
     
-    private Point speed = new Point();    
+    public int SPEED = 5;
+    
+    private Point move = new Point();    
     private Point birdCenter = new Point();
     private Point birdPosition = new Point();
-    //private Point mousePointer = new Point();
     
     private Animation animator;
-    
-    
-    
-//    public void hitDetection(Game game){
-//        //if (menu.equals(Game.Display.PLAY) && menu != null) hitDetection();
-//        try {
-//            if (getClipping().intersects(correctAnswer.getClipping())) {             
-//                answeredCorrect = true;            
-//                correctAnswer.setHit(answeredCorrect);
-//                eat.play();            
-//                reset(getPlayerScore() + 100, "correct");
-//            }
-//            else if (getClipping().intersects(falseAnswer1.getClipping()) ||
-//                getClipping().intersects(falseAnswer2.getClipping())) {            
-//                answeredWrong = true;  
-//                falseAnswer1.setHit(answeredWrong);
-//                falseAnswer2.setHit(answeredWrong);            
-//                wrong.play();            
-//                reset(getPlayerScore() - 50, "wrong");
-//            }
-//            } catch (Exception e) {} 
-//        
-//    }
-    
+        
     public void move(Point mousePointer){
         // bird movement
         if (!center.contains(mousePointer)) {
@@ -108,7 +51,7 @@ public class Bird {
         // move right                
         if (birdCenter.x < mousePointer.x) {                    
             birdDirection = Direction.RIGHT;
-            speed.x = 5;
+            move.x = SPEED;
         }
         else{
             if (birdCenter.x > mousePointer.x - 20 &&
@@ -120,7 +63,7 @@ public class Bird {
         // move left
         if (birdCenter.x > mousePointer.x) {
             birdDirection = Direction.LEFT;
-            speed.x = -5;
+            move.x = -SPEED;
         }
         else{
             if (birdCenter.x > mousePointer.x - 20 &&
@@ -131,7 +74,7 @@ public class Bird {
 
         // move down
         if (birdCenter.y < mousePointer.y) {
-            speed.y = 5;
+            move.y = SPEED;
         }
         else{
             if (birdCenter.y > mousePointer.y - 20 &&
@@ -142,7 +85,7 @@ public class Bird {
 
         // move up
         if (birdCenter.y > mousePointer.y) {
-            speed.y = -5;
+            move.y = -SPEED;
         }
         else{
             if (birdCenter.y > mousePointer.y - 20 &&
@@ -152,10 +95,11 @@ public class Bird {
         }
             // is stationary
         }else{
+            birdStopped = true;
             birdDirection = Direction.RIGHT;
             birdCenter = mousePointer;
-            speed.x = 0;
-            speed.y = 0;
+            move.x = 0;
+            move.y = 0;
         }
     }
     
@@ -167,8 +111,11 @@ public class Bird {
         if (animator != null) {
             animator.update(System.currentTimeMillis());
             
-            birdCenter.x += getSpeed().x;
-            birdCenter.y += getSpeed().y;
+            if (!birdStopped) {
+                birdCenter.x += move.x;
+                birdCenter.y += move.y;
+            }
+            
             
             // determines that bird has moved to correct point
             center = new Rectangle(
@@ -184,7 +131,7 @@ public class Bird {
                     birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2) + animator.sprite.getWidth();
                     birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
                     
-                    setClipping(new Rectangle(
+                    clipping = (new Rectangle(
                          birdCenter.x - 80, 
                          (birdCenter.y) + (animator.sprite.getHeight()/2) - 80,
                          50,
@@ -203,7 +150,7 @@ public class Bird {
                     birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2);
                     birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
                     
-                    setClipping(new Rectangle(
+                    clipping = (new Rectangle(
                          birdCenter.x + 20, 
                          (birdCenter.y) + (animator.sprite.getHeight()/2) - 80,
                          50,

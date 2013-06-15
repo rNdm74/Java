@@ -4,6 +4,7 @@ package S6TimesTables;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -11,146 +12,159 @@ import java.util.ArrayList;
  * @author Adam Charlton
  */
 public class LabelManager {
-    private ArrayList<Desyrel> score = new ArrayList<>();
+    private ArrayList<GameText> score = new ArrayList<>();
     
-    private Desyrel[] scoreLabel;    
-    private Desyrel[] timesTableLabel;    
-    private Desyrel[] correctLabel;
-    private Desyrel[] wrongLabel;
-    private Desyrel[] gameOverLabel;
+    //private GameText[] scoreLabel; 
+    private ArrayList<GameText> back; 
+    private ArrayList<GameText> scoreLabel;    
+    public ArrayList<GameText> timesTableLabel; 
+    public ArrayList<GameText> stage6Label;  
+    private ArrayList<GameText> correctLabel;
+    private ArrayList<GameText> wrongLabel;
+    private ArrayList<GameText> gameOverLabel;
+    
+    public ArrayList<ArrayList<GameText>> menuLabels = new ArrayList<>();
+    public ArrayList<ArrayList<GameText>> questions = new ArrayList<>();
+    public ArrayList<ArrayList<GameText>> answers = new ArrayList<>();
     
     private Dimension size;
     private FontManager fm;
+    private TimesTable table;
     
-    
-    public LabelManager(FontManager fm, Dimension size){
+    public LabelManager(FontManager fm, Dimension size, TimesTable table){
         this.fm = fm;
         this.size = size;
-        
+        this.table = table;
+        pos = new Point(size.width + 100, size.height / 2);
         createLabels();
     }  
     
-    private void createLabels() {
-        correctLabel = new Desyrel[]{
-            fm.getLetter("C"),
-            fm.getLetter("O"),
-            fm.getLetter("R"),
-            fm.getLetter("R"),
-            fm.getLetter("E"),
-            fm.getLetter("C"),
-            fm.getLetter("T")
-        };
-
-        wrongLabel = new Desyrel[]{
-            fm.getLetter("T"),
-            fm.getLetter("R"),
-            fm.getLetter("Y"),
-            fm.getLetter("A"),
-            fm.getLetter("G"),
-            fm.getLetter("A"),
-            fm.getLetter("I"),
-            fm.getLetter("N")
-        };
-
-        gameOverLabel = new Desyrel[]{
-            fm.getLetter("W"),
-            fm.getLetter("E"),
-            fm.getLetter("L"),
-            fm.getLetter("L"),
-            fm.getLetter("D"),
-            fm.getLetter("O"),
-            fm.getLetter("N"),
-            fm.getLetter("E")
-        };
-
-//        gameOverLabel = new Desyrel[]{
-//            fm.getLetter("P"),
-//            fm.getLetter("E"),
-//            fm.getLetter("R"),
-//            fm.getLetter("F"),
-//            fm.getLetter("E"),
-//            fm.getLetter("C"),
-//            fm.getLetter("T")
-//        };
-
-        scoreLabel = new Desyrel[]{
-            fm.getLetter("S"),
-            fm.getLetter("c"),
-            fm.getLetter("o"),
-            fm.getLetter("r"),
-            fm.getLetter("e"),
-            fm.getLetter(":")                    
-        };
+    private ArrayList<GameText> label(String word){
+        
+        ArrayList<GameText> gameText = new ArrayList<>();
+        
+        for (int i = 0; i < word.length(); i++) {            
+            char c = word.charAt(i);            
+            if (c != '\u0020')gameText.add(fm.getLetter(c));
+        }
+        
+        return gameText;        
     }
     
-    public void updateGameOverLabel(Graphics2D g) {        
-        for (int i = 0; i < gameOverLabel.length; i++) {
-                gameOverLabel[i].update();
+    private void createLabels() {       
+        
+        String[] levels = {
+            //"One",
+            //"Two",
+            "Three",
+            "Four",
+            //"Five",
+            "Six",
+            "Seven",
+            "Eight",
+            "Nine",
+            //"Ten",
+            //"Eleven",
+            //"Twelve"                        
+        };
+        
+        for (String s: levels) {
+            menuLabels.add(label(s));
+            for(Equation e: new ReadXML("tables.xml").getTableData(s)){               
+                questions.add(label(e.getQuestion()));
+                answers.add(label(e.getAnswer()));
+            }            
+        }
+                
+        correctLabel = label("CORRECT");
+        wrongLabel = label("TRYAGAIN");
+        gameOverLabel = label("WELLDONE");
+        scoreLabel = label("SCORE:");
+        timesTableLabel = label("TIMESTABLES");
+        stage6Label = label("STAGE6");
+    }
+    
+    public Point pos;
+    
+    public void drawPickedTimesTableAnwser(Graphics2D g, int pickedTimesTable){        
+        for (int i = 0; i < answers.get(pickedTimesTable).size(); i++) {
             
-                gameOverLabel[i].setCentre(new Point(
-                        ((size.width / 2) - 120) + (40 * i),
-                          size.height / 2 - 50
-                ));
-                gameOverLabel[i].draw(g);
+                //sets bound rectangle for each letter in the string
+                answers.get(pickedTimesTable).get(i).update();
+            
+                answers.get(pickedTimesTable).get(i).setCenter(
+                        (pos.x) + (40 * i), pos.y
+                );
+                answers.get(pickedTimesTable).get(i).draw(g);
             }                  
     }
     
-    public void drawGameOverLabel(Graphics2D g){
-        for(Desyrel d: gameOverLabel){d.draw(g);}
+    public void drawPickedTimesTableQuestion(Graphics2D g, int pickedTimesTable){
+        for (int i = 0; i < questions.get(pickedTimesTable).size(); i++) {
+            
+                //sets bound rectangle for each letter in the string
+                questions.get(pickedTimesTable).get(i).update();
+            
+                questions.get(pickedTimesTable).get(i).setCenter(
+                        ((size.width / 2) - 20) + (40 * i),
+                          size.height - 50
+                );
+                questions.get(pickedTimesTable).get(i).draw(g);
+            }
     }
     
     public void updateCorrectLabel(Graphics2D g) {        
-        for (int i = 0; i < correctLabel.length; i++) {
-                correctLabel[i].update();
-                correctLabel[i].setCentre(new Point(
+        for (int i = 0; i < correctLabel.size(); i++) {
+                correctLabel.get(i).update();
+                correctLabel.get(i).setCenter(new Point(
                         ((size.width / 2) - 120) + (40 * i),
                         size.height - 50
                 ));
             
-                correctLabel[i].draw(g);
+                correctLabel.get(i).draw(g);
             }                  
     }
     
     public void drawCorrectLabel(Graphics2D g){
-        for(Desyrel d: correctLabel){d.draw(g);}
+        //for(GameText d: correctLabel){d.draw(g);}
     }
     
     public void updateWrongLabel(Graphics2D g) {
-        for (int i = 0; i < wrongLabel.length; i++) {
-                wrongLabel[i].update();
-                wrongLabel[i].setCentre(new Point(
+        for (int i = 0; i < wrongLabel.size(); i++) {
+                wrongLabel.get(i).update();
+                wrongLabel.get(i).setCenter(new Point(
                         ((size.width / 2) - 130) + (40 * i),
                         size.height - 50
                 ));
 
-                wrongLabel[i].draw(g);
+                wrongLabel.get(i).draw(g);
             }           
     }
     
     public void drawWrongLabel(Graphics2D g){
-        for(Desyrel d: wrongLabel){d.draw(g);}
+        //for(GameText d: wrongLabel){d.draw(g);}
     }
     
     public void updateScoreLabel(Graphics2D g) {
-        for (int i = 0; i < scoreLabel.length; i++) {
-            scoreLabel[i].update();
-            scoreLabel[i].setCentre(new Point(
+        for (int i = 0; i < scoreLabel.size(); i++) {
+            scoreLabel.get(i).update();
+            scoreLabel.get(i).setCenter(new Point(
                     50 + (30 * i),
                     50
             ));
             
-            scoreLabel[i].draw(g);
+            scoreLabel.get(i).draw(g);
         }
         
         for (int i = 0; i < score.size(); i++) {
             score.get(i).update();
-            score.get(i).setCentre(new Point(300 + (40*i), 50));
+            score.get(i).setCenter(new Point(300 + (40*i), 50));
             score.get(i).draw(g);
         }        
     }
     
     public void drawScoreLabel(Graphics2D g){
-        for(Desyrel d: scoreLabel){d.draw(g);}
+        for(GameText d: scoreLabel){d.draw(g);}
     }
     
     public void updateScore(int playerScore) {
@@ -158,26 +172,21 @@ public class LabelManager {
         String ps = Integer.toString(playerScore);
 
         for (int i = 0; i < ps.length(); i++) {                
-            score.add(fm.getLetter(Character.toString(ps.charAt(i))));
-            score.get(i).setCentre(new Point(300 + (40*i), 50));
+            score.add(fm.getLetter(ps.charAt(i)));
+            score.get(i).setCenter(new Point(300 + (40*i), 50));
         }
     }
     
     public void drawScore(Graphics2D g){
-        for(Desyrel d: score){d.draw(g);}
+        for(GameText d: score){d.draw(g);}
     }
 
-    /**
-     * @return the score
-     */
-    public ArrayList<Desyrel> getScore() {
+    
+    public ArrayList<GameText> getScore() {
         return score;
     }
 
-    /**
-     * @param score the score to set
-     */
-    public void setScore(ArrayList<Desyrel> score) {
+    public void setScore(ArrayList<GameText> score) {
         this.score = score;
     }
 }

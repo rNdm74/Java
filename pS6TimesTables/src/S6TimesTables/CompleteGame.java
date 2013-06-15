@@ -24,23 +24,23 @@ public class CompleteGame {
     private Equation wellDone = new Equation(new Object[]{"WELL","DONE"});
     
     public CompleteGame(FontManager fm){
-        back.updateQuestion(fm);            
-        backSize = back.getQuestionSize();
-        
-        wellDone.updateQuestion(fm);            
-        wellDoneSize = wellDone.getQuestionSize();
+//        back.updateQuestion(fm);            
+//        backSize = back.getQuestionSize();
+//        
+//        wellDone.updateQuestion(fm);            
+//        wellDoneSize = wellDone.getQuestionSize();
     }  
     
     public void update(Graphics2D g, Point mousepoint, Game game){
         this.mousepoint = mousepoint;
                         
-        bound = new Rectangle(new Point(
-                (getBack().getQuestionLocation().x) - 35,
-                (getBack().getQuestionLocation().y) - (backSize.height / 2)),
-                backSize
-        );
-                            
-        getBack().drawQuestion(g);
+//        bound = new Rectangle(new Point(
+//                (getBack().getQuestionLocation().x) - 35,
+//                (getBack().getQuestionLocation().y) - (backSize.height / 2)),
+//                backSize
+//        );
+//                            
+//        getBack().drawQuestion(g);
             
         if (bound.contains(mousepoint)) {
             game.menu = Display.MENU;

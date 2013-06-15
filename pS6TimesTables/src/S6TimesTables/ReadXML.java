@@ -60,6 +60,7 @@ public class ReadXML {
         for (int i = 0; i < document.getElementsByTagName(tagName).getLength(); i++) {
             NamedNodeMap namedNodeMap = document.getElementsByTagName(tagName).item(i).getAttributes();
             xmlData.add(new Equation(values(namedNodeMap)));
+            //System.out.println(xmlData.get(i).getQuestion());
         }     
         
         return xmlData;   

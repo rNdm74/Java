@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class FontManager {
     private SpriteSheet dl;
     
-    private ArrayList<Desyrel> gameFonts = new ArrayList<>();
+    private ArrayList<GameText> gameFonts = new ArrayList<>();
     
     private BufferedImage desyrel = null;
     private BufferedImageLoader loader = new BufferedImageLoader();
@@ -31,17 +31,17 @@ public class FontManager {
             int width = fonts.get(texture).getSize().width;
             int height = fonts.get(texture).getSize().height;
                         
-            String letter = fonts.get(texture).getName();
+            char letter = ((String)fonts.get(texture).getText()).charAt(0);
             
-            gameFonts.add(new Desyrel(letter, dl.getSprite(p.x, p.y, width, height)));
+            gameFonts.add(new GameText(letter, dl.getSprite(p.x, p.y, width, height)));
         }
     } 
     
-    public Desyrel getLetter(CharSequence letter){
-        Desyrel foundLetter = null;
+    public GameText getLetter(char letter){
+        GameText foundLetter = null;
         
-        for(Desyrel font: gameFonts){
-            if (font.getLetter().contentEquals(letter)) {
+        for(GameText font: gameFonts){
+            if (font.getChar() == letter) {
                 foundLetter =  font;
             }
         }       
