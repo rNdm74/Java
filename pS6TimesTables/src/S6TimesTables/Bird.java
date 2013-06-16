@@ -21,6 +21,10 @@ public class Bird {
         return clipping;
     }
 
+    public Rectangle getCenter() {
+        return center;
+    }
+
     private enum Direction{
         LEFT,
         RIGHT,
@@ -33,8 +37,8 @@ public class Bird {
     
     public boolean birdStopped = false;
     
-    private Rectangle center;
-    private Rectangle clipping;
+    private Rectangle center = new Rectangle();
+    private Rectangle clipping = new Rectangle();
     
     public int SPEED = 5;
     
@@ -43,6 +47,8 @@ public class Bird {
     private Point birdPosition = new Point();
     
     private Animation animator;
+    
+    //private boolean stop = false;
         
     public void move(Point mousePointer){
         // bird movement
@@ -167,7 +173,7 @@ public class Bird {
                     break;            
             }
             
-            g.draw(center);
+            g.draw(getCenter());
             g.draw(clipping);
         }
     }

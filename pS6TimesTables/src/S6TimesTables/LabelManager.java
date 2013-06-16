@@ -35,7 +35,7 @@ public class LabelManager {
         this.fm = fm;
         this.size = size;
         this.table = table;
-        pos = new Point(size.width + 100, size.height / 2);
+        //pos = new Point(size.width + 100, size.height / 2);
         createLabels();
     }  
     
@@ -75,7 +75,8 @@ public class LabelManager {
                 answers.add(label(e.getAnswer()));
             }            
         }
-                
+         
+        back = label("BACK");
         correctLabel = label("CORRECT");
         wrongLabel = label("TRYAGAIN");
         gameOverLabel = label("WELLDONE");
@@ -84,9 +85,35 @@ public class LabelManager {
         stage6Label = label("STAGE6");
     }
     
-    public Point pos;
+    //public Point pos;
     
-    public void drawPickedTimesTableAnwser(Graphics2D g, int pickedTimesTable){        
+    public void drawPickedTimesTableAnwser(Graphics2D g, int pickedTimesTable, Point pos){        
+        for (int i = 0; i < answers.get(pickedTimesTable).size(); i++) {
+            
+                //sets bound rectangle for each letter in the string
+                answers.get(pickedTimesTable).get(i).update();
+            
+                answers.get(pickedTimesTable).get(i).setCenter(
+                        (pos.x) + (40 * i), pos.y
+                );
+                answers.get(pickedTimesTable).get(i).draw(g);
+            }                  
+    }
+    
+    public void drawWrongAnwser1(Graphics2D g, int pickedTimesTable, Point pos){        
+        for (int i = 0; i < answers.get(pickedTimesTable).size(); i++) {
+            
+                //sets bound rectangle for each letter in the string
+                answers.get(pickedTimesTable).get(i).update();
+            
+                answers.get(pickedTimesTable).get(i).setCenter(
+                        (pos.x) + (40 * i), pos.y
+                );
+                answers.get(pickedTimesTable).get(i).draw(g);
+            }                  
+    }
+    
+    public void drawWrongAnwser2(Graphics2D g, int pickedTimesTable, Point pos){        
         for (int i = 0; i < answers.get(pickedTimesTable).size(); i++) {
             
                 //sets bound rectangle for each letter in the string
@@ -111,6 +138,18 @@ public class LabelManager {
                 );
                 questions.get(pickedTimesTable).get(i).draw(g);
             }
+    }
+    
+    public void drawBack(Graphics2D g) {        
+        for (int i = 0; i < back.size(); i++) {
+                back.get(i).update();
+                back.get(i).setCenter(new Point(
+                        ((size.width / 2) - 120) + (40 * i),
+                        size.height - 50
+                ));
+            
+                back.get(i).draw(g);
+            }                  
     }
     
     public void updateCorrectLabel(Graphics2D g) {        

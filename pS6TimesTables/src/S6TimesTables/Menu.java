@@ -120,7 +120,7 @@ public class Menu implements MouseMotionListener, MouseListener{
         
         for (int i = 0; i < menuItems.size(); i++) {
             for (int c = 0; c < menuItems.get(i).size(); c++) {
-                hover = (menuItems.get(i).get(c).getBounds().contains(mousepoint)) ? true : false;
+                //hover = (menuItems.get(i).get(c).getBounds().contains(mousepoint)) ? true : false;
                 menuItems.get(i).get(c).update();
                 menuItems.get(i).get(c).setCenter(new Point((rects.get(i).x + (rects.get(i).width / 2) - 70) + (40 * c), rects.get(i).y + 25));
             
@@ -138,8 +138,13 @@ public class Menu implements MouseMotionListener, MouseListener{
             if (rects.get(i).contains(mousepoint) &&
                 game.getBird().getClipping().intersects(rects.get(i))) {
                 game.pickedTimesTable = i * 12;
+                
+                int[] wrongAnswers = game.pickRandomAnswer();
+                game.wrongAnswer1 = wrongAnswers[0];
+                game.wrongAnswer2 = wrongAnswers[1];
+                
                 game.menu = Display.PLAY;
-                game.getBird().SPEED = 0;
+                //game.getBird().SPEED = 0;
                 //game.setMousePointer(mousepoint);
 //                if (!selectedItem.equals(menuItems[i].getQuestion())) {
 //                    

@@ -19,9 +19,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
 
     // Contructor
     public Game(Object[] setup) throws HeadlessException { 
-        timer = new Timer();
-        task = new Task(this);
-        timer.schedule(task, 0,  1);
+        
         
         run = (MainApp)setup[0];    
         birdSound = (AudioClip) setup[1];
@@ -32,8 +30,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         contentPaneDimensions = run.getPreferredSize();
         
         updateScreenBounds();
-        
-         
+                 
         BufferedImageLoader loader = new BufferedImageLoader();
         BufferedImage spriteSheet;
         BufferedImage background;
@@ -62,75 +59,25 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         } catch(IOException e){           
         }
         
-//        String[] levels = {
-//            //"One",
-//            //"Two",
-//            "Three",
-//            "Four",
-//            //"Five",
-//            "Six",
-//            "Seven",
-//            "Eight",
-//            "Nine",
-//            //"Ten",
-//            //"Eleven",
-//            //"Twelve"                        
-//        };
-                
-//        for (String s: levels) {
-//            TimesTable t = new TimesTable(s);
-//            
-//            for(int item = 0; item < t.getTimesTable().size(); item++){
-//                t.getTimesTable().get(item).updateQuestion(fm);
-//                t.getTimesTable().get(item).updateAnswer(fm);
-//            }
-//            
-//            timesTables.add(new TimesTable(s));
-//        }
-        
-        // pulls timestable from list e.g. timetable 3
-//        table = timesTables.get(playerLevel);
-        
-  
         backdrop = bg.getSprite(0, 200, 1600, contentPaneDimensions.height);
-        
-        
-        
-        
-        
-        populateShuffledQuestions();
-        createQuestionAnswers();
-        //shuffleQuestions();
-         
-        
-        
-        //currentQuestion = playedQuestions.get(question);
-                                    
-        //table.getTimesTable().get(currentQuestion).updateQuestion(fm);  
-
-        //questionWidth = table.getTimesTable().get(currentQuestion).getQuestionSize().width;
-        
+                        
         menu = Display.MENU;
         mainMenu = new Menu(fm, lm, this);
-
-        
-                
+      
         bird = createBird();
-                                    
-        
-        
-        
-        
+                
         setMousePointer(new Point(150, 300));
         
-        completeGame = new CompleteGame(fm);
+        completeGame = new CompleteGame(lm);
         //completeGame.getBack().setQuestionLocation(new Point(50, getContentPaneDimensions().height - 50));
-        
-         
         
         addMouseListener(this);
         addMouseListener(mainMenu);        
         addMouseMotionListener(mainMenu);
+        
+        timer = new Timer();
+        task = new Task(this);
+        timer.scheduleAtFixedRate(task, 0, 1);
     }
 
     //<editor-fold defaultstate="collapsed" desc=" Applet Paint ">
@@ -153,6 +100,9 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             case PLAY:                
                 play(g);
                 break; 
+            case CORRECT:
+                correct(g);
+                break;
             case END:
                 end(g);
                 break;
@@ -160,23 +110,28 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         g.dispose();
         super.repaint();
     }   
-          
+      
+    private void menu(Graphics2D g) {
+        mainMenu.update(g, getMousePointer());
+    } 
+    
     private void play(Graphics2D g) {
-        drawLabels(g);
-        
-        //drawAnswers(g);
-        
-        //drawQuestion(g);               
+        drawLabels(g);             
                 
         drawBird(g);
     }
-    private void menu(Graphics2D g) {
-        mainMenu.update(g, getMousePointer());
-    }      
+    
+    private void correct(Graphics2D g) {
+        lm.updateCorrectLabel(g);               
+                
+        drawBird(g);
+    }
+         
     private void end(Graphics2D g) {
-        completeGame.update(g, getMousePointer(), this);
-        
+        //completeGame.update(g, getMousePointer(), this);
+        lm.drawBack(g);
         lm.updateScoreLabel(g); 
+        drawBird(g);
         //lm.updateGameOverLabel(g);
     }
     //</editor-fold>  
@@ -218,14 +173,31 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     //</editor-fold>
       
     public int pickedTimesTable;
+    public int wrongAnswer1;
+    public int wrongAnswer2;
+    
+    //Point[] pos = shuffleAnswerPositions();
         
     private void drawLabels(Graphics2D g){
-        if (answeredCorrect)lm.updateCorrectLabel(g);
-        if (answeredWrong)lm.updateWrongLabel(g);
+        if (answeredTrue){
+            lm.updateCorrectLabel(g);
+        }
+        if (answeredFalse){
+            lm.updateWrongLabel(g);
+        }
+        if (!answeredTrue && !answeredFalse){
+            lm.drawPickedTimesTableQuestion(g, pickedTimesTable);
+        }
+        
         lm.updateScoreLabel(g);
         lm.updateScore(getPlayerScore());
-        lm.drawPickedTimesTableQuestion(g, pickedTimesTable);
-        lm.drawPickedTimesTableAnwser(g, pickedTimesTable);
+        
+        
+        
+        lm.drawWrongAnwser1(g, wrongAnswer1, top);
+        lm.drawPickedTimesTableAnwser(g, pickedTimesTable, center);
+        lm.drawWrongAnwser2(g, wrongAnswer2, bottom);
+        
     }
     
     private void checkPlayerScore() {
@@ -258,40 +230,46 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
 
     
     boolean correctAnswerHit = false;
-    boolean falseAnswerHit;
-    int count = 0;
+    boolean falseAnswerHit  = false;
+    boolean birdReset = false;
     
+    int count = 0;    
+    int questionCount = 0;
     
-    public void hitDetection() {
-//        falseAnswerHit = (bird.getClipping().intersects(falseAnswer1.getClipping()) ||
-//            clipping.intersects(falseAnswer2.getClipping())) ? true : false;
-            
-        //System.out.println(correctAnswerHit);
-        //System.out.println(falseAnswerHit);
-        //boolean t = ();        
-        //System.out.println(bird.getClipping());       
-            
-//        if (correctAnswerHit != bird.getClipping().intersects(correctAnswer.getClipping())) {  
-//            
-//            correctSound.play(); 
-//            answeredCorrect = bird.getClipping().intersects(correctAnswer.getClipping());            
-//            correctAnswer.setHit(answeredCorrect);
-//                       
-//            resetQuestion(getPlayerScore() + 100, "correct");
-//            
-//            
-//            System.out.println(count++);
-//            
-//            correctAnswerHit = bird.getClipping().intersects(correctAnswer.getClipping());            
-//        }
-            
-        if (falseAnswerHit) {            
-//                answeredWrong = true;  
-//                falseAnswer1.setHit(answeredWrong);
-//                falseAnswer2.setHit(answeredWrong);            
-//                wrongSound.play();            
-//                resetQuestion(getPlayerScore() - 50, "wrong");
-        }             
+    boolean previouslyColliding = false;
+    boolean currentlyColliding = false;
+
+    public boolean checkCollision(int answer) {
+        return (bird.getClipping().intersects(lm.answers.get(answer).get(0).getBounds())) ? true : false;
+    }
+    
+    public void updateHitDetection(){
+        if(hitDetection(pickedTimesTable)){
+            answeredTrue = true;
+        }
+        
+        if(hitDetection(wrongAnswer1)) answeredFalse = true;
+        if(hitDetection(wrongAnswer2)) answeredFalse = true;
+    }
+    
+    public boolean hitDetection(int answer) {
+        
+        currentlyColliding = checkCollision(answer);
+        
+        if(currentlyColliding && !previouslyColliding) 
+        {            
+            handleCollision(answer); 
+            return true;
+        }
+        previouslyColliding = currentlyColliding;
+        
+        
+        if (center.x < contentPaneDimensions.width + 100) {
+            answeredTrue = false;
+            answeredFalse = false;
+        }  
+        
+        return false;
     }
     
     private void resetQuestion(int setScore, String result) {        
@@ -300,9 +278,9 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
 
         answersReset(result);
         
-        shuffleQuestionsPosition();
+        //shuffleQuestionsPosition();
         
-        shuffleQuestions();
+        pickRandomAnswer();
         
         setMousePointer(new Point(150, 300));
     }
@@ -324,8 +302,8 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             playedQuestions.clear(); 
             
             
-            answeredCorrect = false;
-            answeredWrong = false;
+            answeredTrue = false;
+            answeredFalse = false;
             
             //Collections.shuffle(playedQuestions);
             
@@ -337,13 +315,13 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
                 //System.out.println(question);
                 //run.getAppletContext().showStatus(Integer.toString(question));
                 currentQuestion = playedQuestions.get(question++);                
-        }            
+            }            
         }
         
         lm.updateScore(getPlayerScore());
     }
            
-    private void shuffleQuestionsPosition(){
+    public void shuffleAnswersPlacement(){
         ArrayList<Point> points = new ArrayList();
         
         points.add(top);
@@ -351,25 +329,35 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         points.add(bottom);
         
         Collections.shuffle(points);
-            
-        correctAnswerPoint = points.get(0);
-        falseAnswer1Point = points.get(1);
-        falseAnswer2Point = points.get(2);
+         
+        top = points.get(0);
+        center = points.get(1);
+        bottom = points.get(2);
     }
      
-    private void shuffleQuestions(){
-        ArrayList<Integer> questions = new ArrayList();
+    
+    int roundCount = 0;
+    int startNumber = 0;
+    
+    public int[] pickRandomAnswer(){
+        ArrayList<Integer> shuffledNumbers = new ArrayList();
         
-        for (int i = 0; i < 12; i++) {
-            if (i != currentQuestion) {
-                questions.add(i);
+        if(pickedTimesTable % 12 == 0){
+            startNumber = pickedTimesTable;
+            menu = Display.END;
+        }
+        
+        for (int i = startNumber; i < startNumber + 12; i++){            
+            if (i != pickedTimesTable){                
+                shuffledNumbers.add(i);
             }
         }
         
-        Collections.shuffle(questions);
-            
-        falseQuestion1 = questions.get(0);
-        falseQuestion2 = questions.get(questions.size()-1);
+        Collections.shuffle(shuffledNumbers);
+        
+        roundCount++;
+                    
+        return new int[]{shuffledNumbers.get(0), shuffledNumbers.get(shuffledNumbers.size()-1)};
     }
     
     
@@ -413,68 +401,105 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     }
     
     
-    public void moveAnswers() {  
-        System.out.println(lm.pos.x);
-        if (count > 10) {
-            lm.pos.x -= 1f;
+    public void moveAnswers() {
+        if (count > 15) {
+            top.x -= 1f;
+            center.x -= 1f;
+            bottom.x -= 1f;
             count = 0;
         }
         
-        
-        if (lm.pos.x <= 0) {
-            lm.pos.x = getContentPaneDimensions().width + 200;
-        }
+        if (top.x <= 10){
+            resetAnswersPosition();                
+        }        
         
         count++;
     }
 
-               
-    public void updateQuestionAnswers() {        
-        correctAnswerPoint.x = (int)numbersX;
-        falseAnswer1Point.x = (int)numbersX;
-        falseAnswer2Point.x = (int)numbersX;
-        
-        
-        if (numbersX < getContentPaneDimensions().width) {
-            answeredCorrect = false;
-            answeredWrong = false;
-            correctAnswer.setHit(answeredCorrect);
-            falseAnswer1.setHit(answeredWrong);
-            falseAnswer2.setHit(answeredWrong);
+    public void resetAnswersPosition() {
+        top.x = getContentPaneDimensions().width + 200;
+        center.x = getContentPaneDimensions().width + 200;
+        bottom.x = getContentPaneDimensions().width + 200;
+    }
+
+    public void handleCollision(int answer) {
+        if (answer == pickedTimesTable) {
+            //correctSound.play();
+            // move to next question
+            pickedTimesTable++;
+            // add to players score
+            //playerScore += 100;
+        }
+        else{
+            //wrongSound.play();
+            //playerScore -= 50;
         }
         
+                
+        // reset bird position
+        //mousePointer = new Point(150, 300);
+                
+        // get new wrongs answers for next question
+        int[] answers = pickRandomAnswer();            
+        wrongAnswer1 = answers[0];
+        wrongAnswer2 = answers[1];
+
+        // set where answers are placed on screen
+        shuffleAnswersPlacement();
         
-        
-        falseAnswer1.setTable(table);
-        falseAnswer1.setQuestion(falseQuestion1);
-        falseAnswer1.setAnswerLocation(falseAnswer1Point);
-        
-        
-        falseAnswer2.setTable(table);
-        falseAnswer2.setQuestion(falseQuestion2);
-        falseAnswer2.setAnswerLocation(falseAnswer2Point);
-        
-        
-        correctAnswer.setTable(table);
-        correctAnswer.setQuestion(currentQuestion);
-        correctAnswer.setAnswerLocation(correctAnswerPoint);
-            
-        falseAnswer1.updateAnswer();
-        falseAnswer2.updateAnswer();
-        correctAnswer.updateAnswer();
-        correctAnswer.updateQuestion();
-    }     
-    public void updateCorrectAnswer() {
-        correctAnswer.setQuestionLocation(new Point(
-                    (getContentPaneDimensions().width / 2) - 40,
-                    getContentPaneDimensions().height - 50
-            ));
+        // resets the x position
+        resetAnswersPosition();
     }
-        
+
+//               
+//    public void updateQuestionAnswers() {        
+//        correctAnswerPoint.x = (int)numbersX;
+//        falseAnswer1Point.x = (int)numbersX;
+//        falseAnswer2Point.x = (int)numbersX;
+//        
+//        
+//        if (numbersX < getContentPaneDimensions().width) {
+//            answeredCorrect = false;
+//            answeredWrong = false;
+//            correctAnswer.setHit(answeredCorrect);
+//            falseAnswer1.setHit(answeredWrong);
+//            falseAnswer2.setHit(answeredWrong);
+//        }
+//        
+//        
+//        
+//        falseAnswer1.setTable(table);
+//        falseAnswer1.setQuestion(falseQuestion1);
+//        falseAnswer1.setAnswerLocation(falseAnswer1Point);
+//        
+//        
+//        falseAnswer2.setTable(table);
+//        falseAnswer2.setQuestion(falseQuestion2);
+//        falseAnswer2.setAnswerLocation(falseAnswer2Point);
+//        
+//        
+//        correctAnswer.setTable(table);
+//        correctAnswer.setQuestion(currentQuestion);
+//        correctAnswer.setAnswerLocation(correctAnswerPoint);
+//            
+//        falseAnswer1.updateAnswer();
+//        falseAnswer2.updateAnswer();
+//        correctAnswer.updateAnswer();
+//        correctAnswer.updateQuestion();
+//    }     
+//    public void updateCorrectAnswer() {
+//        correctAnswer.setQuestionLocation(new Point(
+//                    (getContentPaneDimensions().width / 2) - 40,
+//                    getContentPaneDimensions().height - 50
+//            ));
+//    }
+//        
     //<editor-fold defaultstate="collapsed" desc=" Applet Enums ">
     public static enum Display{
         MENU,
         PLAY,
+        CORRECT,
+        WRONG,
         END
     }
         
@@ -535,14 +560,12 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         }
     }  
      
-    private void drawBackground(Graphics2D g) {
-        //moveBackground();
-        
+    private void drawBackground(Graphics2D g) {        
         g.drawImage(backdrop, 
                 (int)backgroundX,
                 (int)backgroundY,
                 backdrop.getWidth(this), 
-            backdrop.getHeight(this), 
+                backdrop.getHeight(this), 
                 null
         );
         
@@ -554,32 +577,6 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
                 null
         );
     }  
-    private void drawAnswers(Graphics2D g){
-        try{
-            falseAnswer1.drawAnswer(g);
-            falseAnswer2.drawAnswer(g);
-            correctAnswer.drawAnswer(g); 
-        }catch(Exception e){}
-           
-    }
-    private void drawQuestion(Graphics2D g) {        
-        if (!answeredCorrect && !answeredWrong)correctAnswer.drawQuestion(g);                
-    }
-    
-    
-    
-        
-    private void createQuestionAnswers() {
-        //correctAnswer = new EquationManager(table, currentQuestion, fm);
-        //falseAnswer1 = new EquationManager(table, falseQuestion1, fm);
-        //falseAnswer2 = new EquationManager(table, falseQuestion2, fm);
-    }
-        
-    private void populateShuffledQuestions() {
-//        for (int i = 0; i < table.getTimesTable().size(); i++)playedQuestions.add(i);        
-        //Collections.shuffle(playedQuestions);
-    }
-
     
     //</editor-fold>
         
@@ -594,15 +591,24 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
     @Override
     public void mouseClicked(MouseEvent me) {
-        pickedTimesTable++;
-        playerScore += 20;
+//        pickedTimesTable++;
+//        playerScore += 20;
+//        
+//        int[] answers = pickRandomAnswer();
+//        wrongAnswer1 = answers[0];
+//        wrongAnswer2 = answers[1];
+//        
+//        shuffleAnswerPositions();
+        
+        
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
+        
         setMousePointer(me.getPoint()); 
         bird.birdStopped = false;
-        bird.SPEED = 2;
+        bird.SPEED = 5;
     }
 
     @Override
@@ -696,8 +702,8 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     private EquationManager falseAnswer1;
     private EquationManager falseAnswer2;
     
-    private boolean answeredCorrect;
-    private boolean answeredWrong;
+    private boolean answeredTrue;
+    private boolean answeredFalse;
     
     private boolean gameEnd;
         

@@ -20,11 +20,14 @@ public class CompleteGame {
     
     private Dimension wellDoneSize;
     
-    private Equation back = new Equation(new Object[]{"BACK",""});
-    private Equation wellDone = new Equation(new Object[]{"WELL","DONE"});
+    //private Equation back = new Equation(new Object[]{"BACK",""});
+    //private Equation wellDone = new Equation(new Object[]{"WELL","DONE"});
     
-    public CompleteGame(FontManager fm){
-//        back.updateQuestion(fm);            
+    LabelManager lm;
+    
+    public CompleteGame(LabelManager lm){
+//        back.updateQuestion(fm);
+        this.lm = lm;
 //        backSize = back.getQuestionSize();
 //        
 //        wellDone.updateQuestion(fm);            
@@ -33,6 +36,8 @@ public class CompleteGame {
     
     public void update(Graphics2D g, Point mousepoint, Game game){
         this.mousepoint = mousepoint;
+        
+        lm.drawBack(g);
                         
 //        bound = new Rectangle(new Point(
 //                (getBack().getQuestionLocation().x) - 35,
@@ -42,25 +47,8 @@ public class CompleteGame {
 //                            
 //        getBack().drawQuestion(g);
             
-        if (bound.contains(mousepoint)) {
-            game.menu = Display.MENU;
-            this.mousepoint = new Point(50, 300);
-        }   
+        //   
         
         game.drawBird(g);    
-    }
-
-    /**
-     * @return the back
-     */
-    public Equation getBack() {
-        return back;
-    }
-
-    /**
-     * @param back the back to set
-     */
-    public void setBack(Equation back) {
-        this.back = back;
     }
 }
