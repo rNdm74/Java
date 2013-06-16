@@ -37,7 +37,7 @@ public class CompleteGame {
     public void update(Graphics2D g, Point mousepoint, Game game){
         this.mousepoint = mousepoint;
         
-        lm.drawBack(g);
+        lm.drawGameOver(g);
                         
 //        bound = new Rectangle(new Point(
 //                (getBack().getQuestionLocation().x) - 35,

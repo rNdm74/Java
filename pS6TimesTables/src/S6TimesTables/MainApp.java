@@ -11,6 +11,9 @@ import javax.swing.JApplet;
 public class MainApp extends JApplet {
     public static AudioClip music;
     
+    private AudioClip back;
+    private AudioClip select;
+    private AudioClip validate;
     private AudioClip newLevel;
     private AudioClip wrong;
     private AudioClip bird;    
@@ -25,6 +28,9 @@ public class MainApp extends JApplet {
         setFocusable(true);
         requestFocusInWindow();
                 
+        back = getAudioClip(getClass().getResource("back.wav"));
+        select = getAudioClip(getClass().getResource("select.wav"));
+        validate = getAudioClip(getClass().getResource("validate.wav"));
         bird = getAudioClip(getClass().getResource("wing_flap.wav")); 
         newLevel = getAudioClip(getClass().getResource("level.wav"));
         wrong = getAudioClip(getClass().getResource("wrong.wav"));
@@ -36,7 +42,10 @@ public class MainApp extends JApplet {
             bird,
             eat,
             newLevel,
-            wrong
+            wrong,
+            back,
+            select,
+            validate
         };
         
         setContentPane(new Game(setup));

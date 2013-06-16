@@ -23,7 +23,7 @@ public class Menu implements MouseMotionListener, MouseListener{
     private boolean mousePressed = false;
     
     private ArrayList<GameText> stage; 
-    private ArrayList<GameText> table;
+    private ArrayList<GameText> choose;
     private ArrayList<ArrayList<GameText>> menuItems;
     
     private ArrayList<Rectangle> rects;
@@ -43,14 +43,14 @@ public class Menu implements MouseMotionListener, MouseListener{
             rects = new ArrayList<>();
 
             for (int y = 0; y < 6; y++) {  
-                Point p = new Point(800 - 250,  50 + (90 * y));
-                rects.add(new Rectangle(p, new Dimension(200,50)));                
+                Point p = new Point(400,  50 + (90 * y));
+                rects.add(new Rectangle(p, new Dimension(250,50)));                
             }
             
-            selectLeft = fm.getLetter('<');
-            selectRight = fm.getLetter(']');
-            table = lm.timesTableLabel;            
-            stage = lm.stage6Label;
+            selectLeft = fm.getLetter('>');
+            selectRight = fm.getLetter('<');
+            choose = lm.choose;            
+            //stage = lm.choose;
             menuItems = lm.menuLabels;   
     }
     
@@ -58,8 +58,9 @@ public class Menu implements MouseMotionListener, MouseListener{
         this.mousepoint = mousePoint;
         
         updateMenuItems(g);
+        
         updateChoose(g);
-        updateStage(g);
+        //updateStage(g);
         
         if (!mousePressed)updateSelect(g);
         
@@ -82,13 +83,13 @@ public class Menu implements MouseMotionListener, MouseListener{
     }
     
     private void updateChoose(Graphics2D g) {
-        Point p = new Point(50, d.height - 50);
+        Point p = new Point(50, 50);
         
-        if (table != null) {
-            for (int i = 0; i < table.size(); i++) {
-                table.get(i).update();
-                table.get(i).setCenter(new Point((p.x) + (40 * i), p.y));            
-                table.get(i).draw(g);
+        if (choose != null) {
+            for (int i = 0; i < choose.size(); i++) {
+                choose.get(i).update();
+                choose.get(i).setCenter(new Point((p.x) + (40 * i), p.y));            
+                choose.get(i).draw(g);
             }
         }
     }
@@ -105,59 +106,49 @@ public class Menu implements MouseMotionListener, MouseListener{
             }
         }
     }
-
-    private void updateMenuItems(Graphics2D g) { 
-        for (int i = 0; i < menuItems.size(); i++) {
-            if(rects.get(i).contains(mousePosition)){
-                
-                Point leftPoint = new Point(rects.get(i).x  - 50, rects.get(i).y + 25);
-                Point rightPoint = new Point(rects.get(i).x  + 150, rects.get(i).y + 25);
-                selectLeft.setCenter(leftPoint);
-                //selectRight.setCenter(rightPoint);
-                g.draw(rects.get(i));
-            }
-        }
-        
-        for (int i = 0; i < menuItems.size(); i++) {
-            for (int c = 0; c < menuItems.get(i).size(); c++) {
-                //hover = (menuItems.get(i).get(c).getBounds().contains(mousepoint)) ? true : false;
-                menuItems.get(i).get(c).update();
-                menuItems.get(i).get(c).setCenter(new Point((rects.get(i).x + (rects.get(i).width / 2) - 70) + (40 * c), rects.get(i).y + 25));
-            
-                menuItems.get(i).get(c).draw(g);
-                
+    
+    public void updateSelectTimesTableItem(){
+        for (int i = 0; i < menuItems.size(); i++) {                        
+            if(rects.get(i).contains(mousePosition)){                
+                //Point leftPoint = new Point(rects.get(i).x  - 25, rects.get(i).y + 25);
+                Point rightPoint = new Point(rects.get(i).x  + 275, rects.get(i).y + 25);
+                //selectLeft.setCenter(leftPoint);
+                selectRight.setCenter(rightPoint);
             }
             
-//            menuItems[i].setQuestionLocation(new Point(
-//                    (rects.get(i).x + (rects.get(i).width / 2) - (menuItemSizes[i].width / 2) + 30), 
-//                    ((rects.get(i).y + (rects.get(i).height / 2) - (menuItemSizes[i].height / 2)) + 30)
-//            ));
-//            
-//            menuItems[i].drawQuestion(g);
-            
-            if (rects.get(i).contains(mousepoint) &&
-                game.getBird().getClipping().intersects(rects.get(i))) {
+            if (rects.get(i).contains(mousepoint)) {                
+                game.validateSound.play();
+                
                 game.pickedTimesTable = i * 12;
                 
                 int[] wrongAnswers = game.pickRandomAnswer();
                 game.wrongAnswer1 = wrongAnswers[0];
                 game.wrongAnswer2 = wrongAnswers[1];
                 
+                game.answeredFalse = false;
+                game.answeredTrue = false;
+                
                 game.menu = Display.PLAY;
-                //game.getBird().SPEED = 0;
-                //game.setMousePointer(mousepoint);
-//                if (!selectedItem.equals(menuItems[i].getQuestion())) {
-//                    
-                    game.setMousePointer(new Point(150, 600 / 2));
-//                    MainApp.music.loop();
-//                    int level = getLevel(menuItems[i].getQuestion());
-//                    game.setPlayerScore(0);
-//                    game.setLevel(level);
-//                    game.setTable(game.getTimesTables().get(level));                    
-//                }
-//                
-//                selectedItem = menuItems[i].getQuestion();
+                game.resetAnswersPosition();
+                     
+                game.setMousePointer(new Point(150, 300));
+                MainApp.music.loop();
+                game.setPlayerScore(0);
+                mousepoint = new Point();
             }            
+        }
+    }
+
+    private void updateMenuItems(Graphics2D g) {         
+        for (int i = 0; i < menuItems.size(); i++) {
+            for (int c = 0; c < menuItems.get(i).size(); c++) {
+                menuItems.get(i).get(c).update();
+                menuItems.get(i).get(c).setCenter(new Point(
+                        (rects.get(i).x + (rects.get(i).width / 2) - 70) + (40 * c), 
+                         rects.get(i).y + 25));
+            
+                menuItems.get(i).get(c).draw(g);                
+            }
         }
     }
 
@@ -165,9 +156,24 @@ public class Menu implements MouseMotionListener, MouseListener{
     public void mouseDragged(MouseEvent me) {
     }
 
+    int previousSelectItem;
+    int currentSelectItem;
+    
     @Override
     public void mouseMoved(MouseEvent me) {
-        mousePosition = me.getPoint();        
+        mousePosition = me.getPoint(); 
+        for (int i = 0; i < menuItems.size(); i++) {
+            if(new CollisionDetection().pointContained(mousePosition, rects.get(i)) &&
+                game.menu.equals(Display.MENU)){  
+                currentSelectItem = i;
+                
+                if (currentSelectItem != previousSelectItem) {
+                    game.selectSound.play();
+                }
+                
+                previousSelectItem = currentSelectItem;
+            }
+        }
     }
 
     @Override

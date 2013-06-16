@@ -20,28 +20,34 @@ public class Task extends TimerTask {
     @Override
     public void run() {  
         switch(game.menu){
+                case TITLE:
+                    game.moveBackground();
+                    game.clickPlay();
+                    game.getBird().move(game.getMousePointer());
+                break;
                 case MENU:
                     game.moveBackground();
+                    game.mainMenu.updateSelectTimesTableItem();
                     game.getBird().move(game.getMousePointer());
                     break;
                 case PLAY:
-                    game.updateHitDetection();
+                    if (!game.currentlyColliding) game.updateHitDetection();
+                    
+                    game.checkAnswersLocation();
                     
                     game.moveBackground();
-                    //game.updateQuestionAnswers();
-                    //game.updateCorrectAnswer();
+                    
+                    game.clickMenu();
+                    
                     game.moveAnswers(); 
                     
                     game.getBird().move(game.getMousePointer());
-                    break;
-                    
-                case CORRECT:
-//                    game.moveBackground();
-//                    game.getBird().move(game.getMousePointer());
-//                    game.hitDetection();
-                    break;
+                    break;                                        
                 case END:
                     game.moveBackground();
+                    
+                    game.clickMenu();
+                    
                     game.getBird().move(game.getMousePointer());
                     break;            
             }

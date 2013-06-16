@@ -56,7 +56,7 @@ public class GameText{
                     null
                 );
                 
-                g.draw(bounds);
+                //g.draw(bounds);
             }            
         }
 
