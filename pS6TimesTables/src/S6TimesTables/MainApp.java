@@ -51,8 +51,15 @@ public class MainApp extends JApplet {
             poop
         };
         
-        setContentPane(new Game(setup));
         
+        
+        Game g = new Game(setup);
+        
+        Thread t = new Thread(g);
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+        
+        setContentPane(g);
     }
     
     @Override

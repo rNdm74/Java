@@ -4,7 +4,6 @@ package S6TimesTables;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 
 /**
  *
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 public class Bird {  
     public Bird(Animation animator){
         this.animator = animator;
-        
-        
         
         animator.setSpeed(90);
         animator.start();
@@ -46,7 +43,7 @@ public class Bird {
     public int SPEED = 3;
     
     private Point move = new Point();    
-    private Point birdCenter = new Point();
+    public Point birdCenter = new Point(0,0);
     private Point birdPosition = new Point();
     
     

@@ -10,7 +10,7 @@ import java.util.TimerTask;
  *
  * @author Adam Charlton
  */
-public class Task extends TimerTask {
+public class Task extends TimerTask implements Runnable{
     private Game game;    
     
     public Task(Game g){ 
@@ -19,7 +19,7 @@ public class Task extends TimerTask {
     
     @Override
     public void run() {  
-        switch(game.menu){
+        switch(game.display){
                 case TITLE:
                     game.moveBackground();
                     game.clickPlay();
@@ -28,7 +28,7 @@ public class Task extends TimerTask {
                 break;
                 case MENU:
                     game.moveBackground();
-                    game.mainMenu.updateSelectTimesTableItem();
+                    //game.mainMenu.updateSelectTimesTableItem();
                     game.getBird().move(game.getMousePointer());
                     game.birdPoop();
                     break;
