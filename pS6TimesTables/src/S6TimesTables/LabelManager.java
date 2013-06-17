@@ -87,16 +87,16 @@ public class LabelManager {
         menu = label("MENU");
         scoreLabel = label("SCORE:");
         timesTableLabel = label("TIMESTABLES");
-        stage6Label = label("STAGE6:");
+        stage6Label = label("STAGE6");
     }
-    public int move = 0;
+    public float move = 0;
     public void drawPoop(Graphics2D g, Point p) { 
         
         //poopPos = center.getLocation();
         
         for (int i = 0; i < poop.size(); i++) {
                 poop.get(i).update();
-                poop.get(i).setCenter(p.x - 30, (p.y + 17) + move);            
+                poop.get(i).setCenter(p.x - 30, (p.y + 17) + (int)move);            
                 poop.get(i).draw(g);
             }                  
     }

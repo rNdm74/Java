@@ -32,13 +32,13 @@ public class ReadXML {
     
     public ReadXML(String file){         
         try {
-//            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + file);
-//            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-//            connection.setRequestMethod("GET");
-//            connection.connect();            
-//            InputStream stream = connection.getInputStream();
+            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + file);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();            
+            InputStream stream = connection.getInputStream();
                         
-            File stream = new File(file);         
+            //File stream = new File(file);         
                     
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
             

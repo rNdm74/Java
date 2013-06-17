@@ -24,11 +24,13 @@ public class Task extends TimerTask {
                     game.moveBackground();
                     game.clickPlay();
                     game.getBird().move(game.getMousePointer());
+                    game.birdPoop();
                 break;
                 case MENU:
                     game.moveBackground();
                     game.mainMenu.updateSelectTimesTableItem();
                     game.getBird().move(game.getMousePointer());
+                    game.birdPoop();
                     break;
                 case PLAY:
                     if (!game.currentlyColliding) game.updateHitDetection();
@@ -42,6 +44,8 @@ public class Task extends TimerTask {
                     game.moveAnswers(); 
                     
                     game.getBird().move(game.getMousePointer());
+                    
+                    game.birdPoop();
                     break;                                        
                 case END:
                     game.moveBackground();
@@ -49,6 +53,8 @@ public class Task extends TimerTask {
                     game.clickMenu();
                     
                     game.getBird().move(game.getMousePointer());
+                    
+                    game.birdPoop();
                     break;            
             }
         try{

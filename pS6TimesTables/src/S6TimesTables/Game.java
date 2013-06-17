@@ -27,6 +27,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
         backSound = (AudioClip) setup[5];
         selectSound = (AudioClip) setup[6];
         validateSound = (AudioClip) setup[7];
+        poopSound = (AudioClip) setup[8];
                   
         contentPaneDimensions = run.getPreferredSize();
         
@@ -332,25 +333,13 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     }
     
     boolean clicked = false;
+    boolean pooped = false;
     
     public void drawBird(Graphics2D g) {     
         lm.drawPoop(g, getBird().getCenter().getLocation());
+        
         getBird().updateBird(g);
-        
-        
-        if(clicked && getBird().getCenter().contains(mousePointer)){  
-            boolean val = new Random().nextInt(1000)==0;
-            
-            if(val){                
-                if (lm.poop.get(0).getCenter().y > 600) {               
-                    lm.move = 0;
-                    clicked = false;
-               }
-           }
-           
-           
-           lm.move += 4; 
-        }        
+        birdPoop();      
     }
     
     public Bird getBird() {
@@ -417,6 +406,28 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
             previouslyColliding = false;
             answeredTrue = false;
             answeredFalse = false;
+        }
+    }
+
+    private void playPoop() {
+        poopSound.play();
+        pooped = true;
+    }
+
+    public void birdPoop() {
+        if (new Random().nextInt(10000)==0) {
+            playPoop();
+        }
+        
+        
+        if(pooped){
+            lm.move += 0.5f;
+        }
+        
+        if (lm.poop.get(0).getCenter().y > 600) {               
+            lm.move = 0;
+            clicked = false;
+            pooped = false;
         }
     }
  
@@ -517,8 +528,13 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     
     @Override
     public void mouseClicked(MouseEvent me) {
-    
+        //
         clicked = true;
+        
+        if(getBird().getCenter().contains(me.getPoint())){
+            //poopSound.play();
+            playPoop();
+        }
         
 //        pickedTimesTable++;
 //        playerScore += 20;
@@ -613,6 +629,7 @@ public final class Game extends JPanel implements MouseListener, MouseMotionList
     private AudioClip correctSound;
     public AudioClip roundCompleteSound;
     private AudioClip wrongSound;
+    public AudioClip poopSound;
     
     private Rectangle gameContentArea = new Rectangle();
     

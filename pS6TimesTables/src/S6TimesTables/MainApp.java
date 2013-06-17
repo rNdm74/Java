@@ -18,6 +18,7 @@ public class MainApp extends JApplet {
     private AudioClip wrong;
     private AudioClip bird;    
     private AudioClip eat;
+    private AudioClip poop;
         
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
@@ -36,6 +37,7 @@ public class MainApp extends JApplet {
         wrong = getAudioClip(getClass().getResource("wrong.wav"));
         music = getAudioClip(getClass().getResource("music.wav"));
         eat = getAudioClip(getClass().getResource("eat.wav"));
+        poop = getAudioClip(getClass().getResource("poop.wav"));
                 
         Object[] setup = {
             this,
@@ -45,7 +47,8 @@ public class MainApp extends JApplet {
             wrong,
             back,
             select,
-            validate
+            validate,
+            poop
         };
         
         setContentPane(new Game(setup));
