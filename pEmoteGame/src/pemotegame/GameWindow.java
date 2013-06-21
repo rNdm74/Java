@@ -7,7 +7,7 @@ import javax.swing.JFrame;
  *
  * @author Adam Charlton
  */
-public class GameWindow extends JFrame{
+public class GameWindow extends JFrame {
     private Game game;
 
     public GameWindow() {
@@ -15,12 +15,14 @@ public class GameWindow extends JFrame{
         
         setSize(800,600);
         
-        setResizable(false);                
+        //setResizable(false);                
         setVisible(true);  
         
         game = new Game(getContentPane().getSize());
         
         setContentPane(game);        
         addKeyListener(game);
+        addMouseListener(game);
+        addComponentListener(game);
     }        
 }

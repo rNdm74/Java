@@ -5,15 +5,44 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
+import java.util.Random;
 
 /**
  *
  * @author Adam Charlton
  */
-public class Game extends JPanel implements ActionListener, KeyListener{
-    
+public class Game extends JPanel implements ActionListener, KeyListener, MouseListener,ComponentListener{
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+        Point2D p2d = me.getPoint();
+        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
+        //System.out.println(me.getPoint());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+    }
+        
     public enum Direction{
         LEFT,
         RIGHT,
@@ -33,17 +62,26 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     
     private Timer t;
     
+    private Dimension size;
     
     private boolean north, south, east, west;
     
-    public Game(Dimension size){    
-        c = new Computer[5];
+    public Game(Dimension size){   
+        this.size = size;
+        
+        c = new Computer[10];
         
         p = new Player(size.width / 2, size.height / 2, 50, 50);
         p.r = new Rectangle(0, 0, size.width, size.height);
         
         for (int i = 0; i < c.length; i++) {
-            c[i] = new Computer(50 * i, 150, 50, 50);
+            c[i] = new Computer(
+                    new Random().nextInt(size.width),
+                    new Random().nextInt(size.height), 
+                    25, 
+                    25
+            );
+            
             c[i].r = new Rectangle(0, 0, size.width, size.height);
         }
                 
@@ -52,6 +90,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         t = new Timer(10, this);
         
         t.start();
+        
+        
     }
     
     @Override
@@ -80,6 +120,30 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         }
                  
         g.dispose();        
+    }
+    
+    @Override
+    public void componentResized(ComponentEvent ce) {
+        size = getSize();
+        p.r = new Rectangle(0, 0, size.width, size.height);
+        for (int i = 0; i < c.length; i++) {            
+            c[i].r = new Rectangle(0, 0, size.width, size.height);
+        }
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent ce) {
+        
+    }
+
+    @Override
+    public void componentShown(ComponentEvent ce) {
+        
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent ce) {
+        
     }
     
     @Override

@@ -26,22 +26,22 @@ public class Computer extends Character {
         g.setColor(c);
         g.draw(clipping);        
         g.fill(clipping);
-        g.drawLine(
-                (int)center.getX(), 
-                (int)center.getY(), 
-                (int)center.getX(), 
-                (int)center.getY()
-        );
+//        g.drawLine(
+//                (int)center.getX(), 
+//                (int)center.getY(), 
+//                (int)center.getX(), 
+//                (int)center.getY()
+//        );
     }
 
     public void move(Player p){
         y += speedY;
         x += speedX;
         
-        int rand = new Random().nextInt(1000);
+        int rand = new Random().nextInt(500);
         
         if (rand == 0) {
-            System.out.println("RANDOM TIME");
+            //System.out.println("RANDOM TIME");
             speedX *= DIRECTION;
             speedY *= DIRECTION;
         }
