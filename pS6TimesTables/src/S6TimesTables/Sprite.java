@@ -1,27 +1,65 @@
 
 package S6TimesTables;
 
+import java.awt.Rectangle;
+
 /**
  *
- * @author rNdm
+ * @author Adam Charlton
  */
-public class Sprite {
-    private Animation a;
-    
+public abstract class Sprite {
+        
     private float x;    
     private float y;
-    private float vx;
-    private float vy;
     
-    public Sprite(Animation a){
-        this.a = a;
-    }
+    private int width;
+    private int height;
     
-    // change position
-    public void update(long timePassed){
-        x += vx * timePassed;
-        y += vy * timePassed;
+    private Rectangle bounds;
+    
+    public Sprite(){
         
-        //a.update(timePassed);
     }
+        
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public void setBounds(Rectangle bounds) {
+        this.bounds = bounds;
+    }
+    
+    
 }

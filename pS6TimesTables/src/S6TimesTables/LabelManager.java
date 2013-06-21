@@ -72,7 +72,11 @@ public class LabelManager {
         
         for (String s: levels) {
             menuLabels.add(label(s.toUpperCase()));
-            for(Equation e: new ReadXML("tables.xml").getTableData(s)){               
+            ReadXML readxml = new ReadXML("tables.xml");
+            readxml.getXMLData();
+            readxml.initDocument();
+            
+            for(Equation e: readxml.getTableData(s)){               
                 questions.add(label(e.getQuestion()));
                 answers.add(label(e.getAnswer()));
             }            
@@ -86,8 +90,8 @@ public class LabelManager {
         wrongLabel = label("TRYAGAIN");
         menu = label("MENU");
         scoreLabel = label("SCORE:");
-        timesTableLabel = label("TIMESTABLES");
-        stage6Label = label("STAGE6");
+        timesTableLabel = label("MATHS!!");
+        stage6Label = label("SUPER-BIRDIEPOOP");
     }
     public float move = 0;
     public void drawPoop(Graphics2D g, Point p) { 
@@ -194,8 +198,8 @@ public class LabelManager {
         for (int i = 0; i < timesTableLabel.size(); i++) {
                 timesTableLabel.get(i).update();
                 timesTableLabel.get(i).setCenter(new Point(
-                        ((size.width / 2) - 10) + (36 * i),
-                        50
+                        ((size.width / 2) - 80) + (36 * i),
+                        150
                 ));
             
                 timesTableLabel.get(i).draw(g);

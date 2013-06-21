@@ -1,13 +1,13 @@
 
 package S6TimesTables;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.Permission;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,40 +18,60 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author rNdm
+ * @author Adam Charlton
  */
 public class ReadXML {
     private DocumentBuilderFactory documentBuilderFactory;
     private DocumentBuilder documentBuilder;
     private Document document;
         
+    private String file;
     private String[] items;
     private String[] equation = {"equation","answer"};
     private String[] images = {"name","x","y","width","height"};
     private String[] fonts = {"letter","x","y","width","height", "id"};
     
-    public ReadXML(String file){         
+    private InputStream stream = null;
+    
+    public ReadXML(String file){ 
+            this.file = file;        
+    }
+    
+    public boolean initDocument(){ 
+        boolean init;
         try {
-            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + file);
+            documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();            
+            document = documentBuilder.parse(stream);            
+            init =  true;
+            
+        } catch (ParserConfigurationException | SAXException | IOException ex){
+            init = false;
+            System.out.println("Failed to build document");
+        }    
+        
+        return init;
+    }
+    
+    public boolean getXMLData(){
+        boolean init;
+        
+        try {
+            URL url = new URL("http://kate.ict.op.ac.nz/~charlal1/" + getFile());
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();            
-            InputStream stream = connection.getInputStream();
-                        
-            //File stream = new File(file);         
-                    
-            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            
-            document = documentBuilder.parse(stream);
-            
+            stream = connection.getInputStream();
+            init = true;
             //connection.disconnect();
-            
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            System.out.println(ex);
-        }
+        } catch (Exception ex) {
+            init = false;
+            System.out.println("Failed to get data from webserver");
+        }   
+        
+        return init;
     }
+    
     public ArrayList<Equation> getTableData(String tagName){
         ArrayList<Equation> xmlData = new ArrayList<>();
         
@@ -60,7 +80,6 @@ public class ReadXML {
         for (int i = 0; i < document.getElementsByTagName(tagName).getLength(); i++) {
             NamedNodeMap namedNodeMap = document.getElementsByTagName(tagName).item(i).getAttributes();
             xmlData.add(new Equation(values(namedNodeMap)));
-            //System.out.println(xmlData.get(i).getQuestion());
         }     
         
         return xmlData;   
@@ -87,5 +106,19 @@ public class ReadXML {
         }
         
         return values;
+    }
+
+    /**
+     * @return the file
+     */
+    public String getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(String file) {
+        this.file = file;
     }
 }

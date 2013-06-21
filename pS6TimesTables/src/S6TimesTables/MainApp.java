@@ -22,8 +22,7 @@ public class MainApp extends JApplet {
         
     //<editor-fold defaultstate="collapsed" desc=" Applet Overrides ">
     @Override
-    public void init() {        
-        
+    public void init() {  
         setSize(800, 600);
         setPreferredSize(getSize());
         setFocusable(true);
@@ -50,8 +49,6 @@ public class MainApp extends JApplet {
             validate,
             poop
         };
-        
-        
         
         Game g = new Game(setup);
         

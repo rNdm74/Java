@@ -9,12 +9,11 @@ import java.awt.Rectangle;
  *
  * @author Adam Charlton
  */
-public class Bird {  
-    public Bird(Animation animator){
-        this.animator = animator;
-        
-        animator.setSpeed(90);
-        animator.start();
+public class Bird{      
+    public Bird(Animation animation){
+        this.animation = animation;
+        animation.setSpeed(90);
+        animation.start();
     }
 
     public Rectangle getClipping() {
@@ -39,19 +38,17 @@ public class Bird {
     
     private Rectangle center = new Rectangle();
     private Rectangle clipping = new Rectangle();
-    
-    public int SPEED = 3;
+        
+    public Point birdCenter = new Point(0,0);
     
     private Point move = new Point();    
-    public Point birdCenter = new Point(0,0);
     private Point birdPosition = new Point();
     
-    
-    
-    private Animation animator;
+    private Animation animation;
     
     public Point poopPos;
     
+    public int SPEED = 3;
         
     
         
@@ -119,8 +116,8 @@ public class Bird {
     }
     
     public void updateBird(Graphics2D g) {        
-        if (animator != null) {
-            animator.update(System.currentTimeMillis());
+        if (animation != null) {
+            animation.update(System.currentTimeMillis());
             
             if (!birdStopped) {
                 birdCenter.x += move.x;
@@ -139,40 +136,40 @@ public class Bird {
                                                                         
             switch(birdDirection){
                 case LEFT:
-                    birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2) + animator.sprite.getWidth();
-                    birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
+                    birdPosition.x = (birdCenter.x - animation.sprite.getWidth() / 2) + animation.sprite.getWidth();
+                    birdPosition.y = birdCenter.y - animation.sprite.getHeight() / 2;
                     
                     clipping = (new Rectangle(
                          birdCenter.x - 80, 
-                         (birdCenter.y) + (animator.sprite.getHeight()/2) - 80,
+                         (birdCenter.y) + (animation.sprite.getHeight()/2) - 80,
                          50,
                          50
                      ));
             
-                    g.drawImage(animator.sprite, 
+                    g.drawImage(animation.sprite, 
                         birdPosition.x, 
                         birdPosition.y, 
-                        -animator.sprite.getWidth(), 
-                        animator.sprite.getHeight(),                    
+                        -animation.sprite.getWidth(), 
+                        animation.sprite.getHeight(),                    
                         null
                     );
                     break;
                 case RIGHT:
-                    birdPosition.x = (birdCenter.x - animator.sprite.getWidth() / 2);
-                    birdPosition.y = birdCenter.y - animator.sprite.getHeight() / 2;
+                    birdPosition.x = (birdCenter.x - animation.sprite.getWidth() / 2);
+                    birdPosition.y = birdCenter.y - animation.sprite.getHeight() / 2;
                     
                     clipping = (new Rectangle(
                          birdCenter.x + 20, 
-                         (birdCenter.y) + (animator.sprite.getHeight()/2) - 80,
+                         (birdCenter.y) + (animation.sprite.getHeight()/2) - 80,
                          50,
                          50
                      ));
                     
-                    g.drawImage(animator.sprite, 
+                    g.drawImage(animation.sprite, 
                         birdPosition.x, 
                         birdPosition.y, 
-                        animator.sprite.getWidth(), 
-                        animator.sprite.getHeight(),                    
+                        animation.sprite.getWidth(), 
+                        animation.sprite.getHeight(),                    
                         null
                     );
                     break;            

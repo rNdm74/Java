@@ -42,6 +42,9 @@ public final class Game extends JPanel
     @Override
     public void paint(Graphics g){   
         super.paint(g);
+        
+        g.drawImage(backdrop, getWidth(), getHeight(), null);
+        
         doubleBufferedImage = createImage(getWidth(), getHeight());
         doubleBufferedGraphics = doubleBufferedImage.getGraphics();
         
@@ -67,9 +70,9 @@ public final class Game extends JPanel
                 break;
         }
         
-        g.dispose();
+        //g.dispose();
         
-        super.repaint();
+        repaint();
     }   
       
     private void menu(Graphics2D g) {
@@ -81,8 +84,8 @@ public final class Game extends JPanel
     }    
     private void title(Graphics2D g) {
         lm.drawPlay(g);
-        //lm.drawStage6Label(g);               
-        //lm.drawTimesTableLabel(g);
+        lm.drawStage6Label(g);               
+        lm.drawTimesTableLabel(g);
         drawBird(g);
     }         
     private void end(Graphics2D g) {
@@ -230,14 +233,23 @@ public final class Game extends JPanel
         try{
             BufferedImageLoader loader = new BufferedImageLoader();
             
-            sprites = new ReadXML("atlas.xml").getImageData("SubTexture");            
+            ReadXML readxml = new ReadXML("atlas.xml");
+            readxml.getXMLData();
+            readxml.initDocument();
+            sprites = readxml.getImageData("SubTexture");
+            
+            
+                        
             birdSpriteSheet = loader.loadImage("atlas.png");
             ss = new SpriteSheet(birdSpriteSheet);
             
             background = loader.loadImage("bg.png");
             backdrop = new SpriteSheet(background).getSprite(0, 200, 1600, contentPaneDimensions.height);
             
-            fonts = new ReadXML("desyrel.xml").getImageData("char");            
+            readxml.setFile("desyrel.xml");
+            readxml.getXMLData();
+            readxml.initDocument();
+            fonts = readxml.getImageData("char");            
             Collections.sort(fonts, new CompareTexture());            
             fm = new FontManager(fonts);
             lm = new LabelManager(fm, contentPaneDimensions , table);
@@ -245,7 +257,7 @@ public final class Game extends JPanel
             menu = new Menu(fm, lm, this);
 
             bird = createBird();
-
+            
             addMouseListener(this);
             addMouseListener(menu); 
             addMouseMotionListener(this);
@@ -471,8 +483,7 @@ public final class Game extends JPanel
         if (new Random().nextInt(10000)==0) {
             playPoop();
         }
-        
-        
+                
         if(pooped){
             lm.move += 0.5f;
         }
@@ -501,7 +512,9 @@ public final class Game extends JPanel
         for (int i = 0; i < lm.play.size(); i++) {
             if(lm.play.get(i).getBounds().contains(me.getPoint()) && 
               (display.equals(Display.TITLE))){     
-                Point p = lm.play.get(0).getCenter();
+                //Point p = lm.play.get(0).getCenter();
+                Point p = new Point(350,350);
+                
                 getBird().birdCenter.setLocation(p.x - 120, p.y);
                 getMousePointer().setLocation(p.x - 120, p.y);
             }
@@ -529,7 +542,7 @@ public final class Game extends JPanel
                 if (!lm.menu.get(i).getBounds().contains(me.getPoint())) {
                     setMousePointer(me.getPoint());
                     bird.birdStopped = false;
-                    bird.SPEED = 2;
+                    bird.SPEED = 3;
                 }
             }            
         }        
@@ -610,7 +623,7 @@ public final class Game extends JPanel
     private Point top = new Point();
     private Point center = new Point();
     private Point bottom = new Point();    
-    private Point mousePointer = new Point();
+    private Point mousePointer = new Point(150, 300);
         
     public boolean answeredTrue;
     public boolean answeredFalse;
