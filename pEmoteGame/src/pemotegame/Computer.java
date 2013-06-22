@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Computer extends Character {
     private int DIRECTION = -1;
-    private int speedX = 1;
+    private float speedX = 1f;
     private int speedY = 1;
     
     private Color c;
@@ -34,18 +34,33 @@ public class Computer extends Character {
 //        );
     }
 
-    public void move(Player p){
-        y += speedY;
-        x += speedX;
+    public void update(Player p){
+        move();
         
-        int rand = new Random().nextInt(500);
+        randomizeDirection();
+        computerBoundsCheck(p);
+        screenBoundsCheck();        
+    }
+
+    private void screenBoundsCheck() {
+        if (super.y + 50 > r.height - 1) {
+            speedY *= DIRECTION;            
+        } 
         
-        if (rand == 0) {
-            //System.out.println("RANDOM TIME");
-            speedX *= DIRECTION;
-            speedY *= DIRECTION;
+        if (super.y < 1) {
+            speedY *= DIRECTION;            
         }
         
+        if (super.x + 50 > r.width - 1) {
+            speedX *= DIRECTION;            
+        } 
+        
+        if (super.x < 1) {
+            speedX *= DIRECTION;            
+        }        
+    }
+
+    private void computerBoundsCheck(Player p) {
         if(super.bounds.contains(p.center)){
             if (p.center.getX() < super.center.getX()) {
                 speedX *= -speedX;
@@ -63,21 +78,20 @@ public class Computer extends Character {
                 speedY *= speedY;
             }            
         }
+    }
+
+    private void randomizeDirection() {
+        int rand = new Random().nextInt(500);
         
-        if (super.y + 50 > r.height - 1) {
-            speedY *= DIRECTION;            
-        } 
-        
-        if (super.y < 1) {
-            speedY *= DIRECTION;            
+        if (rand == 0) {
+            //System.out.println("RANDOM TIME");
+            speedX *= DIRECTION;
+            speedY *= DIRECTION;
         }
-        
-        if (super.x + 50 > r.width - 1) {
-            speedX *= DIRECTION;            
-        } 
-        
-        if (super.x < 1) {
-            speedX *= DIRECTION;            
-        }        
+    }
+
+    private void move() {
+        y += speedY;
+        x += speedX;
     }
 }

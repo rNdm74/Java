@@ -23,6 +23,7 @@ public class GameWindow extends JFrame {
         setContentPane(game);        
         addKeyListener(game);
         addMouseListener(game);
+        addMouseMotionListener(game);
         addComponentListener(game);
     }        
 }

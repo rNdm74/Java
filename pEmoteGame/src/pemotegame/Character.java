@@ -13,7 +13,7 @@ public abstract class Character {
     public Rectangle bounds;    
     public Point2D center;
     
-    protected Dimension size;
+    
     
     public Rectangle r;
     
@@ -25,6 +25,8 @@ public abstract class Character {
     
     public float velocityX;
     public float velocityY;
+    
+    public float gravity = 3;
     
     protected final float STOP = 0;    
     protected final float SPEED = 3f;
@@ -42,10 +44,34 @@ public abstract class Character {
         r = new Rectangle();
     }
             
-    public void update(){
+    public void update(Dimension size){        
         x += velocityX;
         y += velocityY;
         
+        if(y <= (size.height-100)-height){
+            y += gravity;
+        }        
+        if (y>=(size.height-100)-height) {
+            y=(size.height-100)-height;
+        }
+        
+        center.setLocation(x, y);
+                
+        clipping.setFrame(center.getX(), center.getY(), width, width);
+        
+        center.setLocation(clipping.getCenterX(), clipping.getCenterY());
+        
+        bounds.setFrame(
+                clipping.getCenterX() - 200/2, 
+                clipping.getCenterY() - 200/2,
+                200,
+                200);
+    }
+    
+    public void update(){        
+        x += velocityX;
+        y += velocityY;
+                
         center.setLocation(x, y);
                 
         clipping.setFrame(center.getX(), center.getY(), width, width);

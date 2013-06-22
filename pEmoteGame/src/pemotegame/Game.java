@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -18,7 +19,8 @@ import java.util.Random;
  *
  * @author Adam Charlton
  */
-public class Game extends JPanel implements ActionListener, KeyListener, MouseListener,ComponentListener{
+public class Game extends JPanel 
+implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -41,6 +43,17 @@ public class Game extends JPanel implements ActionListener, KeyListener, MouseLi
 
     @Override
     public void mouseExited(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent me) {
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent me) {
+//        Point2D p2d = me.getPoint();
+//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
         
     public enum Direction{
@@ -118,6 +131,9 @@ public class Game extends JPanel implements ActionListener, KeyListener, MouseLi
                 (int)comp.center.getY()
             );           
         }
+        
+        g.setColor(Color.GREEN.darker());
+        g.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100);           
                  
         g.dispose();        
     }
@@ -156,8 +172,8 @@ public class Game extends JPanel implements ActionListener, KeyListener, MouseLi
         //COMPUTERS
         for(Computer comp: c){
             comp.bounds();
-            comp.move(p);
-            comp.update();        
+            comp.update(p);
+            comp.update(getSize());        
         }
                 
         super.repaint();

@@ -1,6 +1,7 @@
 
 package pemotegame;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -14,6 +15,7 @@ import static pemotegame.Game.Direction.UP;
 public class Player extends Character {
     public Point2D p = new Point();
     private int DIRECTION = -1;
+    //private int gravity = 3;
     private int speedX = 2;
     private int speedY = 2;
 
@@ -30,8 +32,34 @@ public class Player extends Character {
     }
     
     public void move(Game.Direction d){
+        mouseMove();
+                
+        switch(d){
+            case LEFT:
+                velocityX = -SPEED;
+                break;
+            case RIGHT:
+                velocityX = SPEED;
+                break;
+            case UP:
+                velocityY = -SPEED;
+                break;
+            case DOWN:
+                velocityY = SPEED;
+                break;
+            case STATIONARY:
+                //velocityX = STOP;
+                //velocityY = STOP;
+                break;
+            default:                            
+        }
+    }
+
+    private void mouseMove() {
         //y += speedY;
         //x += speedX;
+        
+        
         
         if (center.getX() > p.getX() - 5 &&
             center.getX() < p.getX() + 5) {
@@ -48,9 +76,7 @@ public class Player extends Character {
         }
         
         // bird movement
-        if (center.distance(p) > 6) {
-            
-            
+        if (center.distance(p) > 6) {            
             // move right                
             if (center.getX() < p.getX()) { 
                 velocityX=speedX;                
@@ -75,26 +101,6 @@ public class Player extends Character {
             
             velocityX = STOP;
             velocityY = STOP;
-        }
-                
-        switch(d){
-            case LEFT:
-                velocityX = -SPEED;
-                break;
-            case RIGHT:
-                velocityX = SPEED;
-                break;
-            case UP:
-                velocityY = -SPEED;
-                break;
-            case DOWN:
-                velocityY = SPEED;
-                break;
-            case STATIONARY:
-                //velocityX = STOP;
-                //velocityY = STOP;
-                break;
-            default:                            
         }
     }
 }
