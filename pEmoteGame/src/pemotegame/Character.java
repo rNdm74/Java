@@ -26,10 +26,10 @@ public abstract class Character {
     public float velocityX;
     public float velocityY;
     
-    public float gravity = 3;
+    public float gravity = 15;
     
     protected final float STOP = 0;    
-    protected final float SPEED = 3f;
+    protected final float SPEED = 4f;
     
     public Character(float x, float y, float width, float height){
         this.x = x;
@@ -57,15 +57,15 @@ public abstract class Character {
         
         center.setLocation(x, y);
                 
-        clipping.setFrame(center.getX(), center.getY(), width, width);
+        clipping.setFrame(center.getX(), center.getY(), width, height);
         
         center.setLocation(clipping.getCenterX(), clipping.getCenterY());
         
         bounds.setFrame(
                 clipping.getCenterX() - 200/2, 
-                clipping.getCenterY() - 200/2,
+                clipping.getCenterY() - size.height / 2,
                 200,
-                200);
+                size.height / 2);
     }
     
     public void update(){        

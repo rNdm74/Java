@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -47,7 +48,8 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
 
     @Override
     public void mouseDragged(MouseEvent me) {
-        
+//        Point2D p2d = me.getPoint();
+//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
 
     @Override
@@ -69,7 +71,8 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         
     private Player p;
     
-    private Computer[] c;
+    private ArrayList<Poop> poops;
+    private ArrayList<Computer> c;
     
     private Direction d;
     
@@ -82,20 +85,22 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     public Game(Dimension size){   
         this.size = size;
         
-        c = new Computer[10];
+        
+        c = new ArrayList<>();
+        poops = new ArrayList<>();
         
         p = new Player(size.width / 2, size.height / 2, 50, 50);
         p.r = new Rectangle(0, 0, size.width, size.height);
         
-        for (int i = 0; i < c.length; i++) {
-            c[i] = new Computer(
+        for (int i = 0; i < 1; i++) {
+            c.add(new Computer(
                     new Random().nextInt(size.width),
                     new Random().nextInt(size.height), 
                     25, 
-                    25
-            );
+                    50
+            ));
             
-            c[i].r = new Rectangle(0, 0, size.width, size.height);
+            c.get(i).r = new Rectangle(0, 0, size.width, size.height);
         }
                 
         d = Direction.STATIONARY;
@@ -119,19 +124,37 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         g.drawImage(doubleBufferedImage, 0,0,null);
     }
     
+    long beforeTime = System.currentTimeMillis();
+    long currentTime;
+    
     private void paintComponent(Graphics2D g){
+        //PLAYER
         p.draw(g);
         
+        
+        
+        //COMPUTER
         for(Computer comp: c){
             comp.draw(g);
-            g.drawLine(
+            
+            //LINES
+            if(comp.playerInBounds){
+               g.drawLine(
                 (int)p.center.getX(), 
                 (int)p.center.getY(), 
                 (int)comp.center.getX(), 
                 (int)comp.center.getY()
-            );           
+                ); 
+            }                       
         }
         
+        g.setColor(Color.DARK_GRAY);
+        //POOP
+        for(Poop poop: poops){
+            poop.draw(g);
+        }
+        
+        //GROUND
         g.setColor(Color.GREEN.darker());
         g.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100);           
                  
@@ -142,8 +165,8 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     public void componentResized(ComponentEvent ce) {
         size = getSize();
         p.r = new Rectangle(0, 0, size.width, size.height);
-        for (int i = 0; i < c.length; i++) {            
-            c[i].r = new Rectangle(0, 0, size.width, size.height);
+        for (int i = 0; i < c.size(); i++) {            
+            c.get(i).r = new Rectangle(0, 0, size.width, size.height);
         }
     }
 
@@ -161,21 +184,37 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     public void componentHidden(ComponentEvent ce) {
         
     }
-    
+            
     @Override
     public void actionPerformed(ActionEvent e) {
-        //PLAYER
-        p.bounds();        
-        p.move(d);        
-        p.update();
+        currentTime = System.currentTimeMillis();
+        //System.out.println(currentTime - beforeTime);
+        long moveTime = currentTime - beforeTime;
         
-        //COMPUTERS
-        for(Computer comp: c){
-            comp.bounds();
-            comp.update(p);
-            comp.update(getSize());        
-        }
+        if (moveTime > 15) {
+            //PLAYER
+            p.bounds();        
+            p.move(d);        
+            p.update();
+            
+            //POOP
+            for (Poop poop: poops) {
+                poop.update(getSize());
+                //poop.y++;
                 
+            }
+
+            //COMPUTERS
+            for(Computer comp: c){
+                comp.bounds();
+                comp.update(p, poops);
+                comp.update(getSize());        
+            }
+            
+            beforeTime = System.currentTimeMillis();
+            currentTime = 0;
+        }
+               
         super.repaint();
     }
 
@@ -186,6 +225,34 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        
+        if (key == KeyEvent.VK_SPACE) {
+            poops.add(new Poop(
+                    (float)p.center.getX(), 
+                    (float)p.center.getY(), 
+                    5f, 
+                    5f
+            ));
+        }
+        
+        if (key == KeyEvent.VK_C) {
+            c.add(new Computer(
+                    new Random().nextInt(size.width),
+                    new Random().nextInt(size.height), 
+                    25, 
+                    50
+            ));
+            
+            c.get(c.size()-1).r = new Rectangle(0, 0, size.width, size.height);
+        }
+        
+        if (key == KeyEvent.VK_B) {
+            poops.clear();
+        }
+        
+        if (key == KeyEvent.VK_V) {
+            if(!c.isEmpty())c.remove(0);
+        }
         
         if (key == KeyEvent.VK_A && !west) {
             east = false;

@@ -1,7 +1,6 @@
 
 package pemotegame;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -55,11 +54,7 @@ public class Player extends Character {
         }
     }
 
-    private void mouseMove() {
-        //y += speedY;
-        //x += speedX;
-        
-        
+    private void mouseMove() {        
         
         if (center.getX() > p.getX() - 5 &&
             center.getX() < p.getX() + 5) {
