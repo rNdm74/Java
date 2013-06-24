@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import static pemotegame.Game.poops;
 
 class Computer extends Character {
-    private static final int DIRECTION = -1;
-    
-    public float speedX = 1f;
+    public float speedX = Constants.SPEED;
     
     public boolean playerInBounds;
     
     private final ArrayList<Boolean> hitPoop;
+
+    public boolean crap;
+
+    private long directionTrigger;
+    private long waitTrigger;
+    private long poopTrigger;
 
     private String talk = "";
     
@@ -22,19 +26,19 @@ class Computer extends Character {
     public Computer(Rectangle rect, Game game) {
         super(rect, game);
         
-        this.hitPoop = new ArrayList<>();        
+        hitPoop = new ArrayList<>();
     }
     
     public void draw(Graphics2D g){
         //BOUNDS
-        g.setColor(Color.CYAN.darker());        
-        if(playerInBounds)g.setColor(Color.PINK.darker());        
+        //g.setColor(Color.CYAN.darker());
+        //if(playerInBounds)g.setColor(Color.PINK.darker());
         //g.draw(bounds);
         
         //CLIPPING
-        g.setColor(Color.GREEN.darker()); 
-        
+
         g.draw(clipping);
+        g.setColor(Color.GREEN.darker());
         g.fill(clipping);
         
         //TALK
@@ -43,9 +47,9 @@ class Computer extends Character {
         }
     }
 
-    public void update(Player p, ArrayList<Poop> poops){  
+    public void update(Player p, ArrayList<Poop> poops){
         talk = "";
-        
+        updateBounds();
         computerWait();
         computerClippingCheck(poops);
         computerBoundsCheck(p);
@@ -56,116 +60,114 @@ class Computer extends Character {
         move();       
     }
 
+    private void updateBounds() {
+        bounds.setFrame(
+                clipping.getCenterX() - Constants.GROUND_HEIGHT/2,
+                (clipping.getY() + height) - (game.getHeight() - Constants.GROUND_HEIGHT),
+                Constants.DEFAULT_CLIPPING_SIZE,
+                game.getHeight() - Constants.GROUND_HEIGHT);
+    }
+
     private void screenBoundsCheck() {        
         if (clipping.getX() < 1) {
-            speedX *= DIRECTION;            
+            speedX *= Constants.DIRECTION;
         } 
         
-        if ((clipping.getX() + width) > game.getBounds().width) {            
-            speedX *= DIRECTION;            
+        if ((clipping.getX() + Constants.PEDESTRIAN_WIDTH) > game.getBounds().width) {
+            speedX *= Constants.DIRECTION;
         }       
     }
 
     private void computerClippingCheck(ArrayList<Poop> poops) {
         hitPoop.clear();
-        
-        for (Poop poop: poops) {
-            hitPoop.add(clipping.contains(poop.center));
-//            if (top.intersects(poop.clipping)) {
-//                System.out.println("foo");
-//                game.c.remove(game.c.indexOf(this));
-//            }
-        }
+        for (Poop poop: poops) hitPoop.add(clipping.contains(poop.center));
     }
     
     
     
     private void computerBoundsCheck(Player p) {
-        
         if(bounds.contains(p.center)){            
             playerInBounds = true;
             talk = "PRETTY BIRDIE!";
             
-            if (p.center.getX() < center.getX()) {
-                //speedX *= -speedX;
-            }
-            
-            if (p.center.getX() > center.getX()) {
-                //speedX *= speedX;
-            }            
+//            if (p.center.getX() < center.getX()) {
+//                //speedX *= -speedX;
+//            }
+//
+//            if (p.center.getX() > center.getX()) {
+//                //speedX *= speedX;
+//            }
         }
         else{
             playerInBounds = false;
-            //talk = "";
         }
     }
 
-    private final Pause pause = new Pause(this);
-    public boolean ohcrap;
-    private long directionTrigger;
-    private long waitTrigger;
-    private final int minimum = 0;
-    private int maximum = 500;
-    
-    private long poopCheckTrigger;
+
     
     void poopCheck(){
         for (Poop poop: poops) {
             if (top.intersects(poop.clipping)) {
-                poopCheckTrigger = System.currentTimeMillis();
+                poopTrigger = System.currentTimeMillis();
             }
         }
                 
-        if (poopCheckTrigger > 0) {
+        if (poopTrigger > 0) {
             talk ="OH CRAP!";
-            if(pause.start(500, poopCheckTrigger)){
-                poopCheckTrigger = 0;
-                ohcrap = true;
+            if(new CompWait().start(Constants.POOP_DELAY, poopTrigger)){
+                poopTrigger = 0;
+                crap = true;
             }            
         }
-        
-        //ohcrap = false;
     }
     
     private void randomizeDirection() {
-        maximum = 500;
-        
-        int rand = (int) (Math.random() * maximum);
-        
-        if(rand == maximum -1) directionTrigger = System.currentTimeMillis();
-                
-        if(directionTrigger > 0){            
-            talk ="I WANNA GO THIS WAY!";
-            if(pause.start(2000, directionTrigger)){
-                directionTrigger = 0;
-                speedX*=DIRECTION;
-            }            
-        }
+        directionTrigger = new CompWait().invoke("I WANNA GO THIS WAY!", directionTrigger, (int)(Math.random() * Constants.MAXIMUM));
     }
-    
-    
-    
-    private void computerWait(){ 
-        maximum = 1000;
-        int rand = (int) (Math.random() * maximum);
-        
-        if(rand == minimum) waitTrigger = System.currentTimeMillis(); 
-        
-        if(waitTrigger > 0) {
-            talk = "WHAT A LOVELY DAY!";                        
-            if(pause.start(2000, waitTrigger)){
-                waitTrigger = 0;
-            }
-        }
+
+    private void computerWait(){
+        waitTrigger = new CompWait().invoke("WHAT A LOVELY DAY!", waitTrigger, (int)(Math.random() * Constants.MAXIMUM));
     }
-    
-    
-    
+
+
     private void move() {
         x += speedX;        
     }
 
     private void groundPoop() {
-        for(boolean hitpoop: hitPoop) if(hitpoop)talk = "THERE IS A POOP!";
+        for(boolean hp: hitPoop) if(hp)talk = "THERE IS A POOP!";
+    }
+
+    public class CompWait {
+        public boolean start(int waitTime, long trigger){
+            long moveTime = System.currentTimeMillis() - trigger;
+            //COMPUTER STOP
+            speedX = 0f;
+
+            //COMPUTER START
+            if (moveTime > waitTime) {
+                //System.out.println("start");
+                speedX = 1f;
+                return true;
+            }
+
+            return false;
+        }
+
+        public long invoke(String text, long trigger, int max) {
+            int rand = (int)(Math.random() * max);
+
+            if(rand == Constants.MINIMUM) trigger = System.currentTimeMillis();
+
+            if(trigger > 0) {
+                talk = text;
+                if(start(Constants.WAIT_DELAY, trigger)){
+                    speedX *= Constants.DIRECTION;
+                    return 0;
+                }
+            }
+
+            return trigger;
+        }
     }
 }

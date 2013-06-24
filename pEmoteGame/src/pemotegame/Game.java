@@ -12,33 +12,24 @@ import java.util.ArrayList;
  * @author Adam Charlton
  */
 public class Game extends JPanel 
-implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
+    implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
             
-    public enum Direction{
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
-        STATIONARY,
-    }
 
-    private final Player p;
-    
+
+    private final Player player;
     public static ArrayList<Poop> poops;
-    private static ArrayList<Computer> c;
+    private static ArrayList<Computer> pedestrian;
 
     private long beforeTime = System.currentTimeMillis();
-
-    private boolean north, south, east, west;
     
     public Game(Dimension size){ 
         
-        c = new ArrayList<>();
+        pedestrian = new ArrayList<>();
         poops = new ArrayList<>();
         
-        p = new Player(new Rectangle(size.width / 2, 50, 50, 50), this);
+        player = new Player(new Rectangle(size.width / 2, 50, 50, 50), this);
 
-        Timer t = new Timer(10, this);
+        Timer t = new Timer(Constants.TIMER_INTERVAL, this);
         
         t.start();
     }
@@ -57,7 +48,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     
     private void paintComponent(Graphics2D g){
         //PLAYER
-        p.draw(g);
+        player.draw(g);
         
         //POOP
         g.setColor(Color.DARK_GRAY);
@@ -66,12 +57,12 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         }
         
         // COMPUTER
-        for (Computer comp : c) {
+        for (Computer comp : pedestrian) {
             comp.draw(g);
             if (comp.playerInBounds) {
                 g.drawLine(
-                        (int) p.center.getX(),
-                        (int) p.center.getY(),
+                        (int) player.center.getX(),
+                        (int) player.center.getY(),
                         (int) comp.center.getX(),
                         (int) comp.center.getY()
                 );
@@ -89,7 +80,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
     @Override
     public void componentResized(ComponentEvent ce) {
-        for (Computer comp : c) comp.y = (getHeight() - 150);
+        for (Computer comp : pedestrian) comp.y = (getHeight() - 150);
     }
     @Override
     public void componentMoved(ComponentEvent ce) {
@@ -112,8 +103,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     @Override
     public void mousePressed(MouseEvent me) {
         Point2D p2d = me.getPoint();
-        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
-        //System.out.println(me.getPoint());
+        player.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
     @Override
     public void mouseReleased(MouseEvent me) {
@@ -126,13 +116,9 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     }
     @Override
     public void mouseDragged(MouseEvent me) {
-//        Point2D p2d = me.getPoint();
-//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
     @Override
     public void mouseMoved(MouseEvent me) {
-//        Point2D p2d = me.getPoint();
-//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
     //</editor-fold> 
     
@@ -148,7 +134,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         }
         
         if (key == KeyEvent.VK_C) {
-            c.add(createComputer());
+            pedestrian.add(createComputer());
         }
         
         if (key == KeyEvent.VK_B) {
@@ -156,30 +142,13 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         }
         
         if (key == KeyEvent.VK_V) {
-            if(!c.isEmpty())c.clear();
+            if(!pedestrian.isEmpty()) pedestrian.clear();
         }
-        
-        if (key == KeyEvent.VK_A && !west) {
-            east = false;
-        }else if(key == KeyEvent.VK_D && !east){
-            west = false;
-        }else if(key == KeyEvent.VK_W && !north){
-        }else if(key == KeyEvent.VK_S && !south){
-        }
-        
+
         e.consume();
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-        
-        if (key == KeyEvent.VK_A) {
-        }else if(key == KeyEvent.VK_D){
-        }else if(key == KeyEvent.VK_W){
-        }else if(key == KeyEvent.VK_S){
-        }
-        
-        e.consume();
     }
     //</editor-fold>
     
@@ -187,11 +156,11 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     @Override
     public void actionPerformed(ActionEvent e) {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - beforeTime > 20) {
+        if (currentTime - beforeTime > Constants.UPDATE_INTERVAL) {
             //PLAYER
-            p.bounds();        
-            p.move();
-            p.update();
+            player.bounds();
+            player.move();
+            player.update();
             
             //POOP
             for (Poop poop: poops) {
@@ -199,16 +168,15 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
             }
 
             //COMPUTERS
-            for(Computer comp: c){
-                
+            for(Computer comp: pedestrian){
                 comp.bounds();
-                comp.update(p, poops);
+                comp.update(player, poops);
                 comp.update(); 
             }
             
-            for (int i = 0; i < c.size(); i++) {
-                if (c.get(i).ohcrap) {
-                    c.remove(i);
+            for (int i = 0; i < pedestrian.size(); i++) {
+                if (pedestrian.get(i).crap) {
+                    pedestrian.remove(i);
                 }
             }
             
@@ -218,12 +186,13 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         //super.repaint();
     }
     private Computer createComputer(){
-        return new Computer(new Rectangle(0, (getHeight() - 100) - 50, 25, 50), this);
+        Point point = new Point(0, (getHeight() - Constants.GROUND_HEIGHT) - Constants.PEDESTRIAN_HEIGHT);
+        Dimension dimension = new Dimension(Constants.PEDESTRIAN_WIDTH, Constants.PEDESTRIAN_HEIGHT);
+        return new Computer(new Rectangle(point, dimension), this);
     }
     private Poop createPoop(){
-        Point point = new Point((int)p.center.getX(),(int)p.center.getY());
-        Dimension dimension = new Dimension(5, 5);
-        
+        Point point = new Point((int) player.center.getX(),(int) player.center.getY());
+        Dimension dimension = new Dimension(Constants.POOP_WIDTH, Constants.POOP_HEIGHT);
         return new Poop(new Rectangle(point, dimension), this);
     }  
     

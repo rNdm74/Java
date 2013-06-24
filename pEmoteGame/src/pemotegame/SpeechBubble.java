@@ -18,22 +18,21 @@ class SpeechBubble {
         g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
             RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-        Font font = new Font(Font.SANS_SERIF, Font.ITALIC, 14);
+        Font font = new Font(Font.SANS_SERIF, Font.ITALIC, Constants.DEFAULT_FONT_SIZE);
         AffineTransform affinetransform = new AffineTransform();
         FontRenderContext frc = new FontRenderContext(affinetransform, true, true);
         int width = (int) font.getStringBounds(text, frc).getWidth();
         int height = (int) font.getStringBounds(text, frc).getHeight();
 
         Rectangle bounds = new Rectangle();
-        bounds.x = (int)(clipping.getX() + 20);
-        bounds.y = (int)(clipping.getY() - 60);
-        bounds.width = width + 20;
-        bounds.height = height + 20;
+        bounds.x = (int)(clipping.getX() + Constants.DEFAULT_X_PADDING);
+        bounds.y = (int)(clipping.getY() - Constants.DEFAULT_Y_PADDING);
+        bounds.width = width + Constants.DEFAULT_X_PADDING;
+        bounds.height = height + Constants.DEFAULT_X_PADDING;
 
         Point2D center = new Point();
         center.setLocation(bounds.getCenterX(), bounds.getCenterY());
-        
-        //System.out.println(height);
+
         g.drawLine(
                 (int) center.getX(),
                 (int) center.getY(),
@@ -45,9 +44,7 @@ class SpeechBubble {
         //g.setColor(Color.DARK_GRAY);
         
         g.setColor(Color.WHITE);
-        g.fill3DRect(bounds.x+1, bounds.y+1, bounds.width, bounds.height, true);
-        //g.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);
-        
+        g.fill3DRect(bounds.x, bounds.y, bounds.width, bounds.height, true);
         g.setColor(Color.BLACK);           
         g.drawString(text, (bounds.x + bounds.width/2) - (width/2), (bounds.y + (bounds.height/2) + (height/2)));
     }    

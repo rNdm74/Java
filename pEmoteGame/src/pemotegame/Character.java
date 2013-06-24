@@ -11,12 +11,10 @@ import java.awt.geom.Rectangle2D;
  * @author Adam Charlton
  */
 abstract class Character{
+    public final Point2D center;
     final Rectangle2D clipping;
     final Rectangle bounds;
-    public final Point2D center;
-    
     final Game game;
-    
     final Line2D top;
         
     double x;
@@ -27,12 +25,7 @@ abstract class Character{
     
     float velocityX;
     float velocityY;
-    
-    final float gravity = 6;
-    
-    protected final float STOP = 0;    
-    final float SPEED = 3;
-    
+
     Character(Rectangle rect, Game game){
         this.x = rect.getX();
         this.y = rect.getY();
@@ -60,11 +53,7 @@ abstract class Character{
                     clipping.getX() + clipping.getWidth(), 
                     clipping.getY());
         
-        bounds.setFrame(
-                clipping.getCenterX() - 200/2, 
-                (clipping.getY() + height) - (game.getHeight()-100),
-                200,
-                game.getHeight() - 100);
+
     }
     
     public void bounds() {        
@@ -76,8 +65,8 @@ abstract class Character{
             x = game.getBounds().x;            
         }
         
-        if(clipping.getY() > game.getBounds().height - 50){
-            y = game.getBounds().height - 50;
+        if(clipping.getY() + Constants.PEDESTRIAN_HEIGHT > game.getBounds().height - Constants.GROUND_HEIGHT){
+            y = game.getBounds().height - Constants.GROUND_HEIGHT - Constants.PEDESTRIAN_HEIGHT;
         }
         
         if(clipping.getY() < game.getBounds().y){
