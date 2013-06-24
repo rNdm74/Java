@@ -12,9 +12,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
 
 /**
  *
@@ -22,42 +23,7 @@ import java.util.Random;
  */
 public class Game extends JPanel 
 implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
-
-    @Override
-    public void mouseClicked(MouseEvent me) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        Point2D p2d = me.getPoint();
-        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
-        //System.out.println(me.getPoint());
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent me) {
-//        Point2D p2d = me.getPoint();
-//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent me) {
-//        Point2D p2d = me.getPoint();
-//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
-    }
-        
+            
     public enum Direction{
         LEFT,
         RIGHT,
@@ -69,47 +35,32 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     private Graphics doubleBufferedGraphics;
     private Image doubleBufferedImage;        
         
-    private Player p;
+    public Player p;
     
-    private ArrayList<Poop> poops;
-    private ArrayList<Computer> c;
+    public static ArrayList<Poop> poops;
+    public static ArrayList<Computer> c;
     
     private Direction d;
     
     private Timer t;
     
-    private Dimension size;
+    private long beforeTime = System.currentTimeMillis();
+    private long currentTime;
     
     private boolean north, south, east, west;
     
-    public Game(Dimension size){   
-        this.size = size;
-        
+    public Game(Dimension size){ 
         
         c = new ArrayList<>();
         poops = new ArrayList<>();
         
-        p = new Player(size.width / 2, size.height / 2, 50, 50);
-        p.r = new Rectangle(0, 0, size.width, size.height);
-        
-        for (int i = 0; i < 1; i++) {
-            c.add(new Computer(
-                    new Random().nextInt(size.width),
-                    new Random().nextInt(size.height), 
-                    25, 
-                    50
-            ));
-            
-            c.get(i).r = new Rectangle(0, 0, size.width, size.height);
-        }
+        p = new Player(new Rectangle(size.width / 2, 50, 50, 50), this);
                 
         d = Direction.STATIONARY;
         
-        t = new Timer(10, this);
+        t = new Timer(10, this);       
         
         t.start();
-        
-        
     }
     
     @Override
@@ -124,20 +75,21 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         g.drawImage(doubleBufferedImage, 0,0,null);
     }
     
-    long beforeTime = System.currentTimeMillis();
-    long currentTime;
-    
     private void paintComponent(Graphics2D g){
         //PLAYER
         p.draw(g);
         
+        //POOP
+        g.setColor(Color.DARK_GRAY);
+        for (Iterator<Poop> it = poops.iterator(); it.hasNext();) {
+            Poop poop = it.next();
+            poop.draw(g);
+        }
         
-        
-        //COMPUTER
-        for(Computer comp: c){
+        // COMPUTER
+        for (Iterator<Computer> it = c.iterator(); it.hasNext();) {
+            Computer comp = it.next();
             comp.draw(g);
-            
-            //LINES
             if(comp.playerInBounds){
                g.drawLine(
                 (int)p.center.getX(), 
@@ -148,102 +100,80 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
             }                       
         }
         
-        g.setColor(Color.DARK_GRAY);
-        //POOP
-        for(Poop poop: poops){
-            poop.draw(g);
-        }
-        
         //GROUND
-        g.setColor(Color.GREEN.darker());
-        g.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100);           
+        g.setColor(Color.ORANGE.darker());
+        g.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100);          
                  
         g.dispose();        
+        super.repaint();
     }
     
+    //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
     @Override
     public void componentResized(ComponentEvent ce) {
-        size = getSize();
-        p.r = new Rectangle(0, 0, size.width, size.height);
-        for (int i = 0; i < c.size(); i++) {            
-            c.get(i).r = new Rectangle(0, 0, size.width, size.height);
+        for (Iterator<Computer> it = c.iterator(); it.hasNext();) {
+            Computer comp = it.next();
+            comp.y = (getHeight() - 150);
         }
     }
-
     @Override
     public void componentMoved(ComponentEvent ce) {
         
     }
-
     @Override
     public void componentShown(ComponentEvent ce) {
         
     }
-
     @Override
     public void componentHidden(ComponentEvent ce) {
         
     }
-            
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" MOUSE ">
     @Override
-    public void actionPerformed(ActionEvent e) {
-        currentTime = System.currentTimeMillis();
-        //System.out.println(currentTime - beforeTime);
-        long moveTime = currentTime - beforeTime;
-        
-        if (moveTime > 15) {
-            //PLAYER
-            p.bounds();        
-            p.move(d);        
-            p.update();
-            
-            //POOP
-            for (Poop poop: poops) {
-                poop.update(getSize());
-                //poop.y++;
-                
-            }
-
-            //COMPUTERS
-            for(Computer comp: c){
-                comp.bounds();
-                comp.update(p, poops);
-                comp.update(getSize());        
-            }
-            
-            beforeTime = System.currentTimeMillis();
-            currentTime = 0;
-        }
-               
-        super.repaint();
+    public void mouseClicked(MouseEvent me) {
     }
-
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void mousePressed(MouseEvent me) {
+        Point2D p2d = me.getPoint();
+        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
+        //System.out.println(me.getPoint());
     }
-
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+    @Override
+    public void mouseExited(MouseEvent me) {
+    }
+    @Override
+    public void mouseDragged(MouseEvent me) {
+//        Point2D p2d = me.getPoint();
+//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
+    }
+    @Override
+    public void mouseMoved(MouseEvent me) {
+//        Point2D p2d = me.getPoint();
+//        p.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
+    }
+    //</editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc=" KEYBOARD ">
+    @Override
+    public void keyTyped(KeyEvent e) {    }
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         
         if (key == KeyEvent.VK_SPACE) {
-            poops.add(new Poop(
-                    (float)p.center.getX(), 
-                    (float)p.center.getY(), 
-                    5f, 
-                    5f
-            ));
+            poops.add(createPoop());
         }
         
         if (key == KeyEvent.VK_C) {
-            c.add(new Computer(
-                    new Random().nextInt(size.width),
-                    new Random().nextInt(size.height), 
-                    25, 
-                    50
-            ));
-            
-            c.get(c.size()-1).r = new Rectangle(0, 0, size.width, size.height);
+            c.add(createComputer());
         }
         
         if (key == KeyEvent.VK_B) {
@@ -251,7 +181,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         }
         
         if (key == KeyEvent.VK_V) {
-            if(!c.isEmpty())c.remove(0);
+            if(!c.isEmpty())c.clear();
         }
         
         if (key == KeyEvent.VK_A && !west) {
@@ -268,7 +198,6 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         
         e.consume();
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
@@ -285,4 +214,54 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         
         e.consume();
     }
+    //</editor-fold>
+    
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        currentTime = System.currentTimeMillis();
+        if (currentTime - beforeTime > 20) {
+            //PLAYER
+            p.bounds();        
+            p.move(d);        
+            p.update();
+            
+            //POOP
+            for (Poop poop: poops) {
+                poop.update();                
+            }
+
+            //COMPUTERS
+            for(Computer comp: c){
+                
+                comp.bounds();
+                comp.update(p, poops);
+                comp.update(); 
+            }
+            
+            for (int i = 0; i < c.size(); i++) {
+                if (c.get(i).ohcrap) {
+                    c.remove(i);
+                }
+            }
+            
+            beforeTime = System.currentTimeMillis();
+            currentTime = 0;
+        }
+               
+        //super.repaint();
+    }
+    private Computer createComputer(){
+        return new Computer(new Rectangle(0, (getHeight() - 100) - 50, 25, 50), this);
+    }
+    private Poop createPoop(){
+        Point point = new Point((int)p.center.getX(),(int)p.center.getY());
+        Dimension dimension = new Dimension(5, 5);
+        
+        return new Poop(new Rectangle(point, dimension), this);
+    }  
+    
+    
+    
+    
 }

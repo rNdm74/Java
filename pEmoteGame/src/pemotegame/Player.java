@@ -3,71 +3,70 @@ package pemotegame;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
-import static pemotegame.Game.Direction.DOWN;
-import static pemotegame.Game.Direction.LEFT;
-import static pemotegame.Game.Direction.RIGHT;
-import static pemotegame.Game.Direction.STATIONARY;
-import static pemotegame.Game.Direction.UP;
 
 
 public class Player extends Character {
     public Point2D p = new Point();
-    private int DIRECTION = -1;
-    //private int gravity = 3;
-    private int speedX = 2;
-    private int speedY = 2;
+    private final int DIRECTION = -1;
+    private final int LIMIT = 10;
+    private float speedX;
+    private float speedY;
 
-    public Player(float x, float y, float width, float height) {
-        super(x, y, width, height);        
+    public Player(Rectangle rect, Game game) {
+        super(rect, game);        
         p.setLocation(x, y);
     }
     
     public void draw(Graphics2D g){
         g.draw(clipping);
         //g.draw(bounds);
-        g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
+        //g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
         g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
     }
     
     public void move(Game.Direction d){
+        x += velocityX;
+        y += velocityY;
+        
         mouseMove();
                 
-        switch(d){
-            case LEFT:
-                velocityX = -SPEED;
-                break;
-            case RIGHT:
-                velocityX = SPEED;
-                break;
-            case UP:
-                velocityY = -SPEED;
-                break;
-            case DOWN:
-                velocityY = SPEED;
-                break;
-            case STATIONARY:
-                //velocityX = STOP;
-                //velocityY = STOP;
-                break;
-            default:                            
-        }
+//        switch(d){
+//            case LEFT:
+//                velocityX = -SPEED;
+//                break;
+//            case RIGHT:
+//                velocityX = SPEED;
+//                break;
+//            case UP:
+//                velocityY = -SPEED;
+//                break;
+//            case DOWN:
+//                velocityY = SPEED;
+//                break;
+//            case STATIONARY:
+//                //velocityX = STOP;
+//                //velocityY = STOP;
+//                break;
+//            default:                            
+//        }
     }
 
     private void mouseMove() {        
         
-        if (center.getX() > p.getX() - 5 &&
-            center.getX() < p.getX() + 5) {
+        if (center.getX() > p.getX() - LIMIT &&
+            center.getX() < p.getX() + LIMIT) {
             speedX=0;
         }else{
-            speedX = 2;
+            speedX = SPEED;
         }
         
-        if (center.getY() > p.getY() - 5 &&
-            center.getY() < p.getY() + 5) {
+        if (center.getY() > p.getY() - LIMIT &&
+            center.getY() < p.getY() + LIMIT) {
             speedY=0;
         }else{
-            speedY = 2;
+            speedY = SPEED;
         }
         
         // bird movement
@@ -91,11 +90,11 @@ public class Player extends Character {
             
             // is stationary
         }else{
-            x=p.getX()-clipping.getWidth()/2;
-            y=p.getY()-clipping.getHeight()/2;
+            //x=p.getX()-clipping.getWidth()/2;
+            //y=p.getY()-clipping.getHeight()/2;
             
-            velocityX = STOP;
-            velocityY = STOP;
+            //velocityX = STOP;
+            //velocityY = STOP;
         }
     }
 }

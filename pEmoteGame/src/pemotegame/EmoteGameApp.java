@@ -2,16 +2,25 @@
 
 package pemotegame;
 
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 /**
  *
  * @author Adam Charlton
  */
 public class EmoteGameApp {
 
-    /**
-     * @param args the command line arguments
-     */
+    private static final GraphicsDevice GD = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    private static final int WIDTH = GD.getDisplayMode().getWidth();
+    private static final int HEIGHT = GD.getDisplayMode().getHeight();
+    
+    protected static final Dimension RES = new Dimension(WIDTH, HEIGHT);
+    
+    protected static SuperBirdiePoop SBP;
+    
     public static void main(String[] args) {
-        GameWindow game = new GameWindow();
+        SBP = new SuperBirdiePoop(RES);
     }
 }

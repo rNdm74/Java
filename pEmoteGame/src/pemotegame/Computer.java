@@ -3,215 +3,177 @@ package pemotegame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.Random;
+import static pemotegame.Game.c;
+import static pemotegame.Game.poops;
 
 public class Computer extends Character {
-    private int DIRECTION = -1;
-    private float speedX = 1f;
-    private float speedY = 1f;
+    private static int DIRECTION = -1;
+    
+    public float speedX = 1f;
     
     public boolean playerInBounds;
-    //public boolean hitPoop;
+    
     private ArrayList<Boolean> hitPoop;
     
-    public Color c;
+    public Color color;
+    
+    private SpeechBubble s;
+        
+    public String talk = "";
+    
+    
 
-    public Computer(float x, float y, float width, float height) {
-        super(x, y, width, height);
-        this.hitPoop = new ArrayList<>();
+    public Computer(Rectangle rect, Game game) {
+        super(rect, game);
         
-        int red = new Random().nextInt(255);
-        int green = new Random().nextInt(255);
-        int blue = new Random().nextInt(255);
-        
-        //c = new Color(red, green, blue);
+        this.hitPoop = new ArrayList<>();        
     }
     
     public void draw(Graphics2D g){
-        //g.setColor((!playerInBounds)? Color.GREEN.darker(): Color.ORANGE.darker());
-        //System.out.println(hitPoop);
-        g.setColor(Color.CYAN.darker());
-        g.draw(bounds);
-        g.setColor(Color.GREEN.darker());
-        for(boolean hp: hitPoop){
-            if(hp){
-                g.drawString("HIT POOP", (float)(clipping.getX() + width + 20), (float)clipping.getY());
-                g.setColor(Color.RED.darker());
-            } 
-            else{
-               
-            }
-        }
-        //g.setColor(c);
+        //BOUNDS
+        g.setColor(Color.CYAN.darker());        
+        if(playerInBounds)g.setColor(Color.PINK.darker());        
+        //g.draw(bounds);
+        
+        //CLIPPING
+        g.setColor(Color.GREEN.darker()); 
+        
         g.draw(clipping);
         g.fill(clipping);
         
-        
-        
-        
-//        g.drawLine(
-//                (int)center.getX(), 
-//                (int)center.getY(), 
-//                (int)center.getX(), 
-//                (int)center.getY()
-//        );
+        //TALK
+        if(!talk.isEmpty()){            
+            s = new SpeechBubble(clipping, talk, g, this);
+        }
     }
 
-    public void update(Player p, ArrayList<Poop> poops){
-        move();
+    public void update(Player p, ArrayList<Poop> poops){  
+        talk = "";
         
-        //computerWait();
-        //randomizeDirection();
+        computerWait();
         computerClippingCheck(poops);
         computerBoundsCheck(p);
-        screenBoundsCheck();        
+        randomizeDirection();
+        screenBoundsCheck();
+        groundPoop();
+        poopCheck();
+        move();       
     }
 
-    private void screenBoundsCheck() {
-        if (super.y + 50 > r.height - 1) {
-            speedY *= DIRECTION;            
-        } 
-        
-        if (super.y < 1) {
-            speedY *= DIRECTION;            
-        }
-        
-        if (super.x + 50 > r.width - 1) {
+    private void screenBoundsCheck() {        
+        if (clipping.getX() < 1) {
             speedX *= DIRECTION;            
         } 
         
-        if (super.x < 1) {
+        if ((clipping.getX() + width) > game.getBounds().width) {            
             speedX *= DIRECTION;            
-        }        
+        }       
     }
 
     private void computerClippingCheck(ArrayList<Poop> poops) {
-        //System.out.println(hitPoop);
         hitPoop.clear();
-        //boolean[] hitPoop = new boolean[poops.size()];
-        for (int i = 0; i < poops.size(); i++) {
-            if(clipping.contains(poops.get(i).center)){
-                hitPoop.add(true);
-            }
-            else{
-                hitPoop.add(false);
-            }            
+        
+        for (Poop poop: poops) {
+            hitPoop.add(clipping.contains(poop.center));
+//            if (top.intersects(poop.clipping)) {
+//                System.out.println("foo");
+//                game.c.remove(game.c.indexOf(this));
+//            }
         }
-        
-        
-//        for (int i = 0; i < poops.size(); i++) {
-//            if(clipping.contains(poops.get(i).center)){
-//                //poops.remove(i);
-//                
-//                hitPoop.set(i, true);
-//                //System.out.println(hitPoop);
-//            }            
-//            
-//            if (!clipping.contains(poops.get(i).center)) {
-//                hitPoop.set(i, false);
-//                
-//            }
-//        }
-        
-                
-        
-        
-        
-//        if(poops.isEmpty()){
-//            hitPoop = false;
-//        }
-        
-        //c = (hitPoop) ? Color.RED.darker() : Color.GREEN.darker();
-        
-        
-        
-//        for (boolean b: hitPoop) {
-//            if (b) {
-//            System.out.println("RED");
-//            c = Color.RED.darker();
-//            //poops.remove(0);
-//            //hitPoop = true;
-//            }
-//            else{
-//                System.out.println("GREEN");
-//                c = Color.GREEN.darker();
-//                //hitPoop = false;
-//            }
-//        }
     }
     
+    
+    
     private void computerBoundsCheck(Player p) {
-        if(bounds.contains(p.center)){
-            c = Color.ORANGE.darker();
+        
+        if(bounds.contains(p.center)){            
             playerInBounds = true;
-            if (p.center.getX() < super.center.getX()) {
-                speedX *= -speedX;
+            talk = "PRETTY BIRDIE!";
+            
+            if (p.center.getX() < center.getX()) {
+                //speedX *= -speedX;
             }
             
-            if (p.center.getY()< super.center.getY()) {
-                speedY *= -speedY;
-            }
-            
-            if (p.center.getX() > super.center.getX()) {
-                speedX *= speedX;
-            }
-            
-            if (p.center.getY() > super.center.getY()) {
-                speedY *= speedY;
+            if (p.center.getX() > center.getX()) {
+                //speedX *= speedX;
             }            
         }
         else{
-            //c = Color.GREEN.darker();
             playerInBounds = false;
+            //talk = "";
         }
     }
 
-    private void randomizeDirection() {
-        int rand = new Random().nextInt(10000);
-        
-        if (rand == 0) {
-            //System.out.println("RANDOM TIME");
-            speedX *= DIRECTION;
-            speedY *= DIRECTION;
-        }
-    }
-
-    long beforeTime = System.currentTimeMillis();
-    long currentTime;
-    boolean waiting = false;
+    public Pause pause = new Pause(this);
+    public boolean ohcrap;
+    long directionTrigger;
+    long waitTrigger;
+    long poopTrigger;
+    int minimum = 0;
+    int maximum = 500;
     
-    private void computerWait(){
-        
-        
-        int rand = new Random().nextInt(500);
-        
-        if (!waiting && rand == 0) { 
-            System.out.println("WAITING");
-            speedX = 0;  
-            waiting = true;
+    private long poopCheckTrigger;
+    
+    public void poopCheck(){        
+        for (Poop poop: poops) {
+            if (top.intersects(poop.clipping)) {
+                poopCheckTrigger = System.currentTimeMillis();
+            }
+        }
+                
+        if (poopCheckTrigger > 0) {
+            talk ="OH CRAP!";
+            if(pause.start(500, poopCheckTrigger)){
+                poopCheckTrigger = 0;
+                ohcrap = true;
+            }            
         }
         
-        currentTime = System.currentTimeMillis();
-        //System.out.println(currentTime - beforeTime);
-        long moveTime = currentTime - beforeTime;
-        
-        if (waiting && moveTime > 10000) {
-            System.out.println("FINISHED WAITING");
-            speedX = 1f;
-            beforeTime = System.currentTimeMillis();
-            currentTime = 0;
-            waiting = false;
-        }
-        
-        
+        //ohcrap = false;
     }
+    
+    private void randomizeDirection() {
+        maximum = 500;
+        
+        int rand = minimum + (int)(Math.random()*maximum);
+        
+        if(rand == maximum -1) directionTrigger = System.currentTimeMillis();
+                
+        if(directionTrigger > 0){            
+            talk ="I WANNA GO THIS WAY!";
+            if(pause.start(2000, directionTrigger)){
+                directionTrigger = 0;
+                speedX*=DIRECTION;
+            }            
+        }
+    }
+    
+    
+    
+    private void computerWait(){ 
+        maximum = 1000;
+        int rand = minimum + (int)(Math.random()*maximum);
+        
+        if(rand == minimum) waitTrigger = System.currentTimeMillis(); 
+        
+        if(waitTrigger > 0) {
+            talk = "WHAT A LOVELY DAY!";                        
+            if(pause.start(2000, waitTrigger)){
+                waitTrigger = 0;
+            }
+        }
+    }
+    
+    
     
     private void move() {
-        
-        
-        y += speedY;
-        x += speedX;
-        
+        x += speedX;        
+    }
+
+    private void groundPoop() {
+        for(boolean hitpoop: hitPoop) if(hitpoop)talk = "THERE IS A POOP!";
     }
 }
