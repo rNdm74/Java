@@ -6,7 +6,7 @@ package pemotegame;
  * @author rNdm
  */
 public class Pause {
-    Computer comp;
+    private final Computer comp;
     
     public Pause(Computer comp){
         this.comp = comp;

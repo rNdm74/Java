@@ -1,28 +1,21 @@
 
 package pemotegame;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.Line2D;
+import java.awt.*;
 import java.util.ArrayList;
-import static pemotegame.Game.c;
+
 import static pemotegame.Game.poops;
 
-public class Computer extends Character {
-    private static int DIRECTION = -1;
+class Computer extends Character {
+    private static final int DIRECTION = -1;
     
     public float speedX = 1f;
     
     public boolean playerInBounds;
     
-    private ArrayList<Boolean> hitPoop;
-    
-    public Color color;
-    
-    private SpeechBubble s;
-        
-    public String talk = "";
+    private final ArrayList<Boolean> hitPoop;
+
+    private String talk = "";
     
     
 
@@ -45,8 +38,8 @@ public class Computer extends Character {
         g.fill(clipping);
         
         //TALK
-        if(!talk.isEmpty()){            
-            s = new SpeechBubble(clipping, talk, g, this);
+        if(!talk.isEmpty()){
+            new SpeechBubble(clipping, talk, g, this);
         }
     }
 
@@ -107,17 +100,16 @@ public class Computer extends Character {
         }
     }
 
-    public Pause pause = new Pause(this);
+    private final Pause pause = new Pause(this);
     public boolean ohcrap;
-    long directionTrigger;
-    long waitTrigger;
-    long poopTrigger;
-    int minimum = 0;
-    int maximum = 500;
+    private long directionTrigger;
+    private long waitTrigger;
+    private final int minimum = 0;
+    private int maximum = 500;
     
     private long poopCheckTrigger;
     
-    public void poopCheck(){        
+    void poopCheck(){
         for (Poop poop: poops) {
             if (top.intersects(poop.clipping)) {
                 poopCheckTrigger = System.currentTimeMillis();
@@ -138,7 +130,7 @@ public class Computer extends Character {
     private void randomizeDirection() {
         maximum = 500;
         
-        int rand = minimum + (int)(Math.random()*maximum);
+        int rand = (int) (Math.random() * maximum);
         
         if(rand == maximum -1) directionTrigger = System.currentTimeMillis();
                 
@@ -155,7 +147,7 @@ public class Computer extends Character {
     
     private void computerWait(){ 
         maximum = 1000;
-        int rand = minimum + (int)(Math.random()*maximum);
+        int rand = (int) (Math.random() * maximum);
         
         if(rand == minimum) waitTrigger = System.currentTimeMillis(); 
         

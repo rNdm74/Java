@@ -8,11 +8,7 @@ import java.awt.geom.Point2D;
 
 
 public class Player extends Character {
-    public Point2D p = new Point();
-    private final int DIRECTION = -1;
-    private final int LIMIT = 10;
-    private float speedX;
-    private float speedY;
+    public final Point2D p = new Point();
 
     public Player(Rectangle rect, Game game) {
         super(rect, game);        
@@ -26,7 +22,7 @@ public class Player extends Character {
         g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
     }
     
-    public void move(Game.Direction d){
+    public void move(){
         x += velocityX;
         y += velocityY;
         
@@ -53,18 +49,21 @@ public class Player extends Character {
 //        }
     }
 
-    private void mouseMove() {        
-        
+    private void mouseMove() {
+
+        float speedX;
+        int LIMIT = 10;
         if (center.getX() > p.getX() - LIMIT &&
             center.getX() < p.getX() + LIMIT) {
-            speedX=0;
+            speedX =0;
         }else{
             speedX = SPEED;
         }
-        
+
+        float speedY;
         if (center.getY() > p.getY() - LIMIT &&
             center.getY() < p.getY() + LIMIT) {
-            speedY=0;
+            speedY =0;
         }else{
             speedY = SPEED;
         }
@@ -73,7 +72,7 @@ public class Player extends Character {
         if (center.distance(p) > 6) {            
             // move right                
             if (center.getX() < p.getX()) { 
-                velocityX=speedX;                
+                velocityX= speedX;
             }
             // move left
             if (center.getX() > p.getX()) {
@@ -81,7 +80,7 @@ public class Player extends Character {
             }
             // move down
             if (center.getY() < p.getY()) {
-                velocityY=speedY;
+                velocityY= speedY;
             }
             // move up
             if (center.getY() > p.getY()) {

@@ -2,36 +2,38 @@
 package pemotegame;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
  * @author Adam Charlton
  */
-public abstract class Character{
-    public Rectangle2D clipping;
-    public Rectangle bounds;    
-    public Point2D center;
+abstract class Character{
+    final Rectangle2D clipping;
+    final Rectangle bounds;
+    public final Point2D center;
     
-    protected Game game;
+    final Game game;
     
-    public Line2D top;
+    final Line2D top;
         
-    public double x;
+    double x;
     public double y;
     
-    public double width;
-    public double height;
+    final double width;
+    final double height;
     
-    public float velocityX;
-    public float velocityY;
+    float velocityX;
+    float velocityY;
     
-    public float gravity = 6;
+    final float gravity = 6;
     
     protected final float STOP = 0;    
-    protected final float SPEED = 3;
+    final float SPEED = 3;
     
-    public Character(Rectangle rect, Game game){        
+    Character(Rectangle rect, Game game){
         this.x = rect.getX();
         this.y = rect.getY();
         

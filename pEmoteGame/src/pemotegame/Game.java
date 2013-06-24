@@ -1,21 +1,11 @@
 
 package pemotegame;
 
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.geom.Line2D;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -31,22 +21,14 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         DOWN,
         STATIONARY,
     }
-    
-    private Graphics doubleBufferedGraphics;
-    private Image doubleBufferedImage;        
-        
-    public Player p;
+
+    private final Player p;
     
     public static ArrayList<Poop> poops;
-    public static ArrayList<Computer> c;
-    
-    private Direction d;
-    
-    private Timer t;
-    
+    private static ArrayList<Computer> c;
+
     private long beforeTime = System.currentTimeMillis();
-    private long currentTime;
-    
+
     private boolean north, south, east, west;
     
     public Game(Dimension size){ 
@@ -55,10 +37,8 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         poops = new ArrayList<>();
         
         p = new Player(new Rectangle(size.width / 2, 50, 50, 50), this);
-                
-        d = Direction.STATIONARY;
-        
-        t = new Timer(10, this);       
+
+        Timer t = new Timer(10, this);
         
         t.start();
     }
@@ -66,11 +46,11 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     @Override
     public void paint(Graphics g){
         super.paint(g);
+
+        Image doubleBufferedImage = createImage(getWidth(), getHeight());
+        Graphics doubleBufferedGraphics = doubleBufferedImage.getGraphics();
         
-        doubleBufferedImage = createImage(getWidth(), getHeight());
-        doubleBufferedGraphics = doubleBufferedImage.getGraphics();
-        
-        paintComponent((Graphics2D)doubleBufferedGraphics);
+        paintComponent((Graphics2D) doubleBufferedGraphics);
         
         g.drawImage(doubleBufferedImage, 0,0,null);
     }
@@ -81,23 +61,21 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         
         //POOP
         g.setColor(Color.DARK_GRAY);
-        for (Iterator<Poop> it = poops.iterator(); it.hasNext();) {
-            Poop poop = it.next();
+        for (Poop poop : poops) {
             poop.draw(g);
         }
         
         // COMPUTER
-        for (Iterator<Computer> it = c.iterator(); it.hasNext();) {
-            Computer comp = it.next();
+        for (Computer comp : c) {
             comp.draw(g);
-            if(comp.playerInBounds){
-               g.drawLine(
-                (int)p.center.getX(), 
-                (int)p.center.getY(), 
-                (int)comp.center.getX(), 
-                (int)comp.center.getY()
-                ); 
-            }                       
+            if (comp.playerInBounds) {
+                g.drawLine(
+                        (int) p.center.getX(),
+                        (int) p.center.getY(),
+                        (int) comp.center.getX(),
+                        (int) comp.center.getY()
+                );
+            }
         }
         
         //GROUND
@@ -111,10 +89,7 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
     @Override
     public void componentResized(ComponentEvent ce) {
-        for (Iterator<Computer> it = c.iterator(); it.hasNext();) {
-            Computer comp = it.next();
-            comp.y = (getHeight() - 150);
-        }
+        for (Computer comp : c) comp.y = (getHeight() - 150);
     }
     @Override
     public void componentMoved(ComponentEvent ce) {
@@ -186,14 +161,10 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         
         if (key == KeyEvent.VK_A && !west) {
             east = false;
-            d = Direction.LEFT;
         }else if(key == KeyEvent.VK_D && !east){
-            west = false;            
-            d = Direction.RIGHT;
+            west = false;
         }else if(key == KeyEvent.VK_W && !north){
-            d = Direction.UP;
         }else if(key == KeyEvent.VK_S && !south){
-            d = Direction.DOWN;
         }
         
         e.consume();
@@ -203,14 +174,10 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
         int key = e.getKeyCode();
         
         if (key == KeyEvent.VK_A) {
-            d = Direction.STATIONARY;
         }else if(key == KeyEvent.VK_D){
-            d = Direction.STATIONARY;
         }else if(key == KeyEvent.VK_W){
-            d = Direction.STATIONARY;
         }else if(key == KeyEvent.VK_S){
-            d = Direction.STATIONARY;
-        }  
+        }
         
         e.consume();
     }
@@ -219,11 +186,11 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        currentTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();
         if (currentTime - beforeTime > 20) {
             //PLAYER
             p.bounds();        
-            p.move(d);        
+            p.move();
             p.update();
             
             //POOP
@@ -246,7 +213,6 @@ implements ActionListener, KeyListener, MouseListener, MouseMotionListener, Comp
             }
             
             beforeTime = System.currentTimeMillis();
-            currentTime = 0;
         }
                
         //super.repaint();

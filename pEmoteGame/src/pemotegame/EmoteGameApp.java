@@ -17,10 +17,8 @@ public class EmoteGameApp {
     private static final int HEIGHT = GD.getDisplayMode().getHeight();
     
     protected static final Dimension RES = new Dimension(WIDTH, HEIGHT);
-    
-    protected static SuperBirdiePoop SBP;
-    
+
     public static void main(String[] args) {
-        SBP = new SuperBirdiePoop(RES);
+        new SuperBirdiePoop();
     }
 }
