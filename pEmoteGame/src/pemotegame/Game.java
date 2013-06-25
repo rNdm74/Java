@@ -14,6 +14,12 @@ import java.util.ArrayList;
 public class Game extends JPanel 
     implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
 
+    static boolean debug;
+    static boolean alias;
+    static boolean vsync;
+    static boolean showBounds;
+    static boolean showLines;
+
     double w;
     double h;
     Timer t;
@@ -70,11 +76,11 @@ public class Game extends JPanel
 
     long sTime;
     private void paintComponent(Graphics2D g){
-        String s = "FPS: " + String.valueOf(fps);
-        new SpeechBubble(new Rectangle(50, 100, 50, 50), s, g, new Point(100,0));
+        if (alias) Aliasing(g);
+        if(debug)new Debug(g).invoke();
 
 
-
+        g.setColor(Color.BLACK);
         //PLAYER
         player.draw(g);
         
@@ -88,7 +94,8 @@ public class Game extends JPanel
         for (Computer comp : pedestrian) {
             comp.draw(g);
             if (comp.playerInBounds) {
-                g.drawLine(
+                if(showLines)
+                    g.drawLine(
                         (int) player.center.getX(),
                         (int) player.center.getY(),
                         (int) comp.center.getX(),
@@ -101,8 +108,9 @@ public class Game extends JPanel
         g.setColor(Color.ORANGE.darker());
         g.drawLine(0, getHeight() - (int)ground, getWidth(), getHeight() - (int)ground);
                  
-        g.dispose();        
-        //super.repaint();
+        g.dispose();
+
+        if(!vsync)super.repaint();
 
         long eTime = System.currentTimeMillis() - frameBeginTime;
 
@@ -115,7 +123,19 @@ public class Game extends JPanel
             frameBeginTime = System.currentTimeMillis();
         }
     }
-    
+
+    private void Aliasing(Graphics2D g) {
+        // for antialiasing geometric shapes
+        g.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON );
+        // for antialiasing text
+        g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+        // to go for quality over speed
+        g.setRenderingHint( RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY );
+    }
+
     //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
 
 
@@ -207,6 +227,29 @@ public class Game extends JPanel
             if(!pedestrian.isEmpty()) pedestrian.clear();
         }
 
+        if (key == KeyEvent.VK_BACK_QUOTE) {
+            debug = !debug;
+        }
+
+        if (key == KeyEvent.VK_F1) {
+            alias = !alias;
+        }
+
+        if (key == KeyEvent.VK_F2) {
+            vsync = !vsync;
+            super.repaint();
+        }
+
+        if (key == KeyEvent.VK_F4) {
+            showBounds = !showBounds;
+        }
+
+        if (key == KeyEvent.VK_F3) {
+            showLines = !showLines;
+        }
+
+
+
         if (key == KeyEvent.VK_ADD) {
             if(choice < 4)choice++;
             superBirdiePoop.setSize(changeResolution(choice));
@@ -249,17 +292,15 @@ public class Game extends JPanel
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        long gameTime = System.currentTimeMillis() - gameStartTime;
+        //System.out.println(e.getWhen());
+
+        long gameTime = e.getWhen() - gameStartTime;
         if(gameTime > 10000) {
-            System.out.println(gameTime);
             pedestrian.add(createComputer());
-            gameStartTime = System.currentTimeMillis();
+            gameStartTime = e.getWhen();
         }
 
-
-        //if((System.currentTimeMillis() - gameStartTime) % 500 == 0) pedestrian.add(createComputer());
-
-        long currentTime = System.currentTimeMillis();
+        long currentTime = e.getWhen();
         if (currentTime - beforeTime > Constants.UPDATE_INTERVAL) {
             //PLAYER
             player.bounds();
@@ -271,23 +312,28 @@ public class Game extends JPanel
                 poop.update();                
             }
 
-            //COMPUTERS
+            //PEDESTRIANS
             for(Computer comp: pedestrian){
                 comp.bounds();
                 comp.update(player, poops);
                 comp.update(); 
             }
-            
+
+            //PEDESTRIANS HIT
             for (int i = 0; i < pedestrian.size(); i++) {
                 if (pedestrian.get(i).crap) {
                     pedestrian.remove(i);
                 }
             }
             
-            beforeTime = System.currentTimeMillis();
+            beforeTime = e.getWhen();
         }
                
-        super.repaint();
+        if(vsync)super.repaint();
+
+        try {
+            e.wait(10);
+        } catch (Exception e1) {}
     }
     private Computer createComputer(){
         return new Computer(currentPed, this);
@@ -297,9 +343,43 @@ public class Game extends JPanel
         Point point = new Point((int) player.center.getX(),(int) player.center.getY());
         Dimension dimension = new Dimension(Constants.POOP_WIDTH, Constants.POOP_HEIGHT);
         return new Poop(new Rectangle(point, dimension), this);
-    }  
-    
-    
-    
-    
+    }
+
+
+    private class Debug {
+        private Graphics2D g;
+
+        public Debug(Graphics2D g) {
+            this.g = g;
+        }
+
+        public void invoke() {
+            //new SpeechBubble(new Rectangle(50, 100, 50, 50), s, g, new Point(100,0));
+            g.setColor(Color.RED.darker());
+            //g.drawString("DEBUG", 20, 20);
+            g.drawString("PEDESTRIANS", 20, 20);
+            g.drawString(String.valueOf(pedestrian.size()), 150, 20);
+
+            g.drawString("FPS", 20, 50);
+            g.drawString(String.valueOf(fps), 150, 50);
+
+            g.drawString("X", 20, 100);
+            g.drawString(String.valueOf(player.center.getX()), 150, 100);
+
+            g.drawString("Y", 20, 125);
+            g.drawString(String.valueOf(player.center.getY()), 150, 125);
+
+            g.drawString("F4 - BOUNDS", 20, 175);
+            g.drawString((showBounds) ? "ON" : "OFF", 150, 175);
+
+            g.drawString("F3 - LINES", 20, 200);
+            g.drawString((showLines) ? "ON" : "OFF", 150, 200);
+
+            g.drawString("F2 - VSYNC", 20, 225);
+            g.drawString((vsync) ? "ON" : "OFF", 150, 225);
+
+            g.drawString("F1 - ALIAS", 20, 250);
+            g.drawString((alias) ? "ON" : "OFF", 150, 250);
+        }
+    }
 }

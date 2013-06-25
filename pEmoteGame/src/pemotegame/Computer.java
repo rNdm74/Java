@@ -29,9 +29,12 @@ class Computer extends Character {
     
     public void draw(Graphics2D g){
         //BOUNDS
-        //g.setColor(Color.CYAN.darker());
-        //if(playerInBounds)g.setColor(Color.PINK.darker());
-        //g.draw(bounds);
+        if(Game.showBounds){
+            g.setColor(Color.CYAN.darker());
+            if(playerInBounds)g.setColor(Color.PINK.darker());
+            g.draw(bounds);
+        }
+
         
         //CLIPPING
 
@@ -60,7 +63,7 @@ class Computer extends Character {
 
     private void updateBounds() {
         bounds.setFrame(
-                clipping.getCenterX() - Constants.GROUND_HEIGHT/2,
+                clipping.getCenterX() - (Constants.DEFAULT_CLIPPING_SIZE/2),
                 (clipping.getY() + height) - (game.getHeight() - Constants.GROUND_HEIGHT),
                 Constants.DEFAULT_CLIPPING_SIZE,
                 game.getHeight() - Constants.GROUND_HEIGHT);

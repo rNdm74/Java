@@ -19,8 +19,8 @@ public final class Constants {
     public static final int                 DEFAULT_Y_PADDING           = 60;
     public static final int                 DEFAULT_FONT_SIZE           = 14;
 
-    public static final int                 TIMER_INTERVAL              = 10;
-    public static final int                 UPDATE_INTERVAL             = 20;
+    public static final int                 TIMER_INTERVAL              = 17;
+    public static final int                 UPDATE_INTERVAL             = 17;
 
     public static final int                 GROUND_HEIGHT               = 100;
 

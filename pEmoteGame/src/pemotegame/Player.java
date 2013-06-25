@@ -17,9 +17,13 @@ public class Player extends Character {
     
     public void draw(Graphics2D g){
         g.draw(clipping);
-        g.draw(bounds);
-        //g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
-        g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
+
+        if(Game.showBounds)g.draw(bounds);
+
+        if(Game.showLines){
+            g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
+            g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
+        }
     }
     
     public void move(){

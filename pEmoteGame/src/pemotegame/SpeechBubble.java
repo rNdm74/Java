@@ -14,9 +14,9 @@ import java.awt.geom.Rectangle2D;
 class SpeechBubble {
 
     public SpeechBubble(Rectangle2D clipping, String text, Graphics2D g, Point2D c){
-        // for antialiasing text
-        g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
-            RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+//        // for antialiasing text
+//        g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+//            RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
         Font font = new Font(Font.SANS_SERIF, Font.ITALIC, Constants.DEFAULT_FONT_SIZE);
         AffineTransform affinetransform = new AffineTransform();
