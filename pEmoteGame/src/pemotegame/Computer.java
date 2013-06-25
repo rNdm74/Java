@@ -162,7 +162,7 @@ class Computer extends Character {
             if(trigger > 0) {
                 talk = text;
                 if(start(Constants.WAIT_DELAY, trigger)){
-                    speedX *= Constants.DIRECTION;
+                    if((Math.random() * 10) == 0) speedX *= Constants.DIRECTION;
                     return 0;
                 }
             }

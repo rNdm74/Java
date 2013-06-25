@@ -11,17 +11,17 @@ import java.awt.geom.Rectangle2D;
  * @author Adam Charlton
  */
 abstract class Character{
-    public final Point2D center;
-    final Rectangle2D clipping;
+    public Point2D center;
+    public Rectangle2D clipping;
     final Rectangle bounds;
     final Game game;
     final Line2D top;
-        
-    double x;
+
+    public double x;
     public double y;
     
-    final double width;
-    final double height;
+    public double width;
+    public double height;
     
     float velocityX;
     float velocityY;
@@ -43,7 +43,7 @@ abstract class Character{
     
     public void update(){                
         center.setLocation(x, y);
-                
+
         clipping.setFrame(center.getX(), center.getY(), width, height);
         
         center.setLocation(clipping.getCenterX(), clipping.getCenterY());
@@ -52,8 +52,6 @@ abstract class Character{
                     clipping.getY(),
                     clipping.getX() + clipping.getWidth(), 
                     clipping.getY());
-        
-
     }
     
     public void bounds() {        

@@ -13,30 +13,45 @@ import java.util.ArrayList;
  */
 public class Game extends JPanel 
     implements ActionListener, KeyListener, MouseListener, MouseMotionListener, ComponentListener{
-            
 
-
+    double w;
+    double h;
+    Timer t;
+    Rectangle currentPed;
+    private double ground;
     private final Player player;
     public static ArrayList<Poop> poops;
     private static ArrayList<Computer> pedestrian;
     private int fps;
     private int frames = 0;
     private long frameBeginTime;
+    private long gameStartTime;
     private long beforeTime;
+    private SuperBirdiePoop superBirdiePoop;
     
-    public Game(Dimension size){ 
-        
+    public Game(SuperBirdiePoop superBirdiePoop){
+        this.superBirdiePoop = superBirdiePoop;
+        gameStartTime = System.currentTimeMillis();
+
+
+
         pedestrian = new ArrayList<>();
         poops = new ArrayList<>();
         
-        player = new Player(new Rectangle(size.width / 2, 50, 50, 50), this);
+        player = new Player(new Rectangle(Constants.DEFAULT_SCREEN_X_SIZE / 2, 50,
+                                          Constants.DEFAULT_SCREEN_X_SIZE / 16, Constants.DEFAULT_SCREEN_Y_SIZE / 12), this);
 
-        Timer t = new Timer(Constants.TIMER_INTERVAL, this);
-        
+        t = new Timer(Constants.TIMER_INTERVAL, this);
         t.start();
+
+        ground = Constants.GROUND_HEIGHT;
 
         frameBeginTime = System.currentTimeMillis();
         beforeTime = System.currentTimeMillis();
+
+        Point point = new Point(0, (superBirdiePoop.getContentPane().getHeight() - Constants.GROUND_HEIGHT) - Constants.PEDESTRIAN_HEIGHT);
+        Dimension dimension = new Dimension(Constants.PEDESTRIAN_WIDTH, Constants.PEDESTRIAN_HEIGHT);
+        currentPed = new Rectangle(point,dimension);
     }
     
     @Override
@@ -57,6 +72,8 @@ public class Game extends JPanel
     private void paintComponent(Graphics2D g){
         String s = "FPS: " + String.valueOf(fps);
         new SpeechBubble(new Rectangle(50, 100, 50, 50), s, g, new Point(100,0));
+
+
 
         //PLAYER
         player.draw(g);
@@ -82,10 +99,10 @@ public class Game extends JPanel
         
         //GROUND
         g.setColor(Color.ORANGE.darker());
-        g.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100);          
+        g.drawLine(0, getHeight() - (int)ground, getWidth(), getHeight() - (int)ground);
                  
         g.dispose();        
-        super.repaint();
+        //super.repaint();
 
         long eTime = System.currentTimeMillis() - frameBeginTime;
 
@@ -100,9 +117,30 @@ public class Game extends JPanel
     }
     
     //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
+
+
     @Override
     public void componentResized(ComponentEvent ce) {
-        for (Computer comp : pedestrian) comp.y = (getHeight() - 150);
+        w = superBirdiePoop.getWidth();
+        h = superBirdiePoop.getHeight();
+
+        double scale = (h / Constants.DEFAULT_SCREEN_Y_SIZE);
+
+        player.width = Constants.PLAYER_WIDTH * scale;
+        player.height = Constants.PLAYER_HEIGHT * scale;
+
+        ground = (100 * scale);
+
+
+
+        for (Computer ped : pedestrian){
+
+            ped.width = 25 * scale;
+            ped.height = 50 * scale;
+            ped.y = (getHeight() - ped.height - ground);
+
+            currentPed = new Rectangle(0, (int)ped.y, (int)ped.width, (int)ped.height);
+        }
     }
     @Override
     public void componentMoved(ComponentEvent ce) {
@@ -147,6 +185,8 @@ public class Game extends JPanel
     //<editor-fold defaultstate="collapsed" desc=" KEYBOARD ">
     @Override
     public void keyTyped(KeyEvent e) {    }
+
+    int choice = 1;
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -167,8 +207,40 @@ public class Game extends JPanel
             if(!pedestrian.isEmpty()) pedestrian.clear();
         }
 
+        if (key == KeyEvent.VK_ADD) {
+            if(choice < 4)choice++;
+            superBirdiePoop.setSize(changeResolution(choice));
+            superBirdiePoop.setLocation(Constants.SCREEN_WIDTH/2 - (int)changeResolution(choice).getWidth()/2,
+                                        Constants.SCREEN_HEIGHT/2 - (int)changeResolution(choice).getHeight()/2);
+            superBirdiePoop.revalidate();
+        }
+
+        if (key == KeyEvent.VK_SUBTRACT) {
+            if(choice > 1)choice--;
+            superBirdiePoop.setSize(changeResolution(choice));
+            superBirdiePoop.setLocation(Constants.SCREEN_WIDTH / 2 - (int) changeResolution(choice).getWidth() / 2,
+                    Constants.SCREEN_HEIGHT / 2 - (int) changeResolution(choice).getHeight() / 2);
+            superBirdiePoop.revalidate();
+        }
+
         e.consume();
     }
+
+    private Dimension changeResolution(int choice){
+        switch (choice){
+            case 1:
+                return new Dimension(800,600);
+            case 2:
+                return new Dimension(1024,768);
+            case 3:
+                return new Dimension(1366,768);
+            case 4:
+                return new Dimension(1920,1080);
+            default:
+                return new Dimension(640,480);
+        }
+    }
+
     @Override
     public void keyReleased(KeyEvent e) {
     }
@@ -177,6 +249,16 @@ public class Game extends JPanel
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        long gameTime = System.currentTimeMillis() - gameStartTime;
+        if(gameTime > 10000) {
+            System.out.println(gameTime);
+            pedestrian.add(createComputer());
+            gameStartTime = System.currentTimeMillis();
+        }
+
+
+        //if((System.currentTimeMillis() - gameStartTime) % 500 == 0) pedestrian.add(createComputer());
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - beforeTime > Constants.UPDATE_INTERVAL) {
             //PLAYER
@@ -205,13 +287,12 @@ public class Game extends JPanel
             beforeTime = System.currentTimeMillis();
         }
                
-        //super.repaint();
+        super.repaint();
     }
     private Computer createComputer(){
-        Point point = new Point(0, (getHeight() - Constants.GROUND_HEIGHT) - Constants.PEDESTRIAN_HEIGHT);
-        Dimension dimension = new Dimension(Constants.PEDESTRIAN_WIDTH, Constants.PEDESTRIAN_HEIGHT);
-        return new Computer(new Rectangle(point, dimension), this);
+        return new Computer(currentPed, this);
     }
+
     private Poop createPoop(){
         Point point = new Point((int) player.center.getX(),(int) player.center.getY());
         Dimension dimension = new Dimension(Constants.POOP_WIDTH, Constants.POOP_HEIGHT);
