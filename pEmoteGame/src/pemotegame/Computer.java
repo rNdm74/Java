@@ -20,12 +20,10 @@ class Computer extends Character {
     private long poopTrigger;
 
     private String talk = "";
-    
-    
+    public boolean aBoolean;
 
     public Computer(Rectangle rect, Game game) {
         super(rect, game);
-        
         hitPoop = new ArrayList<>();
     }
     
@@ -43,7 +41,7 @@ class Computer extends Character {
         
         //TALK
         if(!talk.isEmpty()){
-            new SpeechBubble(clipping, talk, g, this);
+            new SpeechBubble(clipping, talk, g, center);
         }
     }
 
@@ -106,12 +104,15 @@ class Computer extends Character {
 
     
     void poopCheck(){
+
+
         for (Poop poop: poops) {
             if (top.intersects(poop.clipping)) {
                 poopTrigger = System.currentTimeMillis();
+                //t.start();
             }
         }
-                
+
         if (poopTrigger > 0) {
             talk ="OH CRAP!";
             if(new CompWait().start(Constants.POOP_DELAY, poopTrigger)){
@@ -122,11 +123,11 @@ class Computer extends Character {
     }
     
     private void randomizeDirection() {
-        directionTrigger = new CompWait().invoke("I WANNA GO THIS WAY!", directionTrigger, (int)(Math.random() * Constants.MAXIMUM));
+        directionTrigger = new CompWait().invoke("I WANNA GO THIS WAY!", directionTrigger, Constants.MAXIMUM);
     }
 
     private void computerWait(){
-        waitTrigger = new CompWait().invoke("WHAT A LOVELY DAY!", waitTrigger, (int)(Math.random() * Constants.MAXIMUM));
+        waitTrigger = new CompWait().invoke("WHAT A LOVELY DAY!", waitTrigger, Constants.MAXIMUM);
     }
 
 
@@ -135,7 +136,7 @@ class Computer extends Character {
     }
 
     private void groundPoop() {
-        for(boolean hp: hitPoop) if(hp)talk = "THERE IS A POOP!";
+        for(boolean hp: hitPoop) if(hp)talk = "THERE IS POOP ON THE GROUND!";
     }
 
     public class CompWait {
@@ -146,7 +147,6 @@ class Computer extends Character {
 
             //COMPUTER START
             if (moveTime > waitTime) {
-                //System.out.println("start");
                 speedX = 1f;
                 return true;
             }

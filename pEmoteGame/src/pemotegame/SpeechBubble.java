@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
  */
 class SpeechBubble {
 
-    public SpeechBubble(Rectangle2D clipping, String text, Graphics2D g, Computer c){
+    public SpeechBubble(Rectangle2D clipping, String text, Graphics2D g, Point2D c){
         // for antialiasing text
         g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
             RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
@@ -36,8 +36,8 @@ class SpeechBubble {
         g.drawLine(
                 (int) center.getX(),
                 (int) center.getY(),
-                (int)c.center.getX(), 
-                (int)c.center.getY()
+                (int) c.getX(),
+                (int) c.getY()
                 );
         
         g.setFont(font);

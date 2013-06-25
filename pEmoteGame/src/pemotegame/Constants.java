@@ -29,7 +29,7 @@ public final class Constants {
     public static final int                 RANDOM_DELAY                = 2000;
 
     public static final int                 GRAVITY                     = 6;
-    public static final int                 SPEED                       = 1;
+    public static final int                 SPEED                       = 2;
     public static final int                 DIRECTION                   = -1;
 
     public static final int                 MAXIMUM                     = 1000;

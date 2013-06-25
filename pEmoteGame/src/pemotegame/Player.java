@@ -23,41 +23,22 @@ public class Player extends Character {
     }
     
     public void move(){
+        mouseMove();
+
         x += velocityX;
         y += velocityY;
-        
-        mouseMove();
-                
-//        switch(d){
-//            case LEFT:
-//                velocityX = -SPEED;
-//                break;
-//            case RIGHT:
-//                velocityX = SPEED;
-//                break;
-//            case UP:
-//                velocityY = -SPEED;
-//                break;
-//            case DOWN:
-//                velocityY = SPEED;
-//                break;
-//            case STATIONARY:
-//                //velocityX = STOP;
-//                //velocityY = STOP;
-//                break;
-//            default:                            
-//        }
     }
 
     private void mouseMove() {
-
         float speedX;
+
         int LIMIT = 10;
+
         if (center.getX() > p.getX() - LIMIT &&
             center.getX() < p.getX() + LIMIT) {
             speedX =0;
         }else{
-            speedX = SPEED;
+            speedX = Constants.SPEED;
         }
 
         float speedY;
@@ -65,24 +46,24 @@ public class Player extends Character {
             center.getY() < p.getY() + LIMIT) {
             speedY =0;
         }else{
-            speedY = SPEED;
+            speedY = Constants.SPEED;
         }
         
         // bird movement
         if (center.distance(p) > 6) {            
-            // move right                
+            // fly right
             if (center.getX() < p.getX()) { 
                 velocityX= speedX;
             }
-            // move left
+            // fly left
             if (center.getX() > p.getX()) {
                 velocityX=-speedX;
             }
-            // move down
+            // fly down
             if (center.getY() < p.getY()) {
                 velocityY= speedY;
             }
-            // move up
+            // fly up
             if (center.getY() > p.getY()) {
                 velocityY=-speedY;
             }

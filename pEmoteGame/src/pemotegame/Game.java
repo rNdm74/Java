@@ -19,8 +19,10 @@ public class Game extends JPanel
     private final Player player;
     public static ArrayList<Poop> poops;
     private static ArrayList<Computer> pedestrian;
-
-    private long beforeTime = System.currentTimeMillis();
+    private int fps;
+    private int frames = 0;
+    private long frameBeginTime;
+    private long beforeTime;
     
     public Game(Dimension size){ 
         
@@ -32,10 +34,14 @@ public class Game extends JPanel
         Timer t = new Timer(Constants.TIMER_INTERVAL, this);
         
         t.start();
+
+        frameBeginTime = System.currentTimeMillis();
+        beforeTime = System.currentTimeMillis();
     }
     
     @Override
     public void paint(Graphics g){
+
         super.paint(g);
 
         Image doubleBufferedImage = createImage(getWidth(), getHeight());
@@ -44,9 +50,14 @@ public class Game extends JPanel
         paintComponent((Graphics2D) doubleBufferedGraphics);
         
         g.drawImage(doubleBufferedImage, 0,0,null);
+
     }
-    
+
+    long sTime;
     private void paintComponent(Graphics2D g){
+        String s = "FPS: " + String.valueOf(fps);
+        new SpeechBubble(new Rectangle(50, 100, 50, 50), s, g, new Point(100,0));
+
         //PLAYER
         player.draw(g);
         
@@ -75,6 +86,17 @@ public class Game extends JPanel
                  
         g.dispose();        
         super.repaint();
+
+        long eTime = System.currentTimeMillis() - frameBeginTime;
+
+        if (eTime < 1000){
+            frames++;
+        }
+        else {
+            fps = frames;
+            frames = 0;
+            frameBeginTime = System.currentTimeMillis();
+        }
     }
     
     //<editor-fold defaultstate="collapsed" desc=" COMPONENT ">
