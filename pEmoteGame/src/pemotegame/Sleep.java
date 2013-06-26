@@ -4,26 +4,40 @@ package pemotegame;
  * Created by
  * Adam Charlton
  */
-public class Sleep implements Runnable{
-    boolean finished;
-    long time = 0;
-    Computer computer;
+public class Sleep{
+    private Computer computer;
 
     public Sleep(Computer computer){
         this.computer = computer;
     }
 
-    @Override
-    public void run() {
-        long sTime = System.nanoTime();
-        while (!finished && time < 1000000){
-            time++;
-        }
-        long tPassed = System.nanoTime() - sTime;
-        System.out.println(tPassed);
+    public boolean start(int waitTime, long trigger){
+        long moveTime = System.currentTimeMillis() - trigger;
+        //COMPUTER STOP
+        computer.speedX = 0f;
 
-        //finished = true;
-        time = 0;
-        computer.aBoolean = true;
+        //COMPUTER START
+        if (moveTime > waitTime) {
+            computer.speedX = 1f;
+            return true;
+        }
+
+        return false;
+    }
+
+    public long invoke(String text, long trigger, int max) {
+        int rand = (int)(Math.random() * max);
+
+        if(rand == Constants.MINIMUM) trigger = System.currentTimeMillis();
+
+        if(trigger > 0) {
+            computer.talk = text;
+            if(start(Constants.WAIT_DELAY, trigger)){
+                if((Math.random() * 10) == 0) computer.speedX *= Constants.DIRECTION;
+                return 0;
+            }
+        }
+
+        return trigger;
     }
 }

@@ -35,10 +35,14 @@ public final class Constants {
     public static final int                 MAXIMUM                     = 2000;
     public static final int                 MINIMUM                     = 0;
 
+    public static final int                 PLAYER_START_X              = DEFAULT_SCREEN_X_SIZE / 2;
+    public static final int                 PLAYER_START_Y              = 50;
     public static final int                 PLAYER_WIDTH                = 50;
     public static final int                 PLAYER_HEIGHT               = 50;
+
     public static final int                 PEDESTRIAN_WIDTH            = 25;
     public static final int                 PEDESTRIAN_HEIGHT           = 50;
+
     public static final int                 POOP_WIDTH                  = 5;
     public static final int                 POOP_HEIGHT                 = 5;
 

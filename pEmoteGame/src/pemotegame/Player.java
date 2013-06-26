@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
-
 public class Player extends Character {
     public final Point2D p = new Point();
 
@@ -18,9 +17,9 @@ public class Player extends Character {
     public void draw(Graphics2D g){
         g.draw(clipping);
 
-        if(Game.showBounds)g.draw(bounds);
+        if(game.showBounds)g.draw(bounds);
 
-        if(Game.showLines){
+        if(game.showLines){
             g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
             g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
         }
