@@ -9,15 +9,14 @@ import java.awt.event.ActionListener;
  * Adam Charlton
  */
 public class Run implements Runnable{
-    private ActionListener actionListener;
+    private final Timer timer;
 
-    public Run(ActionListener actionListener){
-        this.actionListener = actionListener;
+    public Run(ActionListener actionListener, int updateInterval){
+        timer = new Timer(updateInterval, actionListener);
     }
 
     @Override
     public void run() {
-        Timer timer = new Timer(Constants.TIMER_INTERVAL, actionListener);
         timer.start();
     }
 }

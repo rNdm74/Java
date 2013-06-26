@@ -41,7 +41,7 @@ public class Player extends Character {
             center.getX() < p.getX() + LIMIT) {
             speedX =0;
         }else{
-            speedX = Constants.SPEED + 2;
+            speedX = Constants.PLAYER_SPEED;
         }
 
         float speedY;
@@ -49,7 +49,7 @@ public class Player extends Character {
             center.getY() < p.getY() + LIMIT) {
             speedY =0;
         }else{
-            speedY = Constants.SPEED + 2;
+            speedY = Constants.PLAYER_SPEED;
         }
         
         // bird movement

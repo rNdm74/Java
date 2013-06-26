@@ -63,8 +63,8 @@ abstract class Character{
             x = game.getBounds().x;            
         }
         
-        if(clipping.getY() + Constants.PEDESTRIAN_HEIGHT > game.getBounds().height - Constants.GROUND_HEIGHT){
-            y = game.getBounds().height - Constants.GROUND_HEIGHT - Constants.PEDESTRIAN_HEIGHT;
+        if(clipping.getY() + Constants.COMPUTER_HEIGHT > game.getBounds().height - Constants.GROUND_HEIGHT){
+            y = game.getBounds().height - Constants.GROUND_HEIGHT - Constants.COMPUTER_HEIGHT;
         }
         
         if(clipping.getY() < game.getBounds().y){

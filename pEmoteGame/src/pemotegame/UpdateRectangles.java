@@ -30,7 +30,8 @@ public class UpdateRectangles implements ActionListener {
 
             for(Computer comp: game.pedestrian){
                 comp.update();
-                comp.bounds();
+                comp.update(game.player, game.poops);
+                //comp.bounds();
             }
 
             updateTime = e.getWhen();

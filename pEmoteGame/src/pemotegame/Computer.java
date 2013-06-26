@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import static pemotegame.Game.poops;
 
 class Computer extends Character {
-    public float speedX = Constants.SPEED;
+    public float speedX = Constants.COMPUTER_SPEED;
+    public float speedY = 0;
     
     public boolean playerInBounds;
     
@@ -42,17 +43,17 @@ class Computer extends Character {
         if(!talk.isEmpty()) new SpeechBubble(clipping, talk, g, center);
     }
 
-    public synchronized void update(Player p, ArrayList<Poop> poops){
+    public void update(Player p, ArrayList<Poop> poops){
         talk = "";
         updateBounds();
         computerWait();
         computerClippingCheck(poops);
         computerBoundsCheck(p);
         randomizeDirection();
-        screenBoundsCheck();
+        //screenBoundsCheck();
         groundPoop();
         poopCheck();
-        move();       
+        //move();
     }
 
     private synchronized void updateBounds() {
@@ -63,10 +64,10 @@ class Computer extends Character {
                 game.getHeight() - Constants.GROUND_HEIGHT);
     }
 
-    private synchronized void screenBoundsCheck() {
-        if (clipping.getX() < 1) speedX *= Constants.DIRECTION;
-        
-        if ((clipping.getX() + Constants.PEDESTRIAN_WIDTH) > game.getBounds().width) speedX *= Constants.DIRECTION;
+    public void changeDirection() {
+        System.out.println(speedX);
+        if (clipping.getX() <= 1) speedX *= Constants.DIRECTION;
+        if ((clipping.getX() + Constants.COMPUTER_WIDTH) > game.getBounds().width) speedX *= Constants.DIRECTION;
     }
 
     private synchronized void computerClippingCheck(ArrayList<Poop> poops) {
@@ -109,8 +110,9 @@ class Computer extends Character {
     }
 
 
-    private synchronized void move() {
-        x += speedX;        
+    public void move() {
+        x += speedX;
+        y += speedY;
     }
 
     private synchronized void groundPoop() {

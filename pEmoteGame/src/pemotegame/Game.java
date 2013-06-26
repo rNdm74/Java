@@ -3,8 +3,8 @@ package pemotegame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.Point2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -66,27 +66,24 @@ public class Game extends JPanel implements ActionListener{
         ArrayList<Thread> threads = new ArrayList<>();
 
         //START MOVEMENT
-        threads.add(new Thread(new Run(this)));
+        threads.add(new Thread(new Run(this, 1)));
 
         //START UPDATE
-        threads.add(new Thread(new Run(new UpdateRectangles(this))));
+        threads.add(new Thread(new Run(new UpdateRectangles(this), Constants.TIMER_INTERVAL)));
 
         for(Thread thread: threads){
-            thread.setName("Thread:" + thread.getId());
+            //thread.setName("Thread:" + thread.getId());
             thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            thread.setPriority(Thread.MAX_PRIORITY);
-            if (thread.isAlive()) System.out.println(thread.getName());
+            //thread.setPriority(Thread.MAX_PRIORITY);
+            //if (thread.isAlive()) System.out.println(thread.getName());
 
         }
 
+        int height = (superBirdiePoop.getContentPane().getHeight() - Constants.GROUND_HEIGHT) - Constants.COMPUTER_HEIGHT;
 
-        Point point = new Point(0, (superBirdiePoop.getContentPane().getHeight() - Constants.GROUND_HEIGHT) - Constants.PEDESTRIAN_HEIGHT);
-        Dimension dimension = new Dimension(Constants.PEDESTRIAN_WIDTH, Constants.PEDESTRIAN_HEIGHT);
+        Point point = new Point(25, height);
+
+        Dimension dimension = new Dimension(Constants.COMPUTER_WIDTH, Constants.COMPUTER_HEIGHT);
         currentPed = new Rectangle(point,dimension);
     }
 
@@ -112,23 +109,28 @@ public class Game extends JPanel implements ActionListener{
         //SHOW DEBUG INFO
         if(debug)debugInfo.invoke(g);
 
+        //PLAYER
+        player.move();
+
+        //PEDESTRIANS
+        for (Computer comp : pedestrian) comp.move();
+
         //DRAW OBJECTS
         //new DrawHandler(g).invoke(this);
         drawHandler.invoke(g);
 
-        //APPLY V-SYNC
-        if(!vsync)super.repaint();
-
         //TRACK FRAMES PER SECOND
         if(debug)calculateFrameRate();
 
+        //APPLY V-SYNC
+        if(!vsync)super.repaint();
     }
 
     private void applyAntiAliasing(Graphics2D g) {
-        // for antialiasing geometric shapes
+        // for anti-aliasing geometric shapes
         g.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
-        // for antialiasing text
+        // for anti-aliasing text
         g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
         // to go for quality over speed
@@ -163,38 +165,61 @@ public class Game extends JPanel implements ActionListener{
         return new Poop(new Rectangle(point, dimension), this);
     }
 
-
+     int count = 1;
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //System.out.println(e.getWhen() - pedestrianSpawnTime % 1000);
+        if (e.getWhen() - pedestrianSpawnTime > 1000 * count){
+            System.out.println(count);
+            count++;
+        }
 
         //SPAWN PEDESTRIANS
-        if(e.getWhen() - pedestrianSpawnTime > 10000) {
+        if(e.getWhen() - pedestrianSpawnTime > 60000) {
+            count = 1;
             pedestrian.add(createComputer());
             pedestrianSpawnTime = e.getWhen();
         }
 
-        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
-            //PLAYER
-            player.move();
 
-            //PEDESTRIANS
-            for (Computer comp : pedestrian) comp.update(player, poops);
+//        //PLAYER
+//        player.move();
+//
+//        //PEDESTRIANS
+//        for (Computer comp : pedestrian) comp.move();
 
-            //PEDESTRIANS HIT
-            for (int i = 0; i < pedestrian.size(); i++) if (pedestrian.get(i).crap) pedestrian.remove(i);
+        //PEDESTRIANS
+        for (Computer comp : pedestrian) comp.changeDirection();
 
-            //RESET TIME
-            updateTime = e.getWhen();
-        }
+        //PEDESTRIANS HIT
+        //for (int i = 0; i < pedestrian.size(); i++) if (pedestrian.get(i).crap) pedestrian.remove(i);
+
+        //RESET TIME
+//        updateTime = e.getWhen();
+
+        //MOVE OBJECTS ON SCREEN
+//        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
+//            //PLAYER
+//            player.move();
+//
+//            //PEDESTRIANS
+//            for (Computer comp : pedestrian) comp.update(player, poops);
+//
+//            //PEDESTRIANS HIT
+//            //for (int i = 0; i < pedestrian.size(); i++) if (pedestrian.get(i).crap) pedestrian.remove(i);
+//
+//            //RESET TIME
+//            updateTime = e.getWhen();
+//        }
 
         //TURN V-SYNC ON
-        if(vsync)super.repaint();
+        //if(vsync)super.repaint();
 
         //CATCHUP TIME
-        try {
-            e.wait(10);
-        } catch (Exception ex) {}
+//        try {
+//            e.wait(10);
+//        } catch (Exception ex) {}
     }
 }

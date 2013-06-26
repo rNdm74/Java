@@ -29,7 +29,6 @@ public final class Constants {
     public static final int                 RANDOM_DELAY                = 2000;
 
     public static final int                 GRAVITY                     = 6;
-    public static final int                 SPEED                       = 1;
     public static final int                 DIRECTION                   = -1;
 
     public static final int                 MAXIMUM                     = 2000;
@@ -39,9 +38,11 @@ public final class Constants {
     public static final int                 PLAYER_START_Y              = 50;
     public static final int                 PLAYER_WIDTH                = 50;
     public static final int                 PLAYER_HEIGHT               = 50;
+    public static final int                 PLAYER_SPEED                = 1;
 
-    public static final int                 PEDESTRIAN_WIDTH            = 25;
-    public static final int                 PEDESTRIAN_HEIGHT           = 50;
+    public static final int                 COMPUTER_WIDTH              = 25;
+    public static final int                 COMPUTER_HEIGHT             = 50;
+    public static final float               COMPUTER_SPEED              = 0.2f;
 
     public static final int                 POOP_WIDTH                  = 5;
     public static final int                 POOP_HEIGHT                 = 5;
