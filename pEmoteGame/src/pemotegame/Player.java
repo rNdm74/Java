@@ -14,7 +14,7 @@ public class Player extends Character {
         p.setLocation(x, y);
     }
     
-    public void draw(Graphics2D g){
+    public synchronized void draw(Graphics2D g){
         g.draw(clipping);
 
         if(game.showBounds)g.draw(bounds);

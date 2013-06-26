@@ -26,7 +26,7 @@ class Computer extends Character {
         hitPoop = new ArrayList<>();
     }
     
-    public void draw(Graphics2D g){
+    public synchronized void draw(Graphics2D g){
         //BOUNDS
         if(game.showBounds){
             g.setColor(Color.CYAN.darker());
@@ -34,18 +34,15 @@ class Computer extends Character {
             g.draw(bounds);
         }
 
-        
         //CLIPPING
         g.setColor(Color.GREEN.darker());
         g.draw(clipping);
 
-        //g.fill(clipping);
-        
         //TALK
         if(!talk.isEmpty()) new SpeechBubble(clipping, talk, g, center);
     }
 
-    public void update(Player p, ArrayList<Poop> poops){
+    public synchronized void update(Player p, ArrayList<Poop> poops){
         talk = "";
         updateBounds();
         computerWait();
@@ -67,13 +64,9 @@ class Computer extends Character {
     }
 
     private synchronized void screenBoundsCheck() {
-        if (clipping.getX() < 1) {
-            speedX *= Constants.DIRECTION;
-        } 
+        if (clipping.getX() < 1) speedX *= Constants.DIRECTION;
         
-        if ((clipping.getX() + Constants.PEDESTRIAN_WIDTH) > game.getBounds().width) {
-            speedX *= Constants.DIRECTION;
-        }       
+        if ((clipping.getX() + Constants.PEDESTRIAN_WIDTH) > game.getBounds().width) speedX *= Constants.DIRECTION;
     }
 
     private synchronized void computerClippingCheck(ArrayList<Poop> poops) {
@@ -87,14 +80,6 @@ class Computer extends Character {
         if(bounds.contains(p.center)){            
             playerInBounds = true;
             talk = "PRETTY BIRDIE!";
-            
-//            if (p.center.getX() < center.getX()) {
-//                //speedX *= -speedX;
-//            }
-//
-//            if (p.center.getX() > center.getX()) {
-//                //speedX *= speedX;
-//            }
         }
         else{
             playerInBounds = false;
@@ -104,11 +89,7 @@ class Computer extends Character {
 
 
     private synchronized void poopCheck(){
-        for (Poop poop: poops) {
-            if (top.intersects(poop.clipping)) {
-                poopTrigger = System.currentTimeMillis();
-            }
-        }
+        for (Poop poop: poops) if (top.intersects(poop.clipping)) poopTrigger = System.currentTimeMillis();
 
         if (poopTrigger > 0) {
             talk ="OH CRAP!";
