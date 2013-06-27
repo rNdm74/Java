@@ -44,6 +44,9 @@ public class Game extends JPanel implements ActionListener{
     public DrawHandler drawHandler;
     private Debug debugInfo;
 
+    private World world;
+    public PhysicalEntity physicalEntity;
+
     
     public Game(SuperBirdiePoop superBirdiePoop) {
         this.superBirdiePoop = superBirdiePoop;
@@ -54,6 +57,10 @@ public class Game extends JPanel implements ActionListener{
         updateTime = System.currentTimeMillis();
         frameBeginTime = System.currentTimeMillis();
         pedestrianSpawnTime = System.currentTimeMillis();
+
+        physicalEntity = new PhysicalEntity(new Vector2(superBirdiePoop.getWidth()/2,superBirdiePoop.getHeight()/2));
+        world = new World(physicalEntity);
+
 
 
 
@@ -115,6 +122,8 @@ public class Game extends JPanel implements ActionListener{
         //PEDESTRIANS
         for (Computer comp : pedestrian) comp.move();
 
+        world.draw(g);
+
         //DRAW OBJECTS
         //new DrawHandler(g).invoke(this);
         drawHandler.invoke(g);
@@ -166,13 +175,13 @@ public class Game extends JPanel implements ActionListener{
     }
 
      int count = 1;
-
+     Vector2 speedVector = new Vector2(0,0);
 
     @Override
     public void actionPerformed(ActionEvent e) {
         //System.out.println(e.getWhen() - pedestrianSpawnTime % 1000);
         if (e.getWhen() - pedestrianSpawnTime > 1000 * count){
-            System.out.println(count);
+            //System.out.println(count);
             count++;
         }
 
@@ -184,6 +193,8 @@ public class Game extends JPanel implements ActionListener{
         }
 
 
+
+
 //        //PLAYER
 //        player.move();
 //
@@ -191,16 +202,38 @@ public class Game extends JPanel implements ActionListener{
 //        for (Computer comp : pedestrian) comp.move();
 
         //PEDESTRIANS
-        for (Computer comp : pedestrian) comp.changeDirection();
+//        for (Computer comp : pedestrian) comp.changeDirection();
 
         //PEDESTRIANS HIT
         //for (int i = 0; i < pedestrian.size(); i++) if (pedestrian.get(i).crap) pedestrian.remove(i);
 
         //RESET TIME
 //        updateTime = e.getWhen();
+        //System.out.println(physicalEntity.position.y);
+        physicalEntity.position.x += speedVector.x;
+        physicalEntity.position.y += speedVector.y;
+
+        if (physicalEntity.jumping) speedVector.y+=-15;
+
 
         //MOVE OBJECTS ON SCREEN
-//        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
+        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
+            world.update(0.1f);
+
+            if (physicalEntity.isOnGround)
+            {
+                speedVector.y = 0;
+            }
+
+
+//            if (physicalEntity.position.y < (float)getHeight() - 151){
+//                world.update(0.5f);
+//
+//                //System.out.println("hit ground");
+//            }
+//            else{
+//                physicalEntity.position.y = (float)getHeight() - 151;
+//            }
 //            //PLAYER
 //            player.move();
 //
@@ -211,8 +244,10 @@ public class Game extends JPanel implements ActionListener{
 //            //for (int i = 0; i < pedestrian.size(); i++) if (pedestrian.get(i).crap) pedestrian.remove(i);
 //
 //            //RESET TIME
-//            updateTime = e.getWhen();
-//        }
+            updateTime = e.getWhen();
+        }
+
+
 
         //TURN V-SYNC ON
         //if(vsync)super.repaint();

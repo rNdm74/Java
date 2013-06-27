@@ -1,5 +1,7 @@
 package pemotegame;
 
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rndm
@@ -8,9 +10,10 @@ package pemotegame;
  * To change this template use File | Settings | File Templates.
  */
 public class PhysicalEntity {
-    private Vector2 position;
-    private Vector2 velocity;
-    private boolean isOnGround;
+    public Vector2 position;
+    public Vector2 velocity;
+    public boolean isOnGround;
+    public boolean jumping = false;
     public static final float GROUND_FRICTION = 0.9f;
     public static final float AIR_FRICTION = 0.99f;
 
@@ -19,6 +22,10 @@ public class PhysicalEntity {
         position = pos;
         velocity = new Vector2(0,0);
         isOnGround = false;
+    }
+
+    public void draw(Graphics2D g){
+        g.drawRect((int) position.x, (int) position.y, 50, 50);
     }
 
     public void update(float delta)
@@ -36,13 +43,33 @@ public class PhysicalEntity {
         }
 
         //change position by velocity
+
         position.x += velocity.x * delta;
-        position.y += velocity.y * delta;
+
+        if(position.y < Game.superBirdiePoop.getHeight() - 200){
+
+            position.y += velocity.y * delta;
+        }
+        else{
+            isOnGround = true;
+
+            position.y = Game.superBirdiePoop.getHeight() - 200;
+        }
+
     }
 
     public void applyAcceleration(Vector2 acceleration)
     {
         velocity.x += acceleration.x;
-        velocity.y += acceleration.y;
+
+        if(position.y < Game.superBirdiePoop.getHeight() - 200){
+
+            velocity.y += acceleration.y;
+        }
+        else{
+            //jumping = false;
+            isOnGround = true;
+            position.y = Game.superBirdiePoop.getHeight() - 200;
+        }
     }
 }

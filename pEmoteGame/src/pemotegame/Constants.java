@@ -38,7 +38,7 @@ public final class Constants {
     public static final int                 PLAYER_START_Y              = 50;
     public static final int                 PLAYER_WIDTH                = 50;
     public static final int                 PLAYER_HEIGHT               = 50;
-    public static final int                 PLAYER_SPEED                = 1;
+    public static final float               PLAYER_SPEED                = 3f;
 
     public static final int                 COMPUTER_WIDTH              = 25;
     public static final int                 COMPUTER_HEIGHT             = 50;

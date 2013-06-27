@@ -12,13 +12,68 @@ public class KeyHandler implements KeyListener {
     private KeyEvent e;
     private int choice = 1;
     private Game g;
+    public long jumpTime = 1000l;
+    public boolean jumping = false;
 
     public KeyHandler(Game g) {
         this.g = g;
     }
 
+    public void invokeReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        //g.speedVector.x = 0f;
+
+//        if (key == KeyEvent.VK_LEFT) {
+//            g.speedVector.x = -1f;
+//        }
+//        else if (key == KeyEvent.VK_RIGHT) {
+//            g.speedVector.x = 1f;
+//        }
+//        else{
+//            g.speedVector.x = 0;
+//        }
+    }
+
+    class Jump implements Runnable{
+        //long jumpTime = 200;
+        @Override
+        public void run() {
+            try{
+                g.physicalEntity.jumping = false;
+                Thread.sleep(jumpTime);
+            }catch (Exception e){
+                e.printStackTrace();
+                new Thread(this).start();
+                System.exit(0);
+            }
+        }
+    }
+
     public void invoke(KeyEvent e) {
         int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            g.speedVector.x = -0.5f;
+        }
+        else if (key == KeyEvent.VK_RIGHT) {
+            g.speedVector.x = 0.5f;
+        }
+
+
+        if (key == KeyEvent.VK_UP && g.physicalEntity.isOnGround) {
+           //System.out.println(g.physicalEntity.isOnGround);
+           //g.physicalEntity.position.y += -50f;
+           //g.physicalEntity.isOnGround = false;
+           //g.physicalEntity.position.y += -100f;
+           g.physicalEntity.jumping = true;
+
+           new Thread(new Jump()).start();
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+
+        }
 
         if (key == KeyEvent.VK_SPACE) {
             g.poops.add(g.createPoop());
@@ -102,5 +157,40 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        int key = keyEvent.getKeyCode();
+
+        //g.speedVector.x = 0f;
+
+        if (key == KeyEvent.VK_UP) {
+            //g.speedVector.y = 0f;
+        }
+
+        if (key == KeyEvent.VK_LEFT) {
+            //g.speedVector.x = 0f;
+//            float getSpeed = g.speedVector.x;
+//            for (float f = getSpeed; f <= 0f; f +=0.00001f ){
+//                System.out.println(f);
+//                g.speedVector.x = f;
+//            }
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            //g.speedVector.x = 0f;
+//            float getSpeed = g.speedVector.x;
+//            for (float f = getSpeed; f >= 0f; f -=0.00001f ){
+//                System.out.println(f);
+//                g.speedVector.x = f;
+//            }
+        }
+//        else{
+//            g.speedVector.x = 0;
+//        }
+
+
+        //g.speedVector -=0.1
+        //g.speedVector.x = 0;
+        //invokeReleased(keyEvent);
     }
 }
+
+
