@@ -11,64 +11,58 @@ import java.awt.geom.Rectangle2D;
  * @author Adam Charlton
  */
 abstract class Character{
-    public Point2D center;
-    public Rectangle2D clipping;
-    final Rectangle bounds;
+    public Rectangle2D clipping = new Rectangle();
+    public Point2D center = new Point();
+
+    final Rectangle bounds = new Rectangle();
+    final Line2D top = new Line2D.Float();
+
     final Game game;
-    final Line2D top;
 
-    public double x;
-    public double y;
-    
-    public double width;
-    public double height;
-    
-    float velocityX;
-    float velocityY;
+    public Rectangle rectangle;
+    VectorRect vectorRect;
+    Vector2 velocity;
 
-    Character(Rectangle rect, Game game){
-        this.x = rect.getX();
-        this.y = rect.getY();
-        
-        this.width = rect.getWidth();
-        this.height = rect.getHeight();
-        
+    Character(Rectangle rectangle, Game game){
+        vectorRect = new VectorRect(rectangle);
+        System.out.println(vectorRect.getCenter());
+
         this.game = game;
-        
-        clipping = new Rectangle();
-        bounds = new Rectangle();        
-        center = new Point();
-        top = new Line2D.Float();
     }
     
-    public void update(){                
-        center.setLocation(x, y);
+    public void update(){
 
-        clipping.setFrame(center.getX(), center.getY(), width, height);
+        //center.setLocation(rectangle.x, rectangle.y);
+
+        //clipping.setFrame(center.getX(), center.getY(), rectangle.width, rectangle.height);
         
-        center.setLocation(clipping.getCenterX(), clipping.getCenterY());
+        //center.setLocation(clipping.getCenterX(), clipping.getCenterY());
         
-        top.setLine(clipping.getX(), 
-                    clipping.getY(),
-                    clipping.getX() + clipping.getWidth(), 
-                    clipping.getY());
+//        top.setLine(clipping.getX(),
+//                    clipping.getY(),
+//                    clipping.getX() + clipping.getWidth(),
+//                    clipping.getY());
     }
     
-    public void bounds() {        
+    public void bounds() {
+        //NORTH BOUNDARY
+        if(clipping.getY() < 0){
+            //y = 1;
+        }
+
+        //SOUTH BOUNDARY
+        if(clipping.getY() + Constants.COMPUTER_HEIGHT > game.getBounds().height - game.ground){
+            //y = game.getBounds().height - game.ground - Constants.COMPUTER_HEIGHT;
+        }
+
+        //EAST BOUNDARY
         if(clipping.getX() > game.getBounds().width){
-            x = game.getBounds().width;
+            //x = game.getBounds().width-1;
         }
-        
-        if(clipping.getX() < game.getBounds().x){
-            x = game.getBounds().x;            
-        }
-        
-        if(clipping.getY() + Constants.COMPUTER_HEIGHT > game.getBounds().height - Constants.GROUND_HEIGHT){
-            y = game.getBounds().height - Constants.GROUND_HEIGHT - Constants.COMPUTER_HEIGHT;
-        }
-        
-        if(clipping.getY() < game.getBounds().y){
-            y = game.getBounds().y;            
+
+        //WEST BOUNDARY
+        if(clipping.getX() < 0){
+            //x = 1;
         }
     }
 }

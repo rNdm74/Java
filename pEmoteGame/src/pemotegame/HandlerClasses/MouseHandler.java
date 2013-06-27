@@ -1,4 +1,7 @@
-package pemotegame;
+package pemotegame.HandlerClasses;
+
+import pemotegame.Debug;
+import pemotegame.Game;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,7 +27,7 @@ public class MouseHandler implements Serializable, MouseListener, MouseMotionLis
     @Override
     public void mousePressed(MouseEvent me) {
         Point2D p2d = me.getPoint();
-        game.player.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
+        //.p.setLocation(p2d.getX() - 8, p2d.getY() - 30);
     }
     @Override
     public void mouseReleased(MouseEvent me) {

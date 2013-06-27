@@ -3,73 +3,68 @@ package pemotegame;
 import java.awt.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: rndm
- * Date: 27/06/13
- * Time: 9:09 AM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author Adam Charlton
  */
-public class PhysicalEntity {
-    public Vector2 position;
+public abstract class PhysicalEntity {
+    public Game game;
+
     public Vector2 velocity;
+    public VectorRect clip;
+
+    public boolean collision;
     public boolean isOnGround;
     public boolean jumping = false;
+
     public static final float GROUND_FRICTION = 0.9f;
     public static final float AIR_FRICTION = 0.99f;
 
-    public PhysicalEntity(Vector2 pos)
-    {
-        position = pos;
+    protected String talk = "";
+
+    public PhysicalEntity(Vector2 pos, Dimension size, Game game){
+        this.game = game;
+
+        clip = new VectorRect(pos, size);
         velocity = new Vector2(0,0);
         isOnGround = false;
     }
 
     public void draw(Graphics2D g){
-        g.drawRect((int) position.x, (int) position.y, 50, 50);
+
+        g.draw(clip.getRectangle2D());
+
+        //TALK
+        if(!talk.isEmpty()) new SpeechBubble(clip, talk, g);
+
+        //CENTER
+        g.drawLine((int) clip.getCenter().getX(), (int) clip.getCenter().getY(),
+                   (int) clip.getCenter().getX(), (int) clip.getCenter().getY());
     }
 
     public void update(float delta)
     {
         //apply friction
-        if (isOnGround)
-        {
+        if (isOnGround){
             velocity.x *= 1.0f - ((1.0f - GROUND_FRICTION) * delta);
             velocity.y *= 1.0f - ((1.0f - GROUND_FRICTION) * delta);
         }
-        else
-        {
+        else {
             velocity.x *= 1.0f - ((1.0f - AIR_FRICTION) * delta);
             velocity.y *= 1.0f - ((1.0f - AIR_FRICTION) * delta);
         }
 
+        if (collision){
+            velocity.x = 0;
+            velocity.y = 0;
+        }
+
         //change position by velocity
-
-        position.x += velocity.x * delta;
-
-        if(position.y < Game.superBirdiePoop.getHeight() - 200){
-
-            position.y += velocity.y * delta;
-        }
-        else{
-            isOnGround = true;
-
-            position.y = Game.superBirdiePoop.getHeight() - 200;
-        }
-
+        clip.x += velocity.x * delta;
+        if(!isOnGround && !jumping) clip.y += velocity.y * delta;
     }
 
-    public void applyAcceleration(Vector2 acceleration)
-    {
+    public void applyAcceleration(Vector2 acceleration){
         velocity.x += acceleration.x;
-
-        if(position.y < Game.superBirdiePoop.getHeight() - 200){
-
-            velocity.y += acceleration.y;
-        }
-        else{
-            //jumping = false;
-            isOnGround = true;
-            position.y = Game.superBirdiePoop.getHeight() - 200;
-        }
+        if(!isOnGround && !jumping)velocity.y += acceleration.y;
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
  * Adam Charlton
  */
 public class Debug {
-    public static Point point;
+    public static Point point = new Point();
     private Graphics2D g;
     private final Game game;
 
@@ -19,14 +19,15 @@ public class Debug {
         //new SpeechBubble(new Rectangle(50, 100, 50, 50), s, g, new Point(100,0));
         g.setColor(Color.RED.darker());
         //g.drawString("DEBUG", 20, 20);
-        g.drawString("PEDESTRIANS", 20, 20);
-        g.drawString(String.valueOf(game.pedestrian.size()), 150, 20);
+        g.drawString("RESOLUTION", 20, 20);
+        g.drawString("width=" + String.valueOf(game.superBirdiePoop.getWidth()) + "," +
+                     "height=" + String.valueOf(game.superBirdiePoop.getHeight()), 150, 20);
 
         g.drawString("FPS", 20, 50);
         g.drawString(String.valueOf(game.fps), 150, 50);
 
         g.drawString("PLAYER POSITION", 20, 100);
-        g.drawString("x=" + String.valueOf((int)game.player.center.getX()) + ",y=" + String.valueOf((int)game.player.center.getY()), 150, 100);
+        g.drawString("x=" + String.valueOf((int)game.hero.clip.getCenter().getX()) + ",y=" + String.valueOf((int)game.hero.clip.getCenter().getY()), 150, 100);
 
         g.drawString("MOUSE POINT", 20, 125);
         g.drawString("x=" + String.valueOf((int)point.getX()) + ",y=" + String.valueOf((int)point.getY()), 150, 125);

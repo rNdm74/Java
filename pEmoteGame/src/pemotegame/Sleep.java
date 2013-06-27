@@ -5,20 +5,21 @@ package pemotegame;
  * Adam Charlton
  */
 public class Sleep{
-    private Computer computer;
+    private Bird bird;
 
-    public Sleep(Computer computer){
-        this.computer = computer;
+    public Sleep(Bird bird){
+        this.bird = bird;
     }
 
     public boolean start(int waitTime, long trigger){
         long moveTime = System.currentTimeMillis() - trigger;
         //COMPUTER STOP
-        computer.speedX = 0f;
+        bird.speed.x = 0f;
 
         //COMPUTER START
         if (moveTime > waitTime) {
-            computer.speedX = 1f;
+            bird.speed.x = 1f;
+            bird.talk = "";
             return true;
         }
 
@@ -31,9 +32,9 @@ public class Sleep{
         if(rand == Constants.MINIMUM) trigger = System.currentTimeMillis();
 
         if(trigger > 0) {
-            computer.talk = text;
+            bird.talk = text;
             if(start(Constants.WAIT_DELAY, trigger)){
-                if((Math.random() * 10) == 0) computer.speedX *= Constants.DIRECTION;
+                if((Math.random() * 10) == 0) bird.speed.x *= Constants.DIRECTION;
                 return 0;
             }
         }

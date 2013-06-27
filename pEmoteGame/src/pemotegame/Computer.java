@@ -4,15 +4,14 @@ package pemotegame;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static pemotegame.Game.poops;
 
-class Computer extends Character {
+class Computer {
     public float speedX = Constants.COMPUTER_SPEED;
     public float speedY = 0;
     
     public boolean playerInBounds;
     
-    private final ArrayList<Boolean> hitPoop;
+    //private final ArrayList<Boolean> hitPoop;
 
     public boolean crap;
 
@@ -22,25 +21,25 @@ class Computer extends Character {
 
     protected String talk = "";
 
-    public Computer(Rectangle rect, Game game) {
-        super(rect, game);
-        hitPoop = new ArrayList<>();
-    }
+//    public Computer(Rectangle rect, Game game) {
+//        //super(rect, game);
+//        hitPoop = new ArrayList<>();
+//    }
     
     public synchronized void draw(Graphics2D g){
         //BOUNDS
-        if(game.showBounds){
-            g.setColor(Color.CYAN.darker());
-            if(playerInBounds)g.setColor(Color.PINK.darker());
-            g.draw(bounds);
-        }
+//        if(game.showBounds){
+//            g.setColor(Color.CYAN.darker());
+//            if(playerInBounds)g.setColor(Color.PINK.darker());
+//            g.draw(clip);
+//        }
 
         //CLIPPING
         g.setColor(Color.GREEN.darker());
-        g.draw(clipping);
+        //g.draw(clipping);
 
         //TALK
-        if(!talk.isEmpty()) new SpeechBubble(clipping, talk, g, center);
+        //if(!talk.isEmpty()) new SpeechBubble(clipping, talk, g, center);
     }
 
     public void update(Player p, ArrayList<Poop> poops){
@@ -50,72 +49,74 @@ class Computer extends Character {
         computerClippingCheck(poops);
         computerBoundsCheck(p);
         randomizeDirection();
-        //screenBoundsCheck();
+        changeDirection();
         groundPoop();
         poopCheck();
-        //move();
+        move();
     }
 
     private synchronized void updateBounds() {
-        bounds.setFrame(
-                clipping.getCenterX() - (Constants.DEFAULT_CLIPPING_SIZE/2),
-                (clipping.getY() + height) - (game.getHeight() - Constants.GROUND_HEIGHT),
-                Constants.DEFAULT_CLIPPING_SIZE,
-                game.getHeight() - Constants.GROUND_HEIGHT);
+//        clip.setFrame(
+//                clipping.getCenterX() - (Constants.DEFAULT_CLIPPING_SIZE/2),
+//                1,
+//                Constants.DEFAULT_CLIPPING_SIZE,
+//                game.getHeight() - game.ground-2);
     }
 
-    public void changeDirection() {
-        System.out.println(speedX);
-        if (clipping.getX() <= 1) speedX *= Constants.DIRECTION;
-        if ((clipping.getX() + Constants.COMPUTER_WIDTH) > game.getBounds().width) speedX *= Constants.DIRECTION;
+    public synchronized void changeDirection() {
+//        if (clipping.getX() < 10) {
+//            speedX *= speedX;
+//        }else if ((clipping.getX() + Constants.COMPUTER_WIDTH) > game.getBounds().width - 10) {
+//            speedX *= -speedX;
+//        }
     }
 
     private synchronized void computerClippingCheck(ArrayList<Poop> poops) {
-        hitPoop.clear();
-        for (Poop poop: poops) hitPoop.add(clipping.contains(poop.center));
+        //hitPoop.clear();
+        //for (Poop poop: poops) hitPoop.add(clipping.contains(poop.center));
     }
     
     
     
     private synchronized void computerBoundsCheck(Player p) {
-        if(bounds.contains(p.center)){            
-            playerInBounds = true;
-            talk = "PRETTY BIRDIE!";
-        }
-        else{
-            playerInBounds = false;
-        }
+//        if(clip.contains(p.center)){
+//            playerInBounds = true;
+//            talk = "I'M GONNA POOP ON YOU!";
+//        }
+//        else{
+//            playerInBounds = false;
+//        }
     }
 
 
 
     private synchronized void poopCheck(){
-        for (Poop poop: poops) if (top.intersects(poop.clipping)) poopTrigger = System.currentTimeMillis();
+        //for (Poop poop: poops) if (top.intersects(poop.clipping)) poopTrigger = System.currentTimeMillis();
 
         if (poopTrigger > 0) {
             talk ="OH CRAP!";
-            if(new Sleep(this).start(Constants.POOP_DELAY, poopTrigger)){
-                poopTrigger = 0;
-                crap = true;
-            }            
+//            if(new Sleep(this).start(Constants.POOP_DELAY, poopTrigger)){
+//                poopTrigger = 0;
+//                crap = true;
+//            }
         }
     }
     
     private synchronized void randomizeDirection() {
-        directionTrigger = new Sleep(this).invoke("I WANNA GO THIS WAY!", directionTrigger, Constants.MAXIMUM);
+        //directionTrigger = new Sleep(this).invoke("THERE IS A BIG ONE BREWING!", directionTrigger, Constants.MAXIMUM);
     }
 
     private synchronized void computerWait(){
-        waitTrigger = new Sleep(this).invoke("WHAT A LOVELY DAY!", waitTrigger, Constants.MAXIMUM);
+        //waitTrigger = new Sleep(this).invoke("WHO CAN I POOP ON TODAY!", waitTrigger, Constants.MAXIMUM);
     }
 
 
-    public void move() {
-        x += speedX;
-        y += speedY;
+    public synchronized void move() {
+        //x += speedX;
+        //y += speedY;
     }
 
     private synchronized void groundPoop() {
-        for(boolean hp: hitPoop) if(hp)talk = "THERE IS POOP ON THE GROUND!";
+        //for(boolean hp: hitPoop) if(hp)talk = "THERE IS POOP ON THE GROUND!";
     }
 }

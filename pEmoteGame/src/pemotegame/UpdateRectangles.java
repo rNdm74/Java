@@ -18,25 +18,26 @@ public class UpdateRectangles implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        game.hero.collision();
 
-        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
-            game.player.update();
-            game.player.bounds();
-
-            for(Poop poop: game.poops){
-                poop.update();
-                poop.bounds();
-            }
-
-            for(Computer comp: game.pedestrian){
-                comp.update();
-                comp.update(game.player, game.poops);
-                //comp.bounds();
-            }
-
-            updateTime = e.getWhen();
-        }
-
+//        if (e.getWhen() - updateTime > Constants.UPDATE_INTERVAL) {
+//            game.player.update();
+//            game.player.bounds();
+//
+//            for(Poop poop: game.poops){
+//                poop.update();
+//                poop.bounds();
+//            }
+//
+//            for(Computer comp: game.bird){
+//                //comp.update();
+//                //comp.bounds();
+//                comp.update(game.player, game.poops);
+//            }
+//
+//            updateTime = e.getWhen();
+//        }
+//
         if(game.vsync)game.repaint();
 
         try {

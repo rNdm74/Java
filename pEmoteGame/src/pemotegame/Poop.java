@@ -14,26 +14,26 @@ public class Poop extends Player {
     @Override
     public void draw(Graphics2D g){
         g.draw(clipping);
-        //g.draw(bounds);
+        //g.draw(clip);
         //g.drawLine((int)p.getX(), (int)p.getY(), (int)center.getX(), (int)center.getY());
         g.drawLine((int)center.getX(), (int)center.getY(), (int)center.getX(), (int)center.getY());
     }
     
     @Override
     public void update(){        
-        x += velocityX;
-        y += velocityY;
+        //x += velocityX;
+        //y += velocityY;
         
         //GRAVITY
-        if(y <= (game.getSize().height-Constants.GROUND_HEIGHT)-height){
-            y += Constants.GRAVITY;
-        }  
-        
-        if (y>=(game.getSize().height-Constants.GROUND_HEIGHT)-height) {
-            y=(game.getSize().height-Constants.GROUND_HEIGHT)-height;
-        }
-                
-        center.setLocation(x, y);
+//        if(y <= (game.getSize().height-Constants.GROUND_HEIGHT)-height){
+//            y += Constants.GRAVITY;
+//        }
+//
+//        if (y>=(game.getSize().height-Constants.GROUND_HEIGHT)-height) {
+//            y=(game.getSize().height-Constants.GROUND_HEIGHT)-height;
+//        }
+//
+//        center.setLocation(x, y);
                 
         clipping.setFrame(center.getX(), center.getY(), Constants.POOP_WIDTH, Constants.POOP_WIDTH);
         

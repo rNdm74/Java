@@ -1,4 +1,4 @@
-package pemotegame;
+package pemotegame.HandlerClasses;
 
 /**
  * Created by

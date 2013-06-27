@@ -11,12 +11,12 @@ public class Player extends Character {
 
     public Player(Rectangle rect, Game game) {
         super(rect, game);        
-        p.setLocation(x, y);
+        //p.setLocation(x, y);
     }
     
     public synchronized void draw(Graphics2D g){
         g.draw(clipping);
-
+        g.fill(clipping);
         if(game.showBounds)g.draw(bounds);
 
         if(game.showLines){
@@ -28,8 +28,8 @@ public class Player extends Character {
     public void move(){
         mouseMove();
 
-        x += velocityX;
-        y += velocityY;
+        //rectangle2D. += velocity.x;
+        //y += velocityY;
     }
 
     private void mouseMove() {
@@ -56,19 +56,19 @@ public class Player extends Character {
         if (center.distance(p) > 6) {            
             // fly right
             if (center.getX() < p.getX()) { 
-                velocityX= speedX;
+                //velocityX= speedX;
             }
             // fly left
             if (center.getX() > p.getX()) {
-                velocityX=-speedX;
+                //velocityX=-speedX;
             }
             // fly down
             if (center.getY() < p.getY()) {
-                velocityY= speedY;
+                //velocityY= speedY;
             }
             // fly up
             if (center.getY() > p.getY()) {
-                velocityY=-speedY;
+                //velocityY=-speedY;
             }
             
             // is stationary
