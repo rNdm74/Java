@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jinput">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/jinput.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/lwjgl.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/lwjgl_util.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/lwjgl_test.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/slick.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
