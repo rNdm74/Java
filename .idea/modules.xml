@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PBox/PBox.iml" filepath="$PROJECT_DIR$/PBox/PBox.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PDice/PDice.iml" filepath="$PROJECT_DIR$/PDice/PDice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PMYFirst/PMYFirst.iml" filepath="$PROJECT_DIR$/PMYFirst/PMYFirst.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PNameInStars/PNameInStars.iml" filepath="$PROJECT_DIR$/PNameInStars/PNameInStars.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PRobot/PRobot.iml" filepath="$PROJECT_DIR$/PRobot/PRobot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PSimpleMaths/PSimpleMaths.iml" filepath="$PROJECT_DIR$/PSimpleMaths/PSimpleMaths.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PTempConv/PTempConv.iml" filepath="$PROJECT_DIR$/PTempConv/PTempConv.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PtempConverter/PtempConverter.iml" filepath="$PROJECT_DIR$/PtempConverter/PtempConverter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pAnimal/pAnimal.iml" filepath="$PROJECT_DIR$/pAnimal/pAnimal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pArrayUtilities/pArrayUtilities.iml" filepath="$PROJECT_DIR$/pArrayUtilities/pArrayUtilities.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pCDCollection/pCDCollection.iml" filepath="$PROJECT_DIR$/pCDCollection/pCDCollection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pCollections/pCollections.iml" filepath="$PROJECT_DIR$/pCollections/pCollections.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pComputer/pComputer.iml" filepath="$PROJECT_DIR$/pComputer/pComputer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pEmbeddedMinor/pEmbeddedMinor.iml" filepath="$PROJECT_DIR$/pEmbeddedMinor/pEmbeddedMinor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pFinalMonitor/pFinalMonitor.iml" filepath="$PROJECT_DIR$/pFinalMonitor/pFinalMonitor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pPhone/pPhone.iml" filepath="$PROJECT_DIR$/pPhone/pPhone.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pSorting/pSorting.iml" filepath="$PROJECT_DIR$/pSorting/pSorting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java.iml" filepath="$PROJECT_DIR$/Java.iml" />
     </modules>
   </component>
 </project>
