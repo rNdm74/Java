@@ -1,6 +1,6 @@
 package com.base.gameobject;
 
-import com.base.engine.GameObject;
+import com.base.game.Time;
 import com.base.gameobject.item.Item;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -8,10 +8,9 @@ import org.lwjgl.opengl.Display;
 /**
  * Created by Adam Charlton.
  */
-public class Player extends GameObject {
+public class Player extends StatObject {
     public static final int SIZE = 32;
 
-    private Stats stats;
     private Inventory inventory;
 
     public Player(float x, float y){
@@ -52,36 +51,8 @@ public class Player extends GameObject {
     }
 
     private void move(float magX, float magY) {
-        x += getSpeed() * magX;
-        y += getSpeed() * magY;
-    }
-
-    public float getSpeed(){
-        return stats.getSpeed();
-    }
-
-    public float getXp(){
-        return stats.getXp();
-    }
-
-    public int getLevel(){
-        return stats.getLevel();
-    }
-
-    public int getMaxHealth(){
-        return stats.getMaxHealth();
-    }
-
-    public int getCurrentHealth(){
-        return stats.getCurrentHealth();
-    }
-
-    public float getStrength(){
-        return stats.getStrength();
-    }
-
-    public float getMagic(){
-        return stats.getMagic();
+        x += getSpeed() * magX * Time.getDelta();
+        y += getSpeed() * magY * Time.getDelta();
     }
 
     public void addXp(float amount){

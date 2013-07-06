@@ -73,4 +73,7 @@ public class Stats {
         //addXp(120);
         //Adding to inventory
     }
+    public void damage(int amt){
+        health -= amt;
+    }
 }

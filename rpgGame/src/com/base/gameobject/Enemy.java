@@ -1,18 +1,39 @@
 package com.base.gameobject;
 
 import com.base.engine.GameObject;
+import com.base.engine.Main;
+import com.base.game.Delay;
+import com.base.game.Time;
 import com.base.game.Util;
+
+import java.util.ArrayList;
 
 /**
  * Created by rNdm.
  */
-public class Enemy extends GameObject {
-    protected Stats stats;
-    protected GameObject target; //Basic AI
+public class Enemy extends StatObject {
+    public static final float DAMPING = 0.25f;
+
+    private StatObject target; //Basic AI
+
+    private float sightRange;
+    private float attackRange;
+
+    private Delay attackDelay;
+    private int attackDamage;
+
 
     public Enemy(int level){
         stats = new Stats(level, false);
         target = null;
+
+        sightRange = 128f;
+        attackRange = 48;
+
+
+        attackDamage = 1;
+        attackDelay = new Delay(500);
+        attackDelay.end();
     }
 
     @Override
@@ -21,25 +42,55 @@ public class Enemy extends GameObject {
             look();
         }
         else{
-            chase();
+            if(Util.LineOfSight(this, target) &&
+               Util.dist(x, y, getTarget().getX(), getTarget().getY()) <= attackRange){
 
-            if(Util.LineOfSight(this, target)) attack();
+                if(attackDelay.over()) attack();
+            }
+            else{
+                chase();
+            }
         }
 
         if(stats.getCurrentHealth() <= 0){
-            die();
+            death();
         }
     }
 
     protected void attack(){
+        getTarget().damage(getAttackDamage());
+        restartAttackDelay();
+    }
 
+    protected void death(){
+        remove();
     }
 
     protected void look(){
+        ArrayList<GameObject> objects = Main.sphereCollide(x, y, sightRange);
+
+        for(GameObject go: objects){
+            if(go.getType() == PLAYER_ID){
+                setTarget((StatObject)go);
+            }
+        }
 
     }
 
     protected void chase(){
+        float speedX = (getTarget().getX() - x);
+        float speedY = (getTarget().getY() - y);
+
+        float maxSpeed = getStats().getSpeed() * DAMPING;
+
+        if(speedX > maxSpeed) speedX = maxSpeed;
+        if(speedX < -maxSpeed) speedX = -maxSpeed;
+
+        if(speedY > maxSpeed) speedY = maxSpeed;
+        if(speedY < -maxSpeed) speedY = -maxSpeed;
+
+        x += speedX * Time.getDelta();
+        y += speedY * Time.getDelta();
 
     }
 
@@ -47,19 +98,42 @@ public class Enemy extends GameObject {
 
     }
 
-    protected void die(){
-
-    }
-
-    public void setTarget(GameObject object){
+    public void setTarget(StatObject object){
         target = object;
     }
 
-    public GameObject getTarget(){
+    public StatObject getTarget(){
         return target;
     }
 
     public Stats getStats(){
         return stats;
     }
+
+    public int getAttackDamage(){
+        return attackDamage;
+    }
+
+    public void setAttackRange(int range){
+        attackRange = range;
+    }
+
+    public void setSightRange(int range){
+        sightRange = range;
+    }
+
+    public void setAttackDelay(int time){
+        attackDelay = new Delay(time);
+        attackDelay.end();
+    }
+
+    public void setAttackDamage(int amt){
+        attackDamage = amt;
+    }
+
+    public void restartAttackDelay(){
+        attackDelay.start();
+    }
+
+
 }
