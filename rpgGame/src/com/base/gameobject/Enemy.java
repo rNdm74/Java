@@ -1,8 +1,8 @@
 package com.base.gameobject;
 
 import com.base.engine.GameObject;
-import com.base.engine.Main;
 import com.base.game.Delay;
+import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.Util;
 
@@ -29,11 +29,10 @@ public class Enemy extends StatObject {
 
         sightRange = 128f;
         attackRange = 48;
-
-
         attackDamage = 1;
+
         attackDelay = new Delay(500);
-        attackDelay.end();
+        attackDelay.terminate();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class Enemy extends StatObject {
             if(Util.LineOfSight(this, target) &&
                Util.dist(x, y, getTarget().getX(), getTarget().getY()) <= attackRange){
 
-                if(attackDelay.over()) attack();
+                if(attackDelay.isOver()) attack();
             }
             else{
                 chase();
@@ -59,7 +58,7 @@ public class Enemy extends StatObject {
 
     protected void attack(){
         getTarget().damage(getAttackDamage());
-        restartAttackDelay();
+        attackDelay.restart();
     }
 
     protected void death(){
@@ -67,14 +66,13 @@ public class Enemy extends StatObject {
     }
 
     protected void look(){
-        ArrayList<GameObject> objects = Main.sphereCollide(x, y, sightRange);
+        ArrayList<GameObject> objects = Game.sphereCollide(x, y, sightRange);
 
         for(GameObject go: objects){
             if(go.getType() == PLAYER_ID){
                 setTarget((StatObject)go);
             }
         }
-
     }
 
     protected void chase(){
@@ -91,11 +89,9 @@ public class Enemy extends StatObject {
 
         x += speedX * Time.getDelta();
         y += speedY * Time.getDelta();
-
     }
 
     protected void idle(){
-
     }
 
     public void setTarget(StatObject object){
@@ -124,16 +120,10 @@ public class Enemy extends StatObject {
 
     public void setAttackDelay(int time){
         attackDelay = new Delay(time);
-        attackDelay.end();
+        attackDelay.terminate();
     }
 
     public void setAttackDamage(int amt){
         attackDamage = amt;
     }
-
-    public void restartAttackDelay(){
-        attackDelay.start();
-    }
-
-
 }

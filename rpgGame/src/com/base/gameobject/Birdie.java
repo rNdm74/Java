@@ -6,11 +6,11 @@ package com.base.gameobject;
 public class Birdie extends Enemy{
     public static final int SIZE = 32;
 
-    public Birdie(int level, float x, float y) {
+    public Birdie(float x, float y, int level) {
         super(level);
 
-        init(x, y, 0.2f, 0.2f, 1f, SIZE, SIZE, 0);
+        init(x, y, 0.2f, 0.2f, 1f, SIZE, SIZE, 3);
 
-        setAttackDelay(200);
+        setAttackDelay(1500);
     }
 }
