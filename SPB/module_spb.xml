@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_spb" default="compile.module.spb">
+  <dirname property="module.spb.basedir" file="${ant.file.module_spb}"/>
+  
+  <property name="module.jdk.home.spb" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.spb" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.spb" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.spb" value="${compiler.args}"/>
+  
+  <property name="spb.output.dir" value="${module.spb.basedir}/out/production/SPB"/>
+  <property name="spb.testoutput.dir" value="${module.spb.basedir}/out/test/SPB"/>
+  
+  <path id="spb.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="spb.module.production.classpath">
+    <path refid="${module.jdk.classpath.spb}"/>
+  </path>
+  
+  <path id="spb.runtime.production.module.classpath">
+    <pathelement location="${spb.output.dir}"/>
+  </path>
+  
+  <path id="spb.module.classpath">
+    <path refid="${module.jdk.classpath.spb}"/>
+    <pathelement location="${spb.output.dir}"/>
+  </path>
+  
+  <path id="spb.runtime.module.classpath">
+    <pathelement location="${spb.testoutput.dir}"/>
+    <pathelement location="${spb.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.spb">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.spb">
+    <patternset refid="excluded.from.module.spb"/>
+  </patternset>
+  
+  <path id="spb.module.sourcepath">
+    <dirset dir="${module.spb.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.spb" depends="compile.module.spb.production,compile.module.spb.tests" description="Compile module SPB"/>
+  
+  <target name="compile.module.spb.production" depends="register.custom.compilers" description="Compile module SPB; production classes">
+    <mkdir dir="${spb.output.dir}"/>
+    <javac2 destdir="${spb.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.spb}/javac">
+      <compilerarg line="${compiler.args.spb}"/>
+      <bootclasspath refid="spb.module.bootclasspath"/>
+      <classpath refid="spb.module.production.classpath"/>
+      <src refid="spb.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.spb"/>
+    </javac2>
+    
+    <copy todir="${spb.output.dir}">
+      <fileset dir="${module.spb.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.spb.tests" depends="register.custom.compilers,compile.module.spb.production" description="compile module SPB; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.spb" description="cleanup module">
+    <delete dir="${spb.output.dir}"/>
+    <delete dir="${spb.testoutput.dir}"/>
+  </target>
+</project>

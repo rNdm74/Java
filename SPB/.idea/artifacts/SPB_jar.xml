@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SPB:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SPB_jar</output-path>
+    <root id="archive" name="SPB.jar">
+      <element id="module-output" name="SPB" />
+    </root>
+  </artifact>
+</component>
