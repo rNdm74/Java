@@ -1,4 +1,4 @@
-package com.base.gameobject.item;
+package com.base.item;
 
 /**
  * Created by rNdm.
