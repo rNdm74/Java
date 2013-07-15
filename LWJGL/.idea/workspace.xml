@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bed16d7f-6892-4120-a1d5-70e1c3dc33f7" name="Default" comment="" />
+    <list default="true" id="bed16d7f-6892-4120-a1d5-70e1c3dc33f7" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/game/RPGRandom.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/StatScale.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/item/Wall.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Enemy.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Enemy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Equipment.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Equipment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/game/Game.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/game/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/engine/GameObject.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/engine/GameObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Inventory.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Inventory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/engine/Main.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/engine/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Player.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Stats.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/gameobject/Stats.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/src/com/base/game/Time.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/game/Time.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../rpgGame/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../rpgGame/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="E:\Work\Git\Java\rpgGame\src\com\base\gameobject\item\EquippableItems.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/item/EquippableItems.java" />
+      <change type="MOVED" beforePath="E:\Work\Git\Java\rpgGame\src\com\base\gameobject\item\Item.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/item/Item.java" />
+      <change type="MOVED" beforePath="E:\Work\Git\Java\rpgGame\src\com\base\gameobject\item\Poop.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/item/Poop.java" />
+      <change type="MOVED" beforePath="E:\Work\Git\Java\rpgGame\src\com\base\gameobject\item\PoopOfGrandur.java" afterPath="$PROJECT_DIR$/../rpgGame/src/com/base/item/PoopOfGrandur.java" />
+    </list>
     <ignored path="LWJGL.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,6 +37,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -54,7 +74,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -64,10 +83,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="8" selection-start="1307" selection-end="1307" vertical-scroll-proportion="0.0" vertical-offset="451" max-vertical-offset="1475">
+            <state line="50" column="8" selection-start="1307" selection-end="1307" vertical-scroll-proportion="1.2043189" vertical-offset="450" max-vertical-offset="1400">
               <folding />
             </state>
           </provider>
@@ -76,10 +95,8 @@
       <file leaf-file-name="Slickgame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Slickgame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="11" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1000">
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state line="29" column="11" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="1150">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -87,10 +104,8 @@
       <file leaf-file-name="FrameHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrameHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="49" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="2100">
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state line="33" column="49" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="2100">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,18 +113,16 @@
       <file leaf-file-name="DisplayHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DisplayHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="10" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1750">
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state line="66" column="10" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="1750">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Render.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Render.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Render.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="30" selection-start="96" selection-end="219" vertical-scroll-proportion="-0.0048387097" vertical-offset="253" max-vertical-offset="1175">
+            <state line="10" column="30" selection-start="96" selection-end="219" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1175">
               <folding />
             </state>
           </provider>
@@ -118,10 +131,8 @@
       <file leaf-file-name="KeyHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KeyHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="4" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="1250">
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state line="3" column="4" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="50" max-vertical-offset="1275">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -132,6 +143,14 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -146,12 +165,12 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1928" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1096" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -229,18 +248,18 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="C:/Program Files/Java/jdk1.7.0_25/lwjgl/jar/slick.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LWGL" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
@@ -255,6 +274,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -283,19 +315,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -386,7 +405,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -397,22 +416,22 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30982906" sideWeight="0.35963002" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32905984" sideWeight="0.35965848" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972796" sideWeight="0.67045456" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14621131" sideWeight="0.69017094" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.64036995" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14621131" sideWeight="0.67094016" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.6403415" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -485,9 +504,7 @@
     <entry file="file://$PROJECT_DIR$/src/DisplayHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="66" column="10" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="1105" max-vertical-offset="1292">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -501,9 +518,7 @@
     <entry file="file://$PROJECT_DIR$/src/KeyHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="4" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="867">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -517,18 +532,14 @@
     <entry file="file://$PROJECT_DIR$/src/FrameHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="49" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1462">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DisplayHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="32" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1292">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -542,9 +553,7 @@
     <entry file="file://$PROJECT_DIR$/src/KeyHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="4" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="867">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -560,36 +569,9 @@
         <state line="36" column="0" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.81914896" vertical-offset="133" max-vertical-offset="697" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FrameHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="49" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1462">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DisplayHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="10" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/KeyHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="4" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="867">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="8" selection-start="1307" selection-end="1307" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="1475">
           <folding />
         </state>
       </provider>
@@ -597,15 +579,34 @@
     <entry file="file://$PROJECT_DIR$/src/Slickgame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="11" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="782">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Render.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="30" selection-start="96" selection-end="219" vertical-scroll-proportion="-0.0048387097" vertical-offset="253" max-vertical-offset="1175">
+        <state line="10" column="30" selection-start="96" selection-end="219" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1175">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DisplayHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="10" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrameHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="49" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="8" selection-start="1307" selection-end="1307" vertical-scroll-proportion="1.2043189" vertical-offset="450" max-vertical-offset="1400">
           <folding />
         </state>
       </provider>

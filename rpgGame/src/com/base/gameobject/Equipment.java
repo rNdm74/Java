@@ -1,6 +1,6 @@
 package com.base.gameobject;
 
-import com.base.gameobject.item.EquippableItems;
+import com.base.item.EquippableItems;
 
 /**
  * Created by rNdm.
@@ -24,6 +24,7 @@ public class Equipment {
             }
         }
 
+        inventory.remove(item);
         items[index] = item;
         return true;
     }

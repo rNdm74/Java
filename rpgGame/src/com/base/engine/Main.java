@@ -29,7 +29,7 @@ public class Main {
             Display.setDisplayMode(new DisplayMode(800, 600));
             Display.create();
             Keyboard.create();
-            Display.setVSyncEnabled(true);
+            //Display.setVSyncEnabled(true);
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
@@ -52,11 +52,28 @@ public class Main {
     private static void gameLoop(){
         Time.init();
 
+        int frames = 0;
+        long lastTime = System.nanoTime();
+        long totalTime = 0;
+
         while (!Display.isCloseRequested()){
+            long now = System.nanoTime();
+            long passed = now - lastTime;
+            lastTime = now;
+            totalTime += passed;
+
+            if(totalTime >= 1000000000){
+                Display.setTitle("FPS: " + frames);
+                //System.out.println(frames);
+                totalTime = 0;
+                frames = 0;
+            }
+
             Time.update();
             getInput();
             update();
             render();
+            frames++;
         }
     }
 
@@ -76,7 +93,7 @@ public class Main {
 
         Display.update();//Display to screen
 
-        Display.sync(60); //Set frame rate
+        //Display.sync(60); //Set frame rate
     }
 
     private static void cleanUp(){

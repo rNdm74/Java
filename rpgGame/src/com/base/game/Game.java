@@ -2,9 +2,8 @@ package com.base.game;
 
 import com.base.engine.GameObject;
 import com.base.engine.Physics;
-import com.base.gameobject.Birdie;
 import com.base.gameobject.Player;
-import com.base.gameobject.item.Poop;
+import com.base.item.Wall;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -20,6 +19,39 @@ public class Game{
     private ArrayList<GameObject> remove;
     private Player player;
 
+    public void generateTestLevel(){
+        int wall_thickness = 15;
+        //Generate first room
+        objects.add(new Wall(200,200, wall_thickness, 300)); // West
+        objects.add(new Wall(500,200, wall_thickness, 100)); // East
+        objects.add(new Wall(500,400, wall_thickness, 100)); // East
+        objects.add(new Wall(200,200, 300, wall_thickness)); // South
+        objects.add(new Wall(200,500, 98, wall_thickness));  // North
+        objects.add(new Wall(402,500, 100, wall_thickness)); // North
+
+        //Generate hallway1
+        objects.add(new Wall(298,500, wall_thickness, 200)); // West
+        objects.add(new Wall(400,500, wall_thickness, 200)); // East
+
+        //Generate second room
+        objects.add(new Wall(400,700, 100, wall_thickness)); // South
+        objects.add(new Wall(200,700, 100, wall_thickness)); // South
+        objects.add(new Wall(200,700, wall_thickness, 300)); // West
+        objects.add(new Wall(500,700, wall_thickness, 300)); // East
+        objects.add(new Wall(200,1000, 302, wall_thickness));// North
+
+        //Generate hallway2
+        objects.add(new Wall(500,300, 200, wall_thickness)); // East
+        objects.add(new Wall(500,400, 200, wall_thickness)); // East
+
+        //Generate third room
+        objects.add(new Wall(700,400, wall_thickness, 100)); // West
+        objects.add(new Wall(700,200, wall_thickness, 100)); // West
+        objects.add(new Wall(700,200, 300, wall_thickness)); // South
+        objects.add(new Wall(700,500, 300, wall_thickness)); // North
+        objects.add(new Wall(1000,200, wall_thickness, 302));// East
+    }
+
     public Game(){
         objects = new ArrayList<>();
         remove = new ArrayList<>();
@@ -27,8 +59,11 @@ public class Game{
         player = new Player(Display.getWidth() / 2 - Player.SIZE / 2, Display.getHeight() / 2 - Player.SIZE / 2);
 
         objects.add(player);
-        objects.add(new Poop(132, 132));
-        objects.add(new Birdie(0, Display.getHeight() - Birdie.SIZE, 1));
+        generateTestLevel();
+//        objects.add(new Poop(132, 132));
+//        objects.add(new Birdie(0, Display.getHeight() - Birdie.SIZE, 1));
+//
+
     }
 
     public void getInput(){

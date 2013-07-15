@@ -5,11 +5,13 @@ import com.base.game.Delay;
 import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.Util;
-import com.base.gameobject.item.Item;
+import com.base.item.Item;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import java.util.ArrayList;
+
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 /**
  * Created by Adam Charlton.
@@ -31,12 +33,18 @@ public class Player extends StatObject {
 
     private int facingDirection;
 
+    private int moveAmountX;
+    private int moveAmountY;
+
     public Player(float x, float y){
         init(x, y, 0.1f, 1f, 0.25f, SIZE, SIZE, PLAYER_ID);
 
         stats = new Stats(0, true);
         inventory = new Inventory(20);
         equipment = new Equipment(inventory);
+
+        moveAmountX = 0;
+        moveAmountY = 0;
 
         attackDamage = 1;
         attackRange = 49;
@@ -49,26 +57,49 @@ public class Player extends StatObject {
 
     @Override
     public void update(){
-        StringBuilder sb = new StringBuilder();
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append("Speed: " + getSpeed());
+//        sb.append("     Level: " + getLevel());
+//        sb.append("     XP: " + getXp());
+//        sb.append("     MaxHP: " + getMaxHealth());
+//        sb.append("     HP: " +  getCurrentHealth());
+//        sb.append("     Strength: " + Math.round(getStrength()));
+//        sb.append("     Magic: " + Math.round(getMagic()));
+//
+//        Display.setTitle(sb.toString());
 
-        sb.append("Speed: " + getSpeed());
-        sb.append("     Level: " + getLevel());
-        sb.append("     XP: " + getXp());
-        sb.append("     MaxHP: " + getMaxHealth());
-        sb.append("     HP: " +  getCurrentHealth());
-        sb.append("     Strength: " + getStrength());
-        sb.append("     Magic: " + getMagic());
+        float newX = x + (float)moveAmountX;
+        float newY = y + (float)moveAmountY;
 
-        Display.setTitle(sb.toString());
+        moveAmountX = 0;
+        moveAmountY = 0;
 
-        ArrayList<GameObject> objects = Game.rectangleCollide(x,  y, x + SIZE, y + SIZE);
+        ArrayList<GameObject> objects = Game.rectangleCollide(newX,  newY, newX + SIZE, newY + SIZE);
+
+        ArrayList<GameObject> items = new ArrayList<>();
+
+        boolean move = true;
 
         for (GameObject go: objects){
             if (go.getType() == GameObject.ITEM_ID){
-                System.out.println(((Item)go).getName());
-                go.remove();
-                addItem((Item)go);
+                items.add(go);
             }
+
+            if (go.isSolid()){
+                move = false;
+            }
+        }
+
+        if(!move) return;
+
+        x = newX;
+        y = newY;
+
+        for(GameObject go: items){
+            System.out.println(((Item)go).getName());
+            go.remove();
+            addItem((Item)go);
         }
     }
 
@@ -134,6 +165,14 @@ public class Player extends StatObject {
         attackDelay.restart();
     }
 
+    @Override
+    public void render(){
+
+        glTranslatef(Display.getWidth() / 2 - Player.SIZE / 2, Display.getHeight() / 2 - Player.SIZE / 2, 0);
+        sprite.render();
+        glTranslatef(-x,-y,0);
+    }
+
     private void move(float magX, float magY) {
 
         if(magX == 0 && magY == 1) facingDirection = FORWARD;
@@ -141,8 +180,9 @@ public class Player extends StatObject {
         if(magX == -1 && magY == 0) facingDirection = LEFT;
         if(magX == 1 && magY == 0) facingDirection = RIGHT;
 
-        x += getSpeed() * magX * Time.getDelta();
-        y += getSpeed() * magY * Time.getDelta();
+        moveAmountX += 4f * magX * Time.getDelta()*14f; //TODO: Add speed based scale
+        System.out.println(Time.getDelta()*14f);
+        moveAmountY += 4f * magY * Time.getDelta()*14f;
     }
 
     public void addXp(float amount){

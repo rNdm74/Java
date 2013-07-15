@@ -14,7 +14,6 @@ public class Time {
     }
 
     public static float getDelta(){ // Time between frames
-
         return (currentTime - lastTime) / DAMPING;
     }
 

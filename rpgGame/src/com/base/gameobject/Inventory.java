@@ -1,6 +1,6 @@
 package com.base.gameobject;
 
-import com.base.gameobject.item.Item;
+import com.base.item.Item;
 
 /**
  * Created by rNdm.
