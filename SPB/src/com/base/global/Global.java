@@ -12,6 +12,6 @@ public final class Global {
     public static boolean               vsync                           = false;
     public static boolean               antialiasing                    = false;
 
-    public static int                   WINDOW_WIDTH                    = 1024;
-    public static int                   WINDOW_HEIGHT                   = 768;
+    public static int                   WINDOW_WIDTH                    = 800;
+    public static int                   WINDOW_HEIGHT                   = 600;
 }

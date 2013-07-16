@@ -1,11 +1,17 @@
 package com.base.constants;
 
+import com.base.engine.Main;
+import com.base.global.Global;
+import org.lwjgl.opengl.Display;
+
+import java.util.Locale;
+
 /**
  * Created by rNdm.
  */
 public final class Constants {
-    public static final int                 WINDOW_WIDTH                    = 1024;
-    public static final int                 WINDOW_HEIGHT                   = 768;
+    public static final int                 WINDOW_WIDTH                    = 800;
+    public static final int                 WINDOW_HEIGHT                   = 600;
 
     public static final int                 TITLE_X                         = 200;
     public static final int                 TITLE_Y                         = 200;
@@ -35,15 +41,15 @@ public final class Constants {
 
 
     public static final String[]            MAIN_ITEMS                      = {"EXIT",
-                                                                               "NEW GAME",
-                                                                               "LOAD GAME",
                                                                                "OPTIONS",
+                                                                               "LOAD GAME",
+                                                                               "NEW GAME"
                                                                                };
 
     public static final int[]               MAIN_IDS                        = {EXIT,
-                                                                               MAIN_NEW_GAME,
-                                                                               MAIN_LOAD_GAME,
                                                                                MAIN_OPTIONS,
+                                                                               MAIN_LOAD_GAME,
+                                                                               MAIN_NEW_GAME,
                                                                                };
 
     public static final String[]            OPTION_ITEMS                    = {"BACK",
@@ -61,7 +67,9 @@ public final class Constants {
     public static final String[]            GRAPHICS_ITEMS                   = {"BACK",
                                                                                 "FULL SCREEN",
                                                                                 "V SYNC",
-                                                                                "ANTI ALIASING"};
+                                                                                "ANTI ALIASING",
+                                                                                "RESOLUTION     " + Global.WINDOW_WIDTH + "x" + Global.WINDOW_HEIGHT
+                                                                                };
 
     public static final int[]               GRAPHICS_IDS                     = {BACK,
                                                                                 GRAPHICS_FULLSCREEN,

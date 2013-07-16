@@ -15,6 +15,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by rNdm.
@@ -32,12 +34,19 @@ public class Game extends StateBasedGame {
         this.addState(new Controls(Constants.OPTIONS_CONTROLS));
         this.addState(new Graphics(Constants.OPTIONS_GRAPHICS));
         this.addState(new Sound(Constants.OPTIONS_SOUND));
-
-
     }
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
+
+        try {
+            DisplayMode[] dm = Display.getAvailableDisplayModes();
+            Arrays.sort(dm, new DisplayModeSort());
+            for (DisplayMode d: dm) System.out.println(d);
+            Display.setDisplayMode(dm[2]);
+        } catch (LWJGLException e) {}
+
+
         this.getState(Constants.MAIN_MENU).init(gameContainer, this);
 
         this.getState(Constants.MAIN_NEW_GAME).init(gameContainer, this);
@@ -50,13 +59,8 @@ public class Game extends StateBasedGame {
 
         this.enterState(Constants.MAIN_MENU);
 
-        try {
-            DisplayMode[] dm = Display.getAvailableDisplayModes();
-            for (DisplayMode d: dm) System.out.println(d);
-            Main.game.setDisplayMode(dm[0].getWidth(), dm[0].getHeight(), false);
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
+
+
 
     }
 }

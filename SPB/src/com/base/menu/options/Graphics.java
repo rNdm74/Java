@@ -49,7 +49,7 @@ public class Graphics extends BasicGameState {
         inputHandler.update(gameContainer, stateBasedGame, delta);
 
         //System.out.println(gameContainer.getSamples());
-        Main.game.setDisplayMode(Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT, Global.fullscreen);
+        //Main.game.setDisplayMode(Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT, Global.fullscreen);
         gameContainer.setVSync(Global.vsync);
         gameContainer.setFullscreen(Global.fullscreen);
     }

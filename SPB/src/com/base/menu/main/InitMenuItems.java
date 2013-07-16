@@ -20,12 +20,13 @@ public class InitMenuItems {
 
     private void init(){
         float aspectRatio = 1f / ((float) gameContainer.getWidth() / (float) gameContainer.getHeight());
-        float fontSize = 50f * aspectRatio;
+        float fontSize = (100f / (float) gameContainer.getHeight())*100f;
+        System.out.println(fontSize);
 
         float startY = (float) gameContainer.getHeight() -100;
 
         for (int i = 0; i < menuText.length; i++) {
-            menuText[i] = new MenuText(items[i], 50, startY - (100 * i), fontSize, ids[i]);
+            menuText[i] = new MenuText(items[i], 50, startY - ((fontSize * 2) * i), fontSize, ids[i]);
         }
     }
 }
