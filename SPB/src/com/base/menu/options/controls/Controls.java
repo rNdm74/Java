@@ -1,4 +1,4 @@
-package com.base.menu.options;
+package com.base.menu.options.controls;
 
 import com.base.constants.Constants;
 import com.base.menu.InputHandler;
@@ -13,21 +13,21 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by rNdm.
  */
-public class Sound extends BasicGameState {
+public class Controls extends BasicGameState {
     private InputHandler inputHandler;
     private MenuText[] menuText;
     private String[] items;
     private int[] ids;
 
-    public Sound(int state) {
-        items = Constants.SOUND_ITEMS;
-        ids = Constants.SOUND_IDS;
+    public Controls(int state) {
+        items = Constants.CONTROLS_ITEMS;
+        ids = Constants.CONTROLS_IDS;
         menuText = new MenuText[items.length];
     }
 
     @Override
     public int getID() {
-        return Constants.OPTIONS_SOUND;
+        return Constants.OPTIONS_CONTROLS;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Sound extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        for(MenuText font: menuText) font.render();
+        for(MenuText font: menuText) font.render(graphics);
     }
 
     @Override

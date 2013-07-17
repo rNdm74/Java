@@ -1,11 +1,18 @@
-package com.base.menu;
+package com.base.menu.common;
 
+import com.base.engine.Main;
 import com.base.global.Global;
 import com.base.constants.Constants;
+import com.base.menu.MenuText;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.AMDDebugOutput;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class InputHandler {
     private MenuText[] menuText;
@@ -59,13 +66,13 @@ public class InputHandler {
         }
     }
 
-    private void execute(int id, StateBasedGame stateBasedGame){
+    private void execute(int id, StateBasedGame stateBasedGame) {
         switch (id) {
             case Constants.GRAPHICS_ANTIALIASING:
                 Global.antialiasing = !Global.antialiasing;
                 break;
             case Constants.GRAPHICS_RESOLUTION:
-                Global.antialiasing = !Global.antialiasing;
+                ChangeResolution();
                 break;
             case Constants.GRAPHICS_FULLSCREEN:
                 Global.fullscreen = !Global.fullscreen;
@@ -87,9 +94,11 @@ public class InputHandler {
         }
     }
 
+    private void ChangeResolution() {}
+
     private void resetSelectedItem() {
-        if(selectedItem < 0) selectedItem = 3;
-        selectedItem %= 4;
+        if(selectedItem < 0) selectedItem = menuText.length-1;
+        selectedItem %= menuText.length;
     }
 
     private void hoverSelectedItem(GameContainer gc) {
@@ -97,7 +106,7 @@ public class InputHandler {
         float y = gc.getHeight() - Mouse.getY();
 
         for (int i = 0; i < menuText.length; i++)
-            if (Cursor.hover(menuText[i], x, y)) {
+            if (menuText[i].contains(x, y)) {
                 if (selectedItem != i && !Keyboard.isKeyDown(Input.KEY_DOWN)) selectedItem = i;
                 break;
             }
@@ -108,12 +117,6 @@ public class InputHandler {
         while (i < menuText.length) {
             menuText[i].setColor((i == selectedItem) ? Color.yellow : Color.white);
             i++;
-        }
-    }
-
-    private static class Cursor {
-        public static boolean hover(MenuText menuText, float x, float y) {
-            return menuText.getBounds().contains(x, y);
         }
     }
 }

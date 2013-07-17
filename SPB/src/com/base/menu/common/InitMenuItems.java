@@ -1,4 +1,4 @@
-package com.base.menu.main;
+package com.base.menu.common;
 
 import com.base.menu.MenuText;
 import org.newdawn.slick.GameContainer;
@@ -21,7 +21,6 @@ public class InitMenuItems {
     private void init(){
         float aspectRatio = 1f / ((float) gameContainer.getWidth() / (float) gameContainer.getHeight());
         float fontSize = (100f / (float) gameContainer.getHeight())*100f;
-        System.out.println(fontSize);
 
         float startY = (float) gameContainer.getHeight() -100;
 

@@ -1,4 +1,4 @@
-package com.base.menu;
+package com.base.menu.common;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.UnicodeFont;
@@ -14,6 +14,7 @@ import java.io.InputStream;
  * Created by rNdm.
  */
 public class MenuText {
+    private UnicodeFont.DisplayList list;
     private UnicodeFont font;
 
     private String text;
@@ -54,12 +55,13 @@ public class MenuText {
         }
     }
 
-    public void render() {
-        font.drawString(getX(), getY(), getText(), getColor());
+    public void render(org.newdawn.slick.Graphics graphics) {
+        list = font.drawDisplayList(getX(), getY(), getText(), getColor(), 0, getText().length());
     }
 
-    public Rectangle getBounds(){
-        return new Rectangle(getX(), getY(), font.getWidth(getText()), font.getHeight(getText()));
+    public boolean contains(float tx, float ty){
+        Rectangle r = new Rectangle(x, y, font.getWidth(getText()), font.getHeight(getText()));
+        return r.contains(tx, ty);
     }
 
     public Color getColor() {
