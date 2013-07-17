@@ -3,10 +3,10 @@ package com.base.menu.common;
 import org.newdawn.slick.GameContainer;
 
 public class InitMenuItems {
-    private final GameContainer gameContainer;
-    private final MenuText[] menuText;
-    private final String[] items;
-    private final int[] ids;
+    private GameContainer gameContainer;
+    private MenuText[] menuText;
+    private String[] items;
+    private int[] ids;
 
     public InitMenuItems(GameContainer gameContainer, MenuText[] menuText, String[] items, int[] ids) {
         this.gameContainer = gameContainer;
@@ -17,7 +17,7 @@ public class InitMenuItems {
         init();
     }
 
-    private void init(){
+    public void init(){
         float aspectRatio = 1f / ((float) gameContainer.getWidth() / (float) gameContainer.getHeight());
         float fontSize = (100f / (float) gameContainer.getHeight())*100f;
 

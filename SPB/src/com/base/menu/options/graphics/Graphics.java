@@ -5,6 +5,7 @@ import com.base.constants.Constants;
 import com.base.menu.common.InputHandler;
 import com.base.menu.common.MenuText;
 import com.base.menu.common.InitMenuItems;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -14,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by rNdm.
  */
 public class Graphics extends BasicGameState {
+    private InitMenuItems initMenuItems;
     private InputHandler inputHandler;
     private MenuText[] menuText;
     private MenuText[] menuTextOptions;
@@ -35,7 +37,7 @@ public class Graphics extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        new InitMenuItems(gameContainer, menuText, items, ids);
+        initMenuItems = new InitMenuItems(gameContainer, menuText, items, ids);
         inputHandler = new InputHandler(menuText);
     }
 
@@ -50,5 +52,12 @@ public class Graphics extends BasicGameState {
 
         gameContainer.setVSync(Global.vsync);
         gameContainer.setFullscreen(Global.fullscreen);
+    }
+
+    public void updateText(GameContainer gameContainer) {
+        Global.resolution = Display.getDisplayMode().toString();
+        items = Constants.GRAPHICS_ITEMS;
+        initMenuItems = new InitMenuItems(gameContainer, menuText, items, ids);
+        inputHandler = new InputHandler(menuText);
     }
 }

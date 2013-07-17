@@ -2,8 +2,10 @@ package com.base.menu.common;
 
 import com.base.global.Global;
 import com.base.constants.Constants;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,7 +26,7 @@ public class InputHandler {
         moveSelectItemUp();
         moveSelectItemDown();
         resetSelectedItem();
-        executeSelectedMenuItem(stateBasedGame);
+        executeSelectedMenuItem(gameContainer, stateBasedGame);
         hoverSelectedItem(gameContainer);
         activeSelectedItem();
     }
@@ -47,10 +49,10 @@ public class InputHandler {
         }
     }
 
-    private void executeSelectedMenuItem(StateBasedGame stateBasedGame) {
+    private void executeSelectedMenuItem(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         if (Keyboard.isKeyDown(Input.KEY_ENTER) || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (enter == 0){
-                execute(menuText[selectedItem].getID(), stateBasedGame);
+                execute(menuText[selectedItem].getID(), gameContainer, stateBasedGame);
             }
 
             enter++;
@@ -59,7 +61,7 @@ public class InputHandler {
         }
     }
 
-    private void execute(int id, StateBasedGame stateBasedGame) {
+    private void execute(int id, GameContainer gameContainer, StateBasedGame stateBasedGame) {
         switch (id) {
             case Constants.GRAPHICS_ANTIALIASING:
                 Global.antialiasing = !Global.antialiasing;
@@ -81,13 +83,21 @@ public class InputHandler {
                 Global.previousMenu.remove(Global.previousMenu.size() - 1);
                 break;
             default:
+                ((com.base.menu.options.graphics.Graphics)stateBasedGame.getState(Constants.OPTIONS_GRAPHICS)).updateText(gameContainer);
                 Global.previousMenu.add(stateBasedGame.getCurrentStateID());
                 stateBasedGame.enterState(menuText[selectedItem].getID());
                 break;
         }
     }
 
-    private void ChangeResolution() {}
+    int selectedMode = 0;
+    private void ChangeResolution() {
+        selectedMode++;
+        try {
+
+            Display.setDisplayMode(Global.displayModes.get(selectedMode));
+        } catch (LWJGLException e) {}
+    }
 
     private void resetSelectedItem() {
         if(selectedItem < 0) selectedItem = menuText.length-1;

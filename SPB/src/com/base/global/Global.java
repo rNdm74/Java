@@ -16,7 +16,7 @@ public final class Global {
     public static boolean                   vsync                           = false;
     public static boolean                   antialiasing                    = false;
 
-    public static String                    resolution                      = "";
+    public static String                    resolution                      = "foo";
 
 
 

@@ -64,11 +64,11 @@ public final class Constants {
                                                                                OPTIONS_CONTROLS,
                                                                                };
 
-    public static final String[]            GRAPHICS_ITEMS                   = {"BACK",
+    public static String[]            GRAPHICS_ITEMS                   = {"BACK",
                                                                                 "WINDOWED",
                                                                                 "V SYNC",
                                                                                 "ANTI ALIASING",
-                                                                                "RESOLUTION"
+                                                                                "RESOLUTION " + Global.resolution
                                                                                 };
 
     public static final int[]               GRAPHICS_IDS                     = {BACK,
