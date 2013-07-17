@@ -1,9 +1,9 @@
 package com.base.menu.main;
 
 import com.base.constants.Constants;
-import com.base.menu.InputHandler;
-import com.base.menu.MenuText;
-import org.lwjgl.input.Mouse;
+import com.base.menu.common.InitMenuItems;
+import com.base.menu.common.InputHandler;
+import com.base.menu.common.MenuText;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -37,9 +37,7 @@ public class Options extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        for(MenuText font: menuText) font.render();
-
-        graphics.drawRect(Mouse.getX()-5, gameContainer.getHeight() - Mouse.getY()-5, 2, 2);
+        for(MenuText font: menuText) font.render(graphics);
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.base.engine;
 
 import com.base.constants.Constants;
-import com.base.menu.InputHandler;
+import com.base.global.Global;
 import com.base.menu.main.*;
 import com.base.menu.main.Menu;
-import com.base.menu.options.Controls;
-import com.base.menu.options.Graphics;
-import com.base.menu.options.Sound;
+import com.base.menu.options.controls.Controls;
+import com.base.menu.options.graphics.Graphics;
+import com.base.menu.options.sound.Sound;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 import org.lwjgl.opengl.DisplayMode;
@@ -14,7 +14,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -38,14 +37,17 @@ public class Game extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-
         try {
             DisplayMode[] dm = Display.getAvailableDisplayModes();
             Arrays.sort(dm, new DisplayModeSort());
-            for (DisplayMode d: dm) System.out.println(d);
-            Display.setDisplayMode(dm[2]);
+            Collections.addAll(Global.displayModes, dm);
+            Global.resolution = Display.getDisplayMode().toString();
+            System.out.println(Global.resolution);
+            //for (DisplayMode d: dm) System.out.println(d);
+            //Display.setDisplayMode(dm[2]);
         } catch (LWJGLException e) {}
 
+        //System.out.println(Global.displayModes);
 
         this.getState(Constants.MAIN_MENU).init(gameContainer, this);
 
@@ -58,9 +60,5 @@ public class Game extends StateBasedGame {
         this.getState(Constants.OPTIONS_SOUND).init(gameContainer, this);
 
         this.enterState(Constants.MAIN_MENU);
-
-
-
-
     }
 }

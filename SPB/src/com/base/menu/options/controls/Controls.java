@@ -1,13 +1,12 @@
 package com.base.menu.options.controls;
 
 import com.base.constants.Constants;
-import com.base.menu.InputHandler;
-import com.base.menu.MenuText;
-import com.base.menu.main.InitMenuItems;
+import com.base.menu.common.InputHandler;
+import com.base.menu.common.MenuText;
+import com.base.menu.common.InitMenuItems;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**

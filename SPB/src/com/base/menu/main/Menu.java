@@ -1,10 +1,9 @@
 package com.base.menu.main;
 
 import com.base.constants.Constants;
-import com.base.menu.InputHandler;
-import com.base.menu.MenuText;
-import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
+import com.base.menu.common.InitMenuItems;
+import com.base.menu.common.InputHandler;
+import com.base.menu.common.MenuText;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -38,11 +37,7 @@ public class Menu extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, org.newdawn.slick.Graphics graphics) throws SlickException {
-        graphics.setAntiAlias(false);
-        for(MenuText font: menuText) font.render();
-
-        graphics.setColor(Color.red);
-        graphics.fillRect(Mouse.getX() - 2, gameContainer.getHeight() - Mouse.getY() - 2, 5, 5);
+        for(MenuText font: menuText) font.render(graphics);
     }
 
     @Override

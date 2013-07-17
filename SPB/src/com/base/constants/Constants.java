@@ -65,10 +65,10 @@ public final class Constants {
                                                                                };
 
     public static final String[]            GRAPHICS_ITEMS                   = {"BACK",
-                                                                                "FULL SCREEN",
+                                                                                "WINDOWED",
                                                                                 "V SYNC",
                                                                                 "ANTI ALIASING",
-                                                                                "RESOLUTION     " + Global.WINDOW_WIDTH + "x" + Global.WINDOW_HEIGHT
+                                                                                "RESOLUTION"
                                                                                 };
 
     public static final int[]               GRAPHICS_IDS                     = {BACK,

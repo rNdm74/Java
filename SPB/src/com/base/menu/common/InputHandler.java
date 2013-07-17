@@ -1,18 +1,11 @@
 package com.base.menu.common;
 
-import com.base.engine.Main;
 import com.base.global.Global;
 import com.base.constants.Constants;
-import com.base.menu.MenuText;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.AMDDebugOutput;
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class InputHandler {
     private MenuText[] menuText;

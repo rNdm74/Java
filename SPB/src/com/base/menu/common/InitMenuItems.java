@@ -1,6 +1,5 @@
 package com.base.menu.common;
 
-import com.base.menu.MenuText;
 import org.newdawn.slick.GameContainer;
 
 public class InitMenuItems {
